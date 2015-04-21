@@ -16,13 +16,13 @@ pip install django-bootstrap-themes
 ```
 ### Postgres configuration
 ```bash
-createdb murex_db;
-createuser murex_owner -P;
+createdb pulmo_db;
+createuser pulmo_owner -P;
 
 /etc/postgresql/9.3/main/pg_hba.conf
-hostssl  murex_db     murex_owner        ::1/128                 password
+hostssl  pulmo_db     pulmo_owner        ::1/128                 password
 /etc/init.d/postgresql restart
-psql -h localhost -U murex_owner -p 5432 -d murex_db
+psql -h localhost -U pulmo_owner -p 5432 -d pulmo_db
 ```
 ### App configuration
 ```bash
