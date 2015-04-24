@@ -1,10 +1,13 @@
-from django.conf.urls import include, url
+from django.conf.urls import patterns, include, url
 from django.contrib import admin
+admin.autodiscover()
 
-urlpatterns = [
+urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'pulmo.views.home', name='home'),
+    # url(r'^$', 'murex.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
+#    url('^', include('django.contrib.auth.urls')),
 
+    url(r'^app/', include('app.urls')),
     url(r'^admin/', include(admin.site.urls)),
-]
+)
