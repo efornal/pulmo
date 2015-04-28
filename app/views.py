@@ -7,19 +7,19 @@ def index(request):
     return redirect('new_step1')
 
 def new_step1(request):
-    return render(request, 'new.html')
+    return render(request, 'new_step1.html')
 
 def new_step2(request):
-    return render(request, 'new1.html')
+    return render(request, 'new_step2.html')
 
 def new_step3(request):
-    return render(request, 'new2.html')
+    return render(request, 'new_step3.html')
 
 def new_step4(request):
-    return render(request, 'new3.html')
+    return render(request, 'new_step4.html')
 
 def new_step5(request):
-    return render(request, 'new4.html')
+    return render(request, 'new_step5.html')
 
 
 def save(request):
