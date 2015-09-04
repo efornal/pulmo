@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': 'pulmo_db',
         'USER': 'pulmo_owner',
         'PASSWORD': 'owner',
-        'PORT': '5433',        
+        'PORT': '5432',
         'HOST': 'localhost',
     }
 }
