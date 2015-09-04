@@ -29,3 +29,11 @@ psql -h localhost -U pulmo_owner -p 5432 -d pulmo_db
 python manage.py syncdb
 python manage.py migrate
 ```
+
+### Showing models
+```bash
+sudo aptitude install python-pygraphviz
+
+python manage.py graph_models -a -o myapp_models.pdf
+```
+
