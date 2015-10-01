@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app.models import Proyect, ApplicationForm
+from app.models import Proyect, ApplicationForm, ProductionForm
 
 class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created_at')
@@ -10,4 +10,5 @@ class ProyectAdmin(admin.ModelAdmin):
 #    search_fields = ['proyect']
 
 admin.site.register(ApplicationForm)
+admin.site.register(ProductionForm)
 admin.site.register(Proyect, ProyectAdmin)
