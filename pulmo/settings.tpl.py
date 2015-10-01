@@ -134,3 +134,43 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
+
+
+# =================================\
+# ldap configuration
+
+LDAP_SERVER = 'ldap://host_ldap:port'
+
+LDAP_DN = 'dc=domain,dc=edu,dc=ar'
+
+# Organizational Unit for Person
+LDAP_PEOPLE = 'People'
+
+# =================================/
+
+
+# =================================\
+# django ldap configuration
+import ldap
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
+
+import logging
+logger = logging.getLogger('django_auth_ldap')
+logger.addHandler(logging.StreamHandler())
+slogger.setLevel(logging.DEBUG)
+
+AUTH_LDAP_SERVER_URI = LDAP_SERVER
+
+AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=%s,%s" % (LDAP_PEOPLE,LDAP_DN),
+                                   ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+AUTH_LDAP_USER_ATTR_MAP = {
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail"
+}
+
+AUTHENTICATION_BACKENDS = (
+    'django_auth_ldap.backend.LDAPBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+# =================================/
