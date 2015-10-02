@@ -1,5 +1,6 @@
 from django.contrib import admin
 from app.models import Proyect, ApplicationForm, ProductionForm
+from app.models import ConnectionTarget, ConnectionSource
 
 class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created_at')
@@ -12,3 +13,5 @@ class ProyectAdmin(admin.ModelAdmin):
 admin.site.register(ApplicationForm)
 admin.site.register(ProductionForm)
 admin.site.register(Proyect, ProyectAdmin)
+admin.site.register(ConnectionTarget)
+admin.site.register(ConnectionSource)
