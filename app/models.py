@@ -146,3 +146,27 @@ class Milestone(models.Model):
 
     def __unicode__(self):
         return "%s" % (self.description)
+
+
+
+class SCVPermision(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    user = models.CharField(max_length=200,null=False)
+    permision = models.CharField(max_length=50,null=False)
+    application_form = models.ForeignKey(ApplicationForm, null=False, blank=False)    
+
+    class Meta:
+        db_table = 'scv_permisions'
+        verbose_name_plural = 'SCVPermisions'
+
+    def __unicode__(self):
+        return "%s %s" % (self.user, self.permision)
+
+    @classmethod
+    def permisions(cls):
+        return (
+            ('R', 'Read'),
+            ('W', 'Write'),
+            ('R/W', 'Read/Write'),
+        )
+    

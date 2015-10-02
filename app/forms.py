@@ -13,7 +13,7 @@ class ProyectForm(forms.ModelForm):
         model = Proyect
         fields = ('name', 'description')
 
-
+    
 # class ApplicationFormForm(forms.ModelForm):
 #     observations = forms.CharField(required=True, widget=forms.Textarea, label=_('observations'))
 #     encoding = forms.CharField(max_length=200, required=True)
