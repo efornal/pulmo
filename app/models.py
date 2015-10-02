@@ -31,6 +31,18 @@ class ConnectionTarget(models.Model):
     def __unicode__(self):
         return "%s" % (self.name)
 
+class SoftwareRequirement(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    name = models.CharField(max_length=200,null=False)
+    version = models.CharField(max_length=200,null=True)
+    
+    class Meta:
+        db_table = 'software_requirement'
+        verbose_name_plural = 'SoftwareRequirements'
+
+    def __unicode__(self):
+        return "%s" % (self.name)
+
     
 class Proyect(models.Model):
     id = models.AutoField(primary_key=True,null=False)
@@ -63,6 +75,8 @@ class ApplicationForm (models.Model):
 
     connection_sources = models.ManyToManyField(ConnectionSource, blank=True)
     connection_targets = models.ManyToManyField(ConnectionTarget, blank=True)
+
+    software_requirements = models.ManyToManyField(SoftwareRequirement, blank=True)
     
     class Meta:
         db_table = 'application_form'
