@@ -121,7 +121,9 @@ class ProductionForm (models.Model):
 
     connection_sources = models.ManyToManyField(ConnectionSource, blank=True)
     connection_targets = models.ManyToManyField(ConnectionTarget, blank=True)
-    
+
+    software_requirements = models.ManyToManyField(SoftwareRequirement, blank=True)
+        
     class Meta:
         db_table = 'production_form'
         verbose_name_plural = 'ProductionForms'

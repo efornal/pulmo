@@ -28,4 +28,9 @@ class Migration(migrations.Migration):
             name='software_requirements',
             field=models.ManyToManyField(to='app.SoftwareRequirement', blank=True),
         ),
+        migrations.AddField(
+            model_name='productionform',
+            name='software_requirements',
+            field=models.ManyToManyField(to='app.SoftwareRequirement', blank=True),
+        ),
     ]
