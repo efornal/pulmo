@@ -31,6 +31,7 @@ class ConnectionTarget(models.Model):
     def __unicode__(self):
         return "%s" % (self.name)
 
+    
 class SoftwareRequirement(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=200,null=False)
@@ -132,3 +133,16 @@ class ProductionForm (models.Model):
         return "%s" % (self.proyect.name)
 
 
+class Milestone(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    description = models.CharField(max_length=200,null=False)
+    duration = models.CharField(max_length=50,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    production_form = models.ForeignKey(ProductionForm, null=False, blank=False)
+    
+    class Meta:
+        db_table = 'milestone'
+        verbose_name_plural = 'Milestones'
+
+    def __unicode__(self):
+        return "%s" % (self.description)

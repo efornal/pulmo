@@ -1,6 +1,7 @@
 from django.contrib import admin
 from app.models import Proyect, ApplicationForm, ProductionForm
 from app.models import ConnectionTarget, ConnectionSource, SoftwareRequirement
+from app.models import Milestone
 
 class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created_at')
@@ -16,3 +17,4 @@ admin.site.register(Proyect, ProyectAdmin)
 admin.site.register(ConnectionTarget)
 admin.site.register(ConnectionSource)
 admin.site.register(SoftwareRequirement)
+admin.site.register(Milestone)
