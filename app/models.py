@@ -185,3 +185,18 @@ class Referring(models.Model):
     def __unicode__(self):
         return "%s" % self.name
 
+
+class MonitoredVariable(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    name   = models.CharField(max_length=200,null=False)
+    periodicity  = models.CharField(max_length=200,null=True)
+    preserving_history_by = models.CharField(max_length=200,null=True)
+    production_form = models.ForeignKey(ProductionForm, null=False, blank=False)    
+
+    class Meta:
+        db_table = 'monitored_variables'
+        verbose_name_plural = 'MonitoredVariables'
+
+    def __unicode__(self):
+        return "%s" % self.name
+
