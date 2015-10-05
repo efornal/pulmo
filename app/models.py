@@ -170,3 +170,18 @@ class SCVPermision(models.Model):
             ('R/W', 'Read/Write'),
         )
     
+class Referring(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    name   = models.CharField(max_length=200,null=False)
+    email  = models.CharField(max_length=200,null=True)
+    phones = models.CharField(max_length=200,null=True)
+    is_applicant = models.BooleanField(default=False,null=False)
+    application_form = models.ForeignKey(ApplicationForm, null=False, blank=False)    
+
+    class Meta:
+        db_table = 'referring'
+        verbose_name_plural = 'Referrings'
+
+    def __unicode__(self):
+        return "%s" % self.name
+
