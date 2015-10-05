@@ -10,7 +10,7 @@ class ConnectionSource(models.Model):
     observations = models.TextField(null=True, blank=True)
     
     class Meta:
-        db_table = 'connection_source'
+        db_table = 'connection_sources'
         verbose_name_plural = 'ConnectionSources'
 
     def __unicode__(self):
@@ -25,7 +25,7 @@ class ConnectionTarget(models.Model):
     observations = models.TextField(null=True, blank=True)
     
     class Meta:
-        db_table = 'connection_target'
+        db_table = 'connection_targets'
         verbose_name_plural = 'ConnectionTargets'
 
     def __unicode__(self):
@@ -38,7 +38,7 @@ class SoftwareRequirement(models.Model):
     version = models.CharField(max_length=200,null=True)
     
     class Meta:
-        db_table = 'software_requirement'
+        db_table = 'software_requirements'
         verbose_name_plural = 'SoftwareRequirements'
 
     def __unicode__(self):
@@ -80,7 +80,7 @@ class ApplicationForm (models.Model):
     software_requirements = models.ManyToManyField(SoftwareRequirement, blank=True)
     
     class Meta:
-        db_table = 'application_form'
+        db_table = 'application_forms'
         verbose_name_plural = 'ApplicationForms'
 
     def __unicode__(self):
@@ -126,7 +126,7 @@ class ProductionForm (models.Model):
     software_requirements = models.ManyToManyField(SoftwareRequirement, blank=True)
         
     class Meta:
-        db_table = 'production_form'
+        db_table = 'production_forms'
         verbose_name_plural = 'ProductionForms'
 
     def __unicode__(self):
@@ -141,7 +141,7 @@ class Milestone(models.Model):
     production_form = models.ForeignKey(ProductionForm, null=False, blank=False)
     
     class Meta:
-        db_table = 'milestone'
+        db_table = 'milestones'
         verbose_name_plural = 'Milestones'
 
     def __unicode__(self):
@@ -170,7 +170,7 @@ class SCVPermision(models.Model):
             ('R/W', 'Read/Write'),
         )
     
-class Referring(models.Model):
+class Referrer(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name   = models.CharField(max_length=200,null=False)
     email  = models.CharField(max_length=200,null=True)
@@ -179,8 +179,8 @@ class Referring(models.Model):
     application_form = models.ForeignKey(ApplicationForm, null=False, blank=False)    
 
     class Meta:
-        db_table = 'referring'
-        verbose_name_plural = 'Referrings'
+        db_table = 'referrers'
+        verbose_name_plural = 'Referrers'
 
     def __unicode__(self):
         return "%s" % self.name

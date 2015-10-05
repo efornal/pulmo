@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from app.models import Proyect, ApplicationForm, ProductionForm
 from app.models import ConnectionTarget, ConnectionSource, SoftwareRequirement
-from app.models import Milestone, SCVPermision, Referring, MonitoredVariable
+from app.models import Milestone, SCVPermision, Referrer, MonitoredVariable
 
 class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created_at')
@@ -30,6 +30,6 @@ admin.site.register(ConnectionTarget)
 admin.site.register(ConnectionSource)
 admin.site.register(SoftwareRequirement)
 admin.site.register(Milestone)
-admin.site.register(Referring)
+admin.site.register(Referrer)
 admin.site.register(MonitoredVariable)
 admin.site.register(SCVPermision,SCVPermisionAdmin)
