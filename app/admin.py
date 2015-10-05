@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib import admin
-from app.models import Proyect, ApplicationForm, ProductionForm
-from app.models import ConnectionTarget, ConnectionSource, SoftwareRequirement
-from app.models import Milestone, SCVPermision, Referrer, MonitoredVariable
+from app.models import Proyect, ApplicationForm, ProductionForm, \
+    ConnectionTarget, ConnectionSource, SoftwareRequirement, \
+    Milestone, SCVPermision, Referrer, MonitoredVariable, \
+    TestServer
 
 class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created_at')
@@ -31,5 +32,6 @@ admin.site.register(ConnectionSource)
 admin.site.register(SoftwareRequirement)
 admin.site.register(Milestone)
 admin.site.register(Referrer)
+admin.site.register(TestServer)
 admin.site.register(MonitoredVariable)
 admin.site.register(SCVPermision,SCVPermisionAdmin)
