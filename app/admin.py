@@ -3,7 +3,7 @@ from django.contrib import admin
 from app.models import Proyect, ApplicationForm, ProductionForm, \
     ConnectionTarget, ConnectionSource, SoftwareRequirement, \
     Milestone, SCVPermision, Referrer, MonitoredVariable, \
-    TestServer
+    TestServer, ProductionServer
 
 class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created_at')
@@ -33,5 +33,6 @@ admin.site.register(SoftwareRequirement)
 admin.site.register(Milestone)
 admin.site.register(Referrer)
 admin.site.register(TestServer)
+admin.site.register(ProductionServer)
 admin.site.register(MonitoredVariable)
 admin.site.register(SCVPermision,SCVPermisionAdmin)

@@ -227,3 +227,30 @@ class TestServer(models.Model):
     def __unicode__(self):
         return "%s" % self.virtual_machine_name
 
+
+class ProductionServer(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    virtual_machine_name = models.CharField(max_length=200,null=False)
+    ip_address  = models.CharField(max_length=200,null=True)
+    mac_address = models.CharField(max_length=200,null=True)
+    ram_memory  = models.CharField(max_length=200,null=True)
+    disk_space  = models.CharField(max_length=200,null=True)
+    processors = models.CharField(max_length=200,null=True)
+    database_permissions = models.CharField(max_length=200,null=True)
+    database_server = models.CharField(max_length=200,null=True)
+    location_logs = models.CharField(max_length=200,null=True)
+    cluster_virtual_machine = models.CharField(max_length=200,null=True)
+    observations = models.TextField(null=True, blank=True)
+    production_form = models.ForeignKey(ProductionForm, null=False, blank=False)    
+    added_monitoring = models.BooleanField(default=False,null=False)
+    added_backup     = models.BooleanField(default=False,null=False)
+
+    applicant = models.CharField(max_length=200, null=True, blank=True)
+    signature_date = models.DateTimeField(null=True, blank=True)
+    
+    class Meta:
+        db_table = 'production_servers'
+        verbose_name_plural = 'ProductionServers'
+
+    def __unicode__(self):
+        return "%s" % self.virtual_machine_name
