@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 import logging
+from django.conf import settings
+from django.utils.translation import ugettext as _
+from django.utils import translation
+
 #from .forms import ApplicationFormForm
 
 

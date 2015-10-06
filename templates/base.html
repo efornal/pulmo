@@ -5,9 +5,11 @@
     {% load bootstrap_themes %}
     {% bootstrap_styles theme='spacelab' type='css' %}
     {% bootstrap_script use_min=True %}
+    {% load i18n %}
+    {% get_current_language as LANGUAGE_CODE %}
 
     <meta charset="utf-8">
-    <title>Pulmo</title>
+    <title>{{ _('title') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
@@ -44,7 +46,7 @@
 
         <div class="navbar-header">
           <img class="logo-header" src="/static/images/pulmo.png"/>
-            <a href="#" class="navbar-brand" >Pulmo</a>
+            <a href="#" class="navbar-brand" >{{ _('title') }}</a>
             <button class="navbar-toggle" type="button" data-toggle="collapse"
                     data-target="#navbar-main">
             <span class="icon-bar"></span>

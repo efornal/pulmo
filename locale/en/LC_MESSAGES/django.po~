@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-06 09:50-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: app/forms.py:9 templates/new_step1.html:25
+msgid "name"
+msgstr "Name"
+
+#: app/forms.py:10 templates/new_step1.html:33
+msgid "description"
+msgstr "Description"
+
+#: pulmo/settings.py:110 pulmo/settings.tpl.py:110
+msgid "Spanish"
+msgstr "Spanish"
+
+#: pulmo/settings.py:111 pulmo/settings.tpl.py:111
+msgid "English"
+msgstr "English"
+
+#: templates/new_step1.html:22
+msgid "new_proyect"
+msgstr "New proyect"
+
+#: templates/new_step1.html:42
+#, fuzzy
+#| msgid "name"
+msgid "db_name"
+msgstr "Name"
+
+#: templates/new_step1.html:47
+msgid "encoding"
+msgstr "Encoding"
+
+#: templates/new_step1.html:55
+msgid "user_owner"
+msgstr "User owner"
+
+#: templates/new_step1.html:60
+msgid "user_access"
+msgstr "User access"
+
+#: templates/new_step1.html:69
+msgid "observations"
+msgstr "Observations"
+
+#: templates/new_step1.html:78
+msgid "next"
+msgstr "Next"

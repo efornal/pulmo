@@ -53,6 +53,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 )
 
 ROOT_URLCONF = 'pulmo.urls'
@@ -128,6 +129,8 @@ LOGIN_URL='/app/login/'
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
+LOCALE_PATHS = (
+     BASE_DIR + '/locale', )
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
