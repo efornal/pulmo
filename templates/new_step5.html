@@ -20,30 +20,6 @@
           <fieldset>
             <legend>Nombre de proyecto</legend>
 
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="textinput">Solicitante</label>
-              <div class="col-sm-4">
-                <input class="form-control" type="text" name="proyecto"
-                       id="proyecto" value=""/>
-              </div>
-            </div>
-
-            
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="textinput">Email</label>
-              <div class="col-sm-4">
-                <input class="form-control" type="text" name=""
-                       id="" value="" />
-              </div>
-              <label class="col-sm-2 control-label" for="textinput">Teléfono</label>
-              <div class="col-sm-4">
-                <input class="form-control" type="text" name=""
-                       id="" value="" />
-              </div>
-            </div>
-            
-
-            
             <div class="bs-component">
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#home" data-toggle="tab">Referentes</a></li>
@@ -60,6 +36,7 @@
 		            <tr ><th class="text-center">Apellido y nombre</th>
 		            <th class="text-center">E-mail</th>
 		            <th class="text-center">Teléfono</th>
+                            <th class="text-center">Es solicitante?</th>
 		            <th class="text-center">
                               <a href="#" id="add_row" >
                               <i class=" glyphicon glyphicon-plus-sign"></i></a>
@@ -68,14 +45,17 @@
 		          </thead>
 		          <tbody>
 		            <tr id='addr0'>
-		              <td data-name="name" >
-			        <input type="text" name='name[]'  placeholder='' class="form-control"/>
+		              <td data-name="names" >
+			        <input type="text" name='names[]'  placeholder='' class="form-control"/>
 		              </td>
-		              <td  data-name="email">
-			        <input type="text" name='ip[]' placeholder='' class="form-control"/>
+		              <td data-name="emails">
+			        <input type="text" name='emails[]' placeholder='' class="form-control"/>
 		              </td>
-		              <td  data-name="mobile">
-			        <input type="text" name='observations[]' placeholder='' class="form-control"/>
+		              <td data-name="phones">
+			        <input type="text" name='phones[]' placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="applicants">
+			        <input type="checkbox" name='applicants[]' placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
                                 <a href="#" id='delete_row'>
