@@ -23,7 +23,7 @@
               <label class="col-sm-2 control-label" for="textinput">{{ _('name') }}</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="name"
-                       id="name" value=""/>
+                       id="name" value="{{ form.name.value }}"/>
               </div>
             </div>
 
@@ -31,7 +31,7 @@
               <label for="description" class="col-sm-2 control-label">{{ _('description') }}</label>
               <div class="col-sm-10">
                 <textarea class="form-control" rows="3"  name="description"
-                          id="description"></textarea>
+                          id="description">{{ form.description.value }}</textarea>
               </div>
             </div>
 
@@ -40,12 +40,12 @@
               <label class="col-sm-2 control-label" for="textinput">{{ _('db_name') }}</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="db_name"
-                       id="" value="" />
+                       id="" value="{{ form.db_name.value }}" />
               </div>
               <label class="col-sm-2 control-label" for="textinput">{{ _('encoding') }}</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="encoding"
-g                       id="" value="" />
+                       id="" value="{{ form.encoding.value }}" />
               </div>
             </div>
 
@@ -53,12 +53,12 @@ g                       id="" value="" />
               <label class="col-sm-2 control-label" for="textinput">{{ _('user_owner') }}</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="user_owner"
-                       id="" value="" />
+                       id="" value="{{ form.user_owner.value }}" />
               </div>
               <label class="col-sm-2 control-label" for="textinput">{{ _('user_access') }}</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="user_access"
-                       id="" value="" />
+                       id="" value="{{ form.user_access.value }}" />
               </div>
             </div>
 
@@ -67,7 +67,7 @@ g                       id="" value="" />
               <label for="observations" class="col-sm-2 control-label">{{ _('observations') }}</label>
               <div class="col-sm-10">
                 <textarea class="form-control" rows="3"  name="observations"
-                          id="observations"></textarea>
+                          id="observations">{{ form.observations.value }}</textarea>
               </div>
             </div>
 
