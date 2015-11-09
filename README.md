@@ -10,9 +10,9 @@ sudo apt-get install postgresql-9.3
 sudo apt-get install python-psycopg2
 sudo apt-get install python-pip
 sudo apt-get install python-yaml
-sudo pip install django==1.7.4
-sudo pip install django-extensions
-pip install django-bootstrap-themes
+sudo pip install Django==1.8.5
+sudo pip install django-extensions -v 1.5.7
+sudo pip install django-bootstrap-themes -v 3.1.2
 ```
 ### Postgres configuration
 ```bash
