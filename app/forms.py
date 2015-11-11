@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django import forms
 from django.forms import ModelForm
-from .models import Proyect, ApplicationForm
+from .models import Proyect, ApplicationForm, ApplicationSoftwareRequirement
 from django.utils.translation import ugettext as _
 from django.utils import translation
 
@@ -30,3 +30,13 @@ class ApplicationFormForm(forms.ModelForm):
         model = ApplicationForm
         #fields = '__all__'
         fields = ('db_name','encoding','user_owner','user_access','observations','proyect')
+
+        
+class ApplicationSoftwareRequirementForm(forms.ModelForm):
+    name = forms.CharField(max_length=200,required=True)
+    version = forms.CharField(max_length=200,required=False)
+
+    class Meta:
+        model = ApplicationSoftwareRequirement
+        fields = '__all__'
+

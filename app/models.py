@@ -32,19 +32,6 @@ class ConnectionTarget(models.Model):
         return "%s" % (self.name)
 
     
-class SoftwareRequirement(models.Model):
-    id = models.AutoField(primary_key=True,null=False)
-    name = models.CharField(max_length=200,null=False)
-    version = models.CharField(max_length=200,null=True)
-    
-    class Meta:
-        db_table = 'software_requirements'
-        verbose_name_plural = 'SoftwareRequirements'
-
-    def __unicode__(self):
-        return "%s" % (self.name)
-
-    
 class Proyect(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=200,null=False)
@@ -77,8 +64,6 @@ class ApplicationForm (models.Model):
     connection_sources = models.ManyToManyField(ConnectionSource, blank=True)
     connection_targets = models.ManyToManyField(ConnectionTarget, blank=True)
 
-    software_requirements = models.ManyToManyField(SoftwareRequirement, blank=True)
-    
     class Meta:
         db_table = 'application_forms'
         verbose_name_plural = 'ApplicationForms'
@@ -123,8 +108,6 @@ class ProductionForm (models.Model):
     connection_sources = models.ManyToManyField(ConnectionSource, blank=True)
     connection_targets = models.ManyToManyField(ConnectionTarget, blank=True)
 
-    software_requirements = models.ManyToManyField(SoftwareRequirement, blank=True)
-        
     class Meta:
         db_table = 'production_forms'
         verbose_name_plural = 'ProductionForms'
@@ -132,6 +115,33 @@ class ProductionForm (models.Model):
     def __unicode__(self):
         return "%s" % (self.proyect.name)
 
+    
+class ApplicationSoftwareRequirement(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    name = models.CharField(max_length=200,null=False)
+    version = models.CharField(max_length=200,null=True)
+    application_form = models.ForeignKey(ApplicationForm, null=False, blank=False)
+    
+    class Meta:
+        db_table = 'application_software_requirements'
+        verbose_name_plural = 'ApplicationSoftwareRequirements'
+
+    def __unicode__(self):
+        return "%s" % (self.name)
+
+    
+class ProductionSoftwareRequirement(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    name = models.CharField(max_length=200,null=False)
+    version = models.CharField(max_length=200,null=True)
+    production_form = models.ForeignKey(ProductionForm, null=False, blank=False)
+    
+    class Meta:
+        db_table = 'production_software_requirements'
+        verbose_name_plural = 'ProductionSoftwareRequirements'
+
+    def __unicode__(self):
+        return "%s" % (self.name)
 
 class Milestone(models.Model):
     id = models.AutoField(primary_key=True,null=False)

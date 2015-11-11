@@ -5,7 +5,7 @@ import logging
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils import translation
-from .forms import ProyectForm, ApplicationFormForm
+from .forms import ProyectForm, ApplicationFormForm, ApplicationSoftwareRequirementForm
 from django.forms.models import inlineformset_factory
 from .models import Proyect, ApplicationForm
 from django.db import IntegrityError, transaction
@@ -75,9 +75,10 @@ def new_step2(request):
 
 
 def new_step3(request):
-    
-    request.session['software']['names'] = request.POST.getlist('names[]')
-    request.session['software']['versions'] = request.POST.getlist('versions[]')
+    software = []
+    for i,soft in enumerate( request.POST.getlist('names[]') ):
+        software.append({'name': soft, 'version': request.POST.getlist('versions[]')[i]})
+    request.session['software'] = software
     request.session.modified = True
     log_session(request)
     return render(request, 'new_step3.html')
@@ -107,26 +108,44 @@ def save(request):
     request.session['referrer']['applicants'] = request.POST.getlist('applicants[]')
     request.session.modified = True
     log_session(request)
-
+    
     sid = transaction.savepoint()
+    commit_transaction = True
     try:
         proyect_form = ProyectForm(request.session['proyect'])
         if proyect_form.is_valid():
             proyect = proyect_form.save()
+
+            # application form
             app_params = request.session['application']
-            app_params['proyect'] = proyect.id
-            logging.warning("\n==== params: %s\n" % app_params)
+            app_params['proyect'] = proyect.pk
             application_form = ApplicationFormForm(app_params)
             if application_form.is_valid():
                 application = application_form.save()
-                transaction.savepoint_commit( sid )
-                request.session['has_registered'] = True    
             else:
-                logging.warning(" \n Invalid application: %s\n" % application_form)
-                transaction.savepoint_rollback( sid )
+                commit_transaction = False
+                logging.error(" \n Invalid application: %s\n" % application_form)
+
+            # requirements software
+            for soft in request.session['software']:
+                params = soft.copy()
+                params['application_form'] = application.pk
+                soft_form =  ApplicationSoftwareRequirementForm( params )
+                if soft_form.is_valid():
+                    soft_form.save()
+                else:
+                    commit_transaction = False
+                    logging.error("\n Invalid Software Requirements: %s" % soft_form)
+                    
         else:
+            commit_transaction = False
             logging.warning("\n Invalid proyect: %s\n" % proyect)
 
+        if commit_transaction:
+            transaction.savepoint_commit( sid )
+        else:
+            transaction.savepoint_rollback( sid )
+            
     except IntegrityError:
         logging.error('\nIntegrity error for: %s\n' % proyect)
         transaction.savepoint_rollback( sid )
