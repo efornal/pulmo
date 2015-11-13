@@ -116,7 +116,6 @@ class ApplicationConnectionTarget(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=200,null=False)
     ip = models.CharField(max_length=200,null=True)
-    ip_firewall  = models.CharField(max_length=200,null=True)
     observations = models.TextField(null=True, blank=True)
     application_form = models.ForeignKey(ApplicationForm, null=False, blank=False)
     

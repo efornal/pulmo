@@ -3,9 +3,11 @@ from django import forms
 from django.forms import ModelForm
 from .models import Proyect, ApplicationForm, ApplicationSoftwareRequirement
 from .models import ApplicationConnectionSource
+from .models import ApplicationConnectionTarget
 from django.utils.translation import ugettext as _
 from django.utils import translation
 from django.forms import Textarea
+
 
 class ProyectForm(forms.ModelForm):
     name = forms.CharField(max_length=200, required=True, label=_('name'))
@@ -51,6 +53,16 @@ class ApplicationConnectionSourceForm(forms.ModelForm):
         widgets = {
             'observations': Textarea( attrs={'rows': 5,'cols': 5}),
         }
+
+
+class ApplicationConnectionTargetForm(forms.ModelForm):
+    name = forms.CharField(max_length=200,required=True)
+    ip = forms.CharField(max_length=200,required=False)
+    observations = forms.CharField(required=False, label=_('observations'))
+        
+    class Meta:
+        model = ApplicationConnectionTarget
+        fields = '__all__'
 
 
 

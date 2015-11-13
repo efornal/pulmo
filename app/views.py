@@ -5,8 +5,9 @@ import logging
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils import translation
-from .forms import ProyectForm, ApplicationFormForm, ApplicationSoftwareRequirementForm, \
-    ApplicationConnectionSourceForm
+from .forms import ProyectForm, ApplicationFormForm
+from .forms import ApplicationSoftwareRequirementForm
+from .forms import ApplicationConnectionSourceForm, ApplicationConnectionTargetForm
 from django.forms.models import inlineformset_factory
 from .models import Proyect, ApplicationForm
 from django.db import IntegrityError, transaction
@@ -168,6 +169,16 @@ def save(request):
                     commit_transaction = False
                     logging.error("\n Invalid Application conection source: %s" % acs_form)
 
+            # ac targets
+            for computer in request.session['targets_computer']:
+                params = computer.copy()
+                params['application_form'] = application.pk
+                act_form =  ApplicationConnectionTargetForm( params )
+                if act_form.is_valid():
+                    act_form.save()
+                else:
+                    commit_transaction = False
+                    logging.error("\n Invalid Application conection source: %s" % act_form)
                     
         else:
             commit_transaction = False
