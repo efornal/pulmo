@@ -15,6 +15,11 @@ class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created_at')
     search_fields = ['name']
 
+class ReferrerInline(admin.TabularInline):
+     model = Referrer
+     fk_name = "application_form"
+     extra = 0
+
 class SCVPermisionInline(admin.TabularInline):
      model = SCVPermision
      fk_name = "application_form"
@@ -42,6 +47,7 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         ApplicationConnectionSourceInline,
         ApplicationConnectionTargetInline,
         SCVPermisionInline,
+        ReferrerInline,
     ]
 
     

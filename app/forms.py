@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from .models import Proyect, ApplicationForm, ApplicationSoftwareRequirement
 from .models import ApplicationConnectionSource
 from .models import ApplicationConnectionTarget
-from .models import SCVPermision
+from .models import SCVPermision, Referrer
 from django.utils.translation import ugettext as _
 from django.utils import translation
 from django.forms import Textarea
@@ -74,3 +74,13 @@ class SCVPermisionForm(forms.ModelForm):
         model = SCVPermision
         fields = '__all__'
 
+
+class ReferrerForm(forms.ModelForm):
+    name   = forms.CharField(max_length=200, required=True, label=_('name'))
+    email  = forms.CharField(required=False, label=_('email'))
+    phones = forms.CharField(required=False, label=_('phones'))
+    is_applicant = forms.BooleanField(required=False, label=_('is_applicant'))
+    
+    class Meta:
+        model = Referrer
+        fields = '__all__'

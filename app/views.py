@@ -5,7 +5,7 @@ import logging
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils import translation
-from .forms import ProyectForm, ApplicationFormForm, SCVPermisionForm
+from .forms import ProyectForm, ApplicationFormForm, SCVPermisionForm, ReferrerForm
 from .forms import ApplicationSoftwareRequirementForm
 from .forms import ApplicationConnectionSourceForm, ApplicationConnectionTargetForm
 from django.forms.models import inlineformset_factory
@@ -37,8 +37,8 @@ def new_step1(request):
     request.session['sources_computer'] = {}
     request.session['targets_computer'] = {}
     request.session['software'] = {}
-    request.session['sscv_permisions'] = {}
-    request.session['referrer'] = {}
+    request.session['scv_permisions'] = {}
+    request.session['referrers'] = {}
     return render(request, 'new_step1.html')
 
     
@@ -129,12 +129,25 @@ def new_step5(request):
 @transaction.atomic
 def save(request):
     redirect_without_post(request)
-    request.session['referrer']['names'] = request.POST.getlist('names[]')
-    request.session['referrer']['emails'] = request.POST.getlist('emails[]')
-    request.session['referrer']['phones'] = request.POST.getlist('phones[]')
-    request.session['referrer']['applicants'] = request.POST.getlist('applicants[]')
+    referrers = []
+    logging.error(request.POST)
+    for i,referrer in enumerate( request.POST.getlist('names[]') ):
+        if referrer:
+            is_applicant = False
+            logging.error("%s %s" % (i,len(request.POST.getlist('applicants[]'))))
+            if i < len(request.POST.getlist('applicants[]')) and request.POST.getlist('applicants[]')[i]:
+                is_applicant = True
+                
+            referrers.append({ 'name': referrer,
+                               'email': request.POST.getlist('emails[]')[i],
+                               'phones': request.POST.getlist('phones[]')[i],
+                               'is_applicant': is_applicant,
+            })
+
+    request.session['referrers'] = referrers
     request.session.modified = True
     log_session(request)
+
     
     sid = transaction.savepoint()
     commit_transaction = True
@@ -184,7 +197,7 @@ def save(request):
                     act_form.save()
                 else:
                     commit_transaction = False
-                    logging.error("\n Invalid Application conection source: %s" % act_form)
+                    logging.error("\n Invalid Application conection target: %s" % act_form)
 
             # scv permisions
             for permision in request.session['scv_permisions']:
@@ -195,7 +208,18 @@ def save(request):
                     scv_form.save()
                 else:
                     commit_transaction = False
-                    logging.error("\n Invalid Application conection source: %s" % scv_form)
+                    logging.error("\n Invalid SCV Permision: %s" % scv_form)
+
+            # referrers
+            for referrer in request.session['referrers']:
+                params = referrer.copy()
+                params['application_form'] = application.pk
+                ref_form =  ReferrerForm( params )
+                if ref_form.is_valid():
+                    ref_form.save()
+                else:
+                    commit_transaction = False
+                    logging.error("\n Invalid Referrer: %s" % ref_form)
                     
         else:
             commit_transaction = False
