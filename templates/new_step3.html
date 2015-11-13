@@ -21,8 +21,6 @@
             <legend>Nombre de proyecto</legend>
 
             
-
-            
             <div class="bs-component">
               <ul class="nav nav-tabs">
                 <li class="active">
@@ -50,14 +48,14 @@
 		          </thead>
 		          <tbody>
 		            <tr id='addr0'>
-		              <td data-name="names" >
-			        <input type="text" name='names[]'  placeholder='' class="form-control"/>
+		              <td data-name="sources_name" >
+			        <input type="text" name='sources_name[]'  placeholder='' class="form-control"/>
 		              </td>
-		              <td data-name="ips">
-			        <input type="text" name='ips[]' placeholder='' class="form-control"/>
+		              <td data-name="sources_ip">
+			        <input type="text" name='sources_ip[]' placeholder='' class="form-control"/>
 		              </td>
-		              <td data-name="observations">
-			        <input type="text" name='observations[]' placeholder='' class="form-control"/>
+		              <td data-name="sources_observation">
+			        <input type="text" name='sources_observation[]' placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
                                 <a href="#" id='delete_row'>
@@ -77,30 +75,30 @@
                   <div class="row clearfix">
 	            <div class="col-md-12 column">
                       <div class="panel-body">
-		        <table class="table table-bordered table-hover" id="tab_logic">
+		        <table class="table table-bordered table-hover" id="tab_logics">
 		          <thead>
 		            <tr ><th class="text-center">Nombre del equipo</th>
 		            <th class="text-center">Dirección IP</th>
 		            <th class="text-center">Observaciones</th>
 		            <th class="text-center">
-                              <a href="#" id="add_row" >
+                              <a href="#" id="add_row1" >
                               <i class=" glyphicon glyphicon-plus-sign"></i></a>
                             </th>
 		            </tr>
 		          </thead>
 		          <tbody>
-		            <tr id='addr0'>
-		              <td data-name="name" >
-			        <input type="text" name='name[]'  placeholder='' class="form-control"/>
+		            <tr id='addsr0'>
+		              <td data-name="targets_name" >
+			        <input type="text" name='targets_name[]'  placeholder='' class="form-control"/>
 		              </td>
-		              <td  data-name="email">
-			        <input type="text" name='ip[]' placeholder='' class="form-control"/>
+		              <td  data-name="targets_ip">
+			        <input type="text" name='targets_ip[]' placeholder='' class="form-control"/>
 		              </td>
-		              <td  data-name="mobile">
-			        <input type="text" name='observations[]' placeholder='' class="form-control"/>
+		              <td  data-name="targets_observation">
+			        <input type="text" name='targets_observation[]' placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
-                                <a href="#" id='delete_row'>
+                                <a href="#" id='delete_rows' name="delete[]">
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>

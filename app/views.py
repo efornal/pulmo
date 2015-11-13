@@ -5,14 +5,29 @@ import logging
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils import translation
-from .forms import ProyectForm, ApplicationFormForm, ApplicationSoftwareRequirementForm
+from .forms import ProyectForm, ApplicationFormForm, ApplicationSoftwareRequirementForm, \
+    ApplicationConnectionSourceForm
 from django.forms.models import inlineformset_factory
 from .models import Proyect, ApplicationForm
 from django.db import IntegrityError, transaction
 from django.forms.models import modelformset_factory
 
+
+
+def log_session(request_session):
+    # FIXME LOG
+    for s in request_session.session.items():
+        logging.warning(s)
+
+        
+def redirect_without_post(request):
+    if request.method != 'POST':
+        return redirect('new_step1')
+
+    
 def index(request):
     return redirect('new_step1')
+
 
 def new_step1(request):
     request.session['has_registered'] = False
@@ -24,14 +39,6 @@ def new_step1(request):
     request.session['referrer'] = {}
     return render(request, 'new_step1.html')
 
-def log_session(request_session):
-    # FIXME LOG
-    for s in request_session.session.items():
-        logging.warning(s)
-
-def redirect_without_post(request):
-    if request.method != 'POST':
-        return redirect('new_step1')
     
 @transaction.atomic
 def new_step2(request):
@@ -77,7 +84,8 @@ def new_step2(request):
 def new_step3(request):
     software = []
     for i,soft in enumerate( request.POST.getlist('names[]') ):
-        software.append({'name': soft, 'version': request.POST.getlist('versions[]')[i]})
+        software.append({'name': soft,
+                         'version': request.POST.getlist('versions[]')[i] })
     request.session['software'] = software
     request.session.modified = True
     log_session(request)
@@ -85,9 +93,21 @@ def new_step3(request):
 
 
 def new_step4(request):
-    request.session['computers']['names'] = request.POST.getlist('names[]')
-    request.session['computers']['ips'] = request.POST.getlist('ips[]')
-    request.session['computers']['observations'] = request.POST.getlist('observations[]')
+    sources_computer = []
+    targets_computer = []
+    for i,computer in enumerate( request.POST.getlist('sources_name[]') ):
+        if computer:
+            sources_computer.append({ 'name': computer,
+                                      'ip': request.POST.getlist('sources_ip[]')[i],
+                                      'observation': request.POST.getlist('sources_observation[]')[i] })
+    for i,computer in enumerate( request.POST.getlist('targets_name[]') ):
+        if computer:
+            targets_computer.append({ 'name': computer,
+                                      'ip': request.POST.getlist('targets_ip[]')[i],
+                                      'observation': request.POST.getlist('targets_observation[]')[i] })
+
+    request.session['sources_computer'] = sources_computer
+    request.session['targets_computer'] = targets_computer
     request.session.modified = True
     log_session(request)
     return render(request, 'new_step4.html')
@@ -136,6 +156,18 @@ def save(request):
                 else:
                     commit_transaction = False
                     logging.error("\n Invalid Software Requirements: %s" % soft_form)
+
+            # ac sources 
+            for computer in request.session['sources_computer']:
+                params = computer.copy()
+                params['application_form'] = application.pk
+                acs_form =  ApplicationConnectionSourceForm( params )
+                if acs_form.is_valid():
+                    acs_form.save()
+                else:
+                    commit_transaction = False
+                    logging.error("\n Invalid Application conection source: %s" % acs_form)
+
                     
         else:
             commit_transaction = False

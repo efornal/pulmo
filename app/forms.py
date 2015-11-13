@@ -2,8 +2,10 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Proyect, ApplicationForm, ApplicationSoftwareRequirement
+from .models import ApplicationConnectionSource
 from django.utils.translation import ugettext as _
 from django.utils import translation
+from django.forms import Textarea
 
 class ProyectForm(forms.ModelForm):
     name = forms.CharField(max_length=200, required=True, label=_('name'))
@@ -20,11 +22,6 @@ class ApplicationFormForm(forms.ModelForm):
     user_owner  = forms.CharField(max_length=200, required=False)
     user_access = forms.CharField(max_length=200, required=False)
     observations = forms.CharField(required=False, widget=forms.Textarea, label=_('observations'))
-#    proyect = forms.ModelChoiceField(queryset=Proyect.objects.all(),
-#                                     to_field_name= "proyect",
-#                                     required=True, label=_('proyect'))
-#    proyect = forms.IntegerField(required=True, label=_('proyect'))
-
 
     class Meta:
         model = ApplicationForm
@@ -39,4 +36,21 @@ class ApplicationSoftwareRequirementForm(forms.ModelForm):
     class Meta:
         model = ApplicationSoftwareRequirement
         fields = '__all__'
+
+
+class ApplicationConnectionSourceForm(forms.ModelForm):
+    name = forms.CharField(max_length=200,required=True)
+    ip = forms.CharField(max_length=200,required=False)
+    observations = forms.CharField(required=False, \
+                                   widget=forms.Textarea(attrs={'rows':'5', 'cols': '5'}), \
+                                   label=_('observations'))
+        
+    class Meta:
+        model = ApplicationConnectionSource
+        fields = '__all__'
+        widgets = {
+            'observations': Textarea( attrs={'rows': 5,'cols': 5}),
+        }
+
+
 

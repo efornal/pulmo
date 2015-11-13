@@ -3,34 +3,6 @@ from django.db import models
 from datetime import datetime
 
 
-class ConnectionSource(models.Model):
-    id = models.AutoField(primary_key=True,null=False)
-    name = models.CharField(max_length=200,null=False)
-    ip = models.CharField(max_length=200,null=True)
-    observations = models.TextField(null=True, blank=True)
-    
-    class Meta:
-        db_table = 'connection_sources'
-        verbose_name_plural = 'ConnectionSources'
-
-    def __unicode__(self):
-        return "%s" % (self.name)
-
-    
-class ConnectionTarget(models.Model):
-    id = models.AutoField(primary_key=True,null=False)
-    name = models.CharField(max_length=200,null=False)
-    ip = models.CharField(max_length=200,null=True)
-    ip_firewall  = models.CharField(max_length=200,null=True)
-    observations = models.TextField(null=True, blank=True)
-    
-    class Meta:
-        db_table = 'connection_targets'
-        verbose_name_plural = 'ConnectionTargets'
-
-    def __unicode__(self):
-        return "%s" % (self.name)
-
     
 class Proyect(models.Model):
     id = models.AutoField(primary_key=True,null=False)
@@ -60,9 +32,6 @@ class ApplicationForm (models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     signature_date = models.DateTimeField(null=True, blank=True)
-
-    connection_sources = models.ManyToManyField(ConnectionSource, blank=True)
-    connection_targets = models.ManyToManyField(ConnectionTarget, blank=True)
 
     class Meta:
         db_table = 'application_forms'
@@ -105,15 +74,73 @@ class ProductionForm (models.Model):
     applicant = models.CharField(max_length=200, null=True, blank=True)
     signature_date = models.DateTimeField(null=True, blank=True)
 
-    connection_sources = models.ManyToManyField(ConnectionSource, blank=True)
-    connection_targets = models.ManyToManyField(ConnectionTarget, blank=True)
-
     class Meta:
         db_table = 'production_forms'
         verbose_name_plural = 'ProductionForms'
 
     def __unicode__(self):
         return "%s" % (self.proyect.name)
+
+
+class ApplicationConnectionSource(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    name = models.CharField(max_length=200,null=False)
+    ip = models.CharField(max_length=200,null=True)
+    observations = models.TextField(null=True, blank=True)
+    application_form = models.ForeignKey(ApplicationForm, null=False, blank=False)
+    
+    class Meta:
+        db_table = 'application_connection_sources'
+        verbose_name_plural = 'ApplicationConnectionSources'
+
+    def __unicode__(self):
+        return "%s" % (self.name)
+
+    
+class ProductionConnectionSource(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    name = models.CharField(max_length=200,null=False)
+    ip = models.CharField(max_length=200,null=True)
+    observations = models.TextField(null=True, blank=True)
+    production_form = models.ForeignKey(ProductionForm, null=False, blank=False)
+    
+    class Meta:
+        db_table = 'production_connection_sources'
+        verbose_name_plural = 'ProductionConnectionSources'
+
+    def __unicode__(self):
+        return "%s" % (self.name)
+
+    
+class ApplicationConnectionTarget(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    name = models.CharField(max_length=200,null=False)
+    ip = models.CharField(max_length=200,null=True)
+    ip_firewall  = models.CharField(max_length=200,null=True)
+    observations = models.TextField(null=True, blank=True)
+    application_form = models.ForeignKey(ApplicationForm, null=False, blank=False)
+    
+    class Meta:
+        db_table = 'application_connection_targets'
+        verbose_name_plural = 'ApplicationConnectionTargets'
+
+    def __unicode__(self):
+        return "%s" % (self.name)
+
+class ProductionConnectionTarget(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    name = models.CharField(max_length=200,null=False)
+    ip = models.CharField(max_length=200,null=True)
+    ip_firewall  = models.CharField(max_length=200,null=True)
+    observations = models.TextField(null=True, blank=True)
+    production_form = models.ForeignKey(ProductionForm, null=False, blank=False)
+        
+    class Meta:
+        db_table = 'production_connection_targets'
+        verbose_name_plural = 'ProductionConnectionTargets'
+
+    def __unicode__(self):
+        return "%s" % (self.name)
 
     
 class ApplicationSoftwareRequirement(models.Model):
