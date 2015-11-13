@@ -5,7 +5,7 @@ import logging
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils import translation
-from .forms import ProyectForm, ApplicationFormForm
+from .forms import ProyectForm, ApplicationFormForm, SCVPermisionForm
 from .forms import ApplicationSoftwareRequirementForm
 from .forms import ApplicationConnectionSourceForm, ApplicationConnectionTargetForm
 from django.forms.models import inlineformset_factory
@@ -34,9 +34,10 @@ def new_step1(request):
     request.session['has_registered'] = False
     request.session['proyect'] = {}
     request.session['application'] = {}
-    request.session['computers'] = {}
+    request.session['sources_computer'] = {}
+    request.session['targets_computer'] = {}
     request.session['software'] = {}
-    request.session['scv'] = {}
+    request.session['sscv_permisions'] = {}
     request.session['referrer'] = {}
     return render(request, 'new_step1.html')
 
@@ -114,8 +115,13 @@ def new_step4(request):
     return render(request, 'new_step4.html')
 
 def new_step5(request):
-    request.session['scv']['usernames'] = request.POST.getlist('usernames[]')
-    request.session['scv']['permisions'] = request.POST.getlist('permisions[]')
+    permisions = []
+    for i,username in enumerate( request.POST.getlist('usernames[]') ):
+        if username:
+            permisions.append({ 'user': username,
+                                      'permision': request.POST.getlist('permisions[]')[i] })
+
+    request.session['scv_permisions'] = permisions
     request.session.modified = True
     log_session(request)
     return render(request, 'new_step5.html')
@@ -179,6 +185,17 @@ def save(request):
                 else:
                     commit_transaction = False
                     logging.error("\n Invalid Application conection source: %s" % act_form)
+
+            # scv permisions
+            for permision in request.session['scv_permisions']:
+                params = permision.copy()
+                params['application_form'] = application.pk
+                scv_form =  SCVPermisionForm( params )
+                if scv_form.is_valid():
+                    scv_form.save()
+                else:
+                    commit_transaction = False
+                    logging.error("\n Invalid Application conection source: %s" % scv_form)
                     
         else:
             commit_transaction = False

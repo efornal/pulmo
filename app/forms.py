@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from .models import Proyect, ApplicationForm, ApplicationSoftwareRequirement
 from .models import ApplicationConnectionSource
 from .models import ApplicationConnectionTarget
+from .models import SCVPermision
 from django.utils.translation import ugettext as _
 from django.utils import translation
 from django.forms import Textarea
@@ -65,4 +66,11 @@ class ApplicationConnectionTargetForm(forms.ModelForm):
         fields = '__all__'
 
 
+class SCVPermisionForm(forms.ModelForm):
+    user = forms.CharField(max_length=200, required=True, label=_('user'))
+    permision = forms.CharField(required=True, label=_('permision'))
+
+    class Meta:
+        model = SCVPermision
+        fields = '__all__'
 

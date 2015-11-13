@@ -15,6 +15,10 @@ class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created_at')
     search_fields = ['name']
 
+class SCVPermisionInline(admin.TabularInline):
+     model = SCVPermision
+     fk_name = "application_form"
+     extra = 0
     
 class ApplicationConnectionSourceInline(admin.TabularInline):
      model = ApplicationConnectionSource
@@ -37,6 +41,7 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         ApplicationSoftwareRequirementInline,
         ApplicationConnectionSourceInline,
         ApplicationConnectionTargetInline,
+        SCVPermisionInline,
     ]
 
     
