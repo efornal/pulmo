@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -5,16 +6,17 @@ import logging
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils import translation
-from .forms import ProyectForm, ApplicationFormForm, SCVPermisionForm, ReferrerForm
+from .forms import ProyectForm, ApplicationFormForm, SCVPermissionForm, ReferrerForm
 from .forms import ApplicationSoftwareRequirementForm
 from .forms import ApplicationConnectionSourceForm, ApplicationConnectionTargetForm
 from django.forms.models import inlineformset_factory
 from .models import Proyect, ApplicationForm
 from django.db import IntegrityError, transaction
 from django.forms.models import modelformset_factory
-
-
-
+from django.template import Context
+from django.shortcuts import render
+from django.contrib import messages
+ 
 def log_session(request_session):
     # FIXME LOG
     for s in request_session.session.items():
@@ -23,7 +25,7 @@ def log_session(request_session):
         
 def redirect_without_post(request):
     if request.method != 'POST':
-        return redirect('new_step1')
+        return redirect('index')
 
     
 def index(request):
@@ -37,28 +39,23 @@ def new_step1(request):
     request.session['sources_computer'] = {}
     request.session['targets_computer'] = {}
     request.session['software'] = {}
-    request.session['scv_permisions'] = {}
+    request.session['scv_permissions'] = {}
     request.session['referrers'] = {}
     return render(request, 'new_step1.html')
 
     
-@transaction.atomic
 def new_step2(request):
-    # FIXME: example for validations!
-    context = {}
-    proyect_form = ProyectForm()
-    application_form = ApplicationFormForm()
-    
     redirect_without_post(request)
     
-    sid = transaction.savepoint()
+    proyect_form = ProyectForm()
+    application_form = ApplicationFormForm()
+    context = {'proyect_name': request.POST['name']}
+
     try:
         proyect_form = ProyectForm(request.POST)
         if proyect_form.is_valid():
-            proyect = proyect_form.save()
-            app_params = request.POST.copy()
-            app_params['proyect'] = proyect.id
-            application_form = ApplicationFormForm(app_params)
+            application_form = ApplicationFormForm(request.POST,
+                                                   exclude_from_validation='proyect')
             if application_form.is_valid():
                 request.session['proyect']['name'] = request.POST['name']
                 request.session['proyect']['description'] = request.POST['description']
@@ -68,87 +65,171 @@ def new_step2(request):
                 request.session['application']['user_access'] = request.POST['user_access']
                 request.session['application']['observations'] = request.POST['observations']
                 request.session.modified = True
-                logging.warning("\n New application: %s" % application_form)
-                return render(request, 'new_step2.html')
+                logging.info(" New application: %s" % application_form)
+                return render(request, 'new_step2.html', context)
             else:
-                logging.warning("\nInvalid application: %s" % application_form)
+                logging.warning("Invalid application: %s" % application_form)
         else:
-            logging.warning("\nInvalid proyect: %s\n" % proyect_form)
-    except IntegrityError:
-        logging.error('\nIntegrity error for: %s\n' % proyect)
-    finally:  # mandatory rollback,.. FIXME! refactor validations!!
-        transaction.savepoint_rollback( sid )
+            logging.warning("Invalid proyect: %s" % proyect_form)
+    except Exception as e:
+        logging.error('%s' % e)
+
     log_session(request)
-    context = {'proyect_form': proyect_form, 'application_form': application_form}
+    context.update({'proyect_form': proyect_form, 'application_form': application_form})
     return render(request, 'new_step1.html', context)
 
 
 def new_step3(request):
-    software = []
-    for i,soft in enumerate( request.POST.getlist('names[]') ):
-        software.append({'name': soft,
-                         'version': request.POST.getlist('versions[]')[i] })
-    request.session['software'] = software
-    request.session.modified = True
-    log_session(request)
-    return render(request, 'new_step3.html')
+    redirect_without_post(request)
 
+    software = []
+    software_validated = True
+    context = {'proyect_name': request.session['proyect']['name']}
+
+    try:
+        for i,soft in enumerate( request.POST.getlist('names[]') ):
+            if soft:
+                params = {'name': soft,
+                          'version': request.POST.getlist('versions[]')[i] }
+                soft_form = ApplicationSoftwareRequirementForm( params,
+                                                                exclude_from_validation='application_form' )
+                if soft_form.is_valid():
+                    software.append( params )
+                else:
+                    logging.warning("Invalid application software requirement: %s" % soft_form )
+                    software_validated = False
+    except Exception as e:
+        logging.error('%s' % e)
+
+    if software_validated:
+        request.session['software'] = software
+        request.session.modified = True
+        return render(request, 'new_step3.html', context)
+    else:
+        context.update({'form': soft_form})
+        return render(request, 'new_step2.html', context)
 
 def new_step4(request):
+    redirect_without_post(request)
+    
     sources_computer = []
     targets_computer = []
-    for i,computer in enumerate( request.POST.getlist('sources_name[]') ):
-        if computer:
-            sources_computer.append({ 'name': computer,
-                                      'ip': request.POST.getlist('sources_ip[]')[i],
-                                      'observation': request.POST.getlist('sources_observation[]')[i] })
-    for i,computer in enumerate( request.POST.getlist('targets_name[]') ):
-        if computer:
-            targets_computer.append({ 'name': computer,
-                                      'ip': request.POST.getlist('targets_ip[]')[i],
-                                      'observation': request.POST.getlist('targets_observation[]')[i] })
+    computers_validated = True
+    context = {'proyect_name': request.session['proyect']['name']}
 
-    request.session['sources_computer'] = sources_computer
-    request.session['targets_computer'] = targets_computer
-    request.session.modified = True
-    log_session(request)
-    return render(request, 'new_step4.html')
+    try:
+        for i,computer in enumerate( request.POST.getlist('sources_name[]') ):
+            if computer:
+                params = { 'name': computer,
+                           'ip': request.POST.getlist('sources_ip[]')[i],
+                           'observation': request.POST.getlist('sources_observation[]')[i] }
+                sources_form = ApplicationConnectionSourceForm( params,
+                                                                exclude_from_validation='application_form' )
+                if sources_form.is_valid():
+                    sources_computer.append( params )
+                else:
+                    logging.warning("Invalid application connection source: %s" % sources_form )
+                    computers_validated = False
 
+        for i,computer in enumerate( request.POST.getlist('targets_name[]') ):
+            if computer:
+                params = { 'name': computer,
+                           'ip': request.POST.getlist('targets_ip[]')[i],
+                           'observation': request.POST.getlist('targets_observation[]')[i] }
+                targets_form = ApplicationConnectionTargetForm( params,
+                                                                exclude_from_validation='application_form' )
+                if targets_form.is_valid():
+                    targets_computer.append()
+                else:
+                    logging.warning("Invalid application connection source: %s" % sources_form )
+                    computers_validated = False
+                    
+    except Exception as e:
+        logging.error('%s' % e)
+
+    if computers_validated:
+        request.session['sources_computer'] = sources_computer
+        request.session['targets_computer'] = targets_computer
+        request.session.modified = True
+        log_session(request)
+        return render(request, 'new_step4.html', context)
+    else:
+        context.update({'sources_form': sources_form, 'targets_form': targets_form})
+        return render(request, 'new_step3.html', context)
+
+    
 def new_step5(request):
-    permisions = []
-    for i,username in enumerate( request.POST.getlist('usernames[]') ):
-        if username:
-            permisions.append({ 'user': username,
-                                      'permision': request.POST.getlist('permisions[]')[i] })
+    redirect_without_post(request)
+    
+    permissions = []
+    permissions_validated = True
+    context = {'proyect_name': request.session['proyect']['name']}
+    logging.error( request.POST)
+    try:
+        for i,username in enumerate( request.POST.getlist('usernames[]') ):
+            if username:
+                params = { 'user': username,
+                           'permission': request.POST.getlist('permissions[]')[i] }
+                scv_form =  SCVPermissionForm( params, exclude_from_validation='application_form'  )
+                if scv_form.is_valid():
+                    permissions.append(params)
+                else:
+                    logging.warning("Invalid SCV permission: %s" % scv_form )
+                    permissions_validated = False
+    except Exception as e:
+        logging.error('%s' % e)
 
-    request.session['scv_permisions'] = permisions
-    request.session.modified = True
-    log_session(request)
-    return render(request, 'new_step5.html')
+    if permissions_validated:
+        request.session['scv_permissions'] = permissions
+        request.session.modified = True
+        log_session(request)
+        return render(request, 'new_step5.html')
+    else:
+        context.update({'form': scv_form})
+        return render(request, 'new_step4.html', context)
+
 
 @transaction.atomic
 def save(request):
     redirect_without_post(request)
     referrers = []
+    ref_validated = True
     logging.error(request.POST)
-    for i,referrer in enumerate( request.POST.getlist('names[]') ):
-        if referrer:
-            is_applicant = False
-            logging.error("%s %s" % (i,len(request.POST.getlist('applicants[]'))))
-            if i < len(request.POST.getlist('applicants[]')) and request.POST.getlist('applicants[]')[i]:
-                is_applicant = True
-                
-            referrers.append({ 'name': referrer,
-                               'email': request.POST.getlist('emails[]')[i],
-                               'phones': request.POST.getlist('phones[]')[i],
-                               'is_applicant': is_applicant,
-            })
+    context = {'proyect_name': request.session['proyect']['name']}
+    
+    # validate referrers
+    try:
+        for i,referrer in enumerate( request.POST.getlist('names[]') ):
+            if referrer:
 
-    request.session['referrers'] = referrers
-    request.session.modified = True
-    log_session(request)
+                is_applicant = False
+                if i < len(request.POST.getlist('applicants[]')) and request.POST.getlist('applicants[]')[i]:
+                    is_applicant = True
+
+                params = { 'name': referrer,
+                           'email': request.POST.getlist('emails[]')[i],
+                           'phones': request.POST.getlist('phones[]')[i],
+                           'is_applicant': is_applicant,
+                }
+                ref_form =  ReferrerForm( params, exclude_from_validation='application_form' )
+                if ref_form.is_valid():
+                    referrers.append(params)
+                else:
+                    logging.warning("Invalid referrer: %s" % ref_form )
+                    ref_validated = False
+    except Exception as e:
+        logging.error('%s' % e)
+                
+    if ref_validated:
+        request.session['referrers'] = referrers
+        request.session.modified = True
+        log_session(request)
+    else:
+        context.update({'form': ref_form})
+        return render(request, 'new_step5.html', context)
 
     
+    # === save all data ===
     sid = transaction.savepoint()
     commit_transaction = True
     try:
@@ -164,7 +245,7 @@ def save(request):
                 application = application_form.save()
             else:
                 commit_transaction = False
-                logging.error(" \n Invalid application: %s\n" % application_form)
+                logging.error("Invalid application: %s" % application_form)
 
             # requirements software
             for soft in request.session['software']:
@@ -175,7 +256,7 @@ def save(request):
                     soft_form.save()
                 else:
                     commit_transaction = False
-                    logging.error("\n Invalid Software Requirements: %s" % soft_form)
+                    logging.error("Invalid Software Requirements: %s" % soft_form)
 
             # ac sources 
             for computer in request.session['sources_computer']:
@@ -186,7 +267,7 @@ def save(request):
                     acs_form.save()
                 else:
                     commit_transaction = False
-                    logging.error("\n Invalid Application conection source: %s" % acs_form)
+                    logging.error("Invalid Application conection source: %s" % acs_form)
 
             # ac targets
             for computer in request.session['targets_computer']:
@@ -197,18 +278,18 @@ def save(request):
                     act_form.save()
                 else:
                     commit_transaction = False
-                    logging.error("\n Invalid Application conection target: %s" % act_form)
+                    logging.error("Invalid Application conection target: %s" % act_form)
 
-            # scv permisions
-            for permision in request.session['scv_permisions']:
-                params = permision.copy()
+            # scv permissions
+            for permission in request.session['scv_permissions']:
+                params = permission.copy()
                 params['application_form'] = application.pk
-                scv_form =  SCVPermisionForm( params )
+                scv_form =  SCVPermissionForm( params )
                 if scv_form.is_valid():
                     scv_form.save()
                 else:
                     commit_transaction = False
-                    logging.error("\n Invalid SCV Permision: %s" % scv_form)
+                    logging.error("Invalid SCV Permission: %s" % scv_form)
 
             # referrers
             for referrer in request.session['referrers']:
@@ -219,20 +300,21 @@ def save(request):
                     ref_form.save()
                 else:
                     commit_transaction = False
-                    logging.error("\n Invalid Referrer: %s" % ref_form)
+                    logging.error("Invalid Referrer: %s" % ref_form)
                     
         else:
             commit_transaction = False
-            logging.warning("\n Invalid proyect: %s\n" % proyect)
+            logging.warning("Invalid proyect: %s" % proyect)
 
         if commit_transaction:
             transaction.savepoint_commit( sid )
+            return render(request, 'outcome_success.html', context)
         else:
             transaction.savepoint_rollback( sid )
             
     except IntegrityError:
-        logging.error('\nIntegrity error for: %s\n' % proyect)
+        logging.error('Integrity error for: %s' % proyect)
         transaction.savepoint_rollback( sid )
-        
 
-    return HttpResponse("Values: %s" % proyect )
+    return render(request, 'outcome_error.html.html', context)
+

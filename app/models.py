@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 from datetime import datetime
-
+from django.core.validators import validate_ipv46_address
 
     
 class Proyect(models.Model):
@@ -85,7 +85,7 @@ class ProductionForm (models.Model):
 class ApplicationConnectionSource(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=200,null=False)
-    ip = models.CharField(max_length=200,null=True)
+    ip = models.CharField(max_length=200, null=True, validators=[validate_ipv46_address])
     observations = models.TextField(null=True, blank=True)
     application_form = models.ForeignKey(ApplicationForm, null=False, blank=False)
     
@@ -115,7 +115,7 @@ class ProductionConnectionSource(models.Model):
 class ApplicationConnectionTarget(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=200,null=False)
-    ip = models.CharField(max_length=200,null=True)
+    ip = models.CharField(max_length=200,null=True, validators=[validate_ipv46_address])
     observations = models.TextField(null=True, blank=True)
     application_form = models.ForeignKey(ApplicationForm, null=False, blank=False)
     
@@ -185,21 +185,21 @@ class Milestone(models.Model):
 
 
 
-class SCVPermision(models.Model):
+class SCVPermission(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     user = models.CharField(max_length=200,null=False)
-    permision = models.CharField(max_length=50,null=False)
+    permission = models.CharField(max_length=50,null=False)
     application_form = models.ForeignKey(ApplicationForm, null=False, blank=False)    
 
     class Meta:
-        db_table = 'scv_permisions'
-        verbose_name_plural = 'SCVPermisions'
+        db_table = 'scv_permissions'
+        verbose_name_plural = 'SCVPermissions'
 
     def __unicode__(self):
-        return "%s %s" % (self.user, self.permision)
+        return "%s %s" % (self.user, self.permission)
 
     @classmethod
-    def permisions(cls):
+    def permissions(cls):
         return (
             ('R', 'Read'),
             ('W', 'Write'),

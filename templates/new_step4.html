@@ -1,11 +1,23 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 
 {% if form.errors %}
-  {% for errors in form.errors %}
-  <p>{{ errors }}</p>
-  {% endfor %}
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="bs-component">
+            {% for field in form %}
+            {% if field.errors %}
+            <div class="alert alert-dismissible alert-danger">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {%  trans field.name %}: {{ field.errors|striptags }}
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
 {% endif %}
 
 <div class="bs-docs-section">
@@ -18,7 +30,7 @@
           {% csrf_token %}
           <input type='hidden' name="id" value="" />
           <fieldset>
-            <legend>Nombre de proyecto</legend>
+            <legend>{{ _('new_proyect') }} '{{ proyect_name|default:''  }}'</legend>
 
             
             <div class="bs-component">
@@ -50,7 +62,7 @@
 		                <input type="text" name='usernames[]'  placeholder='' class="form-control"/>
 		              </td>
 		              <td  data-name="permisions">
-		                <input type="text" name='permisions[]' placeholder='' class="form-control"/>
+		                <input type="text" name='permissions[]' placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
                                 <a href="#" id='delete_row'>

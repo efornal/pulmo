@@ -4,7 +4,7 @@ from app.models import Proyect, ApplicationForm, ProductionForm
 from app.models import ApplicationConnectionTarget, ApplicationConnectionSource
 from app.models import ProductionConnectionTarget, ProductionConnectionSource
 from app.models import ApplicationSoftwareRequirement, ProductionSoftwareRequirement
-from app.models import Milestone, SCVPermision, Referrer, MonitoredVariable
+from app.models import Milestone, SCVPermission, Referrer, MonitoredVariable
 from app.models import TestServer, ProductionServer
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
@@ -20,8 +20,8 @@ class ReferrerInline(admin.TabularInline):
      fk_name = "application_form"
      extra = 0
 
-class SCVPermisionInline(admin.TabularInline):
-     model = SCVPermision
+class SCVPermissionInline(admin.TabularInline):
+     model = SCVPermission
      fk_name = "application_form"
      extra = 0
     
@@ -46,9 +46,15 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         ApplicationSoftwareRequirementInline,
         ApplicationConnectionSourceInline,
         ApplicationConnectionTargetInline,
-        SCVPermisionInline,
+        SCVPermissionInline,
         ReferrerInline,
     ]
+
+class ApplicationFormAdminForm(forms.ModelForm):
+
+    class Meta:
+        model = ApplicationForm
+        fields = '__all__'
 
     
 class ApplicationConnectionSourceAdminForm(forms.ModelForm):
@@ -74,15 +80,15 @@ class ApplicationConnectionTargetAdmin(admin.ModelAdmin):
     form = ApplicationConnectionTargetAdminForm
 
     
-class SCVPermisionAdminForm(forms.ModelForm):
-    permision = forms.ChoiceField(choices = SCVPermision.permisions())
+class SCVPermissionAdminForm(forms.ModelForm):
+    permission = forms.ChoiceField(choices = SCVPermission.permissions())
 
     class Meta:
-        model = SCVPermision
+        model = SCVPermission
         fields = '__all__'
         
-class SCVPermisionAdmin(admin.ModelAdmin):
-    form = SCVPermisionAdminForm
+class SCVPermissionAdmin(admin.ModelAdmin):
+    form = SCVPermissionAdminForm
     
 admin.site.register(ApplicationForm,ApplicationFormAdmin)
 admin.site.register(ProductionForm)
@@ -98,4 +104,4 @@ admin.site.register(Referrer)
 admin.site.register(TestServer)
 admin.site.register(ProductionServer)
 admin.site.register(MonitoredVariable)
-admin.site.register(SCVPermision,SCVPermisionAdmin)
+admin.site.register(SCVPermission,SCVPermissionAdmin)
