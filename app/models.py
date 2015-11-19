@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 from datetime import datetime
-from django.core.validators import validate_ipv46_address
+from django.core.validators import validate_ipv46_address, validate_email
 
     
 class Proyect(models.Model):
@@ -209,7 +209,7 @@ class SCVPermission(models.Model):
 class Referrer(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name   = models.CharField(max_length=200,null=False)
-    email  = models.CharField(max_length=200,null=True)
+    email  = models.CharField(max_length=200,null=True, validators=[validate_email])
     phones = models.CharField(max_length=200,null=True)
     is_applicant = models.BooleanField(default=False,null=False)
     application_form = models.ForeignKey(ApplicationForm, null=False, blank=False)    

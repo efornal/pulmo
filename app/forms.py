@@ -120,6 +120,14 @@ class ReferrerForm(forms.ModelForm):
     email  = forms.CharField(required=False, label=_('email'))
     phones = forms.CharField(required=False, label=_('phones'))
     is_applicant = forms.BooleanField(required=False, label=_('is_applicant'))
+
+    def __init__(self,*args,**kwargs):
+        field_to_exclude = ''
+        if kwargs.get('exclude_from_validation', False):
+            field_to_exclude = kwargs.pop('exclude_from_validation')
+        super(ReferrerForm, self).__init__(*args,**kwargs)
+        if field_to_exclude:
+            self.fields.pop(field_to_exclude)
     
     class Meta:
         model = Referrer

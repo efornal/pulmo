@@ -203,7 +203,6 @@ def save(request):
     try:
         for i,referrer in enumerate( request.POST.getlist('names[]') ):
             if referrer:
-
                 is_applicant = False
                 if i < len(request.POST.getlist('applicants[]')) and request.POST.getlist('applicants[]')[i]:
                     is_applicant = True
