@@ -7,6 +7,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils import translation
 from .forms import ProyectForm, ApplicationFormForm, SCVPermissionForm, ReferrerForm
+from .forms import SCVPermission
 from .forms import ApplicationSoftwareRequirementForm
 from .forms import ApplicationConnectionSourceForm, ApplicationConnectionTargetForm
 from django.forms.models import inlineformset_factory
@@ -111,11 +112,12 @@ def new_step3(request):
 
 def new_step4(request):
     redirect_without_post(request)
-    
+    permissions_options = SCVPermission.permissions()    
     sources_computer = []
     targets_computer = []
     computers_validated = True
-    context = {'proyect_name': request.session['proyect']['name']}
+    context = {'proyect_name': request.session['proyect']['name'],
+               'permissions_options': permissions_options }
 
     try:
         for i,computer in enumerate( request.POST.getlist('sources_name[]') ):

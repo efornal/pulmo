@@ -61,8 +61,13 @@
 		              <td data-name="usernames" >
 		                <input type="text" name='usernames[]'  placeholder='' class="form-control"/>
 		              </td>
-		              <td  data-name="permisions">
-		                <input type="text" name='permissions[]' placeholder='' class="form-control"/>
+		              <td  data-name="permissions">
+                                <select class="form-control" id="select" name='permissions[]' >
+                                  {% for p in permissions_options %}
+                                  <option value='{{ p.0 }}' {% if p.0 == 'W' %}selected{%endif%}>
+                                  {{ p.1 }}{{i}}</option>
+                                  {% endfor%}
+                                </select>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
                                 <a href="#" id='delete_row'>

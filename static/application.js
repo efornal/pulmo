@@ -34,6 +34,20 @@ $(document).ready(function() {
                 //c.attr("name", $(cur_td).data("name") + newid);
                 c.attr("name", $(cur_td).data("name")+ "[]");
                 c.appendTo($(td));
+                
+                if ( $(this).data("name") == 'permissions' ) {
+                    c.find("option").each(function(){
+                        if ( $(this).attr("selected") == 'selected' ){
+                            $(this).prop('selected', true);
+                        }
+                            
+                        // if ( $(this).val() == 'W' ){
+                        //     //$(this).attr("selected","R");
+                        //     alert($(this).attr("selected"));
+                        //     $(this).prop('selected', true);
+                        // }
+                    });
+                }
                 td.appendTo($(tr));
             } else {
                 var td = $("<td></td>", {
