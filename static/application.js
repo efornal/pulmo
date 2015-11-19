@@ -40,12 +40,6 @@ $(document).ready(function() {
                         if ( $(this).attr("selected") == 'selected' ){
                             $(this).prop('selected', true);
                         }
-                            
-                        // if ( $(this).val() == 'W' ){
-                        //     //$(this).attr("selected","R");
-                        //     alert($(this).attr("selected"));
-                        //     $(this).prop('selected', true);
-                        // }
                     });
                 }
                 td.appendTo($(tr));
