@@ -56,7 +56,25 @@
                               </th>
 		            </tr>
 		          </thead>
-		          <tbody>
+                          {% if software_list %}
+                            {% for soft in software_list %}
+		            <tbody>
+		              <tr id='addr{{forloop.counter0}}' data-id="{{forloop.counter0}}">
+		                <td data-name="names" >
+			          <input type="text" name='names[]' value="{{soft.name}}" placeholder='' class="form-control"/>
+		                </td>
+		                <td  data-name="versions">
+			          <input type="text" name='versions[]' value="{{soft.version}}" placeholder='' class="form-control"/>
+		                </td>
+                                <td data-name="delete" >
+                                  <a href="#" id='delete_row' name="delete[]">
+                                  <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
+                                </td>
+		              </tr>
+		            </tbody>
+                            {% endfor %}
+                          {% else %}
+                          <tbody>
 		            <tr id='addr0' data-id="0">
 		              <td data-name="names" >
 			        <input type="text" name='names[]'  placeholder='' class="form-control"/>
@@ -70,6 +88,7 @@
                               </td>
 		            </tr>
 		          </tbody>
+                          {% endif %}
 		        </table>
                       </div>
                     </div>

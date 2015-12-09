@@ -86,28 +86,32 @@ def new_step3(request):
     software = []
     software_validated = True
     context = {'proyect_name': request.session['proyect']['name']}
-
+    invalid_form = None
+    
     try:
         for i,soft in enumerate( request.POST.getlist('names[]') ):
-            if soft:
-                params = {'name': soft,
-                          'version': request.POST.getlist('versions[]')[i] }
-                soft_form = ApplicationSoftwareRequirementForm( params,
-                                                                exclude_from_validation='application_form' )
-                if soft_form.is_valid():
-                    software.append( params )
-                else:
-                    logging.warning("Invalid application software requirement: %s" % soft_form )
-                    software_validated = False
+#            if soft:
+            params = {'name': soft,
+                      'version': request.POST.getlist('versions[]')[i] }
+            soft_form = ApplicationSoftwareRequirementForm( params,
+                                                            exclude_from_validation='application_form' )
+            if soft_form.is_valid():
+                software.append( params )
+            else:
+                logging.warning("Invalid application software requirement: %s" % soft_form )
+                software_validated = False
+                invalid_form = soft_form
     except Exception as e:
         logging.error('%s' % e)
 
+    request.session['software'] = software
+    request.session.modified = True
+    log_session(request)
+    
     if software_validated:
-        request.session['software'] = software
-        request.session.modified = True
         return render(request, 'new_step3.html', context)
     else:
-        context.update({'form': soft_form})
+        context.update({'form': invalid_form, 'software_list': software})
         return render(request, 'new_step2.html', context)
 
 def new_step4(request):
