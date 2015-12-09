@@ -85,12 +85,11 @@ def new_step3(request):
 
     software = []
     software_validated = True
-    context = {'proyect_name': request.session['proyect']['name']}
     invalid_form = None
+    context = {'proyect_name': request.session['proyect']['name']}
     
     try:
         for i,soft in enumerate( request.POST.getlist('names[]') ):
-#            if soft:
             params = {'name': soft,
                       'version': request.POST.getlist('versions[]')[i] }
             soft_form = ApplicationSoftwareRequirementForm( params,
@@ -121,47 +120,51 @@ def new_step4(request):
     sources_computer = []
     targets_computer = []
     computers_validated = True
+    invalid_sources_form = None
+    invalid_targets_form = None
     context = {'proyect_name': request.session['proyect']['name'],
                'permissions_options': permissions_options }
 
     try:
         for i,computer in enumerate( request.POST.getlist('sources_name[]') ):
-            if computer:
-                params = { 'name': computer,
-                           'ip': request.POST.getlist('sources_ip[]')[i],
-                           'observation': request.POST.getlist('sources_observation[]')[i] }
-                sources_form = ApplicationConnectionSourceForm( params,
-                                                                exclude_from_validation='application_form' )
-                if sources_form.is_valid():
-                    sources_computer.append( params )
-                else:
-                    logging.warning("Invalid application connection source: %s" % sources_form )
-                    computers_validated = False
+            params = { 'name': computer,
+                       'ip': request.POST.getlist('sources_ip[]')[i],
+                       'observation': request.POST.getlist('sources_observation[]')[i] }
+            sources_form = ApplicationConnectionSourceForm( params,
+                                                            exclude_from_validation='application_form' )
+            if sources_form.is_valid():
+                sources_computer.append( params )
+            else:
+                logging.warning("Invalid application connection source: %s" % sources_form )
+                computers_validated = False
+                invalid_sources_form = sources_form
 
         for i,computer in enumerate( request.POST.getlist('targets_name[]') ):
-            if computer:
-                params = { 'name': computer,
-                           'ip': request.POST.getlist('targets_ip[]')[i],
-                           'observation': request.POST.getlist('targets_observation[]')[i] }
-                targets_form = ApplicationConnectionTargetForm( params,
-                                                                exclude_from_validation='application_form' )
-                if targets_form.is_valid():
-                    targets_computer.append( params )
-                else:
-                    logging.warning("Invalid application connection source: %s" % sources_form )
-                    computers_validated = False
-                    
+            params = { 'name': computer,
+                       'ip': request.POST.getlist('targets_ip[]')[i],
+                       'observation': request.POST.getlist('targets_observation[]')[i] }
+            targets_form = ApplicationConnectionTargetForm( params,
+                                                            exclude_from_validation='application_form' )
+            if targets_form.is_valid():
+                targets_computer.append( params )
+            else:
+                logging.warning("Invalid application connection source: %s" % sources_form )
+                computers_validated = False
+                invalid_targets_form = targets_form
+                
     except Exception as e:
         logging.error('%s' % e)
 
+    request.session['sources_computer'] = sources_computer
+    request.session['targets_computer'] = targets_computer
+    request.session.modified = True
+    log_session(request)
+    
     if computers_validated:
-        request.session['sources_computer'] = sources_computer
-        request.session['targets_computer'] = targets_computer
-        request.session.modified = True
-        log_session(request)
         return render(request, 'new_step4.html', context)
     else:
-        context.update({'sources_form': sources_form, 'targets_form': targets_form})
+        context.update({'sources_form': invalid_sources_form, 'targets_form': invalid_targets_form,
+                        'sources_computer': sources_computer, 'targets_computer': targets_computer})
         return render(request, 'new_step3.html', context)
 
     
