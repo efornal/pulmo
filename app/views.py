@@ -112,6 +112,7 @@ def new_step3(request):
 
 def new_step4(request):
     redirect_without_post(request)
+
     permissions_options = SCVPermission.permissions()    
     sources_computer = []
     targets_computer = []
@@ -141,7 +142,7 @@ def new_step4(request):
                 targets_form = ApplicationConnectionTargetForm( params,
                                                                 exclude_from_validation='application_form' )
                 if targets_form.is_valid():
-                    targets_computer.append()
+                    targets_computer.append( params )
                 else:
                     logging.warning("Invalid application connection source: %s" % sources_form )
                     computers_validated = False
