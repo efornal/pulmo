@@ -170,32 +170,36 @@ def new_step4(request):
     
 def new_step5(request):
     redirect_without_post(request)
-    
+
+    permissions_options = SCVPermission.permissions()    
     permissions = []
     permissions_validated = True
-    context = {'proyect_name': request.session['proyect']['name']}
-    logging.error( request.POST)
+    invalid_scv_form = None
+    context = {'proyect_name': request.session['proyect']['name'],
+               'permissions_options': permissions_options }
+
     try:
         for i,username in enumerate( request.POST.getlist('usernames[]') ):
-            if username:
-                params = { 'user': username,
-                           'permission': request.POST.getlist('permissions[]')[i] }
-                scv_form =  SCVPermissionForm( params, exclude_from_validation='application_form'  )
-                if scv_form.is_valid():
-                    permissions.append(params)
-                else:
-                    logging.warning("Invalid SCV permission: %s" % scv_form )
-                    permissions_validated = False
+            params = { 'user': username,
+                       'permission': request.POST.getlist('permissions[]')[i] }
+            scv_form =  SCVPermissionForm( params, exclude_from_validation='application_form'  )
+            if scv_form.is_valid():
+                permissions.append(params)
+            else:
+                logging.warning("Invalid SCV permission: %s" % scv_form )
+                invalid_scv_form = scv_form
+                permissions_validated = False
     except Exception as e:
         logging.error('%s' % e)
 
+    request.session['scv_permissions'] = permissions
+    request.session.modified = True
+    log_session(request)
+
     if permissions_validated:
-        request.session['scv_permissions'] = permissions
-        request.session.modified = True
-        log_session(request)
         return render(request, 'new_step5.html')
     else:
-        context.update({'form': scv_form})
+        context.update({'form': invalid_scv_form, 'permissions_list': permissions})
         return render(request, 'new_step4.html', context)
 
 

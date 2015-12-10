@@ -56,6 +56,29 @@
                               </th>
 		            </tr>
 	                  </thead>
+                          {% if permissions_list %}
+                          {% for permission in permissions_list %}
+	                  <tbody>
+		            <tr id='addr{{forloop.counter0}}'>
+		              <td data-name="usernames" >
+		                <input type="text" name='usernames[]' value="{{permission.user}}" placeholder='' class="form-control"/>
+		              </td>
+		              <td  data-name="permissions">
+                                <select class="form-control" id="select" name='permissions[]'>
+                                  {% for p in permissions_options %}
+                                    <option value='{{ p.0 }}' {% if p.0 == permission.permission %}selected{%endif%}>
+                                    {{ p.1 }}{{i}}</option>
+                                  {% endfor%}
+                                </select>
+		              </td>
+                              <td data-name="delete" style="width:5%;text-align:center">
+                                <a href="#" id='delete_row'>
+                                <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
+                              </td>
+		            </tr>
+	                  </tbody>
+                          {% endfor %}
+                          {% else %}
 	                  <tbody>
 		            <tr id='addr0'>
 		              <td data-name="usernames" >
@@ -75,6 +98,7 @@
                               </td>
 		            </tr>
 	                  </tbody>
+                          {% endif %}
 	                </table>
                       </div>
                     </div>
