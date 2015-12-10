@@ -208,37 +208,39 @@ def save(request):
     redirect_without_post(request)
     referrers = []
     ref_validated = True
+    invalid_ref_form = None
     logging.error(request.POST)
     context = {'proyect_name': request.session['proyect']['name']}
     
     # validate referrers
     try:
         for i,referrer in enumerate( request.POST.getlist('names[]') ):
-            if referrer:
-                is_applicant = False
-                if i < len(request.POST.getlist('applicants[]')) and request.POST.getlist('applicants[]')[i]:
-                    is_applicant = True
+            is_applicant = False
+            if i < len(request.POST.getlist('applicants[]')) and request.POST.getlist('applicants[]')[i]:
+                is_applicant = True
 
-                params = { 'name': referrer,
-                           'email': request.POST.getlist('emails[]')[i],
-                           'phones': request.POST.getlist('phones[]')[i],
-                           'is_applicant': is_applicant,
-                }
-                ref_form =  ReferrerForm( params, exclude_from_validation='application_form' )
-                if ref_form.is_valid():
-                    referrers.append(params)
-                else:
-                    logging.warning("Invalid referrer: %s" % ref_form )
-                    ref_validated = False
+            params = { 'name': referrer,
+                       'email': request.POST.getlist('emails[]')[i],
+                       'phones': request.POST.getlist('phones[]')[i],
+                       'is_applicant': is_applicant,
+            }
+            ref_form =  ReferrerForm( params, exclude_from_validation='application_form' )
+            if ref_form.is_valid():
+                referrers.append(params)
+            else:
+                logging.warning("Invalid referrer: %s" % ref_form )
+                ref_validated = False
+                invalid_ref_form = ref_form
     except Exception as e:
         logging.error('%s' % e)
+
+    request.session['referrers'] = referrers
+    request.session.modified = True
                 
     if ref_validated:
-        request.session['referrers'] = referrers
-        request.session.modified = True
-        log_session(request)
+        log_session(request) # and continue...
     else:
-        context.update({'form': ref_form})
+        context.update({'form': invalid_ref_form, 'referrers_list': referrers})
         return render(request, 'new_step5.html', context)
 
     

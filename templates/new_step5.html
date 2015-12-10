@@ -55,6 +55,31 @@
                             </th>
 		            </tr>
 		          </thead>
+                          {% if referrers_list %}
+                          {% for referrer in referrers_list %}
+		          <tbody>
+		            <tr id='addr{{forloop.counter0}}'>
+		              <td data-name="names" >
+			        <input type="text" name='names[]' value="{{referrer.name}}"  placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="emails">
+			        <input type="text" name='emails[]' value="{{referrer.email}}" placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="phones">
+			        <input type="text" name='phones[]' value="{{referrer.phones}}" placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="applicants">
+			        <input type="checkbox" name='applicants[]' placeholder='' class="form-control"
+                                       {% if referrer.is_applicant %}checked{%endif%}/>
+		              </td>
+                              <td data-name="delete" style="width:5%;text-align:center">
+                                <a href="#" id='delete_row'>
+                                <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
+                              </td>
+		            </tr>
+		          </tbody>
+                          {% endfor %}
+                          {% else %}
 		          <tbody>
 		            <tr id='addr0'>
 		              <td data-name="names" >
@@ -75,8 +100,8 @@
                               </td>
 		            </tr>
 		          </tbody>
+                          {% endif %}
 		        </table>
-
                       </div>
                     </div>
                   </div>
