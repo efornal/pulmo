@@ -55,9 +55,9 @@
                             </th>
 		            </tr>
 		          </thead>
+		          <tbody>
                           {% if referrers_list %}
                           {% for referrer in referrers_list %}
-		          <tbody>
 		            <tr id='addr{{forloop.counter0}}'>
 		              <td data-name="names" >
 			        <input type="text" name='names[]' value="{{referrer.name}}"  placeholder='' class="form-control"/>
@@ -77,10 +77,8 @@
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>
-		          </tbody>
                           {% endfor %}
                           {% else %}
-		          <tbody>
 		            <tr id='addr0'>
 		              <td data-name="names" >
 			        <input type="text" name='names[]'  placeholder='' class="form-control"/>
@@ -99,8 +97,8 @@
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>
-		          </tbody>
                           {% endif %}
+		          </tbody>
 		        </table>
                       </div>
                     </div>

@@ -4,8 +4,9 @@ $(document).ready(function() {
 
         // Dynamic Rows Code
         // Get max row id and set new id
-        var newid = 0;
+        var newid = $('#tab_logic tr').length - 2;
 
+        
         $.each($("#tab_logic tr"), function() {
             if (parseInt($(this).data("id")) > newid) {
                 newid = parseInt($(this).data("id"));
@@ -70,7 +71,7 @@ $(document).ready(function() {
 
         // Dynamic Rows Code
         // Get max row id and set new id
-        var newid = 0;
+        var newid = $('#tab_logics tr').length - 2;
 
         $.each($("#tab_logics tr"), function() {
             if (parseInt($(this).data("id")) > newid) {

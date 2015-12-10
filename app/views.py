@@ -23,6 +23,11 @@ def log_session(request_session):
     for s in request_session.session.items():
         logging.warning(s)
 
+def are_all_empty_params( params ):
+    for key,value in params.iteritems():
+        if value:
+            return False
+    return True
         
 def redirect_without_post(request):
     if request.method != 'POST':
@@ -87,19 +92,20 @@ def new_step3(request):
     software_validated = True
     invalid_form = None
     context = {'proyect_name': request.session['proyect']['name']}
-    
+
     try:
         for i,soft in enumerate( request.POST.getlist('names[]') ):
             params = {'name': soft,
                       'version': request.POST.getlist('versions[]')[i] }
-            soft_form = ApplicationSoftwareRequirementForm( params,
-                                                            exclude_from_validation='application_form' )
-            if soft_form.is_valid():
-                software.append( params )
-            else:
-                logging.warning("Invalid application software requirement: %s" % soft_form )
-                software_validated = False
-                invalid_form = soft_form
+            if not are_all_empty_params(params):
+                soft_form = ApplicationSoftwareRequirementForm( params,
+                                                                exclude_from_validation='application_form' )
+                if soft_form.is_valid():
+                    software.append( params )
+                else:
+                    logging.warning("Invalid application software requirement: %s" % soft_form )
+                    software_validated = False
+                    invalid_form = soft_form
     except Exception as e:
         logging.error('%s' % e)
 
@@ -130,27 +136,30 @@ def new_step4(request):
             params = { 'name': computer,
                        'ip': request.POST.getlist('sources_ip[]')[i],
                        'observation': request.POST.getlist('sources_observation[]')[i] }
-            sources_form = ApplicationConnectionSourceForm( params,
-                                                            exclude_from_validation='application_form' )
-            if sources_form.is_valid():
-                sources_computer.append( params )
-            else:
-                logging.warning("Invalid application connection source: %s" % sources_form )
-                computers_validated = False
-                invalid_sources_form = sources_form
+            if not are_all_empty_params(params):
+                sources_form = ApplicationConnectionSourceForm( params,
+                                                                exclude_from_validation='application_form' )
+                if sources_form.is_valid():
+                    sources_computer.append( params )
+                else:
+                    logging.warning("Invalid application connection source: %s" % sources_form )
+                    computers_validated = False
+                    invalid_sources_form = sources_form
 
         for i,computer in enumerate( request.POST.getlist('targets_name[]') ):
             params = { 'name': computer,
                        'ip': request.POST.getlist('targets_ip[]')[i],
                        'observation': request.POST.getlist('targets_observation[]')[i] }
-            targets_form = ApplicationConnectionTargetForm( params,
-                                                            exclude_from_validation='application_form' )
-            if targets_form.is_valid():
-                targets_computer.append( params )
-            else:
-                logging.warning("Invalid application connection source: %s" % sources_form )
-                computers_validated = False
-                invalid_targets_form = targets_form
+
+            if not are_all_empty_params(params):
+                targets_form = ApplicationConnectionTargetForm( params,
+                                                                exclude_from_validation='application_form' )
+                if targets_form.is_valid():
+                    targets_computer.append( params )
+                else:
+                    logging.warning("Invalid application connection source: %s" % sources_form )
+                    computers_validated = False
+                    invalid_targets_form = targets_form
                 
     except Exception as e:
         logging.error('%s' % e)
@@ -182,13 +191,15 @@ def new_step5(request):
         for i,username in enumerate( request.POST.getlist('usernames[]') ):
             params = { 'user': username,
                        'permission': request.POST.getlist('permissions[]')[i] }
-            scv_form =  SCVPermissionForm( params, exclude_from_validation='application_form'  )
-            if scv_form.is_valid():
-                permissions.append(params)
-            else:
-                logging.warning("Invalid SCV permission: %s" % scv_form )
-                invalid_scv_form = scv_form
-                permissions_validated = False
+
+            if not are_all_empty_params(params):
+                scv_form =  SCVPermissionForm( params, exclude_from_validation='application_form'  )
+                if scv_form.is_valid():
+                    permissions.append(params)
+                else:
+                    logging.warning("Invalid SCV permission: %s" % scv_form )
+                    invalid_scv_form = scv_form
+                    permissions_validated = False
     except Exception as e:
         logging.error('%s' % e)
 
@@ -197,7 +208,7 @@ def new_step5(request):
     log_session(request)
 
     if permissions_validated:
-        return render(request, 'new_step5.html')
+        return render(request, 'new_step5.html', context)
     else:
         context.update({'form': invalid_scv_form, 'permissions_list': permissions})
         return render(request, 'new_step4.html', context)
@@ -209,7 +220,6 @@ def save(request):
     referrers = []
     ref_validated = True
     invalid_ref_form = None
-    logging.error(request.POST)
     context = {'proyect_name': request.session['proyect']['name']}
     
     # validate referrers
@@ -224,13 +234,14 @@ def save(request):
                        'phones': request.POST.getlist('phones[]')[i],
                        'is_applicant': is_applicant,
             }
-            ref_form =  ReferrerForm( params, exclude_from_validation='application_form' )
-            if ref_form.is_valid():
-                referrers.append(params)
-            else:
-                logging.warning("Invalid referrer: %s" % ref_form )
-                ref_validated = False
-                invalid_ref_form = ref_form
+            if not are_all_empty_params(params):
+                ref_form =  ReferrerForm( params, exclude_from_validation='application_form' )
+                if ref_form.is_valid():
+                    referrers.append(params)
+                else:
+                    logging.warning("Invalid referrer: %s" % ref_form )
+                    ref_validated = False
+                    invalid_ref_form = ref_form
     except Exception as e:
         logging.error('%s' % e)
 
