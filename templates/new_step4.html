@@ -65,6 +65,7 @@
 		              </td>
 		              <td  data-name="permissions">
                                 <select class="form-control" id="select" name='permissions[]'>
+                                  <option value='0'>Seleccione una opción</option>
                                   {% for p in permissions_options %}
                                     <option value='{{ p.0 }}' {% if p.0 == permission.permission %}selected{%endif%}>
                                     {{ p.1 }}{{i}}</option>
@@ -86,9 +87,9 @@
 		              </td>
 		              <td  data-name="permissions">
                                 <select class="form-control" id="select" name='permissions[]' >
+                                  <option value=''>Seleccione una opción</option>
                                   {% for p in permissions_options %}
-                                    <option value='{{ p.0 }}' {% if p.0 == 'R' %}selected{%endif%}>
-                                    {{ p.1 }}{{i}}</option>
+                                    <option value='{{ p.0 }}'>{{ p.1 }}{{i}}</option>
                                   {% endfor%}
                                 </select>
 		              </td>
