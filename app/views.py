@@ -35,9 +35,11 @@ def redirect_without_post(request):
 
     
 def index(request):
-    return redirect('new_step1')
+    #return redirect('new_step1')
+    return print_form()
+    
 
-
+    
 def new_step1(request):
     request.session['has_registered'] = False
     request.session['proyect'] = {}
@@ -343,4 +345,132 @@ def save(request):
         transaction.savepoint_rollback( sid )
 
     return render(request, 'outcome_error.html.html', context)
+
+
+def _header_footer(canvas, doc):
+    # Save the state of our canvas so we can draw on it
+    canvas.saveState()
+    styles = getSampleStyleSheet()
+ 
+    # Header
+    header = Paragraph('This is a multi-line header.  It goes on every page.   ' * 5, styles['Normal'])
+    w, h = header.wrap(doc.width, doc.topMargin)
+    header.drawOn(canvas, doc.leftMargin, doc.height + doc.topMargin - h)
+ 
+    # Footer
+    footer = Paragraph('This is a multi-line footer.  It goes on every page.   ' * 5, styles['Normal'])
+    w, h = footer.wrap(doc.width, doc.bottomMargin)
+    footer.drawOn(canvas, doc.leftMargin, h)
+ 
+    # Release the canvas
+    canvas.restoreState()
+
+def parag_style():
+    from  reportlab.lib.styles import ParagraphStyle
+    from reportlab.lib.enums import TA_LEFT
+    style = ParagraphStyle('test')
+    style.textColor = 'black'
+    style.borderColor = 'black'
+    style.borderWidth = 0
+    style.alignment = TA_LEFT
+    style.fontSize = 9
+    return style
+
+from reportlab.rl_config import defaultPageSize
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import cm,inch
+PAGE_HEIGHT=defaultPageSize[1]
+PAGE_WIDTH=defaultPageSize[0]
+
+
+def write_header(canvas, doc):
+    from django.conf import settings
+    from reportlab.platypus import Paragraph
+    from reportlab.lib.units import cm
+    from datetime import datetime
+    canvas.saveState()
+    fecha = datetime.now().strftime("%d/%m/%y %H:%M")
+    if settings.STATIC_ROOT:
+        img_path = "%s/images/unl.png" % settings.STATIC_ROOT
+    else:
+        img_path = "%s%simages/unl.png" % (settings.BASE_DIR,settings.STATIC_URL)
+    canvas.drawImage(img_path,doc.leftMargin , PAGE_HEIGHT-doc.topMargin, 1.5*cm, 1.5*cm)
+    canvas.line( doc.leftMargin , PAGE_HEIGHT-1.05*doc.topMargin,
+                 PAGE_WIDTH-doc.rightMargin,PAGE_HEIGHT-1.05*doc.topMargin)
+    parag = Paragraph("Dirección de Informatización y Planificación Tecnológica" \
+                      "<br/>Rectorado<br/>Universidad Nacional del Litoral",parag_style())
+    parag.wrapOn(canvas,PAGE_WIDTH*0.5, PAGE_HEIGHT)
+    parag.drawOn(canvas, 2*doc.leftMargin , PAGE_HEIGHT-doc.topMargin)
+    canvas.setFont('Times-Roman',9)
+    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.8*inch, PAGE_HEIGHT-doc.topMargin, fecha)
+    canvas.restoreState()
+
+def firstPage(canvas, doc):
+    write_header(canvas,doc)
+    
+def laterPages(canvas, doc):
+    write_header(canvas,doc)
+    
+def print_form():
+    from reportlab.platypus import Paragraph
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.units import cm,inch
+    from reportlab.platypus import Paragraph
+    from reportlab.lib.styles import ParagraphStyle
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.platypus import SimpleDocTemplate, Paragraph
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.enums import TA_CENTER
+    from reportlab.platypus.flowables import Spacer, Flowable
+    from io import BytesIO
+    from django.http import HttpResponse
+    from django.views.generic import ListView
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import letter
+    from reportlab.platypus import Table, Image
+    from reportlab.pdfgen import canvas
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.lib.units import inch
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="solicitud.pdf"'
+    doc = SimpleDocTemplate(response,
+                            rightMargin=72,
+                            leftMargin=72,
+                            topMargin=72,
+                            bottomMargin=72)
+
+    styles = getSampleStyleSheet()
+    content = [Spacer(1,0.2*inch)]    
+    content.append(Paragraph("Formulario Alta de Proyectos",  styles['Heading2']))
+    content.append(Spacer(1,0.1*inch))
+    content.append(Paragraph("Nombre del Proyecto:", styles['Normal']))
+    content.append(Spacer(1,0.1*inch))
+    content.append(Paragraph("Descripción:", styles['Normal']))
+    content.append(Spacer(1,0.1*inch))
+    content.append(Paragraph("Nombre DB:", styles['Normal']))
+    content.append(Spacer(1,0.1*inch))
+    content.append(Paragraph("Encoding:", styles['Normal']))
+    content.append(Spacer(1,0.1*inch))
+    content.append(Paragraph("Usuario owner:", styles['Normal']))
+    content.append(Spacer(1,0.1*inch))
+    content.append(Paragraph("Usuario acceso:", styles['Normal']))
+
+    content.append(Spacer(1,0.2*inch))
+    data= [['Requerimientos de Software'],['Nombre', 'Versión'],
+           ['Apache','2.0']]
+    t = Table(data)
+    t.setStyle(TableStyle([('GRID', (0,0), (-1,-1), 1, colors.black),]))
+
+    content.append(t)
+
+    doc.build(content, onFirstPage=firstPage, onLaterPages=laterPages)
+    return response
+
+
+
 
