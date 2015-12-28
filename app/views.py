@@ -391,14 +391,14 @@ def write_header(canvas, doc):
     canvas.saveState()
     fecha = datetime.now().strftime("%d/%m/%y %H:%M")
     if settings.STATIC_ROOT:
-        img_path = "%s/images/unl.png" % settings.STATIC_ROOT
+        img_path = "%s/images/logo.png" % settings.STATIC_ROOT
     else:
-        img_path = "%s%simages/unl.png" % (settings.BASE_DIR,settings.STATIC_URL)
+        img_path = "%s%simages/logo.png" % (settings.BASE_DIR,settings.STATIC_URL)
     canvas.drawImage(img_path,doc.leftMargin , PAGE_HEIGHT-doc.topMargin, 1.5*cm, 1.5*cm)
     canvas.line( doc.leftMargin , PAGE_HEIGHT-1.05*doc.topMargin,
                  PAGE_WIDTH-doc.rightMargin,PAGE_HEIGHT-1.05*doc.topMargin)
-    parag = Paragraph("Dirección de Informatización y Planificación Tecnológica" \
-                      "<br/>Rectorado<br/>Universidad Nacional del Litoral",parag_style())
+    parag = Paragraph("Dirección de Informatización" \
+                      "<br/>Rectorado<br/>Universidad Nacional",parag_style())
     parag.wrapOn(canvas,PAGE_WIDTH*0.5, PAGE_HEIGHT)
     parag.drawOn(canvas, 2*doc.leftMargin , PAGE_HEIGHT-doc.topMargin)
     canvas.setFont('Times-Roman',9)
