@@ -11,7 +11,7 @@ from .forms import SCVPermission
 from .forms import ApplicationSoftwareRequirementForm
 from .forms import ApplicationConnectionSourceForm, ApplicationConnectionTargetForm
 from django.forms.models import inlineformset_factory
-from .models import Proyect, ApplicationForm
+from .models import Proyect, ApplicationForm,  ApplicationSoftwareRequirement
 from django.db import IntegrityError, transaction
 from django.forms.models import modelformset_factory
 from django.template import Context
@@ -35,9 +35,7 @@ def redirect_without_post(request):
 
     
 def index(request):
-    #return redirect('new_step1')
-    return print_form()
-    
+    return redirect('new_step1')
 
     
 def new_step1(request):
@@ -336,6 +334,7 @@ def save(request):
 
         if commit_transaction:
             transaction.savepoint_commit( sid )
+            context.update({'application_form_id': application.pk})
             return render(request, 'outcome_success.html', context)
         else:
             transaction.savepoint_rollback( sid )
@@ -345,25 +344,6 @@ def save(request):
         transaction.savepoint_rollback( sid )
 
     return render(request, 'outcome_error.html.html', context)
-
-
-def _header_footer(canvas, doc):
-    # Save the state of our canvas so we can draw on it
-    canvas.saveState()
-    styles = getSampleStyleSheet()
- 
-    # Header
-    header = Paragraph('This is a multi-line header.  It goes on every page.   ' * 5, styles['Normal'])
-    w, h = header.wrap(doc.width, doc.topMargin)
-    header.drawOn(canvas, doc.leftMargin, doc.height + doc.topMargin - h)
- 
-    # Footer
-    footer = Paragraph('This is a multi-line footer.  It goes on every page.   ' * 5, styles['Normal'])
-    w, h = footer.wrap(doc.width, doc.bottomMargin)
-    footer.drawOn(canvas, doc.leftMargin, h)
- 
-    # Release the canvas
-    canvas.restoreState()
 
 def parag_style():
     from  reportlab.lib.styles import ParagraphStyle
@@ -376,14 +356,14 @@ def parag_style():
     style.fontSize = 9
     return style
 
-from reportlab.rl_config import defaultPageSize
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.lib.units import cm,inch
-PAGE_HEIGHT=defaultPageSize[1]
-PAGE_WIDTH=defaultPageSize[0]
 
 
 def write_header(canvas, doc):
+    from reportlab.rl_config import defaultPageSize
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.lib.units import cm,inch
+    PAGE_HEIGHT=defaultPageSize[1]
+    PAGE_WIDTH=defaultPageSize[0]
     from django.conf import settings
     from reportlab.platypus import Paragraph
     from reportlab.lib.units import cm
@@ -410,8 +390,9 @@ def firstPage(canvas, doc):
     
 def laterPages(canvas, doc):
     write_header(canvas,doc)
-    
-def print_form():
+
+def print_application_form (request, proyect_id):
+    application = ApplicationForm.objects.get(proyect_id=proyect_id)
     from reportlab.platypus import Paragraph
     from reportlab.lib.pagesizes import A4
     from reportlab.lib.units import cm,inch
@@ -448,22 +429,30 @@ def print_form():
     content = [Spacer(1,0.2*inch)]    
     content.append(Paragraph("Formulario Alta de Proyectos",  styles['Heading2']))
     content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Nombre del Proyecto:", styles['Normal']))
+    content.append(Paragraph("Nombre del Proyecto: %s" % application.proyect.name,
+                             styles['Normal']))
     content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Descripción:", styles['Normal']))
+    content.append(Paragraph("Descripcion: %s" % application.proyect.description,
+                             styles['Normal']))
     content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Nombre DB:", styles['Normal']))
+    content.append(Paragraph("Nombre DB: %s" % application.db_name,
+                             styles['Normal']))
     content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Encoding:", styles['Normal']))
+    content.append(Paragraph("Encoding: %s" % application.encoding,
+                             styles['Normal']))
     content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Usuario owner:", styles['Normal']))
+    content.append(Paragraph("Usuario owner: %s" % application.user_owner,
+                             styles['Normal']))
     content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Usuario acceso:", styles['Normal']))
+    content.append(Paragraph("Usuario acceso: %s" % application.user_access, 
+                             styles['Normal']))
 
     content.append(Spacer(1,0.2*inch))
-    data= [['Requerimientos de Software'],['Nombre', 'Versión'],
-           ['Apache','2.0']]
-    t = Table(data)
+    data= [['Requerimientos de Software'],['Nombre', 'Versión'],]
+    software = ApplicationSoftwareRequirement.objects.filter(application_form=proyect_id)
+    for item in software:
+        data.append( [item.name,item.version])
+    t = Table(data, colWidths='*')
     t.setStyle(TableStyle([('GRID', (0,0), (-1,-1), 1, colors.black),]))
 
     content.append(t)

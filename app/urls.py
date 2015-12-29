@@ -10,6 +10,7 @@ urlpatterns = patterns('app.views',
     url(r'^new/step/3', 'new_step3', name='new_step3'),
     url(r'^new/step/4', 'new_step4', name='new_step4'),
     url(r'^new/step/5', 'new_step5', name='new_step5'),
+    url(r'^print_application_form/(\d+)/$', 'print_application_form', name='print_application_form'),
 )
 
 
