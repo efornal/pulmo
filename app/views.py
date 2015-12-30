@@ -11,13 +11,15 @@ from .forms import SCVPermission
 from .forms import ApplicationSoftwareRequirementForm
 from .forms import ApplicationConnectionSourceForm, ApplicationConnectionTargetForm
 from django.forms.models import inlineformset_factory
-from .models import Proyect, ApplicationForm,  ApplicationSoftwareRequirement
+from .models import Proyect, ApplicationForm,  ApplicationSoftwareRequirement, Referrer
+from .models import ApplicationConnectionSource, ApplicationConnectionTarget
 from django.db import IntegrityError, transaction
 from django.forms.models import modelformset_factory
 from django.template import Context
 from django.shortcuts import render
 from django.contrib import messages
- 
+
+
 def log_session(request_session):
     # FIXME LOG
     for s in request_session.session.items():
@@ -356,8 +358,6 @@ def parag_style():
     style.fontSize = 9
     return style
 
-
-
 def write_header(canvas, doc):
     from reportlab.rl_config import defaultPageSize
     from reportlab.lib.styles import getSampleStyleSheet
@@ -382,16 +382,20 @@ def write_header(canvas, doc):
     parag.wrapOn(canvas,PAGE_WIDTH*0.5, PAGE_HEIGHT)
     parag.drawOn(canvas, 2*doc.leftMargin , PAGE_HEIGHT-doc.topMargin)
     canvas.setFont('Times-Roman',9)
+    page = "Pág. %s" % doc.page
     canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.8*inch, PAGE_HEIGHT-doc.topMargin, fecha)
+    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.8*inch, PAGE_HEIGHT-doc.topMargin/1.5, page)
     canvas.restoreState()
+
 
 def firstPage(canvas, doc):
     write_header(canvas,doc)
-    
+
 def laterPages(canvas, doc):
     write_header(canvas,doc)
 
 def print_application_form (request, proyect_id):
+
     application = ApplicationForm.objects.get(proyect_id=proyect_id)
     from reportlab.platypus import Paragraph
     from reportlab.lib.pagesizes import A4
@@ -402,7 +406,7 @@ def print_application_form (request, proyect_id):
     from reportlab.lib.styles import getSampleStyleSheet
     from reportlab.platypus import SimpleDocTemplate, Paragraph
     from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib.enums import TA_CENTER
+    from reportlab.lib.enums import TA_CENTER, TA_RIGHT
     from reportlab.platypus.flowables import Spacer, Flowable
     from io import BytesIO
     from django.http import HttpResponse
@@ -416,7 +420,15 @@ def print_application_form (request, proyect_id):
     from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
     from reportlab.lib.styles import getSampleStyleSheet
     from reportlab.lib.units import inch
-
+    import copy
+    styles = getSampleStyleSheet()
+    styleH2 =  copy.copy(styles['Heading2'])
+    styleN  =  copy.copy(styles['Normal'])
+    styleTable = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.black),
+                             ('BACKGROUND', (0, 1), (-1, 1), colors.Color(0.9,0.9,0.9)),
+                             ('SPAN',(0,0),(0, 0)),])
+    space = Spacer(1,0.1*inch)
+    space2 = Spacer(1,0.2*inch)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="solicitud.pdf"'
     doc = SimpleDocTemplate(response,
@@ -425,39 +437,85 @@ def print_application_form (request, proyect_id):
                             topMargin=72,
                             bottomMargin=72)
 
-    styles = getSampleStyleSheet()
-    content = [Spacer(1,0.2*inch)]    
-    content.append(Paragraph("Formulario Alta de Proyectos",  styles['Heading2']))
-    content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Nombre del Proyecto: %s" % application.proyect.name,
-                             styles['Normal']))
-    content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Descripcion: %s" % application.proyect.description,
-                             styles['Normal']))
-    content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Nombre DB: %s" % application.db_name,
-                             styles['Normal']))
-    content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Encoding: %s" % application.encoding,
-                             styles['Normal']))
-    content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Usuario owner: %s" % application.user_owner,
-                             styles['Normal']))
-    content.append(Spacer(1,0.1*inch))
-    content.append(Paragraph("Usuario acceso: %s" % application.user_access, 
-                             styles['Normal']))
 
-    content.append(Spacer(1,0.2*inch))
-    data= [['Requerimientos de Software'],['Nombre', 'Versión'],]
+    content = [space]
+    content.append(Paragraph("Formulario Alta de Proyectos", styleH2))
+    content.append(space)
+    content.append(Paragraph("<b>Nombre del Proyecto</b>: %s" % application.proyect.name, styleN))
+    content.append(space)
+    content.append(Paragraph("<b>Descripcion</b>: %s" % application.proyect.description, styleN))
+    content.append(space)
+    content.append(Paragraph("<b>Nombre DB</b>: %s" % application.db_name, styleN))
+    content.append(space)
+    content.append(Paragraph("<b>Encoding</b>: %s" % application.encoding, styleN))
+    content.append(space)
+    content.append(Paragraph("<b>Usuario owner</b>: %s" % application.user_owner, styleN))
+    content.append(space)
+    content.append(Paragraph("<b>Usuario acceso</b>: %s" % application.user_access, styleN))
+
+    content.append(space2)
+    data = [['Requerimientos de Software'],['Nombre', 'Versión'],]
     software = ApplicationSoftwareRequirement.objects.filter(application_form=proyect_id)
     for item in software:
         data.append( [item.name,item.version])
     t = Table(data, colWidths='*')
-    t.setStyle(TableStyle([('GRID', (0,0), (-1,-1), 1, colors.black),]))
-
+    t.setStyle(styleTable)
     content.append(t)
 
-    doc.build(content, onFirstPage=firstPage, onLaterPages=laterPages)
+    content.append(space2)
+    data = [['Equipos desde los que se conecta'],['Nombre', 'Dirección IP', 'Observaciones'],]
+    sources = ApplicationConnectionSource.objects.filter(application_form=proyect_id)
+    for item in sources:
+        data.append( [item.name,item.ip, item.observations])
+    t = Table(data, colWidths='*')
+    t.setStyle(styleTable)
+    content.append(t)
+
+    content.append(space2)
+    data = [['Equipos hacia los que se conecta'],['Nombre', 'Dirección IP', 'Observaciones'],]
+    targets = ApplicationConnectionTarget.objects.filter(application_form=proyect_id)
+    for item in targets:
+        data.append( [item.name,item.ip, item.observations])
+    t = Table(data, colWidths='*')
+    t.setStyle(styleTable)
+    content.append(t)
+
+    
+    content.append(space2)
+    data = [['Observaciones'],]
+    data.append([[Paragraph(application.observations, styleN)]])
+    t = Table(data, colWidths='*')
+    t.setStyle(TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),]))
+    content.append(t)
+
+    content.append(space2)
+    data = [['Solicitantes y Referentes'],['Nombre y apellido', 'E-mail', 'Teléfono', 'Es solicitante'],]
+    referrers = Referrer.objects.filter(application_form=proyect_id)
+    for item in referrers:
+        is_applicant = ""
+        if item.is_applicant:
+            is_applicant = "Sí"
+        data.append( [Paragraph(item.name, styleN),
+                      Paragraph(item.email, styleN),
+                      Paragraph(item.phones, styleN),
+                      Paragraph(is_applicant, styleN)])
+    t = Table(data, colWidths='*')
+    t.setStyle(styleTable)
+    content.append(t)
+
+
+    styleF = copy.copy(styles['Normal'])
+    styleF.alignment = TA_RIGHT
+    data = [[Paragraph("<br/><br/>%s<br/><br/>%s<br/>%s" % \
+                       ("Santa fe, ..... de .......... de 20....",
+                        '..................................................',
+                        'Firma del solicitante'), styleF)],]
+    t = Table(data, colWidths='*')
+    t.setStyle(TableStyle([('VALIGN',(-1,-1),(-1,-1),'BOTTOM'),
+                           ('ALIGN',(0,0),(0,0),'RIGHT'),]))
+    content.append(t)
+
+    doc.build(content, onFirstPage=firstPage, onLaterPages=laterPages, )
     return response
 
 
