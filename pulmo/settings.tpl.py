@@ -151,6 +151,10 @@ LDAP_PEOPLE = 'People'
 
 # =================================/
 
+# django configuration
+SUIT_CONFIG = {
+    'ADMIN_NAME': _('title')
+}
 
 # =================================\
 # django ldap configuration
