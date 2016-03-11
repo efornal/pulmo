@@ -4,11 +4,9 @@ from django.conf.urls.i18n import i18n_patterns
 
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
+urlpatterns  = i18n_patterns(
     url(r'^', include('app.urls')),
 )
-
 urlpatterns += i18n_patterns(
-    url(r'^', include('app.urls')),
+    url(r'^admin/', include(admin.site.urls)),
 )
