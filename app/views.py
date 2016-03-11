@@ -336,7 +336,10 @@ def save(request):
 
         if commit_transaction:
             transaction.savepoint_commit( sid )
-            context.update({'application_form_id': application.pk})
+            msg = "La solicitud se a realizado con éxito. " \
+                  "Para completar el trámite te pedimos que te acerques a " \
+                  "nuestra oficina con el siguiente formulario impreso y firmado por el solicitante."
+            context.update({'application_form_id': application.pk, 'msg': msg})
             return render(request, 'outcome_success.html', context)
         else:
             transaction.savepoint_rollback( sid )
@@ -345,6 +348,10 @@ def save(request):
         logging.error('Integrity error for: %s' % proyect)
         transaction.savepoint_rollback( sid )
 
+    msg = "La solicitud no pudo completarse. " \
+          "Para poder realizar el trámite te pedimos que te acerques a " \
+          "nuestra oficina o intentes realizar la solicitud nuevamente mas tarde.<br>"
+    context.update({'msg': msg})
     return render(request, 'outcome_error.html.html', context)
 
 def parag_style():
