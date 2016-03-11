@@ -454,55 +454,61 @@ def print_application_form (request, proyect_id):
     content.append(space)
     content.append(Paragraph("<b>Usuario acceso</b>: %s" % application.user_access or '', styleN))
 
-    content.append(space2)
+
     data = [['Requerimientos de Software'],['Nombre', 'Versión'],]
     software = ApplicationSoftwareRequirement.objects.filter(application_form=proyect_id)
-    for item in software:
-        data.append( [item.name or '',item.version or ''])
-    t = Table(data, colWidths='*')
-    t.setStyle(styleTable)
-    content.append(t)
+    if software:
+        content.append(space2)
+        for item in software:
+            data.append( [item.name or '',item.version or ''])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
+        content.append(t)
 
-    content.append(space2)
     data = [['Equipos desde los que se conecta'],['Nombre', 'Dirección IP', 'Observaciones'],]
     sources = ApplicationConnectionSource.objects.filter(application_form=proyect_id)
-    for item in sources:
-        data.append( [item.name or '',item.ip or '', item.observations or ''])
-    t = Table(data, colWidths='*')
-    t.setStyle(styleTable)
-    content.append(t)
+    if sources:
+        content.append(space2)
+        for item in sources:
+            data.append( [item.name or '',item.ip or '', item.observations or ''])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
+        content.append(t)
 
     content.append(space2)
     data = [['Equipos hacia los que se conecta'],['Nombre', 'Dirección IP', 'Observaciones'],]
     targets = ApplicationConnectionTarget.objects.filter(application_form=proyect_id)
-    for item in targets:
-        data.append( [item.name,item.ip or '', item.observations or ''])
-    t = Table(data, colWidths='*')
-    t.setStyle(styleTable)
-    content.append(t)
+    if targets:
+        for item in targets:
+            data.append( [item.name,item.ip or '', item.observations or ''])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
+        content.append(t)
+
+    if application.observations:
+        content.append(space2)
+        data = [['Observaciones'],]
+        data.append([[Paragraph(application.observations or '', styleN)]])
+        t = Table(data, colWidths='*')
+        t.setStyle(TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),]))
+        content.append(t)
 
     
-    content.append(space2)
-    data = [['Observaciones'],]
-    data.append([[Paragraph(application.observations or '', styleN)]])
-    t = Table(data, colWidths='*')
-    t.setStyle(TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),]))
-    content.append(t)
-
-    content.append(space2)
     data = [['Solicitantes y Referentes'],['Nombre y apellido', 'E-mail', 'Teléfono', 'Es solicitante'],]
     referrers = Referrer.objects.filter(application_form=proyect_id)
-    for item in referrers:
-        is_applicant = ""
-        if item.is_applicant:
-            is_applicant = "Sí"
-        data.append( [Paragraph(item.name or '', styleN),
-                      Paragraph(item.email or '', styleN),
-                      Paragraph(item.phones or '', styleN),
-                      Paragraph(is_applicant or '', styleN)])
-    t = Table(data, colWidths='*')
-    t.setStyle(styleTable)
-    content.append(t)
+    if referrers:
+        content.append(space2)
+        for item in referrers:
+            is_applicant = ""
+            if item.is_applicant:
+                is_applicant = "Sí"
+                data.append( [Paragraph(item.name or '', styleN),
+                              Paragraph(item.email or '', styleN),
+                              Paragraph(item.phones or '', styleN),
+                              Paragraph(is_applicant or '', styleN)])
+                t = Table(data, colWidths='*')
+                t.setStyle(styleTable)
+                content.append(t)
 
 
     styleF = copy.copy(styles['Normal'])
