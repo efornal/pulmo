@@ -394,6 +394,7 @@ def firstPage(canvas, doc):
 def laterPages(canvas, doc):
     write_header(canvas,doc)
 
+
 def print_application_form (request, proyect_id):
 
     application = ApplicationForm.objects.get(proyect_id=proyect_id)
@@ -441,23 +442,23 @@ def print_application_form (request, proyect_id):
     content = [space]
     content.append(Paragraph("Formulario Alta de Proyectos", styleH2))
     content.append(space)
-    content.append(Paragraph("<b>Nombre del Proyecto</b>: %s" % application.proyect.name, styleN))
+    content.append(Paragraph("<b>Nombre del Proyecto</b>: %s" % application.proyect.name or '', styleN))
     content.append(space)
-    content.append(Paragraph("<b>Descripcion</b>: %s" % application.proyect.description, styleN))
+    content.append(Paragraph("<b>Descripcion</b>: %s" % application.proyect.description or '', styleN))
     content.append(space)
-    content.append(Paragraph("<b>Nombre DB</b>: %s" % application.db_name, styleN))
+    content.append(Paragraph("<b>Nombre DB</b>: %s" % application.db_name or '', styleN))
     content.append(space)
-    content.append(Paragraph("<b>Encoding</b>: %s" % application.encoding, styleN))
+    content.append(Paragraph("<b>Encoding</b>: %s" % application.encoding or '', styleN))
     content.append(space)
-    content.append(Paragraph("<b>Usuario owner</b>: %s" % application.user_owner, styleN))
+    content.append(Paragraph("<b>Usuario owner</b>: %s" % application.user_owner or '', styleN))
     content.append(space)
-    content.append(Paragraph("<b>Usuario acceso</b>: %s" % application.user_access, styleN))
+    content.append(Paragraph("<b>Usuario acceso</b>: %s" % application.user_access or '', styleN))
 
     content.append(space2)
     data = [['Requerimientos de Software'],['Nombre', 'Versión'],]
     software = ApplicationSoftwareRequirement.objects.filter(application_form=proyect_id)
     for item in software:
-        data.append( [item.name,item.version])
+        data.append( [item.name or '',item.version or ''])
     t = Table(data, colWidths='*')
     t.setStyle(styleTable)
     content.append(t)
@@ -466,7 +467,7 @@ def print_application_form (request, proyect_id):
     data = [['Equipos desde los que se conecta'],['Nombre', 'Dirección IP', 'Observaciones'],]
     sources = ApplicationConnectionSource.objects.filter(application_form=proyect_id)
     for item in sources:
-        data.append( [item.name,item.ip, item.observations])
+        data.append( [item.name or '',item.ip or '', item.observations or ''])
     t = Table(data, colWidths='*')
     t.setStyle(styleTable)
     content.append(t)
@@ -475,7 +476,7 @@ def print_application_form (request, proyect_id):
     data = [['Equipos hacia los que se conecta'],['Nombre', 'Dirección IP', 'Observaciones'],]
     targets = ApplicationConnectionTarget.objects.filter(application_form=proyect_id)
     for item in targets:
-        data.append( [item.name,item.ip, item.observations])
+        data.append( [item.name,item.ip or '', item.observations or ''])
     t = Table(data, colWidths='*')
     t.setStyle(styleTable)
     content.append(t)
@@ -483,7 +484,7 @@ def print_application_form (request, proyect_id):
     
     content.append(space2)
     data = [['Observaciones'],]
-    data.append([[Paragraph(application.observations, styleN)]])
+    data.append([[Paragraph(application.observations or '', styleN)]])
     t = Table(data, colWidths='*')
     t.setStyle(TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),]))
     content.append(t)
@@ -495,10 +496,10 @@ def print_application_form (request, proyect_id):
         is_applicant = ""
         if item.is_applicant:
             is_applicant = "Sí"
-        data.append( [Paragraph(item.name, styleN),
-                      Paragraph(item.email, styleN),
-                      Paragraph(item.phones, styleN),
-                      Paragraph(is_applicant, styleN)])
+        data.append( [Paragraph(item.name or '', styleN),
+                      Paragraph(item.email or '', styleN),
+                      Paragraph(item.phones or '', styleN),
+                      Paragraph(is_applicant or '', styleN)])
     t = Table(data, colWidths='*')
     t.setStyle(styleTable)
     content.append(t)
