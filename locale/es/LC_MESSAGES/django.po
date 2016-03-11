@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-06 09:53-0300\n"
+"POT-Creation-Date: 2016-03-11 14:27-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,50 +18,73 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/forms.py:9 templates/new_step1.html:25
+#: app/forms.py:14 app/forms.py:119 templates/new_step1.html:52
 msgid "name"
 msgstr "Nombre"
 
-#: app/forms.py:10 templates/new_step1.html:33
+#: app/forms.py:15 templates/new_step1.html:60
 msgid "description"
 msgstr "Descripción"
 
-#: pulmo/settings.py:110 pulmo/settings.tpl.py:110
-msgid "Spanish"
-msgstr "Español"
-
-#: pulmo/settings.py:111 pulmo/settings.tpl.py:111
-msgid "English"
-msgstr "Inglés"
-
-#: templates/base.html:12 templates/base.html.py:49
-msgid "title"
-msgstr "Pulmo"
-
-#: templates/new_step1.html:22
-msgid "new_proyect"
-msgstr "Nuevo Proyecto"
-
-#: templates/new_step1.html:42
-msgid "db_name"
-msgstr "Nombre DB"
-
-#: templates/new_step1.html:47
-msgid "encoding"
-msgstr "Codificación"
-
-#: templates/new_step1.html:55
-msgid "user_owner"
-msgstr "Usuario owner"
-
-#: templates/new_step1.html:60
-msgid "user_access"
-msgstr "Usuario acceso"
-
-#: templates/new_step1.html:69
+#: app/forms.py:27 app/forms.py:65 app/forms.py:86 templates/new_step1.html:96
 msgid "observations"
 msgstr "Observaciones"
 
-#: templates/new_step1.html:78
+#: app/forms.py:102
+msgid "user"
+msgstr ""
+
+#: app/forms.py:103
+msgid "permission"
+msgstr ""
+
+#: app/forms.py:120
+msgid "email"
+msgstr ""
+
+#: app/forms.py:121
+msgid "phones"
+msgstr ""
+
+#: app/forms.py:122
+msgid "is_applicant"
+msgstr ""
+
+#: pulmo/settings.py:109 pulmo/settings.tpl.py:110
+msgid "Spanish"
+msgstr "Español"
+
+#: pulmo/settings.py:110 pulmo/settings.tpl.py:111
+msgid "English"
+msgstr "Inglés"
+
+#: pulmo/settings.py:186 pulmo/settings.tpl.py:156 templates/base.html:12
+#: templates/base.html.py:49
+msgid "title"
+msgstr "Pulmo"
+
+#: templates/new_step1.html:49 templates/new_step2.html:32
+#: templates/new_step3.html:50 templates/new_step4.html:33
+#: templates/new_step5.html:33
+msgid "new_proyect"
+msgstr "Nuevo Proyecto"
+
+#: templates/new_step1.html:69
+msgid "db_name"
+msgstr "Nombre DB"
+
+#: templates/new_step1.html:74
+msgid "encoding"
+msgstr "Codificación"
+
+#: templates/new_step1.html:82
+msgid "user_owner"
+msgstr "Usuario owner"
+
+#: templates/new_step1.html:87
+msgid "user_access"
+msgstr "Usuario acceso"
+
+#: templates/new_step1.html:105
 msgid "next"
 msgstr "Siguiente"
