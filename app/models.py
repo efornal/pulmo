@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 from datetime import datetime
+from django.utils.translation import ugettext as _
 from django.core.validators import validate_ipv46_address, validate_email
 
     
@@ -13,7 +14,8 @@ class Proyect(models.Model):
     
     class Meta:
         db_table = 'proyects'
-        verbose_name_plural = 'Proyects'
+        verbose_name = _('Proyect')
+        verbose_name_plural = _('Proyects')
 
     def __unicode__(self):
         return "%s" % (self.name)
@@ -35,7 +37,8 @@ class ApplicationForm (models.Model):
 
     class Meta:
         db_table = 'application_forms'
-        verbose_name_plural = 'ApplicationForms'
+        verbose_name = _('ApplicationForm')
+        verbose_name_plural = _('ApplicationForms')
 
     def __unicode__(self):
         return "%s" % (self.proyect.name)
@@ -76,7 +79,8 @@ class ProductionForm (models.Model):
 
     class Meta:
         db_table = 'production_forms'
-        verbose_name_plural = 'ProductionForms'
+        verbose_name = _('ProductionForm')
+        verbose_name_plural = _('ProductionForms')
 
     def __unicode__(self):
         return "%s" % (self.proyect.name)
@@ -91,7 +95,8 @@ class ApplicationConnectionSource(models.Model):
     
     class Meta:
         db_table = 'application_connection_sources'
-        verbose_name_plural = 'ApplicationConnectionSources'
+        verbose_name = _('ApplicationConnectionSource')
+        verbose_name_plural = _('ApplicationConnectionSources')
 
     def __unicode__(self):
         return "%s" % (self.name)
@@ -106,7 +111,8 @@ class ProductionConnectionSource(models.Model):
     
     class Meta:
         db_table = 'production_connection_sources'
-        verbose_name_plural = 'ProductionConnectionSources'
+        verbose_name = _('ProductionConnectionSource')
+        verbose_name_plural = _('ProductionConnectionSources')
 
     def __unicode__(self):
         return "%s" % (self.name)
@@ -121,7 +127,8 @@ class ApplicationConnectionTarget(models.Model):
     
     class Meta:
         db_table = 'application_connection_targets'
-        verbose_name_plural = 'ApplicationConnectionTargets'
+        verbose_name = _('ApplicationConnectionTarget')
+        verbose_name_plural = _('ApplicationConnectionTargets')
 
     def __unicode__(self):
         return "%s" % (self.name)
@@ -136,7 +143,8 @@ class ProductionConnectionTarget(models.Model):
         
     class Meta:
         db_table = 'production_connection_targets'
-        verbose_name_plural = 'ProductionConnectionTargets'
+        verbose_name = _('ProductionConnectionTarget')
+        verbose_name_plural = _('ProductionConnectionTargets')
 
     def __unicode__(self):
         return "%s" % (self.name)
@@ -150,7 +158,8 @@ class ApplicationSoftwareRequirement(models.Model):
     
     class Meta:
         db_table = 'application_software_requirements'
-        verbose_name_plural = 'ApplicationSoftwareRequirements'
+        verbose_name = _('ApplicationSoftwareRequirement')
+        verbose_name_plural = _('ApplicationSoftwareRequirements')
 
     def __unicode__(self):
         return "%s" % (self.name)
@@ -164,7 +173,8 @@ class ProductionSoftwareRequirement(models.Model):
     
     class Meta:
         db_table = 'production_software_requirements'
-        verbose_name_plural = 'ProductionSoftwareRequirements'
+        verbose_name = _('ProductionSoftwareRequirement')
+        verbose_name_plural = _('ProductionSoftwareRequirements')
 
     def __unicode__(self):
         return "%s" % (self.name)
@@ -178,7 +188,8 @@ class Milestone(models.Model):
     
     class Meta:
         db_table = 'milestones'
-        verbose_name_plural = 'Milestones'
+        verbose_name = _('Milestone')
+        verbose_name_plural = _('Milestones')
 
     def __unicode__(self):
         return "%s" % (self.description)
@@ -193,7 +204,8 @@ class SCVPermission(models.Model):
 
     class Meta:
         db_table = 'scv_permissions'
-        verbose_name_plural = 'SCVPermissions'
+        verbose_name = _('SCVPermission')
+        verbose_name_plural = _('SCVPermissions')
 
     def __unicode__(self):
         return "%s %s" % (self.user, self.permission)
@@ -216,7 +228,9 @@ class Referrer(models.Model):
 
     class Meta:
         db_table = 'referrers'
-        verbose_name_plural = 'Referrers'
+        verbose_name = _('Referrer')
+        verbose_name_plural = _('Referrers')
+
 
     def __unicode__(self):
         return "%s" % self.name
@@ -231,7 +245,8 @@ class MonitoredVariable(models.Model):
 
     class Meta:
         db_table = 'monitored_variables'
-        verbose_name_plural = 'MonitoredVariables'
+        verbose_name = _('MonitoredVariable')
+        verbose_name_plural = _('MonitoredVariables')
 
     def __unicode__(self):
         return "%s" % self.name
@@ -258,7 +273,8 @@ class TestServer(models.Model):
     
     class Meta:
         db_table = 'test_servers'
-        verbose_name_plural = 'TestServers'
+        verbose_name = _('TestServer')
+        verbose_name_plural = _('TestServers')
 
     def __unicode__(self):
         return "%s" % self.virtual_machine_name
@@ -286,7 +302,8 @@ class ProductionServer(models.Model):
     
     class Meta:
         db_table = 'production_servers'
-        verbose_name_plural = 'ProductionServers'
+        verbose_name = _('ProductionServer')
+        verbose_name_plural = _('ProductionServers')
 
     def __unicode__(self):
         return "%s" % self.virtual_machine_name
