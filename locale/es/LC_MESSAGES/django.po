@@ -368,7 +368,7 @@ msgstr "Pulmo"
 #: templates/new_step3.html:50 templates/new_step4.html:33
 #: templates/new_step5.html:33
 msgid "new_proyect"
-msgstr "Nuevo Proyecto"
+msgstr "Solicitud de nuevo proyecto"
 
 #: templates/new_step1.html:105
 msgid "next"
