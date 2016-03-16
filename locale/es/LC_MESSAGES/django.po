@@ -59,11 +59,11 @@ msgstr "Es solicitante"
 
 #: app/models.py:12 app/models.py:34 app/models.py:89 app/models.py:215
 msgid "created_at"
-msgstr ""
+msgstr "Creado el"
 
 #: app/models.py:13 app/models.py:35 app/models.py:91
 msgid "updated_at"
-msgstr ""
+msgstr "Modificado el"
 
 #: app/models.py:17
 msgid "Proyect"
@@ -74,8 +74,6 @@ msgid "Proyects"
 msgstr "Proyectos"
 
 #: app/models.py:25 app/models.py:48
-#, fuzzy
-#| msgid "Proyect"
 msgid "proyect"
 msgstr "Proyecto"
 
@@ -97,7 +95,7 @@ msgstr "Usuario acceso"
 
 #: app/models.py:36 app/models.py:96 app/models.py:309 app/models.py:340
 msgid "signature_date"
-msgstr ""
+msgstr "fecha de firma"
 
 #: app/models.py:40
 msgid "ApplicationForm"
@@ -109,61 +107,59 @@ msgstr "Formularios de Solicitud"
 
 #: app/models.py:56
 msgid "db_space_to_start"
-msgstr ""
+msgstr "Espacio inicial en DB "
 
 #: app/models.py:58
 msgid "db_space_at_year"
-msgstr ""
+msgstr "Espacio en DB por año"
 
 #: app/models.py:60
 msgid "db_space_after"
-msgstr ""
+msgstr "Espacio en DB posterior"
 
 #: app/models.py:63
 msgid "fs_space_to_start"
-msgstr ""
+msgstr "Espacio inicial en disco "
 
 #: app/models.py:65
 msgid "fs_space_at_year"
-msgstr ""
+msgstr "Espacio en disco al año"
 
 #: app/models.py:67
 msgid "fs_space_after"
-msgstr ""
+msgstr "Espacio en disco posterior"
 
 #: app/models.py:70
 msgid "minimum_memory"
-msgstr ""
+msgstr "Espacio mínimo de memoria"
 
 #: app/models.py:72
 msgid "minimum_disk_space"
-msgstr ""
+msgstr "Espacio mínimo en disco"
 
 #: app/models.py:74
 msgid "minimum_processor"
-msgstr ""
+msgstr "Nro mínimo de procesadores"
 
 #: app/models.py:77
 msgid "suggested_memory"
-msgstr ""
+msgstr "Espacio de memoria sugerido"
 
 #: app/models.py:79
 msgid "suggested_disk_space"
-msgstr ""
+msgstr "Espacio en disco sugerido"
 
 #: app/models.py:81
 msgid "suggested_processor"
-msgstr ""
+msgstr "Nro de procesadores sugeridos"
 
 #: app/models.py:84
 msgid "files_backup"
-msgstr ""
+msgstr "Archivos a resguardar"
 
 #: app/models.py:94 app/models.py:308 app/models.py:339
-#, fuzzy
-#| msgid "is_applicant"
 msgid "applicant"
-msgstr "Es solicitante"
+msgstr "Solicitante"
 
 #: app/models.py:100
 msgid "ProductionForm"
@@ -175,12 +171,10 @@ msgstr "Formularios de Producción"
 
 #: app/models.py:112 app/models.py:131 app/models.py:148 app/models.py:165
 msgid "ip"
-msgstr ""
+msgstr "IP"
 
 #: app/models.py:117 app/models.py:152 app/models.py:185 app/models.py:234
 #: app/models.py:260 app/models.py:307
-#, fuzzy
-#| msgid "ApplicationForm"
 msgid "application_form"
 msgstr "Formulario de Solicitud"
 
@@ -194,8 +188,6 @@ msgstr "Fuentes de conexión de solicitud"
 
 #: app/models.py:134 app/models.py:169 app/models.py:201 app/models.py:217
 #: app/models.py:278 app/models.py:335
-#, fuzzy
-#| msgid "ProductionForm"
 msgid "production_form"
 msgstr "Formulario de Producción"
 
@@ -228,10 +220,8 @@ msgid "ProductionConnectionTargets"
 msgstr "Destinos de conexión de producción"
 
 #: app/models.py:183 app/models.py:199
-#, fuzzy
-#| msgid "permission"
 msgid "version"
-msgstr "Permiso"
+msgstr "Versión"
 
 #: app/models.py:189
 msgid "ApplicationSoftwareRequirement"
@@ -250,10 +240,8 @@ msgid "ProductionSoftwareRequirements"
 msgstr "Requerimientos de software de producción"
 
 #: app/models.py:214
-#, fuzzy
-#| msgid "description"
 msgid "duration"
-msgstr "Descripción"
+msgstr "Duración"
 
 #: app/models.py:221
 msgid "Milestone"
@@ -281,11 +269,11 @@ msgstr "Referentes"
 
 #: app/models.py:275
 msgid "periodicity"
-msgstr ""
+msgstr "Periodicidad"
 
 #: app/models.py:276
 msgid "preserving_history_by"
-msgstr ""
+msgstr "Preservar historial por"
 
 #: app/models.py:282
 msgid "MonitoredVariable"
@@ -297,51 +285,47 @@ msgstr "Variables monitoreadas"
 
 #: app/models.py:292 app/models.py:322
 msgid "virtual_machine_name"
-msgstr ""
+msgstr "Nombre de máquina virtual"
 
 #: app/models.py:293 app/models.py:323
 msgid "ip_address"
-msgstr ""
+msgstr "Dirección IP"
 
 #: app/models.py:294 app/models.py:324
 msgid "mac_address"
-msgstr ""
+msgstr "Dirección MAC"
 
 #: app/models.py:295 app/models.py:325
 msgid "ram_memory"
-msgstr ""
+msgstr "Memoria RAM"
 
 #: app/models.py:296 app/models.py:326
 msgid "disk_space"
-msgstr ""
+msgstr "Espacio en disco"
 
 #: app/models.py:297 app/models.py:327
 msgid "processors"
-msgstr ""
+msgstr "Procesadores"
 
 #: app/models.py:299 app/models.py:328
-#, fuzzy
-#| msgid "permission"
 msgid "database_permissions"
-msgstr "Permiso"
+msgstr "Permisos en DB"
 
 #: app/models.py:300 app/models.py:329
 msgid "database_server"
-msgstr ""
+msgstr "Servidor de DB"
 
 #: app/models.py:301 app/models.py:330
-#, fuzzy
-#| msgid "ApplicationForms"
 msgid "location_logs"
-msgstr "Formularios de Solicitud"
+msgstr "Localización de Logs"
 
 #: app/models.py:303 app/models.py:332
 msgid "cluster_virtual_machine"
-msgstr ""
+msgstr "Cluster de máquina virtual"
 
 #: app/models.py:304
 msgid "vcs_repository"
-msgstr ""
+msgstr "Repositorio VCS"
 
 #: app/models.py:313
 msgid "TestServer"
@@ -353,11 +337,11 @@ msgstr "Servidores de Test"
 
 #: app/models.py:336
 msgid "added_monitoring"
-msgstr ""
+msgstr "Monitoreo añadido"
 
 #: app/models.py:337
 msgid "added_backup"
-msgstr ""
+msgstr "Resguardo añadido"
 
 #: app/models.py:344
 msgid "ProductionServer"
