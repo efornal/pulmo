@@ -164,7 +164,7 @@ class ProductionConnectionTarget(models.Model):
     name = models.CharField(max_length=200,null=False,verbose_name=_('name'))
     ip = models.CharField(max_length=200,null=True,verbose_name=_('ip'))
     ip_firewall  = models.CharField(max_length=200,null=True,verbose_name=_('ip_firewall'))
-    observations = models.TextField(null=True, blank=True,verbose_name=_('observations'))
+    port = models.TextField(null=True, blank=True,verbose_name=_('port'))
     production_form = models.ForeignKey(ProductionForm, null=False, blank=False,
                                         verbose_name=_('production_form'))
         

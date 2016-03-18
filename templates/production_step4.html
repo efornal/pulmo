@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+{% if form.errors %}
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="bs-component">
+            {% for field in form %}
+            {% if field.errors %}
+            <div class="alert alert-dismissible alert-danger">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {%  trans field.name %}: {{ field.errors|striptags }}
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+{% endif %}
+
+<div class="bs-docs-section">
+
+<br>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="well bs-component">
+        <form class="form-horizontal" action="{% url 'production_step5' %}" method="post">
+          {% csrf_token %}
+          <input type='hidden' name="id" value="" />
+          <fieldset>
+            <legend>{{ _('production_proyect') }} '{{ proyect_form.name.value|default:'' }}'</legend>
+            
+            <div class="bs-component">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab">Variables a monitorizar del servicio</a></li>
+              </ul>
+
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="home">
+
+                  <div class="row clearfix">
+	            <div class="col-md-12 column">
+                      <div class="panel-body">
+	                <table class="table table-bordered table-hover" id="tab_logic">
+	                  <thead>
+		            <tr >
+                              <th class="text-center">Variable</th>
+		              <th class="text-center">Periodicidad</th>
+		              <th class="text-center">Conservar historial por</th>                              
+		              <th class="text-center">
+                                <a href="#" id="add_row" >
+                                  <i class=" glyphicon glyphicon-plus-sign"></i>
+                                </a>
+                              </th>
+		            </tr>
+	                  </thead>
+                          {% if permissions_list %}
+                          {% for permission in permissions_list %}
+	                  <tbody>
+		            <tr id='addr{{forloop.counter0}}'>
+		              <td data-name="names" >
+		                <input type="text" name='names[]'
+                                       value="{{permission.name}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="periodicity" >
+		                <input type="text" name='periodicity[]'
+                                       value="{{permission.periodicity}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="preserving_history_by" >
+		                <input type="text" name='preserving_history_by[]'
+                                       value="{{permission.preserving_history_by}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+                              <td data-name="delete" style="width:5%;text-align:center">
+                                <a href="#" id='delete_row'>
+                                <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
+                              </td>
+		            </tr>
+	                  </tbody>
+                          {% endfor %}
+                          {% else %}
+	                  <tbody>
+		            <tr id='addr0'>
+		              <td data-name="names" >
+		                <input type="text" name='names[]'
+                                       value="{{permission.name}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="periodicity" >
+		                <input type="text" name='periodicity[]'
+                                       value="{{permission.periodicity}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="preserving_history_by" >
+		                <input type="text" name='preserving_history_by[]'
+                                       value="{{permission.preserving_history_by}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+                              <td data-name="delete" style="width:5%;text-align:center">
+                                <a href="#" id='delete_row'>
+                                <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
+                              </td>
+		            </tr>
+	                  </tbody>
+                          {% endif %}
+	                </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              
+            </div>
+            
+        
+            <div class="form-group">
+              <div class="col-sm-10 col-sm-offset-2">
+                <button type="submit" class="btn btn-primary">Siguiente</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

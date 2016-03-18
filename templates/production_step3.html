@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+{% if sources_form.errors %}
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="bs-component">
+            {% for field in sources_form %}
+            {% if field.errors %}
+            <div class="alert alert-dismissible alert-danger">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {%  trans field.name %}: {{ field.errors|striptags }}
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+{% endif %}
+
+{% if targets_form.errors %}
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="bs-component">
+            {% for field in targets_form %}
+            {% if field.errors %}
+            <div class="alert alert-dismissible alert-danger">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {%  trans field.name %}: {{ field.errors|striptags }}
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+{% endif %}
+
+<div class="bs-docs-section">
+
+  <br>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="well bs-component">
+        <form class="form-horizontal" action="{% url 'production_step4' %}" method="post">
+          {% csrf_token %}
+          <input type='hidden' name="id" value="" />
+          <fieldset>
+            <legend>{{ _('production_proyect') }} '{{ proyect_form.name.value|default:'' }}'</legend>
+            
+            <div class="bs-component">
+              <ul class="nav nav-tabs">
+                <li class="active">
+                  <a href="#home" data-toggle="tab">Equipos desde los que se conectan</a>
+                </li>
+                <li><a href="#profile" data-toggle="tab">Equipos hacia los que se conecta</a></li>
+              </ul>
+
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="home">
+
+                  <div class="row clearfix">
+	            <div class="col-md-12 column">
+                      <div class="panel-body">
+		        <table class="table table-bordered table-hover" id="tab_logic">
+		          <thead>
+		            <tr ><th class="text-center">Nombre del equipo</th>
+		            <th class="text-center">Dirección IP</th>
+		            <th class="text-center">Observaciones</th>
+		            <th class="text-center">
+                              <a href="#" id="add_row" >
+                              <i class=" glyphicon glyphicon-plus-sign"></i></a>
+                            </th>
+		            </tr>
+		          </thead>
+                          {% if sources_computer %}
+                          {% for soft in sources_computer %}
+		          <tbody>
+		            <tr id='addr{{forloop.counter0}}'>
+		              <td data-name="sources_name" >
+			        <input type="text" name='sources_name[]' value="{{soft.name}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_ip">
+			        <input type="text" name='sources_ip[]' value="{{soft.ip}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_observation">
+			        <input type="text" name='sources_observation[]' value="{{soft.observation}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+                              <td data-name="delete" style="width:5%;text-align:center">
+                                <a href="#" id='delete_row'>
+                                <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
+                              </td>
+		            </tr>
+		          </tbody>
+                            {% endfor %}
+                          {% else %}
+		          <tbody>
+		            <tr id='addr0'>
+		              <td data-name="sources_name" >
+			        <input type="text" name='sources_name[]'  placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_ip">
+			        <input type="text" name='sources_ip[]' placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_observation">
+			        <input type="text" name='sources_observation[]' placeholder='' class="form-control"/>
+		              </td>
+                              <td data-name="delete" style="width:5%;text-align:center">
+                                <a href="#" id='delete_row'>
+                                <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
+                              </td>
+		            </tr>
+		          </tbody>
+                          {% endif %}
+		        </table>
+                      </div>
+                    </div>
+	          </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="profile">
+
+                  <div class="row clearfix">
+	            <div class="col-md-12 column">
+                      <div class="panel-body">
+		        <table class="table table-bordered table-hover" id="tab_logics">
+		          <thead>
+		            <tr ><th class="text-center">Nombre del equipo</th>
+		            <th class="text-center">Dirección IP</th>
+		            <th class="text-center">Puerto</th>
+                            <th class="text-center">IP Firewall</th>
+		            <th class="text-center">
+                              <a href="#" id="add_row1" >
+                              <i class=" glyphicon glyphicon-plus-sign"></i></a>
+                            </th>
+		            </tr>
+		          </thead>
+                          {% if targets_computer %}
+                          {% for soft in targets_computer %}
+		          <tbody>
+		            <tr id='addr{{forloop.counter0}}'>
+		              <td data-name="targets_name" >
+			        <input type="text" name='targets_name[]' value="{{soft.name}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td  data-name="targets_ip">
+			        <input type="text" name='targets_ip[]' value="{{soft.ip}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="targets_port">
+			        <input type="text" name='targets_port[]' value="{{soft.port}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="targets_ip_firewall">
+			        <input type="text" name='targets_ip_firewall[]' value="{{soft.ip_firewall}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+                              <td data-name="delete" style="width:5%;text-align:center">
+                                <a href="#" id='delete_rows' name="delete[]">
+                                <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
+                              </td>
+		            </tr>
+		          </tbody>
+                            {% endfor %}
+                          {% else %}
+		          <tbody>
+		            <tr id='addsr0'>
+		              <td data-name="targets_name" >
+			        <input type="text" name='targets_name[]'  placeholder='' class="form-control"/>
+		              </td>
+		              <td  data-name="targets_ip">
+			        <input type="text" name='targets_ip[]' placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="targets_port">
+			        <input type="text" name='targets_port[]' value="{{soft.port}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="targets_ip_firewall">
+			        <input type="text" name='targets_ip_firewall[]' value="{{soft.ip_firewall}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+                              <td data-name="delete" style="width:5%;text-align:center">
+                                <a href="#" id='delete_rows' name="delete[]">
+                                <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
+                              </td>
+		            </tr>
+		          </tbody>
+                          {% endif %}
+		        </table>
+                      </div>
+                    </div>
+	          </div>
+                  
+                </div>
+
+              </div>
+
+            </div>
+
+
+            
+            <div class="form-group">
+              <div class="col-sm-10 col-sm-offset-2">
+                <button type="submit" class="btn btn-primary">Siguiente</button>
+              </div>
+            </div>
+            
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

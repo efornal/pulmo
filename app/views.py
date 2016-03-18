@@ -6,9 +6,13 @@ import logging
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils import translation
-from .forms import ProyectForm, ApplicationFormForm, SCVPermissionForm, ReferrerForm
+from .forms import ProyectForm, ProductionFormForm
+from .forms import ApplicationFormForm, SCVPermissionForm, ReferrerForm
 from .forms import SCVPermission
 from .forms import ApplicationSoftwareRequirementForm
+from .forms import ProductionSoftwareRequirementForm
+from .forms import MonitoredVariableForm
+from .forms import ProductionConnectionSourceForm, ProductionConnectionTargetForm
 from .forms import ApplicationConnectionSourceForm, ApplicationConnectionTargetForm
 from django.forms.models import inlineformset_factory
 from .models import Proyect, ApplicationForm,  ApplicationSoftwareRequirement, Referrer
@@ -535,3 +539,202 @@ def print_application_form (request, proyect_id):
 
 
 
+# ========================= views for production ======= \
+def redirect_without_production_post(request):
+    if request.method != 'POST':
+        return redirect('production_step1')
+
+def production_step(request):
+    request.session['production_proyect'] = {}
+    request.session['production'] = {}
+    request.session['production_sources_computer'] = {}
+    request.session['production_targets_computer'] = {}
+    request.session['production_software'] = {}
+    request.session['production_variables']= {}
+    proyects = Proyect.objects.order_by('name')
+    context = {'proyects': proyects}
+    return render(request, 'production_step.html', context)
+    
+
+def production_step1(request):
+    redirect_without_production_post(request)
+    
+    proyect_id = None
+    if 'id' in request.POST:
+        proyect_id = request.POST['id'] or None
+    if not proyect_id or not Proyect.objects.get(pk=proyect_id):
+        logging.warning('Could not determine the project')
+        messages.warning(request, 'No se pudo determinar el proyecto sobre el cual realizar la solicitud')
+        return redirect('production_step')
+
+    proyect = Proyect.objects.get(pk=proyect_id)    
+    proyect_form = ProyectForm(instance=proyect)
+    request.session['production_has_registered'] = False
+    request.session['production_proyect'] = proyect_id
+    request.session.modified = True
+    context = {'proyect_form': proyect_form }
+    return render(request, 'production_step1.html', context)
+
+def production_step2(request):
+    redirect_without_production_post(request)
+    proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
+    proyect_form = ProyectForm(instance=proyect)
+    production_form = ProductionFormForm()
+    context = {'proyect_form': proyect_form}
+    try:
+        params = request.POST.copy()
+        params['proyect'] = proyect.pk
+        production_form = ProductionFormForm(params)
+        if production_form.is_valid():
+            request.session['production']['db_name'] = request.POST['db_name']
+            request.session['production']['encoding'] = request.POST['encoding']
+            request.session['production']['user_owner'] = request.POST['user_owner']
+            request.session['production']['user_access'] = request.POST['user_access']
+            request.session['production']['observations'] = request.POST['observations']
+            request.session.modified = True
+            return render(request, 'production_step2.html', context)
+        else:
+            logging.warning("Invalid production form: %s" % production_form)
+            
+    except Exception as e:
+        logging.error('%s' % e)
+
+    context.update({'form': production_form,})
+    return render(request, 'production_step1.html', context)
+
+def production_step3(request):
+    redirect_without_production_post(request)
+    log_session(request)
+    
+    proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
+    proyect_form = ProyectForm(instance=proyect)
+    context = {'proyect_form': proyect_form}
+    software = []
+    software_validated = True
+    invalid_form = None
+
+    try:
+        for i,soft in enumerate( request.POST.getlist('names[]') ):
+            params = {'name': soft,
+                      'version': request.POST.getlist('versions[]')[i] }
+            if not are_all_empty_params(params):
+                soft_form = ProductionSoftwareRequirementForm( params,
+                                                                exclude_from_validation='production_form' )
+                if soft_form.is_valid():
+                    software.append( params )
+                else:
+                    logging.warning("Invalid production software requirement: %s" % soft_form )
+                    software_validated = False
+                    invalid_form = soft_form
+    except Exception as e:
+        logging.error('%s' % e)
+
+    request.session['production_software'] = software
+    request.session.modified = True
+    log_session(request)
+    
+    if software_validated:
+        return render(request, 'production_step3.html', context)
+    else:
+        context.update({'form': invalid_form, 'software_list': software})
+        return render(request, 'production_step2.html', context)
+
+
+
+def production_step4(request):
+    redirect_without_production_post(request)
+
+    proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
+    proyect_form = ProyectForm(instance=proyect)
+    permissions_options = SCVPermission.permissions()
+    context = {'proyect_form': proyect_form, 'permissions_options': permissions_options }
+
+    sources_computer = []
+    targets_computer = []
+    computers_validated = True
+    invalid_sources_form = None
+    invalid_targets_form = None
+
+    try:
+        for i,computer in enumerate( request.POST.getlist('sources_name[]') ):
+            params = { 'name': computer,
+                       'ip': request.POST.getlist('sources_ip[]')[i],
+                       'observation': request.POST.getlist('sources_observation[]')[i] }
+            if not are_all_empty_params(params):
+                sources_form = ProductionConnectionSourceForm( params,
+                                                                exclude_from_validation='production_form' )
+                if sources_form.is_valid():
+                    sources_computer.append( params )
+                else:
+                    logging.warning("Invalid production connection source: %s" % sources_form )
+                    computers_validated = False
+                    invalid_sources_form = sources_form
+
+        for i,computer in enumerate( request.POST.getlist('targets_name[]') ):
+            params = { 'name': computer,
+                       'ip': request.POST.getlist('targets_ip[]')[i],
+                       'ip_firewall': request.POST.getlist('targets_ip_firewall[]')[i],
+                       'port': request.POST.getlist('targets_port[]')[i] }
+
+            if not are_all_empty_params(params):
+                targets_form = ProductionConnectionTargetForm( params,
+                                                               exclude_from_validation='production_form' )
+                if targets_form.is_valid():
+                    targets_computer.append( params )
+                else:
+                    logging.warning("Invalid production connection target: %s" % targets_form )
+                    computers_validated = False
+                    invalid_targets_form = targets_form
+                
+    except Exception as e:
+        logging.error('%s' % e)
+
+    request.session['production_sources_computer'] = sources_computer
+    request.session['production_targets_computer'] = targets_computer
+    request.session.modified = True
+    log_session(request)
+    
+    if computers_validated:
+        return render(request, 'production_step4.html', context)
+    else:
+        context.update({'sources_form': invalid_sources_form, 'targets_form': invalid_targets_form,
+                        'sources_computer': sources_computer, 'targets_computer': targets_computer})
+        return render(request, 'production_step3.html', context)
+
+
+def production_step5(request):
+    redirect_without_production_post(request)
+    
+    proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
+    proyect_form = ProyectForm(instance=proyect)
+    context = {'proyect_form': proyect_form}
+    variables = []
+    variables_validated = True
+    invalid_form = None
+
+    try:
+        for i,variable in enumerate( request.POST.getlist('names[]') ):
+            params = {'name': variable,
+                      'periodicity': request.POST.getlist('periodicity[]')[i],
+                      'preserving_history_by': request.POST.getlist('preserving_history_by[]')[i], }
+            if not are_all_empty_params(params):
+                variable_form = MonitoredVariableForm( params,
+                                                       exclude_from_validation='production_form' )
+                if variable_form.is_valid():
+                    variables.append( params )
+                else:
+                    logging.warning("Invalid production monitored variables: %s" % variable_form )
+                    variable_validated = False
+                    invalid_form = variable_form
+    except Exception as e:
+        logging.error('%s' % e)
+
+    request.session['production_variables'] = variables
+    request.session.modified = True
+    log_session(request)
+    
+    if variables_validated:
+        return render(request, 'production_step5.html', context)
+    else:
+        context.update({'form': invalid_form, 'variable_list': variables})
+        return render(request, 'production_step4.html', context)
