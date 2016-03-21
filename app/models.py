@@ -58,7 +58,6 @@ class ProductionForm (models.Model):
                                          verbose_name=_('db_space_at_year'))
     db_space_after    = models.CharField(max_length=200, null=True, blank=True,
                                          verbose_name=_('db_space_after'))
-
     fs_space_to_start = models.CharField(max_length=200, null=True, blank=True,
                                          verbose_name=_('fs_space_to_start'))
     fs_space_at_year  = models.CharField(max_length=200, null=True, blank=True,

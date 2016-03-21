@@ -596,15 +596,60 @@ def print_production_form (request, proyect_id):
     content.append(space)
     content.append(Paragraph("<b>Descripcion</b>: %s" % production.proyect.description or '', styleN))
     content.append(space)
-    content.append(Paragraph("<b>Nombre DB</b>: %s" % production.db_name or '', styleN))
-    content.append(space)
-    content.append(Paragraph("<b>Encoding</b>: %s" % production.encoding or '', styleN))
-    content.append(space)
-    content.append(Paragraph("<b>Usuario owner</b>: %s" % production.user_owner or '', styleN))
-    content.append(space)
-    content.append(Paragraph("<b>Usuario acceso</b>: %s" % production.user_access or '', styleN))
 
+    
+    if production.observations:
+        content.append(space2)
+        data = [['Observaciones'],]
+        data.append([[Paragraph(production.observations or '', styleN)]])
+        t = Table(data, colWidths='*')
+        t.setStyle(TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),]))
+        content.append(t)
 
+        
+    if production.db_name or production.encoding or production.user_owner or production.user_access:
+        data = [['Base de datos']]
+        content.append(space2)
+        data.append(['Nombre','Encoding','Usuario owner', 'Usuario Acceso'])
+        data.append([production.db_name or '',
+                     production.encoding or '',
+                     production.user_owner or '',
+                     production.user_access or '',])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
+        content.append(t)
+
+        
+    data = [['Volumen de datos estimado'],['','Al inicio', '1er Año', 'Posterior'],]
+    content.append(space2)
+    if production.db_space_to_start or production.db_space_at_year or production.db_space_after:
+        data.append( ['Base de datos',
+                      production.db_space_to_start or '',
+                      production.db_space_at_year or '',
+                      production.db_space_after or ''])
+    if production.fs_space_to_start or production.fs_space_at_year or production.fs_space_after:
+        data.append( ['Systema de archivos',
+                      production.fs_space_to_start or '',
+                      production.fs_space_at_year or '',
+                      production.fs_space_after or ''])
+    t = Table(data, colWidths='*')
+    t.setStyle(styleTable)
+    content.append(t)
+
+    
+    data = [['Requerimientos de hardware'],['','Mínimo', 'Recomendado'],]
+    content.append(space2)
+    if production.minimum_memory or production.suggested_memory:
+        data.append( ['Memoria', production.minimum_memory or '', production.suggested_memory or ''])
+    if production.minimum_disk_space or production.suggested_disk_space:
+        data.append( ['Disco', production.minimum_disk_space or '', production.suggested_disk_space or ''])
+    if production.minimum_processor or production.suggested_processor:
+        data.append( ['Procesador', production.minimum_processor or '', production.suggested_processor or ''])
+    t = Table(data, colWidths='*')
+    t.setStyle(styleTable)
+    content.append(t)
+
+            
     data = [['Requerimientos de Software'],['Nombre', 'Versión'],]
     software = ProductionSoftwareRequirement.objects.filter(production_form=proyect_id)
     if software:
@@ -636,14 +681,6 @@ def print_production_form (request, proyect_id):
                           item.ip_firewall or ''])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
-        content.append(t)
-
-    if production.observations:
-        content.append(space2)
-        data = [['Observaciones'],]
-        data.append([[Paragraph(production.observations or '', styleN)]])
-        t = Table(data, colWidths='*')
-        t.setStyle(TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),]))
         content.append(t)
 
     
@@ -741,6 +778,18 @@ def production_step2(request):
             request.session['production']['user_owner'] = request.POST['user_owner']
             request.session['production']['user_access'] = request.POST['user_access']
             request.session['production']['observations'] = request.POST['observations']
+            request.session['production']['db_space_to_start'] = request.POST['db_space_to_start']
+            request.session['production']['db_space_at_year'] = request.POST['db_space_at_year']
+            request.session['production']['db_space_after'] = request.POST['db_space_after']
+            request.session['production']['fs_space_to_start'] = request.POST['fs_space_to_start']
+            request.session['production']['fs_space_at_year'] = request.POST['fs_space_at_year']
+            request.session['production']['fs_space_after'] = request.POST['fs_space_after']
+            request.session['production']['suggested_memory'] = request.POST['suggested_memory']
+            request.session['production']['suggested_disk_space'] = request.POST['suggested_disk_space']
+            request.session['production']['suggested_processor'] = request.POST['suggested_processor']
+            request.session['production']['minimum_memory'] = request.POST['minimum_memory']
+            request.session['production']['minimum_disk_space'] = request.POST['minimum_disk_space']
+            request.session['production']['minimum_processor'] = request.POST['minimum_processor']
             request.session.modified = True
             log_session(request)
             return render(request, 'production_step2.html', context)
