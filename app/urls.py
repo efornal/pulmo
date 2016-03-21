@@ -17,7 +17,8 @@ urlpatterns = patterns('app.views',
     url(r'^new/3/production', 'production_step3', name='production_step3'),
     url(r'^new/4/production', 'production_step4', name='production_step4'),
     url(r'^new/5/production', 'production_step5', name='production_step5'),
-    # url(r'^print_production_form/(\d+)/$', 'print_production_form', name='print_production_form'),
+    url(r'^new/6/production', 'production_step6', name='production_step6'),
+    url(r'^print_production_form/(\d+)/$', 'print_production_form', name='print_production_form'),
 )
 
 

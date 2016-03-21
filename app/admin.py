@@ -49,7 +49,42 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         SCVPermissionInline,
         ReferrerInline,
     ]
+    
+class ProductionConnectionSourceInline(admin.TabularInline):
+     model = ProductionConnectionSource
+     fk_name = "production_form"
+     extra = 0
 
+class ProductionConnectionTargetInline(admin.TabularInline):
+     model = ProductionConnectionTarget
+     fk_name = "production_form"
+     extra = 0
+
+class ProductionSoftwareRequirementInline(admin.TabularInline):
+     model = ProductionSoftwareRequirement
+     fk_name = "production_form"
+     extra = 0
+
+class MonitoredVariableInline(admin.TabularInline):
+    model = MonitoredVariable
+    fk_name = "production_form"
+    extra = 0
+
+class MilestoneInline(admin.TabularInline):
+    model = Milestone
+    fk_name = "production_form"
+    extra = 0
+    
+class ProductionFormAdmin(admin.ModelAdmin):
+    model = ProductionForm
+    inlines = [
+        ProductionSoftwareRequirementInline,
+        ProductionConnectionSourceInline,
+        ProductionConnectionTargetInline,
+        MonitoredVariableInline,
+        MilestoneInline,
+    ]
+    
 class ApplicationFormAdminForm(forms.ModelForm):
 
     class Meta:
@@ -118,7 +153,7 @@ class ProductionServerAdmin(admin.ModelAdmin):
 
     
 admin.site.register(ApplicationForm,ApplicationFormAdmin)
-admin.site.register(ProductionForm)
+admin.site.register(ProductionForm,ProductionFormAdmin)
 admin.site.register(Proyect, ProyectAdmin)
 #admin.site.register(ApplicationConnectionSource,ApplicationConnectionSourceAdmin)
 #admin.site.register(ApplicationConnectionTarget,ApplicationConnectionTargetAdmin)

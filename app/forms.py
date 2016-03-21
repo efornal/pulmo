@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from .models import Proyect, ApplicationForm, ProductionForm, ApplicationSoftwareRequirement
 from .models import ProductionSoftwareRequirement
 from .models import MonitoredVariable
+from .models import Milestone
 from .models import ApplicationConnectionSource, ApplicationConnectionTarget
 from .models import ProductionConnectionSource, ProductionConnectionTarget
 from .models import SCVPermission, Referrer
@@ -212,6 +213,23 @@ class ReferrerForm(forms.ModelForm):
         model = Referrer
         fields = '__all__'
 
+class MilestoneForm(forms.ModelForm):
+    description = forms.CharField(max_length=200, required=True, label=_('description'))
+    duration    = forms.CharField(required=False, label=_('duration'))
+    date_event  = forms.DateField(required=False, label=_('date_event'))
+
+    def __init__(self,*args,**kwargs):
+        field_to_exclude = ''
+        if kwargs.get('exclude_from_validation', False):
+            field_to_exclude = kwargs.pop('exclude_from_validation')
+        super(MilestoneForm, self).__init__(*args,**kwargs)
+        if field_to_exclude:
+            self.fields.pop(field_to_exclude)
+    
+    class Meta:
+        model = Milestone
+        fields = '__all__'
+        
         
 class ProductionFormForm(forms.ModelForm):
     proyect   = forms.ModelChoiceField(queryset=Proyect.objects.all(),

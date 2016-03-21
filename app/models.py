@@ -164,7 +164,7 @@ class ProductionConnectionTarget(models.Model):
     name = models.CharField(max_length=200,null=False,verbose_name=_('name'))
     ip = models.CharField(max_length=200,null=True,verbose_name=_('ip'))
     ip_firewall  = models.CharField(max_length=200,null=True,verbose_name=_('ip_firewall'))
-    port = models.TextField(null=True, blank=True,verbose_name=_('port'))
+    port = models.CharField(max_length=200, null=True, blank=True,verbose_name=_('port'))
     production_form = models.ForeignKey(ProductionForm, null=False, blank=False,
                                         verbose_name=_('production_form'))
         
@@ -208,11 +208,13 @@ class ProductionSoftwareRequirement(models.Model):
     def __unicode__(self):
         return "%s" % (self.name)
 
+    
 class Milestone(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     description = models.CharField(max_length=200,null=False,verbose_name=_('description'))
     duration = models.CharField(max_length=50,null=True,verbose_name=_('duration'))
     created_at = models.DateTimeField(auto_now_add=True,verbose_name=_('created_at'))
+    date_event = models.DateTimeField(null=True, blank=True, verbose_name=_('date_event'))
     production_form = models.ForeignKey(ProductionForm, null=False, blank=False,
                                         verbose_name=_('production_form'))
     

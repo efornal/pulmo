@@ -11,18 +11,21 @@ from .forms import ApplicationFormForm, SCVPermissionForm, ReferrerForm
 from .forms import SCVPermission
 from .forms import ApplicationSoftwareRequirementForm
 from .forms import ProductionSoftwareRequirementForm
-from .forms import MonitoredVariableForm
+from .forms import MonitoredVariableForm, MilestoneForm
 from .forms import ProductionConnectionSourceForm, ProductionConnectionTargetForm
 from .forms import ApplicationConnectionSourceForm, ApplicationConnectionTargetForm
 from django.forms.models import inlineformset_factory
-from .models import Proyect, ApplicationForm,  ApplicationSoftwareRequirement, Referrer
+from .models import Proyect, ApplicationForm, ProductionForm
+from .models import ApplicationSoftwareRequirement,ProductionSoftwareRequirement, Referrer
 from .models import ApplicationConnectionSource, ApplicationConnectionTarget
+from .models import ProductionConnectionSource, ProductionConnectionTarget
+from .models import MonitoredVariable, Milestone
 from django.db import IntegrityError, transaction
 from django.forms.models import modelformset_factory
 from django.template import Context
 from django.shortcuts import render
 from django.contrib import messages
-
+from django.core.urlresolvers import reverse
 
 def log_session(request_session):
     # FIXME LOG
@@ -343,7 +346,9 @@ def save(request):
             msg = "La solicitud se a realizado con éxito. " \
                   "Para completar el trámite te pedimos que te acerques a " \
                   "nuestra oficina con el siguiente formulario impreso y firmado por el solicitante."
-            context.update({'application_form_id': application.pk, 'msg': msg})
+            context.update({'application_form_id': application.pk, 'msg': msg,
+                            'link_to_application': reverse('print_application_form', args=[application.pk]),
+                            'link_to_new_application': reverse('index')})
             return render(request, 'outcome_success.html', context)
         else:
             transaction.savepoint_rollback( sid )
@@ -540,6 +545,148 @@ def print_application_form (request, proyect_id):
 
 
 # ========================= views for production ======= \
+def print_production_form (request, proyect_id):
+
+    production = ProductionForm.objects.get(proyect_id=proyect_id)
+    from reportlab.platypus import Paragraph
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.units import cm,inch
+    from reportlab.platypus import Paragraph
+    from reportlab.lib.styles import ParagraphStyle
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.platypus import SimpleDocTemplate, Paragraph
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.enums import TA_CENTER, TA_RIGHT
+    from reportlab.platypus.flowables import Spacer, Flowable
+    from io import BytesIO
+    from django.http import HttpResponse
+    from django.views.generic import ListView
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import letter
+    from reportlab.platypus import Table, Image
+    from reportlab.pdfgen import canvas
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.lib.units import inch
+    import copy
+    styles = getSampleStyleSheet()
+    styleH2 =  copy.copy(styles['Heading2'])
+    styleN  =  copy.copy(styles['Normal'])
+    styleTable = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.black),
+                             ('BACKGROUND', (0, 1), (-1, 1), colors.Color(0.9,0.9,0.9)),
+                             ('SPAN',(0,0),(0, 0)),])
+    space = Spacer(1,0.1*inch)
+    space2 = Spacer(1,0.2*inch)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="solicitud.pdf"'
+    doc = SimpleDocTemplate(response,
+                            rightMargin=72,
+                            leftMargin=72,
+                            topMargin=72,
+                            bottomMargin=72)
+
+
+    content = [space]
+    content.append(Paragraph("Formulario de puesta de servicio en producción", styleH2))
+    content.append(space)
+    content.append(Paragraph("<b>Nombre del Proyecto</b>: %s" % production.proyect.name or '', styleN))
+    content.append(space)
+    content.append(Paragraph("<b>Descripcion</b>: %s" % production.proyect.description or '', styleN))
+    content.append(space)
+    content.append(Paragraph("<b>Nombre DB</b>: %s" % production.db_name or '', styleN))
+    content.append(space)
+    content.append(Paragraph("<b>Encoding</b>: %s" % production.encoding or '', styleN))
+    content.append(space)
+    content.append(Paragraph("<b>Usuario owner</b>: %s" % production.user_owner or '', styleN))
+    content.append(space)
+    content.append(Paragraph("<b>Usuario acceso</b>: %s" % production.user_access or '', styleN))
+
+
+    data = [['Requerimientos de Software'],['Nombre', 'Versión'],]
+    software = ProductionSoftwareRequirement.objects.filter(production_form=proyect_id)
+    if software:
+        content.append(space2)
+        for item in software:
+            data.append( [item.name or '',item.version or ''])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
+        content.append(t)
+
+    data = [['Equipos desde los que se conecta'],['Nombre', 'Dirección IP', 'Observaciones'],]
+    sources = ProductionConnectionSource.objects.filter(production_form=proyect_id)
+    if sources:
+        content.append(space2)
+        for item in sources:
+            data.append( [item.name or '',item.ip or '', item.observations or ''])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
+        content.append(t)
+
+    content.append(space2)
+    data = [['Equipos hacia los que se conecta'],['Nombre', 'Dirección IP', 'Puerto', 'IP Firewall'],]
+    targets = ProductionConnectionTarget.objects.filter(production_form=proyect_id)
+    if targets:
+        for item in targets:
+            data.append( [item.name,
+                          item.ip or '',
+                          item.port or '',
+                          item.ip_firewall or ''])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
+        content.append(t)
+
+    if production.observations:
+        content.append(space2)
+        data = [['Observaciones'],]
+        data.append([[Paragraph(production.observations or '', styleN)]])
+        t = Table(data, colWidths='*')
+        t.setStyle(TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),]))
+        content.append(t)
+
+    
+    data = [['Variables a monitorizar'],['Variable', 'Periodicidad', 'Conservar historial por'],]
+    variables = MonitoredVariable.objects.filter(production_form=proyect_id)
+    if variables:
+        content.append(space2)
+        for item in variables:
+            data.append( [Paragraph(item.name or '', styleN),
+                          Paragraph(item.periodicity or '', styleN),
+                          Paragraph(item.preserving_history_by or '', styleN)])
+            t = Table(data, colWidths='*')
+            t.setStyle(styleTable)
+        content.append(t)
+
+    data = [['Hitos durante el año'],['Hito', 'Fecha', 'Duración en días'],]
+    hitos = Milestone.objects.filter(production_form=proyect_id)
+    if hitos:
+        content.append(space2)
+        for item in hitos:
+            data.append( [Paragraph(item.description or '', styleN),
+                          Paragraph(item.duration or '', styleN),
+                          Paragraph(str(item.date_event) or '', styleN)])
+            t = Table(data, colWidths='*')
+            t.setStyle(styleTable)
+        content.append(t)
+
+
+    styleF = copy.copy(styles['Normal'])
+    styleF.alignment = TA_RIGHT
+    data = [[Paragraph("<br/><br/>%s<br/><br/>%s<br/>%s" % \
+                       ("Santa fe, ..... de .......... de 20....",
+                        '..................................................',
+                        'Firma del solicitante'), styleF)],]
+    t = Table(data, colWidths='*')
+    t.setStyle(TableStyle([('VALIGN',(-1,-1),(-1,-1),'BOTTOM'),
+                           ('ALIGN',(0,0),(0,0),'RIGHT'),]))
+    content.append(t)
+
+    doc.build(content, onFirstPage=firstPage, onLaterPages=laterPages, )
+    return response
+
+
 def redirect_without_production_post(request):
     if request.method != 'POST':
         return redirect('production_step1')
@@ -551,8 +698,10 @@ def production_step(request):
     request.session['production_targets_computer'] = {}
     request.session['production_software'] = {}
     request.session['production_variables']= {}
+    request.session['production_milestones']= {}
     proyects = Proyect.objects.order_by('name')
     context = {'proyects': proyects}
+    log_session(request)
     return render(request, 'production_step.html', context)
     
 
@@ -572,6 +721,7 @@ def production_step1(request):
     request.session['production_has_registered'] = False
     request.session['production_proyect'] = proyect_id
     request.session.modified = True
+    log_session(request)
     context = {'proyect_form': proyect_form }
     return render(request, 'production_step1.html', context)
 
@@ -592,6 +742,7 @@ def production_step2(request):
             request.session['production']['user_access'] = request.POST['user_access']
             request.session['production']['observations'] = request.POST['observations']
             request.session.modified = True
+            log_session(request)
             return render(request, 'production_step2.html', context)
         else:
             logging.warning("Invalid production form: %s" % production_form)
@@ -721,6 +872,8 @@ def production_step5(request):
                 variable_form = MonitoredVariableForm( params,
                                                        exclude_from_validation='production_form' )
                 if variable_form.is_valid():
+                    logging.error(variable_form.is_valid())
+                    logging.error(params)
                     variables.append( params )
                 else:
                     logging.warning("Invalid production monitored variables: %s" % variable_form )
@@ -738,3 +891,136 @@ def production_step5(request):
     else:
         context.update({'form': invalid_form, 'variable_list': variables})
         return render(request, 'production_step4.html', context)
+
+
+@transaction.atomic
+def production_step6(request):
+    redirect_without_production_post(request)
+    
+    milestones = []
+    milestone_validate = True
+    invalid_milestone_form = None
+    proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
+    proyect_form = ProyectForm(instance=proyect)
+    context = {'proyect_form': proyect_form}
+    
+    # validate milestons
+    try:
+        for i,milestone in enumerate( request.POST.getlist('descriptions[]') ):
+            params = { 'description': milestone,
+                       'duration': request.POST.getlist('durations[]')[i],
+                       'date_event': request.POST.getlist('date_events[]')[i],
+            }
+            if not are_all_empty_params(params):
+                milestone_form =  MilestoneForm( params, exclude_from_validation='production_form' )
+                if milestone_form.is_valid():
+                    milestones.append(params)
+                else:
+                    logging.warning("Invalid milestone: %s" % milestone_form )
+                    milestone_validate = False
+                    invalid_milestone_form = milestone_form
+    except Exception as e:
+        logging.error('%s' % e)
+
+    request.session['milestones'] = milestones
+    request.session.modified = True
+                
+    if milestone_validate:
+        log_session(request) # and continue...
+    else:
+        context.update({'form': invalid_milestone_form, 'milestones_list': milestones})
+        return render(request, 'production_step5.html', context)
+
+    
+    # === save all data ===
+    sid = transaction.savepoint()
+    commit_transaction = True
+    try:
+        # produciton form
+        produciton_params = request.session['production']
+        produciton_params['proyect'] = proyect.pk
+        production_form = ProductionFormForm(produciton_params)
+
+        if production_form.is_valid():
+            production = production_form.save()
+        else:
+            commit_transaction = False
+            logging.error("Invalid production: %s" % production_form)
+
+        # requirements software
+        for soft in request.session['production_software']:
+            params = soft.copy()
+            params['production_form'] = production.pk
+            soft_form =  ProductionSoftwareRequirementForm( params )
+            if soft_form.is_valid():
+                soft_form.save()
+            else:
+                commit_transaction = False
+                logging.error("Invalid Software Requirements: %s" % soft_form)
+
+        # ac sources 
+        for computer in request.session['production_sources_computer']:
+            params = computer.copy()
+            params['production_form'] = production.pk
+            acs_form =  ProductionConnectionSourceForm( params )
+            if acs_form.is_valid():
+                acs_form.save()
+            else:
+                commit_transaction = False
+                logging.error("Invalid Production conection source: %s" % acs_form)
+
+        # ac targets
+        for computer in request.session['production_targets_computer']:
+            params = computer.copy()
+            params['production_form'] = production.pk
+            act_form =  ProductionConnectionTargetForm( params )
+            if act_form.is_valid():
+                act_form.save()
+            else:
+                commit_transaction = False
+                logging.error("Invalid Production conection target: %s" % act_form)
+
+        # variables
+        for variable in request.session['production_variables']:
+            params = variable.copy()
+            params['production_form'] = production.pk
+            variable_form =   MonitoredVariableForm( params )
+            if variable_form.is_valid():
+                variable_form.save()
+            else:
+                commit_transaction = False
+                logging.error("Invalid monitored Variable: %s" % variable_form)
+
+        # referrers
+        for milestone in request.session['milestones']:
+            params = milestone.copy()
+            params['production_form'] = production.pk
+            milestone_form =  MilestoneForm( params )
+            if milestone_form.is_valid():
+                milestone_form.save()
+            else:
+                commit_transaction = False
+                logging.error("Invalid Milestone: %s" % milestone_form)
+                    
+
+        if commit_transaction:
+            transaction.savepoint_commit( sid )
+            msg = "La solicitud se a realizado con éxito. " \
+                  "Para completar el trámite te pedimos que te acerques a " \
+                  "nuestra oficina con el siguiente formulario impreso y firmado por el solicitante."
+            context.update({'production_form_id': production.pk, 'msg': msg,
+                            'link_to_application': reverse('print_production_form', args=[production.pk] ),
+                            'link_to_new_application': reverse('production_step')})
+            return render(request, 'outcome_success.html', context)
+        else:
+            transaction.savepoint_rollback( sid )
+            
+    except IntegrityError:
+        logging.error('Integrity error for: %s' % proyect)
+        transaction.savepoint_rollback( sid )
+
+    msg = "La solicitud no pudo completarse. " \
+          "Para poder realizar el trámite te pedimos que te acerques a " \
+          "nuestra oficina o intentes realizar la solicitud nuevamente mas tarde.<br>"
+    context.update({'msg': msg})
+    return render(request, 'outcome_error.html.html', context)

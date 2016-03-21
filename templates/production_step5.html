@@ -26,7 +26,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="well bs-component">
-        <form class="form-horizontal" action="{% url 'production_step5' %}" method="post">
+        <form class="form-horizontal" action="{% url 'production_step6' %}" method="post">
           {% csrf_token %}
           <input type='hidden' name="id" value="" />
           <fieldset>
@@ -60,19 +60,19 @@
                           {% for permission in permissions_list %}
 	                  <tbody>
 		            <tr id='addr{{forloop.counter0}}'>
-		              <td data-name="names" >
-		                <input type="text" name='names[]'
-                                       value="{{permission.name}}"
+		              <td data-name="descriptions" >
+		                <input type="text" name='descriptions[]'
+                                       value="{{permission.description}}"
                                        placeholder='' class="form-control"/>
 		              </td>
-		              <td data-name="periodicity" >
-		                <input type="text" name='periodicity[]'
-                                       value="{{permission.periodicity}}"
+		              <td data-name="date_events" >
+		                <input type="text" name='date_events[]'
+                                       value="{{permission.date_event}}"
                                        placeholder='' class="form-control"/>
 		              </td>
-		              <td data-name="preserving_history_by" >
-		                <input type="text" name='preserving_history_by[]'
-                                       value="{{permission.preserving_history_by}}"
+		              <td data-name="durations" >
+		                <input type="text" name='durations[]'
+                                       value="{{permission.duration}}"
                                        placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
@@ -85,19 +85,19 @@
                           {% else %}
 	                  <tbody>
 		            <tr id='addr0'>
-		              <td data-name="names" >
-		                <input type="text" name='names[]'
-                                       value="{{permission.name}}"
+		              <td data-name="descriptions" >
+		                <input type="text" name='descriptions[]'
+                                       value="{{permission.description}}"
                                        placeholder='' class="form-control"/>
 		              </td>
-		              <td data-name="periodicity" >
-		                <input type="text" name='periodicity[]'
-                                       value="{{permission.periodicity}}"
+		              <td data-name="date_events" >
+		                <input type="text" name='date_events[]'
+                                       value="{{permission.date_event}}"
                                        placeholder='' class="form-control"/>
 		              </td>
-		              <td data-name="preserving_history_by" >
-		                <input type="text" name='preserving_history_by[]'
-                                       value="{{permission.preserving_history_by}}"
+		              <td data-name="durations" >
+		                <input type="text" name='durations[]'
+                                       value="{{permission.duration}}"
                                        placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">

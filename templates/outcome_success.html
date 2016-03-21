@@ -18,11 +18,11 @@
             </div>
             <div class="panel-body"> {{ msg|safe }} </div>
             <div class="panel-body">
-              <a href="{% url 'index' %}" class="alert-link">
+              <a href="{{ link_to_new_application }}" class="alert-link">
                 Realizar una nueva solicitud
               </a>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>
-              <a href="{% url 'print_application_form' application_form_id %}" TARGET="_blank"
+              <a href="{{ link_to_application }}" TARGET="_blank"
                  class="alert-link" >Imprimir Solicitud</a></strong>
             </div>
           </div>
