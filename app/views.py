@@ -343,9 +343,7 @@ def save(request):
 
         if commit_transaction:
             transaction.savepoint_commit( sid )
-            msg = "La solicitud se a realizado con éxito. " \
-                  "Para completar el trámite te pedimos que te acerques a " \
-                  "nuestra oficina con el siguiente formulario impreso y firmado por el solicitante."
+            msg = _('completed_application')
             context.update({'application_form_id': application.pk, 'msg': msg,
                             'link_to_application': reverse('print_application_form', args=[application.pk]),
                             'link_to_new_application': reverse('index')})
@@ -357,9 +355,7 @@ def save(request):
         logging.error('Integrity error for: %s' % proyect)
         transaction.savepoint_rollback( sid )
 
-    msg = "La solicitud no pudo completarse. " \
-          "Para poder realizar el trámite te pedimos que te acerques a " \
-          "nuestra oficina o intentes realizar la solicitud nuevamente mas tarde.<br>"
+    msg = _('incomplete application')
     context.update({'msg': msg})
     return render(request, 'outcome_error.html.html', context)
 
@@ -393,8 +389,7 @@ def write_header(canvas, doc):
     canvas.drawImage(img_path,doc.leftMargin , PAGE_HEIGHT-doc.topMargin, 1.5*cm, 1.5*cm)
     canvas.line( doc.leftMargin , PAGE_HEIGHT-1.05*doc.topMargin,
                  PAGE_WIDTH-doc.rightMargin,PAGE_HEIGHT-1.05*doc.topMargin)
-    parag = Paragraph("Dirección de Informatización" \
-                      "<br/>Rectorado<br/>Universidad Nacional",parag_style())
+    parag = Paragraph( _('header_text') ,parag_style())
     parag.wrapOn(canvas,PAGE_WIDTH*0.5, PAGE_HEIGHT)
     parag.drawOn(canvas, 2*doc.leftMargin , PAGE_HEIGHT-doc.topMargin)
     canvas.setFont('Times-Roman',9)
@@ -410,6 +405,14 @@ def firstPage(canvas, doc):
 def laterPages(canvas, doc):
     write_header(canvas,doc)
 
+def to_c( field_name ):
+    return "<b>%s</b>" % field_name
+
+def to_v( field_value ):
+    return field_value or ''
+
+def to_cv( field_name, field_value ):
+    return "%s: %s" % ( to_c(field_name), to_v(field_value) )
 
 def print_application_form (request, proyect_id):
 
@@ -456,72 +459,71 @@ def print_application_form (request, proyect_id):
 
 
     content = [space]
-    content.append(Paragraph("Formulario Alta de Proyectos", styleH2))
+    content.append(Paragraph( _('subscription_application_form') , styleH2))
     content.append(space)
-    content.append(Paragraph("<b>Nombre del Proyecto</b>: %s" % application.proyect.name or '', styleN))
+    content.append(Paragraph(to_cv(_('proyect_name'), application.proyect.name), styleN))
     content.append(space)
-    content.append(Paragraph("<b>Descripcion</b>: %s" % application.proyect.description or '', styleN))
+    content.append(Paragraph(to_cv(_('description'), application.proyect.description), styleN))
     content.append(space)
-    content.append(Paragraph("<b>Nombre DB</b>: %s" % application.db_name or '', styleN))
+    content.append(Paragraph(to_cv(_('db_name'), application.db_name), styleN))
     content.append(space)
-    content.append(Paragraph("<b>Encoding</b>: %s" % application.encoding or '', styleN))
+    content.append(Paragraph(to_cv(_('encoding'), application.encoding), styleN))
     content.append(space)
-    content.append(Paragraph("<b>Usuario owner</b>: %s" % application.user_owner or '', styleN))
+    content.append(Paragraph(to_cv(_('user_owner'), application.user_owner), styleN))
     content.append(space)
-    content.append(Paragraph("<b>Usuario acceso</b>: %s" % application.user_access or '', styleN))
+    content.append(Paragraph(to_cv(_('user_access'), application.user_access), styleN))
 
-
-    data = [['Requerimientos de Software'],['Nombre', 'Versión'],]
+    data = [[_('software_requirements')],[_('name'),_('version')],]
     software = ApplicationSoftwareRequirement.objects.filter(application_form=proyect_id)
     if software:
         content.append(space2)
         for item in software:
-            data.append( [item.name or '',item.version or ''])
+            data.append( [to_v(item.name),to_v(item.version)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
 
-    data = [['Equipos desde los que se conecta'],['Nombre', 'Dirección IP', 'Observaciones'],]
+    data = [[_('connection_sources')],[_('name'),_('ip_address'),_('observations')],]
     sources = ApplicationConnectionSource.objects.filter(application_form=proyect_id)
     if sources:
         content.append(space2)
         for item in sources:
-            data.append( [item.name or '',item.ip or '', item.observations or ''])
+            data.append( [to_v(item.name),to_v(item.ip),to_v(item.observations)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
 
     content.append(space2)
-    data = [['Equipos hacia los que se conecta'],['Nombre', 'Dirección IP', 'Observaciones'],]
+    data = [[_('connection_targets')],[_('name'),_('ip_address'),_('observations')],]
     targets = ApplicationConnectionTarget.objects.filter(application_form=proyect_id)
     if targets:
         for item in targets:
-            data.append( [item.name,item.ip or '', item.observations or ''])
+            data.append( [to_v(item.name),to_v(item.ip), to_v(item.observations)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
 
     if application.observations:
         content.append(space2)
-        data = [['Observaciones'],]
-        data.append([[Paragraph(application.observations or '', styleN)]])
+        data = [[_('observations')],]
+        data.append([[Paragraph(to_v(application.observations), styleN)]])
         t = Table(data, colWidths='*')
         t.setStyle(TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),]))
         content.append(t)
 
     
-    data = [['Solicitantes y Referentes'],['Nombre y apellido', 'E-mail', 'Teléfono', 'Es solicitante'],]
+    data = [[_('applicants_and_referentes')],[_('name_and_surname'),_('email'),_('phones'),_('is_applicant')],]
     referrers = Referrer.objects.filter(application_form=proyect_id)
     if referrers:
         content.append(space2)
         for item in referrers:
             is_applicant = ""
             if item.is_applicant:
-                is_applicant = "Sí"
-                data.append( [Paragraph(item.name or '', styleN),
-                              Paragraph(item.email or '', styleN),
-                              Paragraph(item.phones or '', styleN),
-                              Paragraph(is_applicant or '', styleN)])
+                is_applicant = _('yes')
+                data.append( [Paragraph(to_v(item.name), styleN),
+                              Paragraph(to_v(item.email), styleN),
+                              Paragraph(to_v(item.phones), styleN),
+                              Paragraph(to_v(is_applicant), styleN)])
                 t = Table(data, colWidths='*')
                 t.setStyle(styleTable)
                 content.append(t)
@@ -590,120 +592,119 @@ def print_production_form (request, proyect_id):
 
 
     content = [space]
-    content.append(Paragraph("Formulario de puesta de servicio en producción", styleH2))
+    content.append(Paragraph( _('subscription_production_form') , styleH2))
     content.append(space)
-    content.append(Paragraph("<b>Nombre del Proyecto</b>: %s" % production.proyect.name or '', styleN))
+    content.append(Paragraph(to_cv(_('proyect_name'), production.proyect.name), styleN))
     content.append(space)
-    content.append(Paragraph("<b>Descripcion</b>: %s" % production.proyect.description or '', styleN))
+    content.append(Paragraph(to_cv(_('description'), production.proyect.description), styleN))
     content.append(space)
 
     
     if production.observations:
         content.append(space2)
-        data = [['Observaciones'],]
-        data.append([[Paragraph(production.observations or '', styleN)]])
+        data = [[_('observations')],]
+        data.append([[Paragraph(to_v(production.observations), styleN)]])
         t = Table(data, colWidths='*')
         t.setStyle(TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),]))
         content.append(t)
 
         
     if production.db_name or production.encoding or production.user_owner or production.user_access:
-        data = [['Base de datos']]
+        data = [[_('database')]]
         content.append(space2)
-        data.append(['Nombre','Encoding','Usuario owner', 'Usuario Acceso'])
-        data.append([production.db_name or '',
-                     production.encoding or '',
-                     production.user_owner or '',
-                     production.user_access or '',])
+        data.append([_('name'),_('encoding'),_('user_owner'),_('user_access')])
+        data.append([to_v(production.db_name),
+                     to_v(production.encoding),
+                     to_v(production.user_owner),
+                     to_v(production.user_access),])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
 
         
-    data = [['Volumen de datos estimado'],['','Al inicio', '1er Año', 'Posterior'],]
+    data = [[_('estimated_volume_data')],['',_('space_to_start'),_('space_at_year'),_('space_after')],]
     content.append(space2)
     if production.db_space_to_start or production.db_space_at_year or production.db_space_after:
-        data.append( ['Base de datos',
-                      production.db_space_to_start or '',
-                      production.db_space_at_year or '',
-                      production.db_space_after or ''])
+        data.append( [_('database'),
+                      to_v(production.db_space_to_start),
+                      to_v(production.db_space_at_year),
+                      to_v(production.db_space_after)])
     if production.fs_space_to_start or production.fs_space_at_year or production.fs_space_after:
-        data.append( ['Systema de archivos',
-                      production.fs_space_to_start or '',
-                      production.fs_space_at_year or '',
-                      production.fs_space_after or ''])
+        data.append( [_('filesystem'),
+                      to_v(production.fs_space_to_start),
+                      to_v(production.fs_space_at_year),
+                      to_v(production.fs_space_after)])
     t = Table(data, colWidths='*')
     t.setStyle(styleTable)
     content.append(t)
 
     
-    data = [['Requerimientos de hardware'],['','Mínimo', 'Recomendado'],]
+    data = [[_('hardware_requirements')],['',_('minimum'), _('recommended')],]
     content.append(space2)
     if production.minimum_memory or production.suggested_memory:
-        data.append( ['Memoria', production.minimum_memory or '', production.suggested_memory or ''])
+        data.append( [_('memory'), to_v(production.minimum_memory),to_v(production.suggested_memory)])
     if production.minimum_disk_space or production.suggested_disk_space:
-        data.append( ['Disco', production.minimum_disk_space or '', production.suggested_disk_space or ''])
+        data.append( [_('disk'), to_v(production.minimum_disk_space),to_v(production.suggested_disk_space)])
     if production.minimum_processor or production.suggested_processor:
-        data.append( ['Procesador', production.minimum_processor or '', production.suggested_processor or ''])
+        data.append( [_('processor'), to_v(production.minimum_processor), to_v(production.suggested_processor)])
     t = Table(data, colWidths='*')
     t.setStyle(styleTable)
     content.append(t)
 
             
-    data = [['Requerimientos de Software'],['Nombre', 'Versión'],]
+    data = [[_('software_requirements')],[_('name'), _('version')],]
     software = ProductionSoftwareRequirement.objects.filter(production_form=proyect_id)
     if software:
         content.append(space2)
         for item in software:
-            data.append( [item.name or '',item.version or ''])
+            data.append( [to_v(item.name),to_v(item.version)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
-
-    data = [['Equipos desde los que se conecta'],['Nombre', 'Dirección IP', 'Observaciones'],]
+    data = [[_('connection_sources')],[_('name'),_('ip_address'),_('observations')],]
     sources = ProductionConnectionSource.objects.filter(production_form=proyect_id)
     if sources:
         content.append(space2)
         for item in sources:
-            data.append( [item.name or '',item.ip or '', item.observations or ''])
+            data.append( [to_v(item.name), to_v(item.ip), to_v(item.observations)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
 
     content.append(space2)
-    data = [['Equipos hacia los que se conecta'],['Nombre', 'Dirección IP', 'Puerto', 'IP Firewall'],]
+    data = [[_('connection_targets')],[_('name'),_('ip_address'),_('port'),_('ip_firewall')],]
     targets = ProductionConnectionTarget.objects.filter(production_form=proyect_id)
     if targets:
         for item in targets:
             data.append( [item.name,
-                          item.ip or '',
-                          item.port or '',
-                          item.ip_firewall or ''])
+                          to_v(item.ip),
+                          to_v(item.port),
+                          to_v(item.ip_firewall)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
 
     
-    data = [['Variables a monitorizar'],['Variable', 'Periodicidad', 'Conservar historial por'],]
+    data = [[_('Variables to be monitored')],[_('variable'), _('periodicity'), _('preserving_history_by')],]
     variables = MonitoredVariable.objects.filter(production_form=proyect_id)
     if variables:
         content.append(space2)
         for item in variables:
-            data.append( [Paragraph(item.name or '', styleN),
-                          Paragraph(item.periodicity or '', styleN),
-                          Paragraph(item.preserving_history_by or '', styleN)])
+            data.append( [Paragraph(to_v(item.name), styleN),
+                          Paragraph(to_v(item.periodicity), styleN),
+                          Paragraph(to_v(item.preserving_history_by), styleN)])
             t = Table(data, colWidths='*')
             t.setStyle(styleTable)
         content.append(t)
 
-    data = [['Hitos durante el año'],['Hito', 'Fecha', 'Duración en días'],]
+    data = [[_('milestones_during_the_year')],[_('milestone'), _('date'), _('duration_in_days')],]
     hitos = Milestone.objects.filter(production_form=proyect_id)
     if hitos:
         content.append(space2)
         for item in hitos:
-            data.append( [Paragraph(item.description or '', styleN),
-                          Paragraph(item.duration or '', styleN),
-                          Paragraph(str(item.date_event) or '', styleN)])
+            data.append( [Paragraph(to_v(item.description), styleN),
+                          Paragraph(to_v(item.duration), styleN),
+                          Paragraph(to_v(str(item.date_event)), styleN)])
             t = Table(data, colWidths='*')
             t.setStyle(styleTable)
         content.append(t)
@@ -1054,9 +1055,7 @@ def production_step6(request):
 
         if commit_transaction:
             transaction.savepoint_commit( sid )
-            msg = "La solicitud se a realizado con éxito. " \
-                  "Para completar el trámite te pedimos que te acerques a " \
-                  "nuestra oficina con el siguiente formulario impreso y firmado por el solicitante."
+            msg = _('completed_application')
             context.update({'production_form_id': production.pk, 'msg': msg,
                             'link_to_application': reverse('print_production_form', args=[production.pk] ),
                             'link_to_new_application': reverse('production_step')})
@@ -1068,8 +1067,6 @@ def production_step6(request):
         logging.error('Integrity error for: %s' % proyect)
         transaction.savepoint_rollback( sid )
 
-    msg = "La solicitud no pudo completarse. " \
-          "Para poder realizar el trámite te pedimos que te acerques a " \
-          "nuestra oficina o intentes realizar la solicitud nuevamente mas tarde.<br>"
+    msg = _('incomplete application')
     context.update({'msg': msg})
     return render(request, 'outcome_error.html.html', context)

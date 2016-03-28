@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-28 10:13-0300\n"
+"POT-Creation-Date: 2016-03-28 14:14-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,26 +20,31 @@ msgstr ""
 
 #: app/forms.py:17 app/forms.py:199 app/models.py:10 app/models.py:115
 #: app/models.py:135 app/models.py:152 app/models.py:169 app/models.py:187
-#: app/models.py:203 app/models.py:261 app/models.py:281
-#: templates/new_step1.html:52 templates/production_step1.html:36
+#: app/models.py:203 app/models.py:261 app/models.py:281 app/views.py:476
+#: app/views.py:486 app/views.py:497 app/views.py:615 app/views.py:655
+#: app/views.py:664 app/views.py:675 templates/new_step1.html:52
+#: templates/production_step1.html:36
 msgid "name"
 msgstr "Nombre"
 
 #: app/forms.py:18 app/forms.py:217 app/models.py:11 app/models.py:219
-#: templates/new_step1.html:60 templates/production_step1.html:44
+#: app/views.py:466 app/views.py:599 templates/new_step1.html:60
+#: templates/production_step1.html:44
 msgid "description"
 msgstr "Descripción"
 
 #: app/forms.py:30 app/forms.py:85 app/forms.py:107 app/forms.py:128
 #: app/forms.py:244 app/models.py:38 app/models.py:91 app/models.py:120
 #: app/models.py:137 app/models.py:155 app/models.py:312 app/models.py:342
-#: templates/new_step1.html:96 templates/production_step1.html:202
+#: app/views.py:486 app/views.py:497 app/views.py:508 app/views.py:605
+#: app/views.py:664 templates/new_step1.html:96
+#: templates/production_step1.html:202
 msgid "observations"
 msgstr "Observaciones"
 
-#: app/forms.py:147 app/models.py:172
+#: app/forms.py:147 app/models.py:172 app/views.py:675
 msgid "port"
-msgstr ""
+msgstr "Puerto"
 
 #: app/forms.py:164 app/forms.py:181 app/models.py:238
 msgid "user"
@@ -49,19 +54,19 @@ msgstr "Usuario"
 msgid "permission"
 msgstr "Permiso"
 
-#: app/forms.py:183 app/models.py:283
+#: app/forms.py:183 app/models.py:283 app/views.py:688
 msgid "preserving_history_by"
 msgstr "Preservar historial por"
 
-#: app/forms.py:200 app/models.py:263
+#: app/forms.py:200 app/models.py:263 app/views.py:515
 msgid "email"
 msgstr "Email"
 
-#: app/forms.py:201 app/models.py:264
+#: app/forms.py:201 app/models.py:264 app/views.py:515
 msgid "phones"
 msgstr "Teléfonos"
 
-#: app/forms.py:202 app/models.py:265
+#: app/forms.py:202 app/models.py:265 app/views.py:515
 msgid "is_applicant"
 msgstr "Es solicitante"
 
@@ -70,10 +75,8 @@ msgid "duration"
 msgstr "Duración"
 
 #: app/forms.py:219 app/models.py:222
-#, fuzzy
-#| msgid "updated_at"
 msgid "date_event"
-msgstr "Modificado el"
+msgstr "Fecha del evento"
 
 #: app/forms.py:238 app/models.py:31 app/models.py:54
 #: templates/production_step.html:67
@@ -96,23 +99,23 @@ msgstr "Proyecto"
 msgid "Proyects"
 msgstr "Proyectos"
 
-#: app/models.py:33 app/models.py:56 templates/new_step1.html:69
-#: templates/production_step1.html:61
+#: app/models.py:33 app/models.py:56 app/views.py:468
+#: templates/new_step1.html:69 templates/production_step1.html:61
 msgid "db_name"
 msgstr "Nombre DB"
 
-#: app/models.py:34 app/models.py:57 templates/new_step1.html:74
-#: templates/production_step1.html:68
+#: app/models.py:34 app/models.py:57 app/views.py:470 app/views.py:615
+#: templates/new_step1.html:74 templates/production_step1.html:68
 msgid "encoding"
 msgstr "Codificación"
 
-#: app/models.py:35 app/models.py:58 templates/new_step1.html:82
-#: templates/production_step1.html:78
+#: app/models.py:35 app/models.py:58 app/views.py:472 app/views.py:615
+#: templates/new_step1.html:82 templates/production_step1.html:78
 msgid "user_owner"
 msgstr "Usuario owner"
 
-#: app/models.py:36 app/models.py:59 templates/new_step1.html:87
-#: templates/production_step1.html:87
+#: app/models.py:36 app/models.py:59 app/views.py:474 app/views.py:615
+#: templates/new_step1.html:87 templates/production_step1.html:87
 msgid "user_access"
 msgstr "Usuario acceso"
 
@@ -230,9 +233,9 @@ msgstr "Destino de conexión de solicitud"
 msgid "ApplicationConnectionTargets"
 msgstr "Destinos de conexión de solicitud"
 
-#: app/models.py:171
+#: app/models.py:171 app/views.py:675
 msgid "ip_firewall"
-msgstr ""
+msgstr "IP Firewall"
 
 #: app/models.py:178
 msgid "ProductionConnectionTarget"
@@ -242,7 +245,7 @@ msgstr "Destino de conexión de producción"
 msgid "ProductionConnectionTargets"
 msgstr "Destinos de conexión de producción"
 
-#: app/models.py:188 app/models.py:204
+#: app/models.py:188 app/models.py:204 app/views.py:476 app/views.py:655
 msgid "version"
 msgstr "Versión"
 
@@ -286,7 +289,7 @@ msgstr "Referente"
 msgid "Referrers"
 msgstr "Referentes"
 
-#: app/models.py:282
+#: app/models.py:282 app/views.py:688
 msgid "periodicity"
 msgstr "Periodicidad"
 
@@ -302,7 +305,8 @@ msgstr "Variables monitoreadas"
 msgid "virtual_machine_name"
 msgstr "Nombre de máquina virtual"
 
-#: app/models.py:300 app/models.py:332
+#: app/models.py:300 app/models.py:332 app/views.py:486 app/views.py:497
+#: app/views.py:664 app/views.py:675
 msgid "ip_address"
 msgstr "Dirección IP"
 
@@ -369,6 +373,132 @@ msgstr "Servidor de Producción"
 #: app/models.py:356
 msgid "ProductionServers"
 msgstr "Servidores de Producción"
+
+#: app/views.py:346 app/views.py:1058
+msgid "completed_application"
+msgstr ""
+"La solicitud se a realizado con éxito. Para completar el trámite te pedimos "
+"que te acerques a nuestra oficina con el siguiente formulario impreso y "
+"firmado por el solicitante."
+
+#: app/views.py:358 app/views.py:1070
+msgid "incomplete application"
+msgstr ""
+"La solicitud no pudo completarse. Para poder realizar el trámite te pedimos "
+"que te acerques a nuestra oficina o intentes realizar la solicitud "
+"nuevamente mas tarde."
+
+#: app/views.py:392
+msgid "header_text"
+msgstr "Dirección de Informatización <br/>Rectorado<br/>Universidad Nacional"
+
+#: app/views.py:462
+msgid "subscription_application_form"
+msgstr "Formulario alta de proyectos"
+
+#: app/views.py:464 app/views.py:597
+msgid "proyect_name"
+msgstr "Nombre de Proyecto"
+
+#: app/views.py:476 app/views.py:655
+msgid "software_requirements"
+msgstr "Requerimientos de software"
+
+#: app/views.py:486 app/views.py:664
+msgid "connection_sources"
+msgstr "Equipos desde los que se conecta"
+
+#: app/views.py:497 app/views.py:675
+msgid "connection_targets"
+msgstr "Equipos hacia los que se conecta"
+
+#: app/views.py:515
+msgid "applicants_and_referentes"
+msgstr "Solicitantes y referentes"
+
+#: app/views.py:515
+msgid "name_and_surname"
+msgstr "Nombre y apellido"
+
+#: app/views.py:522
+msgid "yes"
+msgstr "Sí"
+
+#: app/views.py:595
+msgid "subscription_production_form"
+msgstr "Formulario de puesta de servicio en producción"
+
+#: app/views.py:613 app/views.py:628
+msgid "database"
+msgstr "Base de datos"
+
+#: app/views.py:625
+msgid "estimated_volume_data"
+msgstr "Volumen de datos estimado"
+
+#: app/views.py:625
+msgid "space_to_start"
+msgstr "Al inicio"
+
+#: app/views.py:625
+msgid "space_at_year"
+msgstr "Al año"
+
+#: app/views.py:625
+msgid "space_after"
+msgstr "Posterior"
+
+#: app/views.py:633
+msgid "filesystem"
+msgstr "Sistema de archivos"
+
+#: app/views.py:642
+msgid "hardware_requirements"
+msgstr "Requerimientos de hardware"
+
+#: app/views.py:642
+msgid "minimum"
+msgstr "Mínimo"
+
+#: app/views.py:642
+msgid "recommended"
+msgstr "Recomendado"
+
+#: app/views.py:645
+msgid "memory"
+msgstr "Memoria"
+
+#: app/views.py:647
+msgid "disk"
+msgstr "Disco"
+
+#: app/views.py:649
+msgid "processor"
+msgstr "Procesador"
+
+#: app/views.py:688
+msgid "Variables to be monitored"
+msgstr "Variable a monitorizar"
+
+#: app/views.py:688
+msgid "variable"
+msgstr "Variable"
+
+#: app/views.py:700
+msgid "milestones_during_the_year"
+msgstr "Hitos durante el año"
+
+#: app/views.py:700
+msgid "date"
+msgstr "Fecha"
+
+#: app/views.py:700
+msgid "duration_in_days"
+msgstr "Duración en días"
+
+#: app/views.py:700
+msgid "milestone"
+msgstr "Hito"
 
 #: pulmo/settings.py:109 pulmo/settings.tpl.py:110
 msgid "Spanish"
