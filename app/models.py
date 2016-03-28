@@ -20,6 +20,12 @@ class Proyect(models.Model):
     def __unicode__(self):
         return "%s" % (self.name)
 
+    @classmethod
+    def without_test_server(cls):
+        return Proyect.objects \
+                      .filter(applicationform__testserver__application_form__isnull=False) \
+                      .order_by('name')
+
     
 class ApplicationForm (models.Model):
     proyect = models.OneToOneField(Proyect, primary_key=True,verbose_name=_('proyect'))

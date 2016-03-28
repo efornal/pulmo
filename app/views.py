@@ -736,7 +736,7 @@ def production_step(request):
     request.session['production_software'] = {}
     request.session['production_variables']= {}
     request.session['production_milestones']= {}
-    proyects = Proyect.objects.order_by('name')
+    proyects = Proyect.without_test_server()
     context = {'proyects': proyects}
     log_session(request)
     return render(request, 'production_step.html', context)
