@@ -181,3 +181,20 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 # =================================/
+
+
+# #loggin querys in develompent
+# if DEBUG:
+#     import logging
+#     l = logging.getLogger('django.db.backends')
+#     l.setLevel(logging.DEBUG)
+#     l.addHandler(logging.StreamHandler())
+#     logging.basicConfig(
+#         level = logging.DEBUG,
+#         format = " %(levelname)s %(name)s: %(message)s",
+#     )
+
+# # Enable debug for ldap server connection
+# logger = logging.getLogger('django_auth_ldap')
+# logger.addHandler(logging.StreamHandler())
+# logger.setLevel(logging.DEBUG)
