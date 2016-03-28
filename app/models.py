@@ -315,6 +315,7 @@ class TestServer(models.Model):
     applicant = models.CharField(max_length=200, null=True, blank=True,verbose_name=_('applicant'))
     signature_date = models.DateTimeField(null=True, blank=True,auto_now_add=True,
                                           verbose_name=_('signature_date'))
+    related_ticket = models.CharField(max_length=200,null=True,verbose_name=_('related_ticket'))
     
     class Meta:
         db_table = 'test_servers'
@@ -347,6 +348,7 @@ class ProductionServer(models.Model):
     applicant = models.CharField(max_length=200, null=True, blank=True,verbose_name=_('applicant'))
     signature_date = models.DateTimeField(null=True, blank=True,auto_now_add=True,
                                           verbose_name=_('signature_date'))
+    related_ticket = models.CharField(max_length=200,null=True,verbose_name=_('related_ticket'))
     
     class Meta:
         db_table = 'production_servers'
