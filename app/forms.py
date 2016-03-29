@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from .models import Proyect, ApplicationForm, ProductionForm, ApplicationSoftwareRequirement
 from .models import ProductionSoftwareRequirement
 from .models import MonitoredVariable
-from .models import Milestone
+from .models import Milestone, TestServer, ProductionServer
 from .models import ApplicationConnectionSource, ApplicationConnectionTarget
 from .models import ProductionConnectionSource, ProductionConnectionTarget
 from .models import SCVPermission, Referrer
@@ -266,3 +266,8 @@ class ProductionFormForm(forms.ModelForm):
         fields = '__all__'
         #fields = ('db_name','encoding','user_owner','user_access','observations', 'production_form')
         
+
+class TestServerForm(forms.ModelForm):
+    class Meta:
+        model = TestServer
+        fields = '__all__'

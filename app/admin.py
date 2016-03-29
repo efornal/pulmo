@@ -128,7 +128,8 @@ class SCVPermissionAdmin(admin.ModelAdmin):
 
     
 class TestServerAdmin(admin.ModelAdmin):
-    exclude = ('signature_date','applicant')
+#    exclude = ('signature_date','applicant') #FIXME, temporal
+    exclude = ('applicant',) #FIXME, temporal
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:
@@ -141,8 +142,9 @@ class TestServerAdmin(admin.ModelAdmin):
 
 
 class ProductionServerAdmin(admin.ModelAdmin):
-    exclude = ('signature_date','applicant')
-
+#    exclude = ('signature_date','applicant') #FIXME, temporal
+    exclude = ('applicant',) #FIXME, temporal
+    
     def save_model(self, request, obj, form, change):
         if not obj.pk:
             obj.applicant = obj.user.username # FIXME, temporal
@@ -150,7 +152,7 @@ class ProductionServerAdmin(admin.ModelAdmin):
             logging.info("The application server production has been signed by the user %s" \
                          % obj.applicant)
             
-        super(TestServerAdmin, self).save_model(request, obj, form, change)
+        super(ProductionServerAdmin, self).save_model(request, obj, form, change)
         
 
     
