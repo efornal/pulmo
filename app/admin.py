@@ -132,7 +132,8 @@ class TestServerAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:
-            obj.applicant = request.user.pk
+            #obj.applicant = request.user.username # FIXME, temporal
+            obj.applicant = obj.user.username
             logging.info("The application server test has been signed by the user %s" \
                          % obj.applicant)
             
@@ -144,7 +145,8 @@ class ProductionServerAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not obj.pk:
-            obj.applicant = request.user.pk
+            obj.applicant = obj.user.username # FIXME, temporal
+            #obj.applicant = request.user.username # FIXME, 
             logging.info("The application server production has been signed by the user %s" \
                          % obj.applicant)
             

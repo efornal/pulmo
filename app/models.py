@@ -3,7 +3,7 @@ from django.db import models
 from datetime import datetime
 from django.utils.translation import ugettext as _
 from django.core.validators import validate_ipv46_address, validate_email
-
+from django.contrib.auth.models import User
     
 class Proyect(models.Model):
     id = models.AutoField( primary_key=True,null=False)
@@ -313,9 +313,10 @@ class TestServer(models.Model):
     application_form = models.ForeignKey(ApplicationForm, null=False, blank=False,
                                          verbose_name=_('application_form'))
     applicant = models.CharField(max_length=200, null=True, blank=True,verbose_name=_('applicant'))
+    user = models.ForeignKey(User, null=True, blank=True, verbose_name=_('user'))
     signature_date = models.DateTimeField(null=True, blank=True,auto_now_add=True,
                                           verbose_name=_('signature_date'))
-    related_ticket = models.CharField(max_length=200,null=True,verbose_name=_('related_ticket'))
+    related_ticket = models.CharField(max_length=200,null=True,blank=True,verbose_name=_('related_ticket'))
     
     class Meta:
         db_table = 'test_servers'
@@ -346,9 +347,10 @@ class ProductionServer(models.Model):
     added_backup     = models.BooleanField(default=False,null=False,verbose_name=_('added_backup'))
 
     applicant = models.CharField(max_length=200, null=True, blank=True,verbose_name=_('applicant'))
+    user = models.ForeignKey(User, null=True, blank=True, verbose_name=_('user'))
     signature_date = models.DateTimeField(null=True, blank=True,auto_now_add=True,
                                           verbose_name=_('signature_date'))
-    related_ticket = models.CharField(max_length=200,null=True,verbose_name=_('related_ticket'))
+    related_ticket = models.CharField(max_length=200,null=True,blank=True,verbose_name=_('related_ticket'))
     
     class Meta:
         db_table = 'production_servers'
