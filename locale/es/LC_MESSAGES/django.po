@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-28 14:14-0300\n"
+"POT-Creation-Date: 2016-03-29 08:42-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -382,7 +382,7 @@ msgstr ""
 "firmado por el solicitante."
 
 #: app/views.py:358 app/views.py:1070
-msgid "incomplete application"
+msgid "incomplete_application"
 msgstr ""
 "La solicitud no pudo completarse. Para poder realizar el trámite te pedimos "
 "que te acerques a nuestra oficina o intentes realizar la solicitud "
@@ -477,8 +477,8 @@ msgid "processor"
 msgstr "Procesador"
 
 #: app/views.py:688
-msgid "Variables to be monitored"
-msgstr "Variable a monitorizar"
+msgid "variables_to_be_monitored"
+msgstr "Variables a monitorizar"
 
 #: app/views.py:688
 msgid "variable"
@@ -489,6 +489,10 @@ msgid "milestones_during_the_year"
 msgstr "Hitos durante el año"
 
 #: app/views.py:700
+msgid "milestone"
+msgstr "Hito"
+
+#: app/views.py:700
 msgid "date"
 msgstr "Fecha"
 
@@ -496,9 +500,9 @@ msgstr "Fecha"
 msgid "duration_in_days"
 msgstr "Duración en días"
 
-#: app/views.py:700
-msgid "milestone"
-msgstr "Hito"
+#: app/views.py:754
+msgid "project_not_found"
+msgstr "No se pudo determinar el proyecto sobre el cual realizar la solicitud"
 
 #: pulmo/settings.py:109 pulmo/settings.tpl.py:110
 msgid "Spanish"

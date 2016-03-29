@@ -355,7 +355,7 @@ def save(request):
         logging.error('Integrity error for: %s' % proyect)
         transaction.savepoint_rollback( sid )
 
-    msg = _('incomplete application')
+    msg = _('incomplete_application')
     context.update({'msg': msg})
     return render(request, 'outcome_error.html.html', context)
 
@@ -685,7 +685,7 @@ def print_production_form (request, proyect_id):
         content.append(t)
 
     
-    data = [[_('Variables to be monitored')],[_('variable'), _('periodicity'), _('preserving_history_by')],]
+    data = [[_('variables_to_be_monitored')],[_('variable'), _('periodicity'), _('preserving_history_by')],]
     variables = MonitoredVariable.objects.filter(production_form=proyect_id)
     if variables:
         content.append(space2)
@@ -751,7 +751,7 @@ def production_step1(request):
         proyect_id = request.POST['id'] or None
     if not proyect_id or not Proyect.objects.get(pk=proyect_id):
         logging.warning('Could not determine the project')
-        messages.warning(request, 'No se pudo determinar el proyecto sobre el cual realizar la solicitud')
+        messages.warning(request, _('project_not_found'))
         return redirect('production_step')
 
     proyect = Proyect.objects.get(pk=proyect_id)    
@@ -1067,6 +1067,6 @@ def production_step6(request):
         logging.error('Integrity error for: %s' % proyect)
         transaction.savepoint_rollback( sid )
 
-    msg = _('incomplete application')
+    msg = _('incomplete_application')
     context.update({'msg': msg})
     return render(request, 'outcome_error.html.html', context)

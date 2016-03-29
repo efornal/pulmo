@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-28 14:14-0300\n"
+"POT-Creation-Date: 2016-03-29 08:42-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -380,7 +380,7 @@ msgstr ""
 "anywhere near our office with the printed form and signed by the applicant."
 
 #: app/views.py:358 app/views.py:1070
-msgid "incomplete application"
+msgid "incomplete_application"
 msgstr ""
 "The request could not be completed. In order to make the process we ask you "
 "anywhere near our office or try to make the request again later."
@@ -474,9 +474,7 @@ msgid "processor"
 msgstr "Processor"
 
 #: app/views.py:688
-#, fuzzy
-#| msgid "variables_to_be_monitored"
-msgid "Variables to be monitored"
+msgid "variables_to_be_monitored"
 msgstr "Variables to be monitored"
 
 #: app/views.py:688
@@ -488,6 +486,10 @@ msgid "milestones_during_the_year"
 msgstr "Milestones during the year"
 
 #: app/views.py:700
+msgid "milestone"
+msgstr "Milestone"
+
+#: app/views.py:700
 msgid "date"
 msgstr "Date"
 
@@ -495,9 +497,9 @@ msgstr "Date"
 msgid "duration_in_days"
 msgstr "Duration in days"
 
-#: app/views.py:700
-msgid "milestone"
-msgstr "Milestone"
+#: app/views.py:754
+msgid "project_not_found"
+msgstr "Could not determine the project on which to make the request"
 
 #: pulmo/settings.py:109 pulmo/settings.tpl.py:110
 msgid "Spanish"
