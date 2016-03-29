@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-29 08:42-0300\n"
+"POT-Creation-Date: 2016-03-29 13:07-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,33 +20,34 @@ msgstr ""
 
 #: app/forms.py:17 app/forms.py:199 app/models.py:10 app/models.py:115
 #: app/models.py:135 app/models.py:152 app/models.py:169 app/models.py:187
-#: app/models.py:203 app/models.py:261 app/models.py:281 app/views.py:476
-#: app/views.py:486 app/views.py:497 app/views.py:615 app/views.py:655
-#: app/views.py:664 app/views.py:675 templates/new_step1.html:52
-#: templates/production_step1.html:36
+#: app/models.py:203 app/models.py:261 app/models.py:281 app/views.py:489
+#: app/views.py:501 app/views.py:511 app/views.py:522 app/views.py:649
+#: app/views.py:696 app/views.py:704 app/views.py:714
+#: templates/new_step1.html:52 templates/production_step1.html:36
 msgid "name"
 msgstr "Nombre"
 
 #: app/forms.py:18 app/forms.py:217 app/models.py:11 app/models.py:219
-#: app/views.py:466 app/views.py:599 templates/new_step1.html:60
+#: app/views.py:472 app/views.py:631 templates/new_step1.html:60
 #: templates/production_step1.html:44
 msgid "description"
 msgstr "Descripción"
 
 #: app/forms.py:30 app/forms.py:85 app/forms.py:107 app/forms.py:128
 #: app/forms.py:244 app/models.py:38 app/models.py:91 app/models.py:120
-#: app/models.py:137 app/models.py:155 app/models.py:312 app/models.py:342
-#: app/views.py:486 app/views.py:497 app/views.py:508 app/views.py:605
-#: app/views.py:664 templates/new_step1.html:96
+#: app/models.py:137 app/models.py:155 app/models.py:312 app/models.py:343
+#: app/views.py:480 app/views.py:511 app/views.py:522 app/views.py:639
+#: app/views.py:704 templates/new_step1.html:96
 #: templates/production_step1.html:202
 msgid "observations"
 msgstr "Observaciones"
 
-#: app/forms.py:147 app/models.py:172 app/views.py:675
+#: app/forms.py:147 app/models.py:172 app/views.py:714
 msgid "port"
 msgstr "Puerto"
 
-#: app/forms.py:164 app/forms.py:181 app/models.py:238
+#: app/forms.py:164 app/forms.py:181 app/models.py:238 app/models.py:316
+#: app/models.py:350
 msgid "user"
 msgstr "Usuario"
 
@@ -54,19 +55,19 @@ msgstr "Usuario"
 msgid "permission"
 msgstr "Permiso"
 
-#: app/forms.py:183 app/models.py:283 app/views.py:688
+#: app/forms.py:183 app/models.py:283 app/views.py:730
 msgid "preserving_history_by"
 msgstr "Preservar historial por"
 
-#: app/forms.py:200 app/models.py:263 app/views.py:515
+#: app/forms.py:200 app/models.py:263 app/views.py:543
 msgid "email"
 msgstr "Email"
 
-#: app/forms.py:201 app/models.py:264 app/views.py:515
+#: app/forms.py:201 app/models.py:264 app/views.py:543
 msgid "phones"
 msgstr "Teléfonos"
 
-#: app/forms.py:202 app/models.py:265 app/views.py:515
+#: app/forms.py:202 app/models.py:265 app/views.py:543
 msgid "is_applicant"
 msgstr "Es solicitante"
 
@@ -99,27 +100,27 @@ msgstr "Proyecto"
 msgid "Proyects"
 msgstr "Proyectos"
 
-#: app/models.py:33 app/models.py:56 app/views.py:468
-#: templates/new_step1.html:69 templates/production_step1.html:61
+#: app/models.py:33 app/models.py:56 templates/new_step1.html:69
+#: templates/production_step1.html:61
 msgid "db_name"
 msgstr "Nombre DB"
 
-#: app/models.py:34 app/models.py:57 app/views.py:470 app/views.py:615
+#: app/models.py:34 app/models.py:57 app/views.py:489 app/views.py:649
 #: templates/new_step1.html:74 templates/production_step1.html:68
 msgid "encoding"
 msgstr "Codificación"
 
-#: app/models.py:35 app/models.py:58 app/views.py:472 app/views.py:615
+#: app/models.py:35 app/models.py:58 app/views.py:489 app/views.py:649
 #: templates/new_step1.html:82 templates/production_step1.html:78
 msgid "user_owner"
 msgstr "Usuario owner"
 
-#: app/models.py:36 app/models.py:59 app/views.py:474 app/views.py:615
+#: app/models.py:36 app/models.py:59 app/views.py:489 app/views.py:649
 #: templates/new_step1.html:87 templates/production_step1.html:87
 msgid "user_access"
 msgstr "Usuario acceso"
 
-#: app/models.py:42 app/models.py:101 app/models.py:317 app/models.py:350
+#: app/models.py:42 app/models.py:101 app/models.py:317 app/models.py:351
 msgid "signature_date"
 msgstr "fecha de firma"
 
@@ -183,7 +184,7 @@ msgstr "Nro de procesadores sugeridos"
 msgid "files_backup"
 msgstr "Archivos a resguardar"
 
-#: app/models.py:99 app/models.py:315 app/models.py:348
+#: app/models.py:99 app/models.py:315 app/models.py:349
 msgid "applicant"
 msgstr "Solicitante"
 
@@ -213,7 +214,7 @@ msgid "ApplicationConnectionSources"
 msgstr "Fuentes de conexión de solicitud"
 
 #: app/models.py:139 app/models.py:174 app/models.py:206 app/models.py:224
-#: app/models.py:285 app/models.py:344
+#: app/models.py:285 app/models.py:345
 msgid "production_form"
 msgstr "Formulario de Producción"
 
@@ -233,7 +234,7 @@ msgstr "Destino de conexión de solicitud"
 msgid "ApplicationConnectionTargets"
 msgstr "Destinos de conexión de solicitud"
 
-#: app/models.py:171 app/views.py:675
+#: app/models.py:171 app/views.py:714
 msgid "ip_firewall"
 msgstr "IP Firewall"
 
@@ -245,7 +246,7 @@ msgstr "Destino de conexión de producción"
 msgid "ProductionConnectionTargets"
 msgstr "Destinos de conexión de producción"
 
-#: app/models.py:188 app/models.py:204 app/views.py:476 app/views.py:655
+#: app/models.py:188 app/models.py:204 app/views.py:501 app/views.py:696
 msgid "version"
 msgstr "Versión"
 
@@ -289,7 +290,7 @@ msgstr "Referente"
 msgid "Referrers"
 msgstr "Referentes"
 
-#: app/models.py:282 app/views.py:688
+#: app/models.py:282 app/views.py:730
 msgid "periodicity"
 msgstr "Periodicidad"
 
@@ -301,87 +302,87 @@ msgstr "Variable monitoreada"
 msgid "MonitoredVariables"
 msgstr "Variables monitoreadas"
 
-#: app/models.py:299 app/models.py:331
+#: app/models.py:299 app/models.py:332
 msgid "virtual_machine_name"
 msgstr "Nombre de máquina virtual"
 
-#: app/models.py:300 app/models.py:332 app/views.py:486 app/views.py:497
-#: app/views.py:664 app/views.py:675
+#: app/models.py:300 app/models.py:333 app/views.py:511 app/views.py:522
+#: app/views.py:704 app/views.py:714
 msgid "ip_address"
 msgstr "Dirección IP"
 
-#: app/models.py:301 app/models.py:333
+#: app/models.py:301 app/models.py:334
 msgid "mac_address"
 msgstr "Dirección MAC"
 
-#: app/models.py:302 app/models.py:334
+#: app/models.py:302 app/models.py:335
 msgid "ram_memory"
 msgstr "Memoria RAM"
 
-#: app/models.py:303 app/models.py:335
+#: app/models.py:303 app/models.py:336
 msgid "disk_space"
 msgstr "Espacio en disco"
 
-#: app/models.py:304 app/models.py:336
+#: app/models.py:304 app/models.py:337
 msgid "processors"
 msgstr "Procesadores"
 
-#: app/models.py:306 app/models.py:337
+#: app/models.py:306 app/models.py:338
 msgid "database_permissions"
 msgstr "Permisos en DB"
 
-#: app/models.py:307 app/models.py:338
+#: app/models.py:307 app/models.py:339
 msgid "database_server"
 msgstr "Servidor de DB"
 
-#: app/models.py:308 app/models.py:339
+#: app/models.py:308 app/models.py:340
 msgid "location_logs"
 msgstr "Localización de Logs"
 
-#: app/models.py:310 app/models.py:341
+#: app/models.py:310 app/models.py:342
 msgid "cluster_virtual_machine"
 msgstr "Cluster de máquina virtual"
 
-#: app/models.py:311
+#: app/models.py:311 app/views.py:531
 msgid "vcs_repository"
 msgstr "Repositorio VCS"
 
-#: app/models.py:318 app/models.py:351
+#: app/models.py:319 app/models.py:353
 msgid "related_ticket"
 msgstr "Ticket relacionado"
 
-#: app/models.py:322
+#: app/models.py:323
 msgid "TestServer"
 msgstr "Servidor de Test"
 
-#: app/models.py:323
+#: app/models.py:324
 msgid "TestServers"
 msgstr "Servidores de Test"
 
-#: app/models.py:345
+#: app/models.py:346
 msgid "added_monitoring"
 msgstr "Monitoreo añadido"
 
-#: app/models.py:346
+#: app/models.py:347
 msgid "added_backup"
 msgstr "Resguardo añadido"
 
-#: app/models.py:355
+#: app/models.py:357
 msgid "ProductionServer"
 msgstr "Servidor de Producción"
 
-#: app/models.py:356
+#: app/models.py:358
 msgid "ProductionServers"
 msgstr "Servidores de Producción"
 
-#: app/views.py:346 app/views.py:1058
+#: app/views.py:346 app/views.py:1098
 msgid "completed_application"
 msgstr ""
 "La solicitud se a realizado con éxito. Para completar el trámite te pedimos "
 "que te acerques a nuestra oficina con el siguiente formulario impreso y "
 "firmado por el solicitante."
 
-#: app/views.py:358 app/views.py:1070
+#: app/views.py:358 app/views.py:1110
 msgid "incomplete_application"
 msgstr ""
 "La solicitud no pudo completarse. Para poder realizar el trámite te pedimos "
@@ -392,115 +393,123 @@ msgstr ""
 msgid "header_text"
 msgstr "Dirección de Informatización <br/>Rectorado<br/>Universidad Nacional"
 
-#: app/views.py:462
+#: app/views.py:466
 msgid "subscription_application_form"
 msgstr "Formulario alta de proyectos"
 
-#: app/views.py:464 app/views.py:597
+#: app/views.py:468 app/views.py:627
 msgid "proyect_name"
 msgstr "Nombre de Proyecto"
 
-#: app/views.py:476 app/views.py:655
-msgid "software_requirements"
-msgstr "Requerimientos de software"
-
-#: app/views.py:486 app/views.py:664
-msgid "connection_sources"
-msgstr "Equipos desde los que se conecta"
-
-#: app/views.py:497 app/views.py:675
-msgid "connection_targets"
-msgstr "Equipos hacia los que se conecta"
-
-#: app/views.py:515
-msgid "applicants_and_referentes"
-msgstr "Solicitantes y referentes"
-
-#: app/views.py:515
-msgid "name_and_surname"
-msgstr "Nombre y apellido"
-
-#: app/views.py:522
-msgid "yes"
-msgstr "Sí"
-
-#: app/views.py:595
-msgid "subscription_production_form"
-msgstr "Formulario de puesta de servicio en producción"
-
-#: app/views.py:613 app/views.py:628
+#: app/views.py:487 app/views.py:647 app/views.py:664
 msgid "database"
 msgstr "Base de datos"
 
+#: app/views.py:501 app/views.py:696
+msgid "software_requirements"
+msgstr "Requerimientos de software"
+
+#: app/views.py:511 app/views.py:704
+msgid "connection_sources"
+msgstr "Equipos desde los que se conecta"
+
+#: app/views.py:522 app/views.py:714
+msgid "connection_targets"
+msgstr "Equipos hacia los que se conecta"
+
+#: app/views.py:531
+msgid "users"
+msgstr "Usuarios"
+
+#: app/views.py:531
+msgid "permissions"
+msgstr "Permisos"
+
+#: app/views.py:542
+msgid "applicants_and_referentes"
+msgstr "Solicitantes y referentes"
+
+#: app/views.py:543
+msgid "name_and_surname"
+msgstr "Nombre y apellido"
+
+#: app/views.py:548
+msgid "yes"
+msgstr "Sí"
+
 #: app/views.py:625
+msgid "subscription_production_form"
+msgstr "Formulario de puesta de servicio en producción"
+
+#: app/views.py:661
 msgid "estimated_volume_data"
 msgstr "Volumen de datos estimado"
 
-#: app/views.py:625
+#: app/views.py:661
 msgid "space_to_start"
 msgstr "Al inicio"
 
-#: app/views.py:625
+#: app/views.py:661
 msgid "space_at_year"
 msgstr "Al año"
 
-#: app/views.py:625
+#: app/views.py:661
 msgid "space_after"
 msgstr "Posterior"
 
-#: app/views.py:633
+#: app/views.py:669
 msgid "filesystem"
 msgstr "Sistema de archivos"
 
-#: app/views.py:642
+#: app/views.py:681
 msgid "hardware_requirements"
 msgstr "Requerimientos de hardware"
 
-#: app/views.py:642
+#: app/views.py:681
 msgid "minimum"
 msgstr "Mínimo"
 
-#: app/views.py:642
+#: app/views.py:681
 msgid "recommended"
 msgstr "Recomendado"
 
-#: app/views.py:645
+#: app/views.py:684
 msgid "memory"
 msgstr "Memoria"
 
-#: app/views.py:647
+#: app/views.py:686
 msgid "disk"
 msgstr "Disco"
 
-#: app/views.py:649
+#: app/views.py:688
 msgid "processor"
 msgstr "Procesador"
 
-#: app/views.py:688
+#: app/views.py:730
 msgid "variables_to_be_monitored"
 msgstr "Variables a monitorizar"
 
-#: app/views.py:688
+#: app/views.py:730
 msgid "variable"
 msgstr "Variable"
 
-#: app/views.py:700
+#: app/views.py:742
 msgid "milestones_during_the_year"
 msgstr "Hitos durante el año"
 
-#: app/views.py:700
+#: app/views.py:742
 msgid "milestone"
 msgstr "Hito"
 
-#: app/views.py:700
+#: app/views.py:742
 msgid "date"
 msgstr "Fecha"
 
-#: app/views.py:700
+#: app/views.py:742
 msgid "duration_in_days"
 msgstr "Duración en días"
 
-#: app/views.py:754
+#: app/views.py:794
 msgid "project_not_found"
 msgstr "No se pudo determinar el proyecto sobre el cual realizar la solicitud"
 

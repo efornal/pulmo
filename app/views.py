@@ -444,9 +444,13 @@ def print_application_form (request, proyect_id):
     styles = getSampleStyleSheet()
     styleH2 =  copy.copy(styles['Heading2'])
     styleN  =  copy.copy(styles['Normal'])
+    styleN.fontSize = 8
     styleTable = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.black),
+                             ('FONTSIZE', (0, 0), (-1, -1), 8), 
                              ('BACKGROUND', (0, 1), (-1, 1), colors.Color(0.9,0.9,0.9)),
                              ('SPAN',(0,0),(0, 0)),])
+    styleTableObs = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),
+                                ('FONTSIZE', (0, 0), (-1, -1), 8),])
     space = Spacer(1,0.1*inch)
     space2 = Spacer(1,0.2*inch)
     response = HttpResponse(content_type='application/pdf')
@@ -462,71 +466,93 @@ def print_application_form (request, proyect_id):
     content.append(Paragraph( _('subscription_application_form') , styleH2))
     content.append(space)
     content.append(Paragraph(to_cv(_('proyect_name'), application.proyect.name), styleN))
-    content.append(space)
-    content.append(Paragraph(to_cv(_('description'), application.proyect.description), styleN))
-    content.append(space)
-    content.append(Paragraph(to_cv(_('db_name'), application.db_name), styleN))
-    content.append(space)
-    content.append(Paragraph(to_cv(_('encoding'), application.encoding), styleN))
-    content.append(space)
-    content.append(Paragraph(to_cv(_('user_owner'), application.user_owner), styleN))
-    content.append(space)
-    content.append(Paragraph(to_cv(_('user_access'), application.user_access), styleN))
 
-    data = [[_('software_requirements')],[_('name'),_('version')],]
+    if application.proyect.description:
+        content.append(space)
+        data = [[_('description')],]
+        data.append([[Paragraph(to_v(application.proyect.description), styleN)]])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTableObs)
+        content.append(t)
+
+    if application.observations:
+        content.append(space)
+        data = [[_('observations')],]
+        data.append([[Paragraph(to_v(application.observations), styleN)]])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTableObs)
+        content.append(t)
+        
+    if application.db_name or application.encoding or application.user_owner or application.user_access:
+        data = [[_('database')]]
+        content.append(space)
+        data.append([_('name'),_('encoding'),_('user_owner'),_('user_access')])
+        data.append([to_v(application.db_name),
+                     to_v(application.encoding),
+                     to_v(application.user_owner),
+                     to_v(application.user_access),])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
+        content.append(t)
+
+
     software = ApplicationSoftwareRequirement.objects.filter(application_form=proyect_id)
     if software:
-        content.append(space2)
+        data = [[_('software_requirements')],[_('name'),_('version')],]
+        content.append(space)
         for item in software:
             data.append( [to_v(item.name),to_v(item.version)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
 
-    data = [[_('connection_sources')],[_('name'),_('ip_address'),_('observations')],]
     sources = ApplicationConnectionSource.objects.filter(application_form=proyect_id)
     if sources:
-        content.append(space2)
+        data = [[_('connection_sources')],[_('name'),_('ip_address'),_('observations')],]
+        content.append(space)
         for item in sources:
             data.append( [to_v(item.name),to_v(item.ip),to_v(item.observations)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
 
-    content.append(space2)
-    data = [[_('connection_targets')],[_('name'),_('ip_address'),_('observations')],]
     targets = ApplicationConnectionTarget.objects.filter(application_form=proyect_id)
     if targets:
+        content.append(space)
+        data = [[_('connection_targets')],[_('name'),_('ip_address'),_('observations')],]
         for item in targets:
             data.append( [to_v(item.name),to_v(item.ip), to_v(item.observations)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
 
-    if application.observations:
-        content.append(space2)
-        data = [[_('observations')],]
-        data.append([[Paragraph(to_v(application.observations), styleN)]])
+    csv_permission = SCVPermission.objects.filter(application_form=proyect_id)
+    if csv_permission:
+        data = [[_('vcs_repository')],[_('users'),_('permissions')],]
+        content.append(space)
+        for item in csv_permission:
+            data.append( [to_v(item.user),to_v(item.permission)])
         t = Table(data, colWidths='*')
-        t.setStyle(TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),]))
+        t.setStyle(styleTable)
         content.append(t)
-
     
-    data = [[_('applicants_and_referentes')],[_('name_and_surname'),_('email'),_('phones'),_('is_applicant')],]
+
     referrers = Referrer.objects.filter(application_form=proyect_id)
     if referrers:
-        content.append(space2)
+        data = [[_('applicants_and_referentes')],
+                [_('name_and_surname'),_('email'),_('phones'),_('is_applicant')],]
+        content.append(space)
         for item in referrers:
             is_applicant = ""
             if item.is_applicant:
                 is_applicant = _('yes')
-                data.append( [Paragraph(to_v(item.name), styleN),
-                              Paragraph(to_v(item.email), styleN),
-                              Paragraph(to_v(item.phones), styleN),
-                              Paragraph(to_v(is_applicant), styleN)])
-                t = Table(data, colWidths='*')
-                t.setStyle(styleTable)
-                content.append(t)
+            data.append( [Paragraph(to_v(item.name), styleN),
+                          Paragraph(to_v(item.email), styleN),
+                          Paragraph(to_v(item.phones), styleN),
+                          Paragraph(to_v(is_applicant), styleN)])
+            t = Table(data, colWidths='*')
+            t.setStyle(styleTable)
+            content.append(t)
 
 
     styleF = copy.copy(styles['Normal'])
@@ -577,9 +603,13 @@ def print_production_form (request, proyect_id):
     styles = getSampleStyleSheet()
     styleH2 =  copy.copy(styles['Heading2'])
     styleN  =  copy.copy(styles['Normal'])
+    styleN.fontSize = 8
     styleTable = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.black),
+                             ('FONTSIZE', (0, 0), (-1, -1), 8), 
                              ('BACKGROUND', (0, 1), (-1, 1), colors.Color(0.9,0.9,0.9)),
                              ('SPAN',(0,0),(0, 0)),])
+    styleTableObs = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),
+                                ('FONTSIZE', (0, 0), (-1, -1), 8),])
     space = Spacer(1,0.1*inch)
     space2 = Spacer(1,0.2*inch)
     response = HttpResponse(content_type='application/pdf')
@@ -595,23 +625,27 @@ def print_production_form (request, proyect_id):
     content.append(Paragraph( _('subscription_production_form') , styleH2))
     content.append(space)
     content.append(Paragraph(to_cv(_('proyect_name'), production.proyect.name), styleN))
-    content.append(space)
-    content.append(Paragraph(to_cv(_('description'), production.proyect.description), styleN))
-    content.append(space)
 
+    if production.proyect.description:
+        content.append(space)
+        data = [[_('description')],]
+        data.append([[Paragraph(to_v(production.proyect.description), styleN)]])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTableObs)
+        content.append(t)
     
     if production.observations:
-        content.append(space2)
+        content.append(space)
         data = [[_('observations')],]
         data.append([[Paragraph(to_v(production.observations), styleN)]])
         t = Table(data, colWidths='*')
-        t.setStyle(TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),]))
+        t.setStyle(styleTableObs)
         content.append(t)
 
         
     if production.db_name or production.encoding or production.user_owner or production.user_access:
         data = [[_('database')]]
-        content.append(space2)
+        content.append(space)
         data.append([_('name'),_('encoding'),_('user_owner'),_('user_access')])
         data.append([to_v(production.db_name),
                      to_v(production.encoding),
@@ -621,60 +655,66 @@ def print_production_form (request, proyect_id):
         t.setStyle(styleTable)
         content.append(t)
 
-        
-    data = [[_('estimated_volume_data')],['',_('space_to_start'),_('space_at_year'),_('space_after')],]
-    content.append(space2)
-    if production.db_space_to_start or production.db_space_at_year or production.db_space_after:
-        data.append( [_('database'),
-                      to_v(production.db_space_to_start),
-                      to_v(production.db_space_at_year),
-                      to_v(production.db_space_after)])
-    if production.fs_space_to_start or production.fs_space_at_year or production.fs_space_after:
-        data.append( [_('filesystem'),
-                      to_v(production.fs_space_to_start),
-                      to_v(production.fs_space_at_year),
-                      to_v(production.fs_space_after)])
-    t = Table(data, colWidths='*')
-    t.setStyle(styleTable)
-    content.append(t)
 
-    
-    data = [[_('hardware_requirements')],['',_('minimum'), _('recommended')],]
-    content.append(space2)
-    if production.minimum_memory or production.suggested_memory:
-        data.append( [_('memory'), to_v(production.minimum_memory),to_v(production.suggested_memory)])
-    if production.minimum_disk_space or production.suggested_disk_space:
-        data.append( [_('disk'), to_v(production.minimum_disk_space),to_v(production.suggested_disk_space)])
-    if production.minimum_processor or production.suggested_processor:
-        data.append( [_('processor'), to_v(production.minimum_processor), to_v(production.suggested_processor)])
-    t = Table(data, colWidths='*')
-    t.setStyle(styleTable)
-    content.append(t)
+    if production.db_space_to_start or production.db_space_at_year or production.db_space_after or \
+       production.fs_space_to_start or production.fs_space_at_year or production.fs_space_after:
+        data = [[_('estimated_volume_data')],['',_('space_to_start'),_('space_at_year'),_('space_after')],]
+        content.append(space)
+        if production.db_space_to_start or production.db_space_at_year or production.db_space_after:
+            data.append( [_('database'),
+                          to_v(production.db_space_to_start),
+                          to_v(production.db_space_at_year),
+                          to_v(production.db_space_after)])
+        if production.fs_space_to_start or production.fs_space_at_year or production.fs_space_after:
+            data.append( [_('filesystem'),
+                          to_v(production.fs_space_to_start),
+                          to_v(production.fs_space_at_year),
+                          to_v(production.fs_space_after)])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
+        content.append(t)
+
+
+    if production.minimum_memory or production.suggested_memory or \
+       production.minimum_disk_space or production.suggested_disk_space or \
+       production.minimum_processor or production.suggested_processor:
+        data = [[_('hardware_requirements')],['',_('minimum'), _('recommended')],]
+        content.append(space)
+        if production.minimum_memory or production.suggested_memory:
+            data.append( [_('memory'), to_v(production.minimum_memory),to_v(production.suggested_memory)])
+        if production.minimum_disk_space or production.suggested_disk_space:
+            data.append( [_('disk'), to_v(production.minimum_disk_space),to_v(production.suggested_disk_space)])
+        if production.minimum_processor or production.suggested_processor:
+            data.append( [_('processor'), to_v(production.minimum_processor), to_v(production.suggested_processor)])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
+        content.append(t)
 
             
-    data = [[_('software_requirements')],[_('name'), _('version')],]
     software = ProductionSoftwareRequirement.objects.filter(production_form=proyect_id)
     if software:
-        content.append(space2)
+        data = [[_('software_requirements')],[_('name'), _('version')],]
+        content.append(space)
         for item in software:
             data.append( [to_v(item.name),to_v(item.version)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
+        
     data = [[_('connection_sources')],[_('name'),_('ip_address'),_('observations')],]
     sources = ProductionConnectionSource.objects.filter(production_form=proyect_id)
     if sources:
-        content.append(space2)
+        content.append(space)
         for item in sources:
             data.append( [to_v(item.name), to_v(item.ip), to_v(item.observations)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
 
-    content.append(space2)
     data = [[_('connection_targets')],[_('name'),_('ip_address'),_('port'),_('ip_firewall')],]
     targets = ProductionConnectionTarget.objects.filter(production_form=proyect_id)
     if targets:
+        content.append(space)
         for item in targets:
             data.append( [item.name,
                           to_v(item.ip),
@@ -685,10 +725,10 @@ def print_production_form (request, proyect_id):
         content.append(t)
 
     
-    data = [[_('variables_to_be_monitored')],[_('variable'), _('periodicity'), _('preserving_history_by')],]
     variables = MonitoredVariable.objects.filter(production_form=proyect_id)
     if variables:
-        content.append(space2)
+        data = [[_('variables_to_be_monitored')],[_('variable'), _('periodicity'), _('preserving_history_by')],]
+        content.append(space)
         for item in variables:
             data.append( [Paragraph(to_v(item.name), styleN),
                           Paragraph(to_v(item.periodicity), styleN),
@@ -697,10 +737,10 @@ def print_production_form (request, proyect_id):
             t.setStyle(styleTable)
         content.append(t)
 
-    data = [[_('milestones_during_the_year')],[_('milestone'), _('date'), _('duration_in_days')],]
     hitos = Milestone.objects.filter(production_form=proyect_id)
     if hitos:
-        content.append(space2)
+        data = [[_('milestones_during_the_year')],[_('milestone'), _('date'), _('duration_in_days')],]
+        content.append(space)
         for item in hitos:
             data.append( [Paragraph(to_v(item.description), styleN),
                           Paragraph(to_v(item.duration), styleN),
