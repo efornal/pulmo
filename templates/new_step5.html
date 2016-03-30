@@ -34,7 +34,7 @@
 
             <div class="bs-component">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#home" data-toggle="tab">Referentes</a></li>
+                <li class="active"><a href="#home" data-toggle="tab">{{_('Referrers')}}</a></li>
               </ul>
 
               <div id="myTabContent" class="tab-content">
@@ -45,10 +45,10 @@
                       <div class="panel-body">
 		        <table class="table table-bordered table-hover" id="tab_logic">
 		          <thead>
-		            <tr ><th class="text-center">Apellido y nombre</th>
-		            <th class="text-center">E-mail</th>
-		            <th class="text-center">Teléfono</th>
-                            <th class="text-center">Es solicitante?</th>
+		            <tr ><th class="text-center">{{_('name_and_surname')}}</th>
+		            <th class="text-center">{{_('email')}}</th>
+		            <th class="text-center">{{_('phones')}}</th>
+                            <th class="text-center">{{_('is_applicant')}}?</th>
 		            <th class="text-center">
                               <a href="#" id="add_row" >
                               <i class=" glyphicon glyphicon-plus-sign"></i></a>
@@ -117,7 +117,7 @@
         
             <div class="form-group">
               <div class="col-sm-10 col-sm-offset-2">
-                <button type="submit" class="btn btn-primary">Finalizar</button>
+                <button type="submit" class="btn btn-primary">{{_('to_finalize')}}</button>
               </div>
             </div>
           </fieldset>

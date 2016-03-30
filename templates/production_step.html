@@ -67,7 +67,7 @@
               <label class="col-sm-2 control-label" for="textinput">{{ _('proyect') }}</label>
               <div class="col-sm-8">
                 <select class="form-control" id="select" name='id' >
-                  <option value=''>Seleccione una opción</option>
+                  <option value=''>{{_('select_an_option')}}</option>
                   {% for p in proyects %}
                     <option value='{{ p.id }}'> {{ p.name }} </option>
                   {% endfor%}

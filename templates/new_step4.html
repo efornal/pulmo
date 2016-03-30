@@ -35,7 +35,7 @@
             
             <div class="bs-component">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#home" data-toggle="tab">Permisos sobre repositorio SCV</a></li>
+                <li class="active"><a href="#home" data-toggle="tab">{{_('scv_permissions')}}</a></li>
               </ul>
 
               <div id="myTabContent" class="tab-content">
@@ -47,8 +47,8 @@
 	                <table class="table table-bordered table-hover" id="tab_logic">
 	                  <thead>
 		            <tr >
-                              <th class="text-center">Usuario</th>
-		              <th class="text-center">Permisos (R/W)</th>
+                              <th class="text-center">{{_('user')}}</th>
+		              <th class="text-center">{{_('permission')}}</th>
 		              <th class="text-center">
                                 <a href="#" id="add_row" >
                                   <i class=" glyphicon glyphicon-plus-sign"></i>
@@ -65,7 +65,7 @@
 		              </td>
 		              <td  data-name="permissions">
                                 <select class="form-control" id="select" name='permissions[]'>
-                                  <option value='0'>Seleccione una opción</option>
+                                  <option value='0'>{{_('select_an_option')}}</option>
                                   {% for p in permissions_options %}
                                     <option value='{{ p.0 }}' {% if p.0 == permission.permission %}selected{%endif%}>
                                     {{ p.1 }}{{i}}</option>
@@ -87,7 +87,7 @@
 		              </td>
 		              <td  data-name="permissions">
                                 <select class="form-control" id="select" name='permissions[]' >
-                                  <option value=''>Seleccione una opción</option>
+                                  <option value=''>{{_('select_an_option')}}</option>
                                   {% for p in permissions_options %}
                                     <option value='{{ p.0 }}'>{{ p.1 }}{{i}}</option>
                                   {% endfor%}
@@ -113,7 +113,7 @@
         
             <div class="form-group">
               <div class="col-sm-10 col-sm-offset-2">
-                <button type="submit" class="btn btn-primary">Siguiente</button>
+                <button type="submit" class="btn btn-primary">{{_('next')}}</button>
               </div>
             </div>
           </fieldset>

@@ -34,7 +34,7 @@
             
             <div class="bs-component">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#home" data-toggle="tab">Variables a monitorizar del servicio</a></li>
+                <li class="active"><a href="#home" data-toggle="tab">{{_('variables_to_be_monitored')}}</a></li>
               </ul>
 
               <div id="myTabContent" class="tab-content">
@@ -46,9 +46,9 @@
 	                <table class="table table-bordered table-hover" id="tab_logic">
 	                  <thead>
 		            <tr >
-                              <th class="text-center">Variable</th>
-		              <th class="text-center">Periodicidad</th>
-		              <th class="text-center">Conservar historial por</th>                              
+                              <th class="text-center">{{_('variable')}}</th>
+		              <th class="text-center">{{_('periodicity')}}</th>
+		              <th class="text-center">{{_('preserving_history_by')}}</th>                              
 		              <th class="text-center">
                                 <a href="#" id="add_row" >
                                   <i class=" glyphicon glyphicon-plus-sign"></i>
@@ -120,7 +120,7 @@
         
             <div class="form-group">
               <div class="col-sm-10 col-sm-offset-2">
-                <button type="submit" class="btn btn-primary">Siguiente</button>
+                <button type="submit" class="btn btn-primary">{{_('next')}}</button>
               </div>
             </div>
           </fieldset>
