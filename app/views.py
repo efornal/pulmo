@@ -369,7 +369,7 @@ def parag_style():
     style.borderColor = 'black'
     style.borderWidth = 0
     style.alignment = TA_LEFT
-    style.fontSize = 9
+    style.fontSize = 8
     return style
 
 def write_header(canvas, doc):
@@ -388,16 +388,16 @@ def write_header(canvas, doc):
         img_path = "%s/images/logo.png" % settings.STATIC_ROOT
     else:
         img_path = "%s%simages/logo.png" % (settings.BASE_DIR,settings.STATIC_URL)
-    canvas.drawImage(img_path,doc.leftMargin , PAGE_HEIGHT-doc.topMargin, 1.5*cm, 1.5*cm)
-    canvas.line( doc.leftMargin , PAGE_HEIGHT-1.05*doc.topMargin,
-                 PAGE_WIDTH-doc.rightMargin,PAGE_HEIGHT-1.05*doc.topMargin)
+    canvas.drawImage(img_path,doc.leftMargin+0.1*cm , PAGE_HEIGHT-doc.topMargin, 1.3*cm, 1.3*cm)
+    canvas.line( doc.leftMargin+0.1*cm , PAGE_HEIGHT-1.05*doc.topMargin,
+                 PAGE_WIDTH-1.05*doc.rightMargin,PAGE_HEIGHT-1.05*doc.topMargin)
     parag = Paragraph( _('header_text') ,parag_style())
     parag.wrapOn(canvas,PAGE_WIDTH*0.5, PAGE_HEIGHT)
-    parag.drawOn(canvas, 2*doc.leftMargin , PAGE_HEIGHT-doc.topMargin)
-    canvas.setFont('Times-Roman',9)
+    parag.drawOn(canvas, 1.6*doc.leftMargin , PAGE_HEIGHT-doc.topMargin)
+    canvas.setFont('Times-Roman',8)
     page = "Pág. %s" % doc.page
-    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.9*inch, PAGE_HEIGHT-doc.topMargin, fecha)
-    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.9*inch, PAGE_HEIGHT-doc.topMargin/1.5, page)
+    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.85*inch, PAGE_HEIGHT-doc.topMargin, fecha)
+    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.85*inch, PAGE_HEIGHT-doc.topMargin/1.5, page)
     canvas.restoreState()
 
 
@@ -444,7 +444,7 @@ def print_application_form (request, proyect_id):
     from reportlab.lib.units import inch
     import copy
     styles = getSampleStyleSheet()
-    styleH2 =  copy.copy(styles['Heading2'])
+    styleH5 =  copy.copy(styles['Heading5'])
     styleN  =  copy.copy(styles['Normal'])
     styleN.fontSize = 8
     styleTable = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.black),
@@ -465,9 +465,9 @@ def print_application_form (request, proyect_id):
 
 
     content = [space]
-    content.append(Paragraph( _('subscription_application_form') , styleH2))
+    content.append(Paragraph( _('subscription_application_form') , styleH5))
     content.append(space)
-    content.append(Paragraph(to_cv(_('proyect_name'), application.proyect.name), styleN))
+    content.append(Paragraph(to_cv(_('proyect_name'), application.proyect.name), styleN ))
 
     if application.proyect.description:
         content.append(space)
@@ -603,7 +603,7 @@ def print_production_form (request, proyect_id):
     from reportlab.lib.units import inch
     import copy
     styles = getSampleStyleSheet()
-    styleH2 =  copy.copy(styles['Heading2'])
+    styleH5 =  copy.copy(styles['Heading5'])
     styleN  =  copy.copy(styles['Normal'])
     styleN.fontSize = 8
     styleTable = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.black),
@@ -624,7 +624,7 @@ def print_production_form (request, proyect_id):
 
 
     content = [space]
-    content.append(Paragraph( _('subscription_production_form') , styleH2))
+    content.append(Paragraph( _('subscription_production_form') , styleH5))
     content.append(space)
     content.append(Paragraph(to_cv(_('proyect_name'), production.proyect.name), styleN))
 
