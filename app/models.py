@@ -40,7 +40,8 @@ class ApplicationForm (models.Model):
     created_at = models.DateTimeField(auto_now_add=True,verbose_name=_('created_at'))
     updated_at = models.DateTimeField(auto_now=True,verbose_name=_('updated_at'))
     signature_date = models.DateTimeField(null=True, blank=True,verbose_name=_('signature_date'))
-
+    received_application = models.BooleanField(default=False, verbose_name=_('received_application'))
+    
     class Meta:
         db_table = 'application_forms'
         verbose_name = _('ApplicationForm')
@@ -99,7 +100,8 @@ class ProductionForm (models.Model):
                                          verbose_name=_('applicant'))
     signature_date = models.DateTimeField(null=True, blank=True,
                                          verbose_name=_('signature_date'))
-
+    received_application = models.BooleanField(default=False, verbose_name=_('received_application'))
+    
     class Meta:
         db_table = 'production_forms'
         verbose_name = _('ProductionForm')
