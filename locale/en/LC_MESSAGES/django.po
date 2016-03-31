@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-29 14:36-0300\n"
+"POT-Creation-Date: 2016-03-31 08:43-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,69 +18,73 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: app/forms.py:17 app/forms.py:199 app/models.py:10 app/models.py:115
-#: app/models.py:135 app/models.py:152 app/models.py:169 app/models.py:187
-#: app/models.py:203 app/models.py:261 app/models.py:281 app/views.py:489
+#: app/models.py:136 app/models.py:154 app/models.py:172 app/models.py:191
+#: app/models.py:207 app/models.py:265 app/models.py:285 app/views.py:489
 #: app/views.py:501 app/views.py:511 app/views.py:522 app/views.py:649
 #: app/views.py:696 app/views.py:704 app/views.py:714
 #: templates/new_step1.html:52 templates/new_step2.html:50
-#: templates/new_step3.html:69 templates/new_step3.html.py:131
-#: templates/production_step1.html:36
+#: templates/new_step3.html:69 templates/new_step3.html.py:142
+#: templates/production_step1.html:36 templates/production_step3.html:68
+#: templates/production_step3.html.py:133
 msgid "name"
 msgstr "Name"
 
-#: app/forms.py:18 app/forms.py:217 app/models.py:11 app/models.py:219
+#: app/forms.py:18 app/forms.py:217 app/models.py:11 app/models.py:223
 #: app/views.py:472 app/views.py:631 templates/new_step1.html:60
 #: templates/production_step1.html:44
 msgid "description"
 msgstr "Description"
 
 #: app/forms.py:30 app/forms.py:85 app/forms.py:107 app/forms.py:128
-#: app/forms.py:244 app/models.py:38 app/models.py:91 app/models.py:120
-#: app/models.py:137 app/models.py:155 app/models.py:312 app/models.py:343
+#: app/forms.py:244 app/models.py:38 app/models.py:91 app/models.py:121
+#: app/models.py:139 app/models.py:158 app/models.py:316 app/models.py:347
 #: app/views.py:480 app/views.py:511 app/views.py:522 app/views.py:639
-#: app/views.py:704 templates/new_step1.html:96 templates/new_step3.html:71
-#: templates/new_step3.html.py:133 templates/production_step1.html:202
+#: app/views.py:704 templates/new_step1.html:96 templates/new_step3.html:72
+#: templates/new_step3.html.py:145 templates/production_step1.html:202
+#: templates/production_step3.html:70
 msgid "observations"
 msgstr "Observations"
 
-#: app/forms.py:147 app/models.py:172 app/views.py:714
+#: app/forms.py:147 app/models.py:176 app/views.py:714
+#: templates/production_step3.html:135
 msgid "port"
 msgstr "Port"
 
-#: app/forms.py:164 app/forms.py:181 app/models.py:238 app/models.py:316
-#: app/models.py:350 templates/new_step4.html:50
+#: app/forms.py:164 app/forms.py:181 app/models.py:242 app/models.py:320
+#: app/models.py:354 templates/new_step4.html:50
 msgid "user"
 msgstr "User"
 
-#: app/forms.py:165 app/forms.py:182 app/models.py:239
+#: app/forms.py:165 app/forms.py:182 app/models.py:243
 #: templates/new_step4.html:51
 msgid "permission"
 msgstr "Permission"
 
-#: app/forms.py:183 app/models.py:283 app/views.py:730
+#: app/forms.py:183 app/models.py:287 app/views.py:730
+#: templates/production_step4.html:51
 msgid "preserving_history_by"
 msgstr "Preserving history by"
 
-#: app/forms.py:200 app/models.py:263 app/views.py:543
+#: app/forms.py:200 app/models.py:267 app/views.py:543
 #: templates/new_step5.html:49
 msgid "email"
 msgstr "Email"
 
-#: app/forms.py:201 app/models.py:264 app/views.py:543
+#: app/forms.py:201 app/models.py:268 app/views.py:543
 #: templates/new_step5.html:50
 msgid "phones"
 msgstr "Phones"
 
-#: app/forms.py:202 app/models.py:265 app/views.py:543
+#: app/forms.py:202 app/models.py:269 app/views.py:543
 #: templates/new_step5.html:51
 msgid "is_applicant"
 msgstr "Is applicant"
 
-#: app/forms.py:218 app/models.py:220
+#: app/forms.py:218 app/models.py:224
 msgid "duration"
 msgstr "Duration"
 
-#: app/forms.py:219 app/models.py:222
+#: app/forms.py:219 app/models.py:226
 msgid "date_event"
 msgstr "Date event"
 
@@ -89,7 +93,7 @@ msgstr "Date event"
 msgid "proyect"
 msgstr "Proyect"
 
-#: app/models.py:12 app/models.py:40 app/models.py:94 app/models.py:221
+#: app/models.py:12 app/models.py:40 app/models.py:94 app/models.py:225
 msgid "created_at"
 msgstr "Created at"
 
@@ -125,7 +129,7 @@ msgstr "User owner"
 msgid "user_access"
 msgstr "User access"
 
-#: app/models.py:42 app/models.py:101 app/models.py:317 app/models.py:351
+#: app/models.py:42 app/models.py:101 app/models.py:321 app/models.py:355
 msgid "signature_date"
 msgstr "Signature date"
 
@@ -189,7 +193,7 @@ msgstr "Suggested processor"
 msgid "files_backup"
 msgstr "Files backup"
 
-#: app/models.py:99 app/models.py:315 app/models.py:349
+#: app/models.py:99 app/models.py:319 app/models.py:353
 msgid "applicant"
 msgstr "Applicant"
 
@@ -201,184 +205,190 @@ msgstr "Production form"
 msgid "ProductionForms"
 msgstr "Production forms"
 
-#: app/models.py:117 app/models.py:136 app/models.py:153 app/models.py:170
+#: app/models.py:117 app/models.py:137 app/models.py:155 app/models.py:173
 msgid "ip"
 msgstr "IP"
 
-#: app/models.py:122 app/models.py:157 app/models.py:190 app/models.py:241
-#: app/models.py:267 app/models.py:314
+#: app/models.py:119 app/models.py:138 app/models.py:157 app/models.py:175
+#: templates/new_step3.html:71 templates/new_step3.html.py:144
+msgid "service"
+msgstr "Service"
+
+#: app/models.py:123 app/models.py:160 app/models.py:194 app/models.py:245
+#: app/models.py:271 app/models.py:318
 msgid "application_form"
 msgstr "Application form"
 
-#: app/models.py:126
+#: app/models.py:127
 msgid "ApplicationConnectionSource"
 msgstr "Application connection source"
 
-#: app/models.py:127
+#: app/models.py:128
 msgid "ApplicationConnectionSources"
 msgstr "Application connection sources"
 
-#: app/models.py:139 app/models.py:174 app/models.py:206 app/models.py:224
-#: app/models.py:285 app/models.py:345
+#: app/models.py:141 app/models.py:178 app/models.py:210 app/models.py:228
+#: app/models.py:289 app/models.py:349
 msgid "production_form"
 msgstr "Production form"
 
-#: app/models.py:143
+#: app/models.py:145
 msgid "ProductionConnectionSource"
 msgstr "Production connection source"
 
-#: app/models.py:144
+#: app/models.py:146
 msgid "ProductionConnectionSources"
 msgstr "Production connection sources"
 
-#: app/models.py:161
+#: app/models.py:164
 msgid "ApplicationConnectionTarget"
 msgstr "Application connection target"
 
-#: app/models.py:162
+#: app/models.py:165
 msgid "ApplicationConnectionTargets"
 msgstr "Application connection targets"
 
-#: app/models.py:171 app/views.py:714
+#: app/models.py:174 app/views.py:714 templates/production_step3.html:136
 msgid "ip_firewall"
 msgstr "IP firewall"
 
-#: app/models.py:178
+#: app/models.py:182
 msgid "ProductionConnectionTarget"
 msgstr "Production connection target"
 
-#: app/models.py:179
+#: app/models.py:183
 msgid "ProductionConnectionTargets"
 msgstr "Production connection targets"
 
-#: app/models.py:188 app/models.py:204 app/views.py:501 app/views.py:696
+#: app/models.py:192 app/models.py:208 app/views.py:501 app/views.py:696
 #: templates/new_step2.html:51
 msgid "version"
 msgstr "Version"
 
-#: app/models.py:194
+#: app/models.py:198
 msgid "ApplicationSoftwareRequirement"
 msgstr "Application software requirement"
 
-#: app/models.py:195
+#: app/models.py:199
 msgid "ApplicationSoftwareRequirements"
 msgstr "Application software requirements"
 
-#: app/models.py:210
+#: app/models.py:214
 msgid "ProductionSoftwareRequirement"
 msgstr "Production software requirement"
 
-#: app/models.py:211
+#: app/models.py:215
 msgid "ProductionSoftwareRequirements"
 msgstr "Production software requirements"
 
-#: app/models.py:228
+#: app/models.py:232 templates/production_step5.html:49
 msgid "Milestone"
 msgstr "Milestone"
 
-#: app/models.py:229
+#: app/models.py:233
 msgid "Milestones"
 msgstr "Milestones"
 
-#: app/models.py:245
+#: app/models.py:249
 msgid "SCVPermission"
 msgstr "SCV permission"
 
-#: app/models.py:246
+#: app/models.py:250
 msgid "SCVPermissions"
 msgstr "SCV permissions"
 
-#: app/models.py:271
+#: app/models.py:275
 msgid "Referrer"
 msgstr "Referrer"
 
-#: app/models.py:272 templates/new_step5.html:37
+#: app/models.py:276 templates/new_step5.html:37
 msgid "Referrers"
 msgstr "Referrers"
 
-#: app/models.py:282 app/views.py:730
+#: app/models.py:286 app/views.py:730 templates/production_step4.html:50
 msgid "periodicity"
 msgstr "Periodicity"
 
-#: app/models.py:289
+#: app/models.py:293
 msgid "MonitoredVariable"
 msgstr "Monitored variable"
 
-#: app/models.py:290
+#: app/models.py:294
 msgid "MonitoredVariables"
 msgstr "Monitored variables"
 
-#: app/models.py:299 app/models.py:332
+#: app/models.py:303 app/models.py:336
 msgid "virtual_machine_name"
 msgstr "Virtual machine name"
 
-#: app/models.py:300 app/models.py:333 app/views.py:511 app/views.py:522
+#: app/models.py:304 app/models.py:337 app/views.py:511 app/views.py:522
 #: app/views.py:704 app/views.py:714 templates/new_step3.html:70
-#: templates/new_step3.html.py:132
+#: templates/new_step3.html.py:143 templates/production_step3.html:69
+#: templates/production_step3.html.py:134
 msgid "ip_address"
 msgstr "IP address"
 
-#: app/models.py:301 app/models.py:334
+#: app/models.py:305 app/models.py:338
 msgid "mac_address"
 msgstr "MAC address"
 
-#: app/models.py:302 app/models.py:335
+#: app/models.py:306 app/models.py:339
 msgid "ram_memory"
 msgstr "RAM memory"
 
-#: app/models.py:303 app/models.py:336
+#: app/models.py:307 app/models.py:340
 msgid "disk_space"
 msgstr "Disk space"
 
-#: app/models.py:304 app/models.py:337
+#: app/models.py:308 app/models.py:341
 msgid "processors"
 msgstr "Processors"
 
-#: app/models.py:306 app/models.py:338
+#: app/models.py:310 app/models.py:342
 msgid "database_permissions"
 msgstr "Database permissions"
 
-#: app/models.py:307 app/models.py:339
+#: app/models.py:311 app/models.py:343
 msgid "database_server"
 msgstr "Database server"
 
-#: app/models.py:308 app/models.py:340
+#: app/models.py:312 app/models.py:344
 msgid "location_logs"
 msgstr "Location logs"
 
-#: app/models.py:310 app/models.py:342
+#: app/models.py:314 app/models.py:346
 msgid "cluster_virtual_machine"
 msgstr "Cluster virtual machine"
 
-#: app/models.py:311 app/views.py:531
+#: app/models.py:315 app/views.py:531
 msgid "vcs_repository"
 msgstr "VCS repository"
 
-#: app/models.py:319 app/models.py:353
+#: app/models.py:323 app/models.py:357
 msgid "related_ticket"
 msgstr "Related ticket"
 
-#: app/models.py:323
+#: app/models.py:327
 msgid "TestServer"
 msgstr "Test server"
 
-#: app/models.py:324
+#: app/models.py:328
 msgid "TestServers"
 msgstr "Test servers"
 
-#: app/models.py:346
+#: app/models.py:350
 msgid "added_monitoring"
 msgstr "Added monitoring"
 
-#: app/models.py:347
+#: app/models.py:351
 msgid "added_backup"
 msgstr "Added backup"
 
-#: app/models.py:357
+#: app/models.py:361
 msgid "ProductionServer"
 msgstr "Production server"
 
-#: app/models.py:358
+#: app/models.py:362
 msgid "ProductionServers"
 msgstr "Production servers"
 
@@ -407,18 +417,22 @@ msgid "proyect_name"
 msgstr "Proyect name"
 
 #: app/views.py:487 app/views.py:647 app/views.py:664
+#: templates/production_step1.html:54 templates/production_step1.html.py:118
 msgid "database"
 msgstr "Database"
 
 #: app/views.py:501 app/views.py:696 templates/new_step2.html:38
+#: templates/production_step2.html:38
 msgid "software_requirements"
 msgstr "Software requirements"
 
 #: app/views.py:511 app/views.py:704 templates/new_step3.html:56
+#: templates/production_step3.html:55
 msgid "connection_sources"
 msgstr "Connection sources"
 
 #: app/views.py:522 app/views.py:714 templates/new_step3.html:58
+#: templates/production_step3.html:57
 msgid "connection_targets"
 msgstr "Connection targets"
 
@@ -446,59 +460,59 @@ msgstr "Yes"
 msgid "subscription_production_form"
 msgstr "Subscription production form"
 
-#: app/views.py:661
+#: app/views.py:661 templates/production_step1.html:104
 msgid "estimated_volume_data"
 msgstr "Estimated volume data"
 
-#: app/views.py:661
+#: app/views.py:661 templates/production_step1.html:110
 msgid "space_to_start"
 msgstr "To start"
 
-#: app/views.py:661
+#: app/views.py:661 templates/production_step1.html:111
 msgid "space_at_year"
 msgstr "At year"
 
-#: app/views.py:661
+#: app/views.py:661 templates/production_step1.html:112
 msgid "space_after"
 msgstr "After"
 
-#: app/views.py:669
+#: app/views.py:669 templates/production_step1.html:132
 msgid "filesystem"
 msgstr "File System"
 
-#: app/views.py:681
+#: app/views.py:681 templates/production_step1.html:150
 msgid "hardware_requirements"
 msgstr "Hardware requirements"
 
-#: app/views.py:681
+#: app/views.py:681 templates/production_step1.html:156
 msgid "minimum"
 msgstr "Minimum"
 
-#: app/views.py:681
+#: app/views.py:681 templates/production_step1.html:157
 msgid "recommended"
 msgstr "Recommended"
 
-#: app/views.py:684
+#: app/views.py:684 templates/production_step1.html:163
 msgid "memory"
 msgstr "Memory"
 
-#: app/views.py:686
+#: app/views.py:686 templates/production_step1.html:174
 msgid "disk"
 msgstr "Disk"
 
-#: app/views.py:688
+#: app/views.py:688 templates/production_step1.html:185
 msgid "processor"
 msgstr "Processor"
 
-#: app/views.py:730
+#: app/views.py:730 templates/production_step4.html:37
 msgid "variables_to_be_monitored"
 msgstr "Variables to be monitored"
 
-#: app/views.py:730
+#: app/views.py:730 templates/production_step4.html:49
 msgid "variable"
 msgstr "Variable"
 
-#: app/views.py:742
+#: app/views.py:742 templates/production_step5.html:37
 msgid "milestones_during_the_year"
 msgstr "Milestones during the year"
 
@@ -506,11 +520,11 @@ msgstr "Milestones during the year"
 msgid "milestone"
 msgstr "Milestone"
 
-#: app/views.py:742
+#: app/views.py:742 templates/production_step5.html:50
 msgid "date"
 msgstr "Date"
 
-#: app/views.py:742
+#: app/views.py:742 templates/production_step5.html:51
 msgid "duration_in_days"
 msgstr "Duration in days"
 
@@ -538,8 +552,9 @@ msgid "new_proyect"
 msgstr "Request new project"
 
 #: templates/new_step1.html:105 templates/new_step2.html:107
-#: templates/new_step3.html:194 templates/new_step4.html:116
+#: templates/new_step3.html:216 templates/new_step4.html:116
 #: templates/production_step.html:80 templates/production_step1.html:211
+#: templates/production_step3.html:209 templates/production_step4.html:123
 msgid "next"
 msgstr "Next"
 
@@ -548,10 +563,11 @@ msgid "scv_permissions"
 msgstr "SCV permissions on the repository"
 
 #: templates/new_step4.html:68 templates/new_step4.html.py:90
+#: templates/production_step.html:70
 msgid "select_an_option"
 msgstr "Select an option"
 
-#: templates/new_step5.html:120
+#: templates/new_step5.html:120 templates/production_step5.html:123
 msgid "to_finalize"
 msgstr "To Finalize"
 

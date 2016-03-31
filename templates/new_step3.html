@@ -68,6 +68,7 @@
 		          <thead>
 		            <tr ><th class="text-center">{{_('name')}}</th>
 		            <th class="text-center">{{_('ip_address')}}</th>
+                            <th class="text-center">{{_('service')}}</th>
 		            <th class="text-center">{{_('observations')}}</th>
 		            <th class="text-center">
                               <a href="#" id="add_row" >
@@ -80,13 +81,20 @@
 		          <tbody>
 		            <tr id='addr{{forloop.counter0}}'>
 		              <td data-name="sources_name" >
-			        <input type="text" name='sources_name[]' value="{{soft.name}}" placeholder='' class="form-control"/>
+			        <input type="text" name='sources_name[]' value="{{soft.name}}"
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="sources_ip">
-			        <input type="text" name='sources_ip[]' value="{{soft.ip}}" placeholder='' class="form-control"/>
+			        <input type="text" name='sources_ip[]' value="{{soft.ip}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_service">
+			        <input type="text" name='sources_service[]' value="{{soft.service}}"
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="sources_observation">
-			        <input type="text" name='sources_observation[]' value="{{soft.observation}}" placeholder='' class="form-control"/>
+			        <input type="text" name='sources_observation[]' value="{{soft.observation}}"
+                                       placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
                                 <a href="#" id='delete_row'>
@@ -103,6 +111,9 @@
 		              </td>
 		              <td data-name="sources_ip">
 			        <input type="text" name='sources_ip[]' placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_service">
+			        <input type="text" name='sources_service[]' placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="sources_observation">
 			        <input type="text" name='sources_observation[]' placeholder='' class="form-control"/>
@@ -130,6 +141,7 @@
 		          <thead>
 		            <tr ><th class="text-center">{{_('name')}}</th>
 		            <th class="text-center">{{_('ip_address')}}</th>
+                            <th class="text-center">{{_('service')}}</th>
 		            <th class="text-center">{{_('observations')}}</th>
 		            <th class="text-center">
                               <a href="#" id="add_row1" >
@@ -142,13 +154,20 @@
 		          <tbody>
 		            <tr id='addr{{forloop.counter0}}'>
 		              <td data-name="targets_name" >
-			        <input type="text" name='targets_name[]' value="{{soft.name}}" placeholder='' class="form-control"/>
+			        <input type="text" name='targets_name[]' value="{{soft.name}}"
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td  data-name="targets_ip">
-			        <input type="text" name='targets_ip[]' value="{{soft.ip}}" placeholder='' class="form-control"/>
+			        <input type="text" name='targets_ip[]' value="{{soft.ip}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td  data-name="targets_service">
+			        <input type="text" name='targets_service[]' value="{{soft.service}}"
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td  data-name="targets_observation">
-			        <input type="text" name='targets_observation[]' value="{{soft.observation}}" placeholder='' class="form-control"/>
+			        <input type="text" name='targets_observation[]' value="{{soft.observation}}"
+                                       placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
                                 <a href="#" id='delete_rows' name="delete[]">
@@ -165,6 +184,9 @@
 		              </td>
 		              <td  data-name="targets_ip">
 			        <input type="text" name='targets_ip[]' placeholder='' class="form-control"/>
+		              </td>
+		              <td  data-name="targets_service">
+			        <input type="text" name='targets_service[]' placeholder='' class="form-control"/>
 		              </td>
 		              <td  data-name="targets_observation">
 			        <input type="text" name='targets_observation[]' placeholder='' class="form-control"/>

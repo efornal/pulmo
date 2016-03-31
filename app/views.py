@@ -144,7 +144,8 @@ def new_step4(request):
         for i,computer in enumerate( request.POST.getlist('sources_name[]') ):
             params = { 'name': computer,
                        'ip': request.POST.getlist('sources_ip[]')[i],
-                       'observation': request.POST.getlist('sources_observation[]')[i] }
+                       'service': request.POST.getlist('sources_service[]')[i],
+                       'observations': request.POST.getlist('sources_observation[]')[i] }
             if not are_all_empty_params(params):
                 sources_form = ApplicationConnectionSourceForm( params,
                                                                 exclude_from_validation='application_form' )
@@ -158,7 +159,8 @@ def new_step4(request):
         for i,computer in enumerate( request.POST.getlist('targets_name[]') ):
             params = { 'name': computer,
                        'ip': request.POST.getlist('targets_ip[]')[i],
-                       'observation': request.POST.getlist('targets_observation[]')[i] }
+                       'service': request.POST.getlist('targets_service[]')[i],
+                       'observations': request.POST.getlist('targets_observation[]')[i] }
 
             if not are_all_empty_params(params):
                 targets_form = ApplicationConnectionTargetForm( params,
@@ -508,10 +510,10 @@ def print_application_form (request, proyect_id):
 
     sources = ApplicationConnectionSource.objects.filter(application_form=proyect_id)
     if sources:
-        data = [[_('connection_sources')],[_('name'),_('ip_address'),_('observations')],]
+        data = [[_('connection_sources')],[_('name'),_('ip_address'),_('service'),_('observations')],]
         content.append(space)
         for item in sources:
-            data.append( [to_v(item.name),to_v(item.ip),to_v(item.observations)])
+            data.append( [to_v(item.name),to_v(item.ip),to_v(item.service),to_v(item.observations)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
@@ -519,9 +521,9 @@ def print_application_form (request, proyect_id):
     targets = ApplicationConnectionTarget.objects.filter(application_form=proyect_id)
     if targets:
         content.append(space)
-        data = [[_('connection_targets')],[_('name'),_('ip_address'),_('observations')],]
+        data = [[_('connection_targets')],[_('name'),_('ip_address'),_('service'),_('observations')],]
         for item in targets:
-            data.append( [to_v(item.name),to_v(item.ip), to_v(item.observations)])
+            data.append( [to_v(item.name),to_v(item.ip),to_v(item.service),to_v(item.observations)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
