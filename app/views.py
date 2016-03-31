@@ -383,7 +383,7 @@ def write_header(canvas, doc):
     from reportlab.lib.units import cm
     from datetime import datetime
     canvas.saveState()
-    fecha = datetime.now().strftime("%d/%m/%y %H:%M")
+    fecha = datetime.now().strftime("%d/%m/%Y %H:%M")
     if settings.STATIC_ROOT:
         img_path = "%s/images/logo.png" % settings.STATIC_ROOT
     else:
@@ -396,8 +396,8 @@ def write_header(canvas, doc):
     parag.drawOn(canvas, 2*doc.leftMargin , PAGE_HEIGHT-doc.topMargin)
     canvas.setFont('Times-Roman',9)
     page = "Pág. %s" % doc.page
-    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.8*inch, PAGE_HEIGHT-doc.topMargin, fecha)
-    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.8*inch, PAGE_HEIGHT-doc.topMargin/1.5, page)
+    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.9*inch, PAGE_HEIGHT-doc.topMargin, fecha)
+    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.9*inch, PAGE_HEIGHT-doc.topMargin/1.5, page)
     canvas.restoreState()
 
 
@@ -703,23 +703,24 @@ def print_production_form (request, proyect_id):
         t.setStyle(styleTable)
         content.append(t)
         
-    data = [[_('connection_sources')],[_('name'),_('ip_address'),_('observations')],]
+    data = [[_('connection_sources')],[_('name'),_('ip_address'),_('service'),_('observations')],]
     sources = ProductionConnectionSource.objects.filter(production_form=proyect_id)
     if sources:
         content.append(space)
         for item in sources:
-            data.append( [to_v(item.name), to_v(item.ip), to_v(item.observations)])
+            data.append( [to_v(item.name), to_v(item.ip), to_v(item.service), to_v(item.observations)])
         t = Table(data, colWidths='*')
         t.setStyle(styleTable)
         content.append(t)
 
-    data = [[_('connection_targets')],[_('name'),_('ip_address'),_('port'),_('ip_firewall')],]
+    data = [[_('connection_targets')],[_('name'),_('ip_address'),_('service'),_('port'),_('ip_firewall')],]
     targets = ProductionConnectionTarget.objects.filter(production_form=proyect_id)
     if targets:
         content.append(space)
         for item in targets:
             data.append( [item.name,
                           to_v(item.ip),
+                          to_v(item.service),
                           to_v(item.port),
                           to_v(item.ip_firewall)])
         t = Table(data, colWidths='*')
@@ -746,7 +747,7 @@ def print_production_form (request, proyect_id):
         for item in hitos:
             data.append( [Paragraph(to_v(item.description), styleN),
                           Paragraph(to_v(item.duration), styleN),
-                          Paragraph(to_v(str(item.date_event)), styleN)])
+                          Paragraph(to_v(str(item.date_event.strftime("%d/%m/%Y %H:%M"))), styleN)])
             t = Table(data, colWidths='*')
             t.setStyle(styleTable)
         content.append(t)
@@ -902,7 +903,8 @@ def production_step4(request):
         for i,computer in enumerate( request.POST.getlist('sources_name[]') ):
             params = { 'name': computer,
                        'ip': request.POST.getlist('sources_ip[]')[i],
-                       'observation': request.POST.getlist('sources_observation[]')[i] }
+                       'service': request.POST.getlist('sources_service[]')[i],
+                       'observations': request.POST.getlist('sources_observation[]')[i] }
             if not are_all_empty_params(params):
                 sources_form = ProductionConnectionSourceForm( params,
                                                                 exclude_from_validation='production_form' )
@@ -916,6 +918,7 @@ def production_step4(request):
         for i,computer in enumerate( request.POST.getlist('targets_name[]') ):
             params = { 'name': computer,
                        'ip': request.POST.getlist('targets_ip[]')[i],
+                       'service': request.POST.getlist('targets_service[]')[i],
                        'ip_firewall': request.POST.getlist('targets_ip_firewall[]')[i],
                        'port': request.POST.getlist('targets_port[]')[i] }
 

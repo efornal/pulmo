@@ -67,6 +67,7 @@
 		          <thead>
 		            <tr ><th class="text-center">{{_('name')}}</th>
 		            <th class="text-center">{{_('ip_address')}}</th>
+                            <th class="text-center">{{_('service')}}</th>
 		            <th class="text-center">{{_('observations')}}</th>
 		            <th class="text-center">
                               <a href="#" id="add_row" >
@@ -84,6 +85,10 @@
 		              </td>
 		              <td data-name="sources_ip">
 			        <input type="text" name='sources_ip[]' value="{{soft.ip}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_service">
+			        <input type="text" name='sources_service[]' value="{{soft.service}}"
                                        placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="sources_observation">
@@ -105,6 +110,9 @@
 		              </td>
 		              <td data-name="sources_ip">
 			        <input type="text" name='sources_ip[]' placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_service">
+			        <input type="text" name='sources_service[]' placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="sources_observation">
 			        <input type="text" name='sources_observation[]' placeholder='' class="form-control"/>
@@ -132,6 +140,7 @@
 		          <thead>
 		            <tr ><th class="text-center">{{_('name')}}</th>
 		            <th class="text-center">{{_('ip_address')}}</th>
+                            <th class="text-center">{{_('service')}}</th>
 		            <th class="text-center">{{_('port')}}</th>
                             <th class="text-center">{{_('ip_firewall')}}</th>
 		            <th class="text-center">
@@ -150,6 +159,10 @@
 		              </td>
 		              <td  data-name="targets_ip">
 			        <input type="text" name='targets_ip[]' value="{{soft.ip}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td  data-name="targets_service">
+			        <input type="text" name='targets_service[]' value="{{soft.service}}"
                                        placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="targets_port">
@@ -175,6 +188,9 @@
 		              </td>
 		              <td  data-name="targets_ip">
 			        <input type="text" name='targets_ip[]' placeholder='' class="form-control"/>
+		              </td>
+		              <td  data-name="targets_service">
+			        <input type="text" name='targets_service[]' placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="targets_port">
 			        <input type="text" name='targets_port[]' value="{{soft.port}}"
