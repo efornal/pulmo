@@ -385,9 +385,9 @@ def write_header(canvas, doc):
     canvas.saveState()
     fecha = datetime.now().strftime("%d/%m/%Y %H:%M")
     if settings.STATIC_ROOT:
-        img_path = "%s/images/logo.png" % settings.STATIC_ROOT
+        img_path = "%s/images/logo_header.png" % settings.STATIC_ROOT
     else:
-        img_path = "%s%simages/logo.png" % (settings.BASE_DIR,settings.STATIC_URL)
+        img_path = "%s%simages/logo_header.png" % (settings.BASE_DIR,settings.STATIC_URL)
     canvas.drawImage(img_path,doc.leftMargin+0.1*cm , PAGE_HEIGHT-doc.topMargin, 1.3*cm, 1.3*cm)
     canvas.line( doc.leftMargin+0.1*cm , PAGE_HEIGHT-1.05*doc.topMargin,
                  PAGE_WIDTH-1.05*doc.rightMargin,PAGE_HEIGHT-1.05*doc.topMargin)
