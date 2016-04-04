@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-31 10:16-0300\n"
+"POT-Creation-Date: 2016-04-04 09:47-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,17 +21,17 @@ msgstr ""
 #: app/forms.py:17 app/forms.py:199 app/models.py:10 app/models.py:117
 #: app/models.py:138 app/models.py:156 app/models.py:174 app/models.py:193
 #: app/models.py:209 app/models.py:267 app/models.py:287 app/views.py:491
-#: app/views.py:503 app/views.py:513 app/views.py:524 app/views.py:651
-#: app/views.py:698 app/views.py:706 app/views.py:716
+#: app/views.py:503 app/views.py:513 app/views.py:524 app/views.py:652
+#: app/views.py:699 app/views.py:707 app/views.py:717
 #: templates/new_step1.html:52 templates/new_step2.html:50
-#: templates/new_step3.html:69 templates/new_step3.html.py:142
+#: templates/new_step3.html:69 templates/new_step3.html.py:146
 #: templates/production_step1.html:36 templates/production_step3.html:68
-#: templates/production_step3.html.py:141
+#: templates/production_step3.html.py:145
 msgid "name"
 msgstr "Nombre"
 
 #: app/forms.py:18 app/forms.py:217 app/models.py:11 app/models.py:225
-#: app/views.py:474 app/views.py:633 templates/new_step1.html:60
+#: app/views.py:474 app/views.py:634 templates/new_step1.html:60
 #: templates/production_step1.html:44
 msgid "description"
 msgstr "Descripción"
@@ -39,15 +39,15 @@ msgstr "Descripción"
 #: app/forms.py:30 app/forms.py:85 app/forms.py:107 app/forms.py:128
 #: app/forms.py:244 app/models.py:38 app/models.py:92 app/models.py:123
 #: app/models.py:141 app/models.py:160 app/models.py:318 app/models.py:350
-#: app/views.py:482 app/views.py:513 app/views.py:524 app/views.py:641
-#: app/views.py:706 templates/new_step1.html:96 templates/new_step3.html:72
-#: templates/new_step3.html.py:145 templates/production_step1.html:202
+#: app/views.py:482 app/views.py:513 app/views.py:524 app/views.py:642
+#: app/views.py:707 templates/new_step1.html:96 templates/new_step3.html:72
+#: templates/new_step3.html.py:149 templates/production_step1.html:202
 #: templates/production_step3.html:71
 msgid "observations"
 msgstr "Observaciones"
 
-#: app/forms.py:147 app/models.py:178 app/views.py:716
-#: templates/production_step3.html:144
+#: app/forms.py:147 app/models.py:178 app/views.py:717
+#: templates/production_step3.html:148
 msgid "port"
 msgstr "Puerto"
 
@@ -61,7 +61,7 @@ msgstr "Usuario"
 msgid "permission"
 msgstr "Permiso"
 
-#: app/forms.py:183 app/models.py:289 app/views.py:733
+#: app/forms.py:183 app/models.py:289 app/views.py:734
 #: templates/production_step4.html:51
 msgid "preserving_history_by"
 msgstr "Preservar historial por"
@@ -115,17 +115,17 @@ msgstr "Proyectos"
 msgid "db_name"
 msgstr "Nombre DB"
 
-#: app/models.py:34 app/models.py:58 app/views.py:491 app/views.py:651
+#: app/models.py:34 app/models.py:58 app/views.py:491 app/views.py:652
 #: templates/new_step1.html:74 templates/production_step1.html:68
 msgid "encoding"
 msgstr "Codificación"
 
-#: app/models.py:35 app/models.py:59 app/views.py:491 app/views.py:651
+#: app/models.py:35 app/models.py:59 app/views.py:491 app/views.py:652
 #: templates/new_step1.html:82 templates/production_step1.html:78
 msgid "user_owner"
 msgstr "Usuario owner"
 
-#: app/models.py:36 app/models.py:60 app/views.py:491 app/views.py:651
+#: app/models.py:36 app/models.py:60 app/views.py:491 app/views.py:652
 #: templates/new_step1.html:87 templates/production_step1.html:87
 msgid "user_access"
 msgstr "Usuario acceso"
@@ -215,9 +215,9 @@ msgid "ip"
 msgstr "IP"
 
 #: app/models.py:121 app/models.py:140 app/models.py:159 app/models.py:177
-#: app/views.py:513 app/views.py:524 app/views.py:706 app/views.py:716
-#: templates/new_step3.html:71 templates/new_step3.html.py:144
-#: templates/production_step3.html:70 templates/production_step3.html.py:143
+#: app/views.py:513 app/views.py:524 app/views.py:707 app/views.py:717
+#: templates/new_step3.html:71 templates/new_step3.html.py:148
+#: templates/production_step3.html:70 templates/production_step3.html.py:147
 msgid "service"
 msgstr "Servicio"
 
@@ -255,7 +255,7 @@ msgstr "Destino de conexión de solicitud"
 msgid "ApplicationConnectionTargets"
 msgstr "Destinos de conexión de solicitud"
 
-#: app/models.py:176 app/views.py:716 templates/production_step3.html:145
+#: app/models.py:176 app/views.py:717 templates/production_step3.html:149
 msgid "ip_firewall"
 msgstr "IP Firewall"
 
@@ -267,7 +267,7 @@ msgstr "Destino de conexión de producción"
 msgid "ProductionConnectionTargets"
 msgstr "Destinos de conexión de producción"
 
-#: app/models.py:194 app/models.py:210 app/views.py:503 app/views.py:698
+#: app/models.py:194 app/models.py:210 app/views.py:503 app/views.py:699
 #: templates/new_step2.html:51
 msgid "version"
 msgstr "Versión"
@@ -312,7 +312,7 @@ msgstr "Referente"
 msgid "Referrers"
 msgstr "Referentes"
 
-#: app/models.py:288 app/views.py:733 templates/production_step4.html:50
+#: app/models.py:288 app/views.py:734 templates/production_step4.html:50
 msgid "periodicity"
 msgstr "Periodicidad"
 
@@ -329,9 +329,9 @@ msgid "virtual_machine_name"
 msgstr "Nombre de máquina virtual"
 
 #: app/models.py:306 app/models.py:340 app/views.py:513 app/views.py:524
-#: app/views.py:706 app/views.py:716 templates/new_step3.html:70
-#: templates/new_step3.html.py:143 templates/production_step3.html:69
-#: templates/production_step3.html.py:142
+#: app/views.py:707 app/views.py:717 templates/new_step3.html:70
+#: templates/new_step3.html.py:147 templates/production_step3.html:69
+#: templates/production_step3.html.py:146
 msgid "ip_address"
 msgstr "Dirección IP"
 
@@ -403,14 +403,14 @@ msgstr "Servidor de Producción"
 msgid "ProductionServers"
 msgstr "Servidores de Producción"
 
-#: app/views.py:348 app/views.py:1103
+#: app/views.py:348 app/views.py:1107
 msgid "completed_application"
 msgstr ""
 "La solicitud se a realizado con éxito. Para completar el trámite te pedimos "
 "que te acerques a nuestra oficina con el siguiente formulario impreso y "
 "firmado por el solicitante."
 
-#: app/views.py:360 app/views.py:1115
+#: app/views.py:360 app/views.py:1119
 msgid "incomplete_application"
 msgstr ""
 "La solicitud no pudo completarse. Para poder realizar el trámite te pedimos "
@@ -425,26 +425,26 @@ msgstr "Dirección de Informatización <br/>Rectorado<br/>Universidad Nacional"
 msgid "subscription_application_form"
 msgstr "Formulario alta de proyectos"
 
-#: app/views.py:470 app/views.py:629
+#: app/views.py:470 app/views.py:630
 msgid "proyect_name"
 msgstr "Nombre de Proyecto"
 
-#: app/views.py:489 app/views.py:649 app/views.py:666
+#: app/views.py:489 app/views.py:650 app/views.py:667
 #: templates/production_step1.html:54 templates/production_step1.html.py:118
 msgid "database"
 msgstr "Base de datos"
 
-#: app/views.py:503 app/views.py:698 templates/new_step2.html:38
+#: app/views.py:503 app/views.py:699 templates/new_step2.html:38
 #: templates/production_step2.html:38
 msgid "software_requirements"
 msgstr "Requerimientos de software"
 
-#: app/views.py:513 app/views.py:706 templates/new_step3.html:56
+#: app/views.py:513 app/views.py:707 templates/new_step3.html:56
 #: templates/production_step3.html:55
 msgid "connection_sources"
 msgstr "Equipos desde los que se conecta"
 
-#: app/views.py:524 app/views.py:716 templates/new_step3.html:58
+#: app/views.py:524 app/views.py:717 templates/new_step3.html:58
 #: templates/production_step3.html:57
 msgid "connection_targets"
 msgstr "Equipos hacia los que se conecta"
@@ -469,79 +469,87 @@ msgstr "Nombre y apellido"
 msgid "yes"
 msgstr "Sí"
 
-#: app/views.py:627
+#: app/views.py:566 app/views.py:765
+msgid "signature_applicant"
+msgstr "Firma del solicitante"
+
+#: app/views.py:628
 msgid "subscription_production_form"
 msgstr "Formulario de puesta de servicio en producción"
 
-#: app/views.py:663 templates/production_step1.html:104
+#: app/views.py:664 templates/production_step1.html:104
 msgid "estimated_volume_data"
 msgstr "Volumen de datos estimado"
 
-#: app/views.py:663 templates/production_step1.html:110
+#: app/views.py:664 templates/production_step1.html:110
 msgid "space_to_start"
 msgstr "Al inicio"
 
-#: app/views.py:663 templates/production_step1.html:111
+#: app/views.py:664 templates/production_step1.html:111
 msgid "space_at_year"
 msgstr "Al año"
 
-#: app/views.py:663 templates/production_step1.html:112
+#: app/views.py:664 templates/production_step1.html:112
 msgid "space_after"
 msgstr "Posterior"
 
-#: app/views.py:671 templates/production_step1.html:132
+#: app/views.py:672 templates/production_step1.html:132
 msgid "filesystem"
 msgstr "Sistema de archivos"
 
-#: app/views.py:683 templates/production_step1.html:150
+#: app/views.py:684 templates/production_step1.html:150
 msgid "hardware_requirements"
 msgstr "Requerimientos de hardware"
 
-#: app/views.py:683 templates/production_step1.html:156
+#: app/views.py:684 templates/production_step1.html:156
 msgid "minimum"
 msgstr "Mínimo"
 
-#: app/views.py:683 templates/production_step1.html:157
+#: app/views.py:684 templates/production_step1.html:157
 msgid "recommended"
 msgstr "Recomendado"
 
-#: app/views.py:686 templates/production_step1.html:163
+#: app/views.py:687 templates/production_step1.html:163
 msgid "memory"
 msgstr "Memoria"
 
-#: app/views.py:688 templates/production_step1.html:174
+#: app/views.py:689 templates/production_step1.html:174
 msgid "disk"
 msgstr "Disco"
 
-#: app/views.py:690 templates/production_step1.html:185
+#: app/views.py:691 templates/production_step1.html:185
 msgid "processor"
 msgstr "Procesador"
 
-#: app/views.py:733 templates/production_step4.html:37
+#: app/views.py:734 templates/production_step4.html:37
 msgid "variables_to_be_monitored"
 msgstr "Variables a monitorizar"
 
-#: app/views.py:733 templates/production_step4.html:49
+#: app/views.py:734 templates/production_step4.html:49
 msgid "variable"
 msgstr "Variable"
 
-#: app/views.py:745 templates/production_step5.html:37
+#: app/views.py:746 templates/production_step5.html:37
 msgid "milestones_during_the_year"
 msgstr "Hitos durante el año"
 
-#: app/views.py:745
+#: app/views.py:746
 msgid "milestone"
 msgstr "Hito"
 
-#: app/views.py:745 templates/production_step5.html:50
+#: app/views.py:746 templates/production_step5.html:50
 msgid "date"
 msgstr "Fecha"
 
-#: app/views.py:745 templates/production_step5.html:51
+#: app/views.py:746 templates/production_step5.html:51
 msgid "duration_in_days"
 msgstr "Duración en días"
 
-#: app/views.py:797
+#: app/views.py:761
+msgid "full_name_applicant"
+msgstr "Nombre y apellido del solicitante"
+
+#: app/views.py:801
 msgid "project_not_found"
 msgstr "No se pudo determinar el proyecto sobre el cual realizar la solicitud"
 
@@ -553,8 +561,8 @@ msgstr "Español"
 msgid "English"
 msgstr "Inglés"
 
-#: pulmo/settings.py:186 pulmo/settings.tpl.py:156 templates/base.html:12
-#: templates/base.html.py:49
+#: pulmo/settings.py:186 pulmo/settings.tpl.py:156 templates/base.html:13
+#: templates/base.html.py:50
 msgid "title"
 msgstr "Pulmo"
 
@@ -564,10 +572,10 @@ msgstr "Pulmo"
 msgid "new_proyect"
 msgstr "Solicitud de nuevo proyecto"
 
-#: templates/new_step1.html:105 templates/new_step2.html:107
-#: templates/new_step3.html:216 templates/new_step4.html:116
+#: templates/new_step1.html:105 templates/new_step2.html:108
+#: templates/new_step3.html:224 templates/new_step4.html:116
 #: templates/production_step.html:80 templates/production_step1.html:211
-#: templates/production_step3.html:225 templates/production_step4.html:123
+#: templates/production_step3.html:232 templates/production_step4.html:122
 msgid "next"
 msgstr "Siguiente"
 
@@ -575,12 +583,12 @@ msgstr "Siguiente"
 msgid "scv_permissions"
 msgstr "Permisos sobre el repositorio SCV"
 
-#: templates/new_step4.html:68 templates/new_step4.html.py:90
+#: templates/new_step4.html:65 templates/new_step4.html.py:85
 #: templates/production_step.html:70
 msgid "select_an_option"
 msgstr "Seleccione una opción"
 
-#: templates/new_step5.html:120 templates/production_step5.html:123
+#: templates/new_step5.html:130 templates/production_step5.html:122
 msgid "to_finalize"
 msgstr "Finalizar"
 

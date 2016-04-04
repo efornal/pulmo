@@ -563,7 +563,7 @@ def print_application_form (request, proyect_id):
     data = [[Paragraph("<br/><br/>%s<br/><br/>%s<br/>%s" % \
                        ("Santa fe, ..... de .......... de 20....",
                         '..................................................',
-                        'Firma del solicitante'), styleF)],]
+                        _('signature_applicant')), styleF)],]
     t = Table(data, colWidths='*')
     t.setStyle(TableStyle([('VALIGN',(-1,-1),(-1,-1),'BOTTOM'),
                            ('ALIGN',(0,0),(0,0),'RIGHT'),]))
@@ -757,10 +757,12 @@ def print_production_form (request, proyect_id):
     styleF = copy.copy(styles['Normal'])
     styleF.alignment = TA_RIGHT
     styleF.fontSize = 9
-    data = [[Paragraph("<br/><br/>%s<br/><br/>%s<br/>%s" % \
-                       ("Santa fe, ..... de .......... de 20....",
+    data = [[Paragraph("<br/><br/>%s<br/><br/>%s<br/><br/>%s<br/>%s" % \
+                       (_('full_name_applicant') \
+                        "..................................................",
+                        "Santa fe, ..... de .......... de 20....",
                         '..................................................',
-                        'Firma del solicitante'), styleF)],]
+                        _('signature_applicant')), styleF)],]
     t = Table(data, colWidths='*')
     t.setStyle(TableStyle([('VALIGN',(-1,-1),(-1,-1),'BOTTOM'),
                            ('ALIGN',(0,0),(0,0),'RIGHT'),]))
