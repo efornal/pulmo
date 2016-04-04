@@ -552,9 +552,9 @@ def print_application_form (request, proyect_id):
                           Paragraph(to_v(item.email), styleN),
                           Paragraph(to_v(item.phones), styleN),
                           Paragraph(to_v(is_applicant), styleN)])
-            t = Table(data, colWidths='*')
-            t.setStyle(styleTable)
-            content.append(t)
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
+        content.append(t)
 
 
     styleF = copy.copy(styles['Normal'])

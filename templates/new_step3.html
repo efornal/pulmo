@@ -70,15 +70,12 @@
 		            <th class="text-center">{{_('ip_address')}}</th>
                             <th class="text-center">{{_('service')}}</th>
 		            <th class="text-center">{{_('observations')}}</th>
-		            <th class="text-center">
-                              <a href="#" id="add_row" >
-                              <i class=" glyphicon glyphicon-plus-sign"></i></a>
-                            </th>
+		            <th class="text-center"></th>
 		            </tr>
 		          </thead>
+		          <tbody>
                           {% if sources_computer %}
                           {% for soft in sources_computer %}
-		          <tbody>
 		            <tr id='addr{{forloop.counter0}}'>
 		              <td data-name="sources_name" >
 			        <input type="text" name='sources_name[]' value="{{soft.name}}"
@@ -101,31 +98,38 @@
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>
-		          </tbody>
                             {% endfor %}
                           {% else %}
-		          <tbody>
 		            <tr id='addr0'>
 		              <td data-name="sources_name" >
-			        <input type="text" name='sources_name[]'  placeholder='' class="form-control"/>
+			        <input type="text" name='sources_name[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="sources_ip">
-			        <input type="text" name='sources_ip[]' placeholder='' class="form-control"/>
+			        <input type="text" name='sources_ip[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="sources_service">
-			        <input type="text" name='sources_service[]' placeholder='' class="form-control"/>
+			        <input type="text" name='sources_service[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="sources_observation">
-			        <input type="text" name='sources_observation[]' placeholder='' class="form-control"/>
+			        <input type="text" name='sources_observation[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
                                 <a href="#" id='delete_row'>
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>
-		          </tbody>
                           {% endif %}
+		          </tbody>
 		        </table>
+                        <table class="table table-bordered table-hover">
+                          <tr><td>
+                            <a href="#" id="add_row" ><i class=" glyphicon glyphicon-plus-sign"></i></a>
+                          </td></tr>
+                        </table>
                       </div>
                     </div>
 	          </div>
@@ -143,15 +147,12 @@
 		            <th class="text-center">{{_('ip_address')}}</th>
                             <th class="text-center">{{_('service')}}</th>
 		            <th class="text-center">{{_('observations')}}</th>
-		            <th class="text-center">
-                              <a href="#" id="add_row1" >
-                              <i class=" glyphicon glyphicon-plus-sign"></i></a>
-                            </th>
+		            <th class="text-center"></th>
 		            </tr>
 		          </thead>
+		          <tbody>
                           {% if targets_computer %}
                           {% for soft in targets_computer %}
-		          <tbody>
 		            <tr id='addr{{forloop.counter0}}'>
 		              <td data-name="targets_name" >
 			        <input type="text" name='targets_name[]' value="{{soft.name}}"
@@ -174,31 +175,38 @@
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>
-		          </tbody>
                             {% endfor %}
                           {% else %}
-		          <tbody>
 		            <tr id='addsr0'>
 		              <td data-name="targets_name" >
-			        <input type="text" name='targets_name[]'  placeholder='' class="form-control"/>
+			        <input type="text" name='targets_name[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td  data-name="targets_ip">
-			        <input type="text" name='targets_ip[]' placeholder='' class="form-control"/>
+			        <input type="text" name='targets_ip[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td  data-name="targets_service">
-			        <input type="text" name='targets_service[]' placeholder='' class="form-control"/>
+			        <input type="text" name='targets_service[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td  data-name="targets_observation">
-			        <input type="text" name='targets_observation[]' placeholder='' class="form-control"/>
+			        <input type="text" name='targets_observation[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
                                 <a href="#" id='delete_rows' name="delete[]">
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>
-		          </tbody>
                           {% endif %}
+		          </tbody>
 		        </table>
+                        <table class="table table-bordered table-hover">
+                          <tr><td>
+                            <a href="#" id="add_row1" ><i class=" glyphicon glyphicon-plus-sign"></i></a>
+                          </td></tr>
+                        </table>
                       </div>
                     </div>
 	          </div>

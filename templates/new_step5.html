@@ -49,10 +49,7 @@
 		            <th class="text-center">{{_('email')}}</th>
 		            <th class="text-center">{{_('phones')}}</th>
                             <th class="text-center">{{_('is_applicant')}}?</th>
-		            <th class="text-center">
-                              <a href="#" id="add_row" >
-                              <i class=" glyphicon glyphicon-plus-sign"></i></a>
-                            </th>
+		            <th class="text-center"></th>
 		            </tr>
 		          </thead>
 		          <tbody>
@@ -60,16 +57,20 @@
                           {% for referrer in referrers_list %}
 		            <tr id='addr{{forloop.counter0}}'>
 		              <td data-name="names" >
-			        <input type="text" name='names[]' value="{{referrer.name}}"  placeholder='' class="form-control"/>
+			        <input type="text" name='names[]' value="{{referrer.name}}"
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="emails">
-			        <input type="text" name='emails[]' value="{{referrer.email}}" placeholder='' class="form-control"/>
+			        <input type="text" name='emails[]' value="{{referrer.email}}"
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="phones">
-			        <input type="text" name='phones[]' value="{{referrer.phones}}" placeholder='' class="form-control"/>
+			        <input type="text" name='phones[]' value="{{referrer.phones}}"
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="applicants">
-			        <input type="checkbox" name='applicants[]' placeholder='' class="form-control"
+			        <input type="checkbox" name='applicants[]'
+                                       placeholder='' class="form-control"
                                        {% if referrer.is_applicant %}checked{%endif%}/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
@@ -81,16 +82,20 @@
                           {% else %}
 		            <tr id='addr0'>
 		              <td data-name="names" >
-			        <input type="text" name='names[]'  placeholder='' class="form-control"/>
+			        <input type="text" name='names[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="emails">
-			        <input type="text" name='emails[]' placeholder='' class="form-control"/>
+			        <input type="text" name='emails[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="phones">
-			        <input type="text" name='phones[]' placeholder='' class="form-control"/>
+			        <input type="text" name='phones[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="applicants">
-			        <input type="checkbox" name='applicants[]' placeholder='' class="form-control"/>
+			        <input type="checkbox" name='applicants[]'
+                                       placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">
                                 <a href="#" id='delete_row'>
@@ -100,6 +105,11 @@
                           {% endif %}
 		          </tbody>
 		        </table>
+                        <table class="table table-bordered table-hover">
+                          <tr><td>
+                            <a href="#" id="add_row" ><i class=" glyphicon glyphicon-plus-sign"></i></a>
+                          </td></tr>
+                        </table>
                       </div>
                     </div>
                   </div>

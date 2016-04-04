@@ -46,35 +46,31 @@
                       <div class="panel-body">
 		        <table class="table table-bordered table-hover" id="tab_logic">
 		          <thead>
-		            <tr >
+		            <tr>
                               <th class="text-center">{{_('name')}}</th>
 		              <th class="text-center">{{_('version')}}</th>
-		              <th class="text-center">
-                                <a href="#" id="add_row" >
-                                  <i class=" glyphicon glyphicon-plus-sign"></i>
-                                </a>
-                              </th>
+		              <th class="text-center"></th>
 		            </tr>
 		          </thead>
+		          <tbody>
                           {% if software_list %}
                             {% for soft in software_list %}
-		            <tbody>
 		              <tr id='addr{{forloop.counter0}}' data-id="{{forloop.counter0}}">
 		                <td data-name="names" >
-			          <input type="text" name='names[]' value="{{soft.name}}" placeholder='' class="form-control"/>
+			          <input type="text" name='names[]' value="{{soft.name}}"
+                                         placeholder='' class="form-control"/>
 		                </td>
 		                <td  data-name="versions">
-			          <input type="text" name='versions[]' value="{{soft.version}}" placeholder='' class="form-control"/>
+			          <input type="text" name='versions[]' value="{{soft.version}}"
+                                         placeholder='' class="form-control"/>
 		                </td>
                                 <td data-name="delete" >
                                   <a href="#" id='delete_row' name="delete[]">
                                   <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                                 </td>
 		              </tr>
-		            </tbody>
                             {% endfor %}
                           {% else %}
-                          <tbody>
 		            <tr id='addr0' data-id="0">
 		              <td data-name="names" >
 			        <input type="text" name='names[]'  placeholder='' class="form-control"/>
@@ -87,9 +83,14 @@
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>
-		          </tbody>
                           {% endif %}
+		          </tbody>
 		        </table>
+                        <table class="table table-bordered table-hover">
+                          <tr><td>
+                            <a href="#" id="add_row" ><i class=" glyphicon glyphicon-plus-sign"></i></a>
+                          </td></tr>
+                        </table>
                       </div>
                     </div>
 	          </div>

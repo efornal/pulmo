@@ -49,19 +49,16 @@
 		            <tr >
                               <th class="text-center">{{_('user')}}</th>
 		              <th class="text-center">{{_('permission')}}</th>
-		              <th class="text-center">
-                                <a href="#" id="add_row" >
-                                  <i class=" glyphicon glyphicon-plus-sign"></i>
-                                </a>
-                              </th>
+		              <th class="text-center"></th>
 		            </tr>
 	                  </thead>
+	                  <tbody>
                           {% if permissions_list %}
                           {% for permission in permissions_list %}
-	                  <tbody>
 		            <tr id='addr{{forloop.counter0}}'>
 		              <td data-name="usernames" >
-		                <input type="text" name='usernames[]' value="{{permission.user}}" placeholder='' class="form-control"/>
+		                <input type="text" name='usernames[]' value="{{permission.user}}"
+                                       placeholder='' class="form-control"/>
 		              </td>
 		              <td  data-name="permissions">
                                 <select class="form-control" id="select" name='permissions[]'>
@@ -77,10 +74,8 @@
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>
-	                  </tbody>
                           {% endfor %}
                           {% else %}
-	                  <tbody>
 		            <tr id='addr0'>
 		              <td data-name="usernames" >
 		                <input type="text" name='usernames[]'  placeholder='' class="form-control"/>
@@ -98,9 +93,14 @@
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>
-	                  </tbody>
                           {% endif %}
+	                  </tbody>
 	                </table>
+                        <table class="table table-bordered table-hover">
+                          <tr><td>
+                            <a href="#" id="add_row" ><i class=" glyphicon glyphicon-plus-sign"></i></a>
+                          </td></tr>
+                        </table>
                       </div>
                     </div>
                   </div>
