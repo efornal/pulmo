@@ -49,16 +49,12 @@
                               <th class="text-center">{{_('Milestone')}}</th>
 		              <th class="text-center">{{_('date')}}</th>
 		              <th class="text-center">{{_('duration_in_days')}}</th> 
-		              <th class="text-center">
-                                <a href="#" id="add_row" >
-                                  <i class=" glyphicon glyphicon-plus-sign"></i>
-                                </a>
-                              </th>
+		              <th class="text-center"></th>
 		            </tr>
 	                  </thead>
+	                  <tbody>
                           {% if permissions_list %}
                           {% for permission in permissions_list %}
-	                  <tbody>
 		            <tr id='addr{{forloop.counter0}}'>
 		              <td data-name="descriptions" >
 		                <input type="text" name='descriptions[]'
@@ -80,10 +76,8 @@
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>
-	                  </tbody>
                           {% endfor %}
                           {% else %}
-	                  <tbody>
 		            <tr id='addr0'>
 		              <td data-name="descriptions" >
 		                <input type="text" name='descriptions[]'
@@ -105,9 +99,14 @@
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
 		            </tr>
-	                  </tbody>
                           {% endif %}
+	                  </tbody>
 	                </table>
+                        <table class="table table-bordered table-hover">
+                          <tr><td>
+                            <a href="#" id="add_row" ><i class=" glyphicon glyphicon-plus-sign"></i></a>
+                          </td></tr>
+                        </table>
                       </div>
                     </div>
                   </div>

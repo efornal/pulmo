@@ -737,8 +737,8 @@ def print_production_form (request, proyect_id):
             data.append( [Paragraph(to_v(item.name), styleN),
                           Paragraph(to_v(item.periodicity), styleN),
                           Paragraph(to_v(item.preserving_history_by), styleN)])
-            t = Table(data, colWidths='*')
-            t.setStyle(styleTable)
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
         content.append(t)
 
     hitos = Milestone.objects.filter(production_form=proyect_id)
@@ -749,8 +749,8 @@ def print_production_form (request, proyect_id):
             data.append( [Paragraph(to_v(item.description), styleN),
                           Paragraph(to_v(item.duration), styleN),
                           Paragraph(to_v(str(item.date_event.strftime("%d/%m/%Y %H:%M"))), styleN)])
-            t = Table(data, colWidths='*')
-            t.setStyle(styleTable)
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTable)
         content.append(t)
 
 
