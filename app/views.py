@@ -402,10 +402,6 @@ class NumberedCanvas(canvas.Canvas):
         self.setFont('Times-Roman',8)
         self.drawString(PAGE_WIDTH-3.9*cm, PAGE_HEIGHT-1.6*cm, page)
 
-        
-        #self.drawRightString(200*mm, 20*mm,
-        #    "Page %d of %d" % (self._pageNumber, page_count))
-
 def write_header(canvas, doc):
     from reportlab.rl_config import defaultPageSize
     from reportlab.lib.styles import getSampleStyleSheet
