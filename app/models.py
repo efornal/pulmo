@@ -4,7 +4,7 @@ from datetime import datetime
 from django.utils.translation import ugettext as _
 from django.core.validators import validate_ipv46_address, validate_email
 from django.contrib.auth.models import User
-    
+
 class Proyect(models.Model):
     id = models.AutoField( primary_key=True,null=False)
     name = models.CharField( max_length=200,null=False,verbose_name=_('name'))

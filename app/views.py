@@ -371,6 +371,40 @@ def parag_style():
     style.alignment = TA_LEFT
     style.fontSize = 8
     return style
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import mm
+
+class NumberedCanvas(canvas.Canvas):
+    def __init__(self, *args, **kwargs):
+        canvas.Canvas.__init__(self, *args, **kwargs)
+        self._saved_page_states = []
+
+    def showPage(self):
+        self._saved_page_states.append(dict(self.__dict__))
+        self._startPage()
+
+    def save(self):
+        """add page info to each page (page x of y)"""
+        num_pages = len(self._saved_page_states)
+        for state in self._saved_page_states:
+            self.__dict__.update(state)
+            self.draw_page_number(num_pages)
+            canvas.Canvas.showPage(self)
+        canvas.Canvas.save(self)
+
+    def draw_page_number(self, page_count):
+        from reportlab.rl_config import defaultPageSize
+        from reportlab.lib.units import cm
+        PAGE_HEIGHT=defaultPageSize[1]
+        PAGE_WIDTH=defaultPageSize[0]
+
+        page = "Pág. %s of %s" % (self._pageNumber, page_count)
+        self.setFont('Times-Roman',8)
+        self.drawString(PAGE_WIDTH-3.9*cm, PAGE_HEIGHT-1.6*cm, page)
+
+        
+        #self.drawRightString(200*mm, 20*mm,
+        #    "Page %d of %d" % (self._pageNumber, page_count))
 
 def write_header(canvas, doc):
     from reportlab.rl_config import defaultPageSize
@@ -395,9 +429,7 @@ def write_header(canvas, doc):
     parag.wrapOn(canvas,PAGE_WIDTH*0.5, PAGE_HEIGHT)
     parag.drawOn(canvas, 1.6*doc.leftMargin , PAGE_HEIGHT-doc.topMargin)
     canvas.setFont('Times-Roman',8)
-    page = "Pág. %s" % doc.page
     canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.85*inch, PAGE_HEIGHT-doc.topMargin, fecha)
-    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.85*inch, PAGE_HEIGHT-doc.topMargin/1.5, page)
     canvas.restoreState()
 
 
@@ -569,7 +601,7 @@ def print_application_form (request, proyect_id):
                            ('ALIGN',(0,0),(0,0),'RIGHT'),]))
     content.append(t)
 
-    doc.build(content, onFirstPage=firstPage, onLaterPages=laterPages, )
+    doc.build(content, onFirstPage=firstPage, onLaterPages=laterPages,canvasmaker=NumberedCanvas )
     return response
 
 
@@ -757,8 +789,8 @@ def print_production_form (request, proyect_id):
     styleF = copy.copy(styles['Normal'])
     styleF.alignment = TA_RIGHT
     styleF.fontSize = 9
-    data = [[Paragraph("<br/><br/>%s<br/><br/>%s<br/><br/>%s<br/>%s" % \
-                       (_('full_name_applicant') \
+    data = [[Paragraph("<br/><br/>%s, %s<br/><br/>%s<br/><br/>%s<br/>%s" % \
+                       (_('full_name_applicant'),
                         "..................................................",
                         "Santa fe, ..... de .......... de 20....",
                         '..................................................',
@@ -768,7 +800,7 @@ def print_production_form (request, proyect_id):
                            ('ALIGN',(0,0),(0,0),'RIGHT'),]))
     content.append(t)
 
-    doc.build(content, onFirstPage=firstPage, onLaterPages=laterPages, )
+    doc.build(content, onFirstPage=firstPage, onLaterPages=laterPages, canvasmaker=NumberedCanvas)
     return response
 
 
