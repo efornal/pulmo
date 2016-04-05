@@ -812,7 +812,7 @@ def production_step(request):
     request.session['production_software'] = {}
     request.session['production_variables']= {}
     request.session['production_milestones']= {}
-    proyects = Proyect.without_test_server()
+    proyects = Proyect.production_pass_enabled()
     context = {'proyects': proyects}
     log_session(request)
     return render(request, 'production_step.html', context)

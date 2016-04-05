@@ -21,9 +21,10 @@ class Proyect(models.Model):
         return "%s" % (self.name)
 
     @classmethod
-    def without_test_server(cls):
+    def production_pass_enabled(cls):
         return Proyect.objects \
                       .filter(applicationform__testserver__application_form__isnull=False) \
+                      .filter(productionform__productionserver__production_form__isnull=True) \
                       .order_by('name')
 
     
