@@ -1,5 +1,13 @@
 $(document).ready(function() {
 
+    // for existing rows
+    $.each($("#tab_logic tbody tr:nth(0) td"), function() {
+        $("a#delete_row").on("click", function() {
+            if ( $('#tab_logic tr').length > 2 ) // header + first row
+                $(this).closest("tr").remove();
+        });
+    });
+    
     $("#add_row").on("click", function() {
 
         // Dynamic Rows Code
@@ -59,6 +67,7 @@ $(document).ready(function() {
         });
 
     });
+
 
     $("#delete_row").on("click", function() {
         if ( $('#tab_logic tr').length > 2 ) // header + first row
