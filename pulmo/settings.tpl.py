@@ -164,7 +164,7 @@ from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 import logging
 logger = logging.getLogger('django_auth_ldap')
 logger.addHandler(logging.StreamHandler())
-slogger.setLevel(logging.DEBUG)
+logger.setLevel(logging.DEBUG)
 
 AUTH_LDAP_SERVER_URI = LDAP_SERVER
 
