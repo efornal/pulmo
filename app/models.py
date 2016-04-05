@@ -204,6 +204,14 @@ class ApplicationSoftwareRequirement(models.Model):
     def __unicode__(self):
         return "%s" % (self.name)
 
+    @classmethod
+    def by_proyect(cls,proyect_id):
+        return ApplicationSoftwareRequirement.objects \
+                                             .select_related('application_form__proyect') \
+                                             .filter(application_form__proyect=proyect_id)
+
+
+    
     
 class ProductionSoftwareRequirement(models.Model):
     id = models.AutoField(primary_key=True,null=False)

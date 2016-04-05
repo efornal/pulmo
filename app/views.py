@@ -840,10 +840,11 @@ def production_step1(request):
 
 def production_step2(request):
     redirect_without_production_post(request)
-    proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
+    proyect = Proyect.objects.get(pk=request.session['production_proyect'])
+    software_in_test = ApplicationSoftwareRequirement.by_proyect(proyect.pk)
     proyect_form = ProyectForm(instance=proyect)
     production_form = ProductionFormForm()
-    context = {'proyect_form': proyect_form}
+    context = {'proyect_form': proyect_form, 'software_list': software_in_test}
     try:
         params = request.POST.copy()
         params['proyect'] = proyect.pk
