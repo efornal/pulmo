@@ -312,22 +312,32 @@ class TestServer(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     virtual_machine_name = models.CharField(max_length=200,null=False,
                                             verbose_name=_('virtual_machine_name'))
-    ip_address  = models.CharField(max_length=200,null=True,verbose_name=_('ip_address'))
-    mac_address = models.CharField(max_length=200,null=True,verbose_name=_('mac_address'))
-    ram_memory  = models.CharField(max_length=200,null=True,verbose_name=_('ram_memory'))
-    disk_space  = models.CharField(max_length=200,null=True,verbose_name=_('disk_space'))
-    processors = models.CharField(max_length=200,null=True,verbose_name=_('processors'))
-    database_permissions = models.CharField(max_length=200,null=True,
+    ip_address  = models.CharField(max_length=200,null=True,blank=True,
+                                   verbose_name=_('ip_address'))
+    mac_address = models.CharField(max_length=200,null=True,
+                                   verbose_name=_('mac_address'))
+    ram_memory  = models.CharField(max_length=200,null=True,
+                                   verbose_name=_('ram_memory'))
+    disk_space  = models.CharField(max_length=200,null=True,
+                                   verbose_name=_('disk_space'))
+    processors = models.CharField(max_length=200,null=True,
+                                  verbose_name=_('processors'))
+    database_permissions = models.CharField(max_length=200,null=True,blank=True,
                                             verbose_name=_('database_permissions'))
-    database_server = models.CharField(max_length=200,null=True,verbose_name=_('database_server'))
-    location_logs = models.CharField(max_length=200,null=True,verbose_name=_('location_logs'))
+    database_server = models.CharField(max_length=200,null=True,
+                                       verbose_name=_('database_server'))
+    location_logs = models.CharField(max_length=200,null=True,blank=True,
+                                     verbose_name=_('location_logs'))
     cluster_virtual_machine = models.CharField(max_length=200,null=True,
                                                verbose_name=_('cluster_virtual_machine'))
-    vcs_repository = models.CharField(max_length=200,null=True,verbose_name=_('vcs_repository'))
-    observations = models.TextField(null=True, blank=True,verbose_name=_('observations'))
+    vcs_repository = models.CharField(max_length=200,null=True,blank=True,
+                                      verbose_name=_('vcs_repository'))
+    observations = models.TextField(null=True, blank=True,
+                                    verbose_name=_('observations'))
     application_form = models.ForeignKey(ApplicationForm, null=False, blank=False,
                                          verbose_name=_('application_form'))
-    applicant = models.CharField(max_length=200, null=True, blank=True,verbose_name=_('applicant'))
+    applicant = models.CharField(max_length=200, null=True, blank=True,
+                                 verbose_name=_('applicant'))
     user = models.ForeignKey(User, null=True, blank=True, verbose_name=_('user'))
     signature_date = models.DateTimeField(null=True, blank=True,verbose_name=_('signature_date'))
     #signature_date = models.DateTimeField(null=True, blank=True,auto_now_add=True,verbose_name=_('signature_date'))
@@ -345,29 +355,46 @@ class TestServer(models.Model):
 
 class ProductionServer(models.Model):
     id = models.AutoField(primary_key=True,null=False)
-    virtual_machine_name = models.CharField(max_length=200,null=False,verbose_name=_('virtual_machine_name'))
-    ip_address  = models.CharField(max_length=200,null=True,verbose_name=_('ip_address'))
-    mac_address = models.CharField(max_length=200,null=True,verbose_name=_('mac_address'))
-    ram_memory  = models.CharField(max_length=200,null=True,verbose_name=_('ram_memory'))
-    disk_space  = models.CharField(max_length=200,null=True,verbose_name=_('disk_space'))
-    processors = models.CharField(max_length=200,null=True,verbose_name=_('processors'))
-    database_permissions = models.CharField(max_length=200,null=True,verbose_name=_('database_permissions'))
-    database_server = models.CharField(max_length=200,null=True,verbose_name=_('database_server'))
-    location_logs = models.CharField(max_length=200,null=True,verbose_name=_('location_logs'))
+    virtual_machine_name = models.CharField(max_length=200,null=False,
+                                            verbose_name=_('virtual_machine_name'))
+    ip_address  = models.CharField(max_length=200,null=True,
+                                   verbose_name=_('ip_address'))
+    mac_address = models.CharField(max_length=200,null=True,
+                                   verbose_name=_('mac_address'))
+    ram_memory  = models.CharField(max_length=200,null=True,
+                                   verbose_name=_('ram_memory'))
+    disk_space  = models.CharField(max_length=200,null=True,
+                                   verbose_name=_('disk_space'))
+    processors = models.CharField(max_length=200,null=True,
+                                  verbose_name=_('processors'))
+    database_permissions = models.CharField(max_length=200,null=True,blank=True,
+                                            verbose_name=_('database_permissions'))
+    database_server = models.CharField(max_length=200,null=True,
+                                       verbose_name=_('database_server'))
+    location_logs = models.CharField(max_length=200,null=True,blank=True,
+                                     verbose_name=_('location_logs'))
     cluster_virtual_machine = models.CharField(max_length=200,null=True,
                                                verbose_name=_('cluster_virtual_machine'))
-    observations = models.TextField(null=True, blank=True,verbose_name=_('observations'))
+    observations = models.TextField(null=True, blank=True,
+                                    verbose_name=_('observations'))
     production_form = models.ForeignKey(ProductionForm, null=False, blank=False,
                                         verbose_name=_('production_form'))    
-    added_monitoring = models.BooleanField(default=False,null=False,verbose_name=_('added_monitoring'))
-    added_backup     = models.BooleanField(default=False,null=False,verbose_name=_('added_backup'))
+    added_monitoring = models.BooleanField(default=False,null=False,
+                                           verbose_name=_('added_monitoring'))
+    added_backup     = models.BooleanField(default=False,null=False,
+                                           verbose_name=_('added_backup'))
 
-    applicant = models.CharField(max_length=200, null=True, blank=True,verbose_name=_('applicant'))
-    user = models.ForeignKey(User, null=True, blank=True, verbose_name=_('user'))
-    signature_date = models.DateTimeField(null=True, blank=True,verbose_name=_('signature_date'))
+    applicant = models.CharField(max_length=200, null=True, blank=True,
+                                 verbose_name=_('applicant'))
+    user = models.ForeignKey(User, null=True, blank=True,
+                             verbose_name=_('user'))
+    signature_date = models.DateTimeField(null=True, blank=True,
+                                          verbose_name=_('signature_date'))
     #signature_date = models.DateTimeField(null=True, blank=True,auto_now_add=True,verbose_name=_('signature_date'))
-    related_ticket = models.CharField(max_length=200,null=True,blank=True,verbose_name=_('related_ticket'))
-    url = models.CharField(max_length=200,null=True,blank=True,verbose_name=_('url'))
+    related_ticket = models.CharField(max_length=200,null=True,blank=True,
+                                      verbose_name=_('related_ticket'))
+    url = models.CharField(max_length=200,null=True,blank=True,
+                           verbose_name=_('url'))
     
     class Meta:
         db_table = 'production_servers'
