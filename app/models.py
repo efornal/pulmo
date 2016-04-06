@@ -273,11 +273,15 @@ class SCVPermission(models.Model):
     
 class Referrer(models.Model):
     id = models.AutoField(primary_key=True,null=False)
-    name   = models.CharField(max_length=200,null=False,verbose_name=_('name'))
-    email  = models.CharField(max_length=200,null=True, validators=[validate_email],
+    name   = models.CharField(max_length=200,null=False,
+                              verbose_name=_('name'))
+    email  = models.CharField(max_length=200,null=True, blank=True,
+                              validators=[validate_email],
                               verbose_name=_('email'))
-    phones = models.CharField(max_length=200,null=True,verbose_name=_('phones'))
-    is_applicant = models.BooleanField(default=False,null=False,verbose_name=_('is_applicant'))
+    phones = models.CharField(max_length=200,null=True, blank=True,
+                              verbose_name=_('phones'))
+    is_applicant = models.BooleanField(default=False,null=False,
+                                       verbose_name=_('is_applicant'))
     application_form = models.ForeignKey(ApplicationForm, null=False, blank=False,
                                          verbose_name=_('application_form'))
 
