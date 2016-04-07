@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
 import logging
+import utils
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.utils import translation
@@ -27,16 +28,11 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 
+
 def log_session(request_session):
     # FIXME LOG
     for s in request_session.session.items():
         logging.warning(s)
-
-def are_all_empty_params( params ):
-    for key,value in params.iteritems():
-        if value:
-            return False
-    return True
         
 def redirect_without_post(request):
     if request.method != 'POST':
@@ -437,9 +433,6 @@ def laterPages(canvas, doc):
 
 def to_c( field_name ):
     return "<b>%s</b>" % field_name
-
-def to_v( field_value ):
-    return field_value or ''
 
 def to_cv( field_name, field_value ):
     return "%s: %s" % ( to_c(field_name), to_v(field_value) )

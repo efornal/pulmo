@@ -139,6 +139,17 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
+# =================================\
+# redmine configuration
+REDMINE_URL='https://servicios.unl.edu.ar/redmine'
+REDMINE_USERNAME="pulmo"
+REDMINE_PASSWORD = "AIeCgmJW0EUj"
+REDMINE_PROJECT = "administradores"
+REDMINE_TRACKER_ID = 2
+REDMINE_STATUS_ID = 1
+REDMINE_PRIORITY_ID = 4
+REDMINE_ASSIGNED_TO_ID = 54
+# =================================/
 
 # =================================\
 # ldap configuration

@@ -4,7 +4,120 @@ from datetime import datetime
 from django.utils.translation import ugettext as _
 from django.core.validators import validate_ipv46_address, validate_email
 from django.contrib.auth.models import User
+import datetime
+import utils
+from redmine import Redmine
+from django.conf import settings
 
+class TicketSystem(models.Model):
+
+    @classmethod
+    def create_issue(cls,subject,description):
+        params = { 'project_id': settings.REDMINE_PROJECT,
+                   'tracker_id': settings.REDMINE_TRACKER_ID,
+                   'status_id': settings.REDMINE_STATUS_ID,
+                   'priority_id': settings.REDMINE_PRIORITY_ID,
+                   'assigned_to_id': settings.REDMINE_ASSIGNED_TO_ID,
+                   'subject': subject,
+                   'description': description,
+        }
+
+        redmine = Redmine(settings.REDMINE_URL,
+                          username=settings.REDMINE_USERNAME,
+                          password=settings.REDMINE_PASSWORD)
+
+        issue = redmine.issue.create( **params )
+
+    @classmethod
+    def format_description_issue(cls,app):
+        software = ApplicationSoftwareRequirement.objects.filter(application_form=app.pk)
+        sources = ApplicationConnectionSource.objects.filter(application_form=app.pk)
+        targets = ApplicationConnectionTarget.objects.filter(application_form=app.pk)
+        csv_permission = SCVPermission.objects.filter(application_form=app.pk)
+        referrers = Referrer.objects.filter(application_form=app.pk)
+        
+        description =  "* *%s*: %s\n" % (_('proyect_name'), app.proyect.name)
+
+        if app.observations:
+            description += "* %s: <pre>%s</pre>\n" % (_('observations'), app.observations)
+
+        if app.db_name or app.encoding or app.user_owner or app.user_access:
+            description += "\n* %s\n" % _('database')
+            description += "<pre>"
+            description += "%s: %s\n" % (_('name'), app.db_name)
+            description += "%s: %s\n" % (_('encoding'), app.encoding)
+            description += "%s: %s\n" % (_('user_owner'), app.user_owner)
+            description += "%s: %s\n" % (_('user_access'), app.user_access)
+            description += "</pre>"
+            
+        if software:
+            description += "\n* %s [%s, %s]\n" % ( _('software_requirements'),
+                                                   _('name'),
+                                                   _('version'))
+            description += "<pre>"
+            for item in software:
+                description += "%s %s\n" % (item.name, to_v(item.version))
+            description += "</pre>"
+
+        if sources:
+            description += "\n* %s [%s, %s, %s, %s]\n" % ( _('connection_sources'),
+                                                           _('name'),
+                                                           _('ip_address'),
+                                                           _('service'),
+                                                           _('observations'))
+            description += "<pre>"
+            for item in sources:
+                description += "%s, %s, %s, %s\n" % (item.name,
+                                                     to_v(item.ip),
+                                                     to_v(item.service),
+                                                     to_v(item.observations))
+            description += "</pre>"
+                
+        if targets:
+            description += "\n* %s [%s, %s, %s, %s]\n" % ( _('connection_targets'),
+                                                           _('name'),
+                                                           _('ip_address'),
+                                                           _('service'),
+                                                           _('observations'))
+            description += "<pre>"
+            for item in targets:
+                description += "%s, %s, %s, %s\n" % (item.name,
+                                                     to_v(item.ip),
+                                                     to_v(item.service),
+                                                     to_v(item.observations))
+            description += "</pre>"
+
+        if csv_permission:
+            description += "\n* %s [%s, %s]\n" % ( _('vcs_repository'),
+                                                   _('users'),
+                                                   _('permissions'), )
+            description += "<pre>"
+            for item in csv_permission:
+                description += "%s, %s\n" % (item.user,
+                                             item.permission)
+            description += "</pre>"
+
+        if referrers:
+            description += "\n* %s [%s, %s, %s, %s]\n" % ( _('applicants_and_referentes'),
+                                                           _('name_and_surname'),
+                                                           _('email'),
+                                                           _('phones'),
+                                                           _('is_applicant'))
+            description += "<pre>"
+            for item in referrers:
+                is_applicant = ""
+                if item.is_applicant:
+                    is_applicant = _('yes')
+                description += "%s, %s, %s, %s\n" % (item.name,
+                                                     to_v(item.email),
+                                                     to_v(item.phones),
+                                                     is_applicant)
+            description += "</pre>"
+
+        return description
+
+
+    
 class Proyect(models.Model):
     id = models.AutoField( primary_key=True,null=False)
     name = models.CharField( max_length=200,null=False,verbose_name=_('name'))

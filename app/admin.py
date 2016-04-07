@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from app.models import Proyect, ApplicationForm, ProductionForm
+from app.models import Proyect, ApplicationForm, ProductionForm, TicketSystem
 from app.models import ApplicationConnectionTarget, ApplicationConnectionSource
 from app.models import ProductionConnectionTarget, ProductionConnectionSource
 from app.models import ApplicationSoftwareRequirement, ProductionSoftwareRequirement
@@ -10,6 +10,9 @@ from django.forms import ModelForm
 from django.forms.widgets import Textarea
 from django.db import models
 import logging
+from django.utils.translation import ugettext as _
+
+
 
 class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created_at')
@@ -49,7 +52,19 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         SCVPermissionInline,
         ReferrerInline,
     ]
-    
+
+    def save_model(self, request, obj, form, change):
+        app = ApplicationForm.objects.get(pk = obj.pk)
+        
+        if obj.received_application and (not app.received_application) and change:
+            # se debe crear ticket
+            subject = "Crear servidor test para '%s'" % app.proyect.name
+            description = TicketSystem.format_description_issue(app)
+            TicketSystem.create_issue(subject,description)
+
+        super(ApplicationFormAdmin, self).save_model(request, obj, form, change)
+
+        
 class ProductionConnectionSourceInline(admin.TabularInline):
      model = ProductionConnectionSource
      fk_name = "production_form"
@@ -137,7 +152,9 @@ class TestServerAdmin(admin.ModelAdmin):
             obj.applicant = obj.user.username
             logging.info("The application server test has been signed by the user %s" \
                          % obj.applicant)
-            
+
+
+        
         super(TestServerAdmin, self).save_model(request, obj, form, change)
 
 
