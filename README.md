@@ -5,14 +5,20 @@ Projects aplication administration
 
 ### Package Installation
 ```bash
-sudo apt-get install python2.7
-sudo apt-get install postgresql-9.3
-sudo apt-get install python-psycopg2
-sudo apt-get install python-pip
-sudo apt-get install python-yaml
+apt-get install apache2=2.4.10-10+deb8u4
+apt-get install apache2 libapache2-mod-wsgi
+apt-get install python2.7=2.7.9-2
+apt-get install postgresql=9.3
+apt-get install python-psycopg2=2.5.4+dfsg-1
+apt-get install python-pip=1.5.6-5
+apt-get install python-yaml=3.11-2
+apt-get install python-dev
+apt-get install python-ldap
+apt-get install gettext=0.19.3-2
 sudo pip install Django==1.8.5
 sudo pip install django-extensions -v 1.5.7
 sudo pip install django-bootstrap-themes -v 3.1.2
+sudo pip install python-redmine
 ```
 ### Postgres configuration
 ```bash
