@@ -24,15 +24,26 @@ body {
 }
 
 .logo-header {
-    margin-left:5px;
+    margin-left: -10px;
     float: left;
     position: relative;
     margin-top:3px;
-    opacity: 0.7;
-    filter: alpha(opacity=70); /* For IE8 and earlier */
+    opacity: 0.9;
+    filter: alpha(opacity=90); /* For IE8 and earlier */
 }
 
 
 .table-sortable tbody tr {
     cursor: move;
+}
+
+.navbar{
+    background-image: linear-gradient(#6d94bf, #446e9b 50%, #3e648d);
+}
+
+.titulo{
+    font-size: 20px; 
+    color: #cccccc !important;
+    font-family: "Open Sans";
+    float: left;
 }
