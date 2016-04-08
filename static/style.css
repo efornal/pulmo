@@ -32,6 +32,16 @@ body {
     filter: alpha(opacity=90); /* For IE8 and earlier */
 }
 
+#logo-header{
+    background:url("images/logo.png") no-repeat;
+    width:915px;
+    font-size: 30px; 
+    line-height: 86px; 
+    text-align: right; 
+    margin-right: 10px;
+    height:50px;
+}
+
 
 .table-sortable tbody tr {
     cursor: move;
