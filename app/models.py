@@ -5,9 +5,9 @@ from django.utils.translation import ugettext as _
 from django.core.validators import validate_ipv46_address, validate_email
 from django.contrib.auth.models import User
 import datetime
-import utils
 from redmine import Redmine
 from django.conf import settings
+from helpers import to_v
 
 class TicketSystem(models.Model):
 
