@@ -58,8 +58,8 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         
         if obj.received_application and (not app.received_application) and change:
             # se debe crear ticket
-            subject = "Crear servidor test para '%s'" % app.proyect.name
-            description = TicketSystem.format_description_issue(app)
+            subject = "Servidor en test para '%s'" % app.proyect.name
+            description = TicketSystem.format_application_description_issue(app)
             TicketSystem.create_issue(subject,description)
 
         super(ApplicationFormAdmin, self).save_model(request, obj, form, change)
@@ -99,6 +99,17 @@ class ProductionFormAdmin(admin.ModelAdmin):
         MonitoredVariableInline,
         MilestoneInline,
     ]
+
+    def save_model(self, request, obj, form, change):
+        app = ProductionForm.objects.get(pk = obj.pk)
+        
+        if obj.received_application and (not app.received_application) and change:
+            # se debe crear ticket
+            subject = "Servidor en produccion para '%s'" % app.proyect.name
+            description = TicketSystem.format_production_description_issue(app)
+            TicketSystem.create_issue(subject,description)
+
+        super(ProductionFormAdmin, self).save_model(request, obj, form, change)
     
 class ApplicationFormAdminForm(forms.ModelForm):
 

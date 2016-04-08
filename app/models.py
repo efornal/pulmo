@@ -29,7 +29,7 @@ class TicketSystem(models.Model):
         issue = redmine.issue.create( **params )
 
     @classmethod
-    def format_description_issue(cls,app):
+    def format_application_description_issue(cls,app):
         software = ApplicationSoftwareRequirement.objects.filter(application_form=app.pk)
         sources = ApplicationConnectionSource.objects.filter(application_form=app.pk)
         targets = ApplicationConnectionTarget.objects.filter(application_form=app.pk)
@@ -116,6 +116,59 @@ class TicketSystem(models.Model):
 
         return description
 
+    @classmethod
+    def format_production_description_issue(cls,app):
+        software = ApplicationSoftwareRequirement.objects.filter(application_form=app.pk)
+        sources = ApplicationConnectionSource.objects.filter(application_form=app.pk)
+        targets = ApplicationConnectionTarget.objects.filter(application_form=app.pk)
+        csv_permission = SCVPermission.objects.filter(application_form=app.pk)
+        referrers = Referrer.objects.filter(application_form=app.pk)
+        
+        description =  "* *%s*: %s\n" % (_('proyect_name'), app.proyect.name)
+
+        if app.observations:
+            description += "* %s: <pre>%s</pre>\n" % (_('observations'), app.observations)
+
+        if app.db_name or app.encoding or app.user_owner or app.user_access:
+            description += "\n* %s\n" % _('database')
+            description += "<pre>"
+            description += "%s: %s\n" % (_('name'), app.db_name)
+            description += "%s: %s\n" % (_('encoding'), app.encoding)
+            description += "%s: %s\n" % (_('user_owner'), app.user_owner)
+            description += "%s: %s\n" % (_('user_access'), app.user_access)
+            description += "</pre>"
+
+        if app.db_space_to_start or app.db_space_at_year or app.db_space_after:
+            description += "\n* %s - %s\n" % (_('estimated_volume_data'), _('database') )
+            description += "<pre>"
+            description += "%s: %s\n" % (_('space_to_start'), app.db_space_to_start)
+            description += "%s: %s\n" % (_('space_at_year'), app.db_space_at_year)
+            description += "%s: %s\n" % (_('space_after'), app.db_space_after)
+            description += "</pre>"
+        if app.fs_space_to_start or app.fs_space_at_year or app.fs_space_after:
+            description += "\n* %s - %s\n" % (_('estimated_volume_data'), _('filesystem') )
+            description += "<pre>"
+            description += "%s: %s\n" % (_('space_to_start'), app.fs_space_to_start)
+            description += "%s: %s\n" % (_('space_at_year'), app.fs_space_at_year)
+            description += "%s: %s\n" % (_('space_after'), app.fs_space_after)
+            description += "</pre>"
+
+            if app.minimum_memory or app.suggested_memory or \
+               app.minimum_disk_space or app.suggested_disk_space or \
+               app.minimum_processor or app.suggested_processor:
+                description += "\n* %s\n" % _('hardware_requirements')
+                description += "<pre>"
+                description += "%s: \t %s: %s \t %s: %s\n" % ( _('memory'),
+                                                               _('minimum'), app.minimum_memory,
+                                                               _('recommended'), app.suggested_memory )
+                description += "%s: \t %s: %s \t %s: %s\n" % ( _('disk'),
+                                                               _('minimum'),app.minimum_disk_space,
+                                                               _('recommended'),app.suggested_disk_space )
+                description += "%s: \t %s: %s \t %s: %s\n" % ( _('processor'),
+                                                               _('minimum'),app.minimum_processor,
+                                                               _('recommended'), app.suggested_processor )
+            
+        return description
 
     
 class Proyect(models.Model):
