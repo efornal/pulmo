@@ -141,6 +141,7 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
 
 # =================================\
 # redmine configuration
+REDMINE_ENABLE_TICKET_CREATION = True
 REDMINE_URL='https://servicios.unl.edu.ar/redmine'
 REDMINE_USERNAME="pulmo"
 REDMINE_PASSWORD = "AIeCgmJW0EUj"

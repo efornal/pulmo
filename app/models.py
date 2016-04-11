@@ -127,6 +127,9 @@ class TicketSystem(models.Model):
     
         description =  "* *%s*: %s\n" % (_('proyect_name'), app.proyect.name)
 
+        if app.applicant:
+            description +=  "* %s: %s\n" % (_('applicant'), app.applicant)
+
         if app.observations:
             description += "* %s: <pre>%s</pre>\n" % (_('observations'), app.observations)
 
@@ -233,8 +236,11 @@ class TicketSystem(models.Model):
                                                  to_v(str(item.date_event.strftime("%d/%m/%Y %H:%M"))),
                                                  to_v(item.duration))
             description += "</pre>"
-            
-            
+
+        if app.files_backup:
+            description += "\n* %s: <pre>%s</pre>\n" % (_('files_backup'), app.files_backup)
+
+    
         return description
 
     

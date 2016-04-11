@@ -57,7 +57,8 @@ class ApplicationFormAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         app = ApplicationForm.objects.get(pk = obj.pk)
         
-        if obj.received_application and (not app.received_application) and change:
+        if settings.REDMINE_ENABLE_TICKET_CREATION and obj.received_application and \
+           (not app.received_application) and change:
             # se debe crear ticket
             subject = _('test_server_for') % {'name': app.proyect.name}
             description = TicketSystem.format_application_description_issue(app)
@@ -105,7 +106,8 @@ class ProductionFormAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         app = ProductionForm.objects.get(pk = obj.pk)
         
-        if obj.received_application and (not app.received_application) and change:
+        if settings.REDMINE_ENABLE_TICKET_CREATION and obj.received_application and \
+           (not app.received_application) and change:
             # se debe crear ticket
             subject = _('production_server_for') % {'name': app.proyect.name}
             description = TicketSystem.format_production_description_issue(app)
