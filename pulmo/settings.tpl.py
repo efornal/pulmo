@@ -139,6 +139,18 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
+# =================================\
+# redmine configuration
+REDMINE_ENABLE_TICKET_CREATION = False
+REDMINE_URL='http://redmine_url'
+REDMINE_USERNAME="username"
+REDMINE_PASSWORD = "password"
+REDMINE_PROJECT = "proyect_name"
+REDMINE_TRACKER_ID = None
+REDMINE_STATUS_ID = None
+REDMINE_PRIORITY_ID = None
+REDMINE_ASSIGNED_TO_ID = None
+# =================================/
 
 # =================================\
 # ldap configuration
