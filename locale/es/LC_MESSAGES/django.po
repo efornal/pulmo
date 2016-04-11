@@ -18,6 +18,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: app/admin.py:62
+msgid "test_server_for"
+msgstr "Servidor de Test para '%(name)s'"
+
+#: app/admin.py:67 app/admin.py:117
+msgid "confirmed_ticket_request_created"
+msgstr "Se creó el ticket '%(ticket)s' en función de la solicitud confirmada"
+
+#: app/admin.py:112
+msgid "production_server_for"
+msgstr "Servidor de Producción para '%(name)s'"
+
 #: app/forms.py:17 app/forms.py:199 app/models.py:10 app/models.py:118
 #: app/models.py:139 app/models.py:157 app/models.py:175 app/models.py:194
 #: app/models.py:218 app/models.py:277 app/models.py:300 app/views.py:519
