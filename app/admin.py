@@ -11,6 +11,7 @@ from django.forms.widgets import Textarea
 from django.db import models
 import logging
 from django.utils.translation import ugettext as _
+from django.contrib import messages
 
 
 
@@ -58,10 +59,11 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         
         if obj.received_application and (not app.received_application) and change:
             # se debe crear ticket
-            subject = "Servidor en test para '%s'" % app.proyect.name
+            subject = _('test_server_for') % {'name': app.proyect.name}
             description = TicketSystem.format_application_description_issue(app)
-            TicketSystem.create_issue(subject,description)
-
+            issue = TicketSystem.create_issue(subject,description)
+            messages.info(request,_('confirmed_ticket_request_created') % {'ticket': issue.id})
+            
         super(ApplicationFormAdmin, self).save_model(request, obj, form, change)
 
         
@@ -105,9 +107,10 @@ class ProductionFormAdmin(admin.ModelAdmin):
         
         if obj.received_application and (not app.received_application) and change:
             # se debe crear ticket
-            subject = "Servidor en produccion para '%s'" % app.proyect.name
+            subject = _('production_server_for') % {'name': app.proyect.name}
             description = TicketSystem.format_production_description_issue(app)
-            TicketSystem.create_issue(subject,description)
+            issue = TicketSystem.create_issue(subject,description)
+            messages.info(request, _('confirmed_ticket_request_created') % {'ticket': issue.id})
 
         super(ProductionFormAdmin, self).save_model(request, obj, form, change)
     

@@ -27,6 +27,7 @@ class TicketSystem(models.Model):
                           password=settings.REDMINE_PASSWORD)
 
         issue = redmine.issue.create( **params )
+        return issue
 
     @classmethod
     def format_application_description_issue(cls,app):
