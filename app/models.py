@@ -118,12 +118,12 @@ class TicketSystem(models.Model):
 
     @classmethod
     def format_production_description_issue(cls,app):
-        software = ApplicationSoftwareRequirement.objects.filter(application_form=app.pk)
-        sources = ApplicationConnectionSource.objects.filter(application_form=app.pk)
-        targets = ApplicationConnectionTarget.objects.filter(application_form=app.pk)
-        csv_permission = SCVPermission.objects.filter(application_form=app.pk)
-        referrers = Referrer.objects.filter(application_form=app.pk)
-        
+        software = ProductionSoftwareRequirement.objects.filter(production_form=app.pk)
+        sources = ProductionConnectionSource.objects.filter(production_form=app.pk)
+        targets = ProductionConnectionTarget.objects.filter(production_form=app.pk)
+        variables = MonitoredVariable.objects.filter(production_form=app.pk)
+        hitos = Milestone.objects.filter(production_form=app.pk)
+    
         description =  "* *%s*: %s\n" % (_('proyect_name'), app.proyect.name)
 
         if app.observations:
@@ -153,20 +153,86 @@ class TicketSystem(models.Model):
             description += "%s: %s\n" % (_('space_after'), app.fs_space_after)
             description += "</pre>"
 
-            if app.minimum_memory or app.suggested_memory or \
-               app.minimum_disk_space or app.suggested_disk_space or \
-               app.minimum_processor or app.suggested_processor:
-                description += "\n* %s\n" % _('hardware_requirements')
-                description += "<pre>"
-                description += "%s: \t %s: %s \t %s: %s\n" % ( _('memory'),
-                                                               _('minimum'), app.minimum_memory,
-                                                               _('recommended'), app.suggested_memory )
-                description += "%s: \t %s: %s \t %s: %s\n" % ( _('disk'),
-                                                               _('minimum'),app.minimum_disk_space,
-                                                               _('recommended'),app.suggested_disk_space )
-                description += "%s: \t %s: %s \t %s: %s\n" % ( _('processor'),
-                                                               _('minimum'),app.minimum_processor,
-                                                               _('recommended'), app.suggested_processor )
+        if app.minimum_memory or app.suggested_memory or \
+           app.minimum_disk_space or app.suggested_disk_space or \
+           app.minimum_processor or app.suggested_processor:
+            description += "\n* %s\n" % _('hardware_requirements')
+            description += "<pre>"
+            description += "%s: \t %s: %s \t %s: %s\n" % ( _('memory'),
+                                                           _('minimum'), app.minimum_memory,
+                                                           _('recommended'), app.suggested_memory )
+            description += "%s: \t %s: %s \t %s: %s\n" % ( _('disk'),
+                                                           _('minimum'),app.minimum_disk_space,
+                                                           _('recommended'),app.suggested_disk_space )
+            description += "%s: \t %s: %s \t %s: %s\n" % ( _('processor'),
+                                                           _('minimum'),app.minimum_processor,
+                                                           _('recommended'), app.suggested_processor )
+            description += "</pre>"
+
+        if software:
+            description += "\n* %s [%s, %s]\n" % ( _('software_requirements'),
+                                                   _('name'),
+                                                   _('version'))
+            description += "<pre>"
+            for item in software:
+                description += "%s, %s\n" % (item.name, to_v(item.version))
+            description += "</pre>"
+
+        if sources:
+            description += "\n* %s [%s, %s, %s, %s]\n" % ( _('connection_sources'),
+                                                           _('name'),
+                                                           _('ip_address'),
+                                                           _('service'),
+                                                           _('observations'))
+            description += "<pre>"
+            for item in sources:
+                description += "%s, %s, %s, %s\n" % (item.name,
+                                                     to_v(item.ip),
+                                                     to_v(item.service),
+                                                     to_v(item.observations))
+            description += "</pre>"
+                
+        if targets:
+            description += "\n* %s [%s, %s, %s, %s, %s]\n" % ( _('connection_targets'),
+                                                           _('name'),
+                                                           _('ip_address'),
+                                                           _('service'),
+                                                           _('port'),
+                                                           _('ip_firewall'))
+            description += "<pre>"
+            for item in targets:
+                description += "%s, %s, %s, %s, %s\n" % (item.name,
+                                                     to_v(item.ip),
+                                                     to_v(item.service),
+                                                     to_v(item.port),
+                                                     to_v(item.ip_firewall))
+            description += "</pre>"
+
+
+        if variables:
+            description += "\n* %s [%s, %s, %s]\n" % ( _('variables_to_be_monitored'),
+                                                       _('variable'),
+                                                       _('periodicity'),
+                                                       _('preserving_history_by') )
+            description += "<pre>"
+            for item in variables:
+                description += "%s, %s, %s\n" % (item.name,
+                                            to_v(item.periodicity),
+                                            to_v(item.preserving_history_by))
+            description += "</pre>"
+
+        if hitos:
+            description += "\n* %s [%s, %s, %s]\n" % ( _('milestones_during_the_year'),
+                                                   _('milestone'),
+                                                   _('date'),
+                                                   _('duration_in_days') )
+            description += "<pre>"
+            for item in hitos:
+                description += "%s, %s, %s\n" % (item.description,
+                                                 to_v(str(item.date_event.strftime("%d/%m/%Y %H:%M"))),
+                                                 to_v(item.duration))
+            description += "</pre>"
+            
             
         return description
 
