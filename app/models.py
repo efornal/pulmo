@@ -354,11 +354,12 @@ class ProductionForm (models.Model):
 class ApplicationConnectionSource(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=200,null=False,
-                                         verbose_name=_('name'))
-    ip = models.CharField(max_length=200, null=True,
+                            verbose_name=_('name'))
+    ip = models.CharField(max_length=200, null=True,blank=True,
                           verbose_name=_('ip'),
                           validators=[validate_ipv46_address])
-    service = models.CharField(max_length=200,null=True,blank=True,verbose_name=_('service'))
+    service = models.CharField(max_length=200,null=True,blank=True,
+                               verbose_name=_('service'))
     observations = models.TextField(null=True, blank=True,
                                     verbose_name=_('observations'))
     application_form = models.ForeignKey(ApplicationForm, null=False, blank=False,
@@ -375,10 +376,14 @@ class ApplicationConnectionSource(models.Model):
     
 class ProductionConnectionSource(models.Model):
     id = models.AutoField(primary_key=True,null=False)
-    name = models.CharField(max_length=200,null=False,verbose_name=_('name'))
-    ip = models.CharField(max_length=200,null=True,verbose_name=_('ip'))
-    service = models.CharField(max_length=200,null=True,blank=True,verbose_name=_('service'))
-    observations = models.TextField(null=True, blank=True,verbose_name=_('observations'))
+    name = models.CharField(max_length=200,null=False,
+                            verbose_name=_('name'))
+    ip = models.CharField(max_length=200,null=True,blank=True,
+                          verbose_name=_('ip'))
+    service = models.CharField(max_length=200,null=True,blank=True,
+                               verbose_name=_('service'))
+    observations = models.TextField(null=True, blank=True,
+                                    verbose_name=_('observations'))
     production_form = models.ForeignKey(ProductionForm, null=False, blank=False,
                                         verbose_name=_('production_form'))
     
@@ -393,11 +398,15 @@ class ProductionConnectionSource(models.Model):
     
 class ApplicationConnectionTarget(models.Model):
     id = models.AutoField(primary_key=True,null=False)
-    name = models.CharField(max_length=200,null=False,verbose_name=_('name'))
-    ip = models.CharField(max_length=200,null=True,verbose_name=_('ip'),
+    name = models.CharField(max_length=200,null=False,
+                            verbose_name=_('name'))
+    ip = models.CharField(max_length=200,null=True,blank=True,
+                          verbose_name=_('ip'),
                           validators=[validate_ipv46_address])
-    service = models.CharField(max_length=200,null=True,blank=True,verbose_name=_('service'))
-    observations = models.TextField(null=True, blank=True,verbose_name=_('observations'))
+    service = models.CharField(max_length=200,null=True,blank=True,
+                               verbose_name=_('service'))
+    observations = models.TextField(null=True, blank=True,
+                                    verbose_name=_('observations'))
     application_form = models.ForeignKey(ApplicationForm, null=False, blank=False,
                                          verbose_name=_('application_form'))
     
@@ -411,11 +420,16 @@ class ApplicationConnectionTarget(models.Model):
 
 class ProductionConnectionTarget(models.Model):
     id = models.AutoField(primary_key=True,null=False)
-    name = models.CharField(max_length=200,null=False,verbose_name=_('name'))
-    ip = models.CharField(max_length=200,null=True,verbose_name=_('ip'))
-    ip_firewall  = models.CharField(max_length=200,null=True,verbose_name=_('ip_firewall'))
-    service = models.CharField(max_length=200,null=True,blank=True,verbose_name=_('service'))
-    port = models.CharField(max_length=200, null=True, blank=True,verbose_name=_('port'))
+    name = models.CharField(max_length=200,null=False,
+                            verbose_name=_('name'))
+    ip = models.CharField(max_length=200,null=True,blank=True,
+                          verbose_name=_('ip'))
+    ip_firewall  = models.CharField(max_length=200,null=True,blank=True,
+                                    verbose_name=_('ip_firewall'))
+    service = models.CharField(max_length=200,null=True,blank=True,
+                               verbose_name=_('service'))
+    port = models.CharField(max_length=200, null=True, blank=True,
+                            verbose_name=_('port'))
     production_form = models.ForeignKey(ProductionForm, null=False, blank=False,
                                         verbose_name=_('production_form'))
         
