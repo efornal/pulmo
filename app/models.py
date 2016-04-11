@@ -4,7 +4,246 @@ from datetime import datetime
 from django.utils.translation import ugettext as _
 from django.core.validators import validate_ipv46_address, validate_email
 from django.contrib.auth.models import User
+import datetime
+from redmine import Redmine
+from django.conf import settings
+from helpers import to_v
 
+class TicketSystem(models.Model):
+
+    @classmethod
+    def create_issue(cls,subject,description):
+        params = { 'project_id': settings.REDMINE_PROJECT,
+                   'tracker_id': settings.REDMINE_TRACKER_ID,
+                   'status_id': settings.REDMINE_STATUS_ID,
+                   'priority_id': settings.REDMINE_PRIORITY_ID,
+                   'assigned_to_id': settings.REDMINE_ASSIGNED_TO_ID,
+                   'subject': subject,
+                   'description': description,
+        }
+
+        redmine = Redmine(settings.REDMINE_URL,
+                          username=settings.REDMINE_USERNAME,
+                          password=settings.REDMINE_PASSWORD)
+
+        issue = redmine.issue.create( **params )
+        return issue
+
+    @classmethod
+    def format_application_description_issue(cls,app):
+        software = ApplicationSoftwareRequirement.objects.filter(application_form=app.pk)
+        sources = ApplicationConnectionSource.objects.filter(application_form=app.pk)
+        targets = ApplicationConnectionTarget.objects.filter(application_form=app.pk)
+        csv_permission = SCVPermission.objects.filter(application_form=app.pk)
+        referrers = Referrer.objects.filter(application_form=app.pk)
+        
+        description =  "* *%s*: %s\n" % (_('proyect_name'), app.proyect.name)
+
+        if app.observations:
+            description += "* %s: <pre>%s</pre>\n" % (_('observations'), app.observations)
+
+        if app.db_name or app.encoding or app.user_owner or app.user_access:
+            description += "\n* %s\n" % _('database')
+            description += "<pre>"
+            description += "%s: %s\n" % (_('name'), app.db_name)
+            description += "%s: %s\n" % (_('encoding'), app.encoding)
+            description += "%s: %s\n" % (_('user_owner'), app.user_owner)
+            description += "%s: %s\n" % (_('user_access'), app.user_access)
+            description += "</pre>"
+            
+        if software:
+            description += "\n* %s [%s, %s]\n" % ( _('software_requirements'),
+                                                   _('name'),
+                                                   _('version'))
+            description += "<pre>"
+            for item in software:
+                description += "%s %s\n" % (item.name, to_v(item.version))
+            description += "</pre>"
+
+        if sources:
+            description += "\n* %s [%s, %s, %s, %s]\n" % ( _('connection_sources'),
+                                                           _('name'),
+                                                           _('ip_address'),
+                                                           _('service'),
+                                                           _('observations'))
+            description += "<pre>"
+            for item in sources:
+                description += "%s, %s, %s, %s\n" % (item.name,
+                                                     to_v(item.ip),
+                                                     to_v(item.service),
+                                                     to_v(item.observations))
+            description += "</pre>"
+                
+        if targets:
+            description += "\n* %s [%s, %s, %s, %s]\n" % ( _('connection_targets'),
+                                                           _('name'),
+                                                           _('ip_address'),
+                                                           _('service'),
+                                                           _('observations'))
+            description += "<pre>"
+            for item in targets:
+                description += "%s, %s, %s, %s\n" % (item.name,
+                                                     to_v(item.ip),
+                                                     to_v(item.service),
+                                                     to_v(item.observations))
+            description += "</pre>"
+
+        if csv_permission:
+            description += "\n* %s [%s, %s]\n" % ( _('vcs_repository'),
+                                                   _('users'),
+                                                   _('permissions'), )
+            description += "<pre>"
+            for item in csv_permission:
+                description += "%s, %s\n" % (item.user,
+                                             item.permission)
+            description += "</pre>"
+
+        if referrers:
+            description += "\n* %s [%s, %s, %s, %s]\n" % ( _('applicants_and_referentes'),
+                                                           _('name_and_surname'),
+                                                           _('email'),
+                                                           _('phones'),
+                                                           _('is_applicant'))
+            description += "<pre>"
+            for item in referrers:
+                is_applicant = ""
+                if item.is_applicant:
+                    is_applicant = _('yes')
+                description += "%s, %s, %s, %s\n" % (item.name,
+                                                     to_v(item.email),
+                                                     to_v(item.phones),
+                                                     is_applicant)
+            description += "</pre>"
+
+        return description
+
+    @classmethod
+    def format_production_description_issue(cls,app):
+        software = ProductionSoftwareRequirement.objects.filter(production_form=app.pk)
+        sources = ProductionConnectionSource.objects.filter(production_form=app.pk)
+        targets = ProductionConnectionTarget.objects.filter(production_form=app.pk)
+        variables = MonitoredVariable.objects.filter(production_form=app.pk)
+        hitos = Milestone.objects.filter(production_form=app.pk)
+    
+        description =  "* *%s*: %s\n" % (_('proyect_name'), app.proyect.name)
+
+        if app.applicant:
+            description +=  "* %s: %s\n" % (_('applicant'), app.applicant)
+
+        if app.observations:
+            description += "* %s: <pre>%s</pre>\n" % (_('observations'), app.observations)
+
+        if app.db_name or app.encoding or app.user_owner or app.user_access:
+            description += "\n* %s\n" % _('database')
+            description += "<pre>"
+            description += "%s: %s\n" % (_('name'), app.db_name)
+            description += "%s: %s\n" % (_('encoding'), app.encoding)
+            description += "%s: %s\n" % (_('user_owner'), app.user_owner)
+            description += "%s: %s\n" % (_('user_access'), app.user_access)
+            description += "</pre>"
+
+        if app.db_space_to_start or app.db_space_at_year or app.db_space_after:
+            description += "\n* %s - %s\n" % (_('estimated_volume_data'), _('database') )
+            description += "<pre>"
+            description += "%s: %s\n" % (_('space_to_start'), app.db_space_to_start)
+            description += "%s: %s\n" % (_('space_at_year'), app.db_space_at_year)
+            description += "%s: %s\n" % (_('space_after'), app.db_space_after)
+            description += "</pre>"
+        if app.fs_space_to_start or app.fs_space_at_year or app.fs_space_after:
+            description += "\n* %s - %s\n" % (_('estimated_volume_data'), _('filesystem') )
+            description += "<pre>"
+            description += "%s: %s\n" % (_('space_to_start'), app.fs_space_to_start)
+            description += "%s: %s\n" % (_('space_at_year'), app.fs_space_at_year)
+            description += "%s: %s\n" % (_('space_after'), app.fs_space_after)
+            description += "</pre>"
+
+        if app.minimum_memory or app.suggested_memory or \
+           app.minimum_disk_space or app.suggested_disk_space or \
+           app.minimum_processor or app.suggested_processor:
+            description += "\n* %s\n" % _('hardware_requirements')
+            description += "<pre>"
+            description += "%s: \t %s: %s \t %s: %s\n" % ( _('memory'),
+                                                           _('minimum'), app.minimum_memory,
+                                                           _('recommended'), app.suggested_memory )
+            description += "%s: \t %s: %s \t %s: %s\n" % ( _('disk'),
+                                                           _('minimum'),app.minimum_disk_space,
+                                                           _('recommended'),app.suggested_disk_space )
+            description += "%s: \t %s: %s \t %s: %s\n" % ( _('processor'),
+                                                           _('minimum'),app.minimum_processor,
+                                                           _('recommended'), app.suggested_processor )
+            description += "</pre>"
+
+        if software:
+            description += "\n* %s [%s, %s]\n" % ( _('software_requirements'),
+                                                   _('name'),
+                                                   _('version'))
+            description += "<pre>"
+            for item in software:
+                description += "%s, %s\n" % (item.name, to_v(item.version))
+            description += "</pre>"
+
+        if sources:
+            description += "\n* %s [%s, %s, %s, %s]\n" % ( _('connection_sources'),
+                                                           _('name'),
+                                                           _('ip_address'),
+                                                           _('service'),
+                                                           _('observations'))
+            description += "<pre>"
+            for item in sources:
+                description += "%s, %s, %s, %s\n" % (item.name,
+                                                     to_v(item.ip),
+                                                     to_v(item.service),
+                                                     to_v(item.observations))
+            description += "</pre>"
+                
+        if targets:
+            description += "\n* %s [%s, %s, %s, %s, %s]\n" % ( _('connection_targets'),
+                                                           _('name'),
+                                                           _('ip_address'),
+                                                           _('service'),
+                                                           _('port'),
+                                                           _('ip_firewall'))
+            description += "<pre>"
+            for item in targets:
+                description += "%s, %s, %s, %s, %s\n" % (item.name,
+                                                     to_v(item.ip),
+                                                     to_v(item.service),
+                                                     to_v(item.port),
+                                                     to_v(item.ip_firewall))
+            description += "</pre>"
+
+
+        if variables:
+            description += "\n* %s [%s, %s, %s]\n" % ( _('variables_to_be_monitored'),
+                                                       _('variable'),
+                                                       _('periodicity'),
+                                                       _('preserving_history_by') )
+            description += "<pre>"
+            for item in variables:
+                description += "%s, %s, %s\n" % (item.name,
+                                            to_v(item.periodicity),
+                                            to_v(item.preserving_history_by))
+            description += "</pre>"
+
+        if hitos:
+            description += "\n* %s [%s, %s, %s]\n" % ( _('milestones_during_the_year'),
+                                                   _('milestone'),
+                                                   _('date'),
+                                                   _('duration_in_days') )
+            description += "<pre>"
+            for item in hitos:
+                description += "%s, %s, %s\n" % (item.description,
+                                                 to_v(str(item.date_event.strftime("%d/%m/%Y %H:%M"))),
+                                                 to_v(item.duration))
+            description += "</pre>"
+
+        if app.files_backup:
+            description += "\n* %s: <pre>%s</pre>\n" % (_('files_backup'), app.files_backup)
+
+    
+        return description
+
+    
 class Proyect(models.Model):
     id = models.AutoField( primary_key=True,null=False)
     name = models.CharField( max_length=200,null=False,verbose_name=_('name'))

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from app.models import Proyect, ApplicationForm, ProductionForm
+from app.models import Proyect, ApplicationForm, ProductionForm, TicketSystem
 from app.models import ApplicationConnectionTarget, ApplicationConnectionSource
 from app.models import ProductionConnectionTarget, ProductionConnectionSource
 from app.models import ApplicationSoftwareRequirement, ProductionSoftwareRequirement
@@ -10,6 +10,11 @@ from django.forms import ModelForm
 from django.forms.widgets import Textarea
 from django.db import models
 import logging
+from django.utils.translation import ugettext as _
+from django.contrib import messages
+from django.conf import settings
+
+
 
 class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'created_at')
@@ -49,7 +54,21 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         SCVPermissionInline,
         ReferrerInline,
     ]
-    
+
+    def save_model(self, request, obj, form, change):
+        app = ApplicationForm.objects.get(pk = obj.pk)
+        
+        if settings.REDMINE_ENABLE_TICKET_CREATION and obj.received_application and \
+           (not app.received_application) and change:
+            # se debe crear ticket
+            subject = _('test_server_for') % {'name': app.proyect.name}
+            description = TicketSystem.format_application_description_issue(app)
+            issue = TicketSystem.create_issue(subject,description)
+            messages.info(request,_('confirmed_ticket_request_created') % {'ticket': issue.id})
+            
+        super(ApplicationFormAdmin, self).save_model(request, obj, form, change)
+
+        
 class ProductionConnectionSourceInline(admin.TabularInline):
      model = ProductionConnectionSource
      fk_name = "production_form"
@@ -84,6 +103,19 @@ class ProductionFormAdmin(admin.ModelAdmin):
         MonitoredVariableInline,
         MilestoneInline,
     ]
+
+    def save_model(self, request, obj, form, change):
+        app = ProductionForm.objects.get(pk = obj.pk)
+        
+        if settings.REDMINE_ENABLE_TICKET_CREATION and obj.received_application and \
+           (not app.received_application) and change:
+            # se debe crear ticket
+            subject = _('production_server_for') % {'name': app.proyect.name}
+            description = TicketSystem.format_production_description_issue(app)
+            issue = TicketSystem.create_issue(subject,description)
+            messages.info(request, _('confirmed_ticket_request_created') % {'ticket': issue.id})
+
+        super(ProductionFormAdmin, self).save_model(request, obj, form, change)
     
 class ApplicationFormAdminForm(forms.ModelForm):
 
@@ -137,7 +169,9 @@ class TestServerAdmin(admin.ModelAdmin):
             obj.applicant = obj.user.username
             logging.info("The application server test has been signed by the user %s" \
                          % obj.applicant)
-            
+
+
+        
         super(TestServerAdmin, self).save_model(request, obj, form, change)
 
 
