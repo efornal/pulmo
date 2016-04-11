@@ -12,6 +12,7 @@ from django.db import models
 import logging
 from django.utils.translation import ugettext as _
 from django.contrib import messages
+from django.conf import settings
 
 
 
