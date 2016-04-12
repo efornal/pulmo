@@ -17,8 +17,9 @@ from django.conf import settings
 
 
 class ProyectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'created_at')
+    list_display = ('name', 'updated_at', 'created_at')
     search_fields = ['name']
+    ordering = ('name',)
 
 class ReferrerInline(admin.TabularInline):
      model = Referrer
@@ -47,6 +48,7 @@ class ApplicationSoftwareRequirementInline(admin.TabularInline):
      
 class ApplicationFormAdmin(admin.ModelAdmin):
     model = ApplicationForm
+    list_display = ('proyect', 'received_application', 'signature_date')
     inlines = [
         ApplicationSoftwareRequirementInline,
         ApplicationConnectionSourceInline,
@@ -54,7 +56,8 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         SCVPermissionInline,
         ReferrerInline,
     ]
-
+    ordering = ('proyect__name',)
+    
     def save_model(self, request, obj, form, change):
         try:
             if obj.pk:
@@ -101,6 +104,7 @@ class MilestoneInline(admin.TabularInline):
     
 class ProductionFormAdmin(admin.ModelAdmin):
     model = ProductionForm
+    list_display = ('proyect', 'received_application', 'applicant', 'signature_date')
     inlines = [
         ProductionSoftwareRequirementInline,
         ProductionConnectionSourceInline,
@@ -108,7 +112,8 @@ class ProductionFormAdmin(admin.ModelAdmin):
         MonitoredVariableInline,
         MilestoneInline,
     ]
-
+    ordering = ('proyect__name',)
+    
     def save_model(self, request, obj, form, change):
         try:
             if obj.pk:
@@ -172,7 +177,9 @@ class SCVPermissionAdmin(admin.ModelAdmin):
 class TestServerAdmin(admin.ModelAdmin):
 #    exclude = ('signature_date','applicant') #FIXME, temporal
     exclude = ('applicant',) #FIXME, temporal
-
+    ordering = ('application_form__proyect__name',)
+    list_display = ('virtual_machine_name', 'ip_address',
+                    'cluster_virtual_machine','related_ticket','user')
     def save_model(self, request, obj, form, change):
         if not obj.pk:
             #obj.applicant = request.user.username # FIXME, temporal
@@ -188,6 +195,10 @@ class TestServerAdmin(admin.ModelAdmin):
 class ProductionServerAdmin(admin.ModelAdmin):
 #    exclude = ('signature_date','applicant') #FIXME, temporal
     exclude = ('applicant',) #FIXME, temporal
+    ordering = ('production_form__proyect__name',)
+    list_display = ('virtual_machine_name', 'ip_address',
+                    'cluster_virtual_machine','related_ticket',
+                    'user','added_backup','added_monitoring')
     
     def save_model(self, request, obj, form, change):
         if not obj.pk:
