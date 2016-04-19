@@ -394,7 +394,9 @@ class NumberedCanvas(canvas.Canvas):
         PAGE_HEIGHT=defaultPageSize[1]
         PAGE_WIDTH=defaultPageSize[0]
 
-        page = "Pág. %s of %s" % (self._pageNumber, page_count)
+        #page = "Pág. %s of %s" % (self._pageNumber, page_count)
+        page = _('page_x_of_y') % {'page_number': self._pageNumber,
+                                   'total_pages': page_count}
         self.setFont('Times-Roman',8)
         self.drawString(PAGE_WIDTH-3.9*cm, PAGE_HEIGHT-1.6*cm, page)
 
