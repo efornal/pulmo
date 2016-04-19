@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-19 10:43-0300\n"
+"POT-Creation-Date: 2016-04-19 12:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -595,7 +595,7 @@ msgid "English"
 msgstr "Inglés"
 
 #: pulmo/settings.py:201 pulmo/settings.tpl.py:169 templates/base.html:13
-#: templates/base.html.py:62
+#: templates/base.html.py:50
 msgid "title"
 msgstr "Pulmo"
 
