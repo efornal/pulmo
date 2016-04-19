@@ -62,12 +62,11 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         try:
             if obj.pk:
                 app = ApplicationForm.objects.get(pk=obj.pk)
-
                 if settings.REDMINE_ENABLE_TICKET_CREATION and obj.received_application and \
                    (not app.received_application) and change:
                     # se debe crear ticket
                     subject = _('test_server_for') % {'name': app.proyect.name}
-                    description = TicketSystem.format_application_description_issue(app)
+                    description = TicketSystem.format_application_description_issue(obj)
                     issue = TicketSystem.create_issue(subject,description)
                     messages.info(request,_('confirmed_ticket_request_created') \
                                   % {'ticket': issue.id})
@@ -123,7 +122,7 @@ class ProductionFormAdmin(admin.ModelAdmin):
                    (not app.received_application) and change:
                     # se debe crear ticket
                     subject = _('production_server_for') % {'name': app.proyect.name}
-                    description = TicketSystem.format_production_description_issue(app)
+                    description = TicketSystem.format_production_description_issue(obj)
                     issue = TicketSystem.create_issue(subject,description)
                     messages.info(request, _('confirmed_ticket_request_created') \
                                   % {'ticket': issue.id})
