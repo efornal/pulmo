@@ -599,14 +599,6 @@ msgstr "Inglés"
 msgid "title"
 msgstr "Pulmo"
 
-#: templates/base.html:81
-msgid "footer-content"
-msgstr ""
-"<a href='https://github.com/efornal/pulmo' target='_blank'>Pulmo</a> | <a "
-"href='http://validator.w3.org/check?uri=referer'>HTML5</a> | <a href='http://"
-"jigsaw.w3.org/css-validator/check/referer'>CSS</a> | <a href='http://"
-"bootswatch.com'>Website templates</a><a href=''> &nbsp;</a>"
-
 #: templates/new_step1.html:49 templates/new_step2.html:32
 #: templates/new_step3.html:50 templates/new_step4.html:33
 #: templates/new_step5.html:33
