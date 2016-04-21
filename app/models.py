@@ -8,27 +8,68 @@ import datetime
 from redmine import Redmine
 from django.conf import settings
 from helpers import to_v
-
+import logging
 class TicketSystem(models.Model):
 
     @classmethod
-    def create_issue(cls,subject,description):
-        params = { 'project_id': settings.REDMINE_PROJECT,
-                   'tracker_id': settings.REDMINE_TRACKER_ID,
-                   'status_id': settings.REDMINE_STATUS_ID,
-                   'priority_id': settings.REDMINE_PRIORITY_ID,
-                   'assigned_to_id': settings.REDMINE_ASSIGNED_TO_ID,
-                   'subject': subject,
-                   'description': description,
-        }
+    def connect(cls):
+        try:
+            return Redmine(settings.REDMINE_URL,
+                           username=settings.REDMINE_USERNAME,
+                           password=settings.REDMINE_PASSWORD)
+        except Exception as e:
+            logging.error("could not connect to %s" % settings.REDMINE_URL)
+            logging.error(e)
 
-        redmine = Redmine(settings.REDMINE_URL,
-                          username=settings.REDMINE_USERNAME,
-                          password=settings.REDMINE_PASSWORD)
+    @classmethod
+    def watchers_ids_by(cls,emails):
+        watchers = []
+        for email in emails:
+            users_found = TicketSystem.find_user(email)
+            for k,user in enumerate(users_found):
+                watchers.append(user['id'])
+        return watchers
+            
+    @classmethod
+    def create_issue(cls,subject,description, emails=[]):
 
-        issue = redmine.issue.create( **params )
-        return issue
+        try:
+            watchers = TicketSystem.watchers_ids_by(emails)            
 
+            params = { 'project_id': settings.REDMINE_PROJECT,
+                       'tracker_id': settings.REDMINE_TRACKER_ID,
+                       'status_id': settings.REDMINE_STATUS_ID,
+                       'priority_id': settings.REDMINE_PRIORITY_ID,
+                       'assigned_to_id': settings.REDMINE_ASSIGNED_TO_ID,
+                       'subject': subject,
+                       'watcher_user_ids': watchers,
+                       'description': description,
+            }
+            redmine = TicketSystem.connect()
+            issue = redmine.issue.create( **params )
+            return issue
+        except Exception as e:
+            logging.error(e)
+            
+    @classmethod
+    def find_user(cls,name_to_search):
+        users_found = []
+        try:
+            redmine = TicketSystem.connect()
+            users = redmine.user.filter(name=name_to_search)
+            if len(users) < settings.REDMINE_MAXIMUM_OBSERVER_FOUND:
+                for user in users:
+                    users_found.append({'id':user.id,
+                                        'mail':user.mail,
+                                        'firstname':user.firstname,
+                                        'lastname': user.lastname})
+            return users_found
+        except Exception as e:
+            logging.error(e)
+            return users_found
+
+
+        
     @classmethod
     def format_application_description_issue(cls,app):
         software = ApplicationSoftwareRequirement.objects.filter(application_form=app.pk)
@@ -547,6 +588,13 @@ class Referrer(models.Model):
     def __unicode__(self):
         return "%s" % self.name
 
+    @classmethod
+    def to_emails_by_application_form(cls, application_form_id):
+        referrers = Referrer.objects.filter(application_form=application_form_id)
+        emails = []
+        for item in referrers:
+            emails.append(item.email)
+        return emails
 
 class MonitoredVariable(models.Model):
     id = models.AutoField(primary_key=True,null=False)

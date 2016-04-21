@@ -150,6 +150,9 @@ REDMINE_TRACKER_ID = None
 REDMINE_STATUS_ID = None
 REDMINE_PRIORITY_ID = None
 REDMINE_ASSIGNED_TO_ID = None
+# maximum limit users found as observers of a ticket.
+# If there are more than this value, the addition of the ticket is omitted obervadores
+REDMINE_MAXIMUM_OBSERVER_FOUND = 5
 # =================================/
 
 # =================================\
