@@ -7,8 +7,11 @@ from django.contrib.auth.models import User
 import datetime
 from redmine import Redmine
 from django.conf import settings
-from helpers import to_v
+from helpers import to_v, to_absolute_url
 import logging
+from django.core.urlresolvers import reverse
+
+
 class TicketSystem(models.Model):
 
     @classmethod
@@ -153,6 +156,10 @@ class TicketSystem(models.Model):
                                                      is_applicant)
             description += "</pre>"
 
+            description += "\n* %s" % (_('remember_to_add_server') \
+                                     % {'url': to_absolute_url(reverse ('admin:app_testserver_add')),
+                                        'name': _('title')})
+
         return description
 
     @classmethod
@@ -277,6 +284,11 @@ class TicketSystem(models.Model):
 
         if app.files_backup:
             description += "\n* %s: <pre>%s</pre>\n" % (_('files_backup'), app.files_backup)
+
+
+        description += "\n* %s" % (_('remember_to_add_server') \
+                                % {'url': to_absolute_url(reverse ('admin:app_productionserver_add')),
+                                'name': _('title')})
 
     
         return description
