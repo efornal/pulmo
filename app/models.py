@@ -22,20 +22,17 @@ class TicketSystem(models.Model):
             logging.error(e)
 
     @classmethod
-    def watchers_ids_by(cls,emails):
+    def watchers_ids_by(cls,patterns):
         watchers = []
-        for email in emails:
-            users_found = TicketSystem.find_user(email)
+        for pattern in patterns:
+            users_found = TicketSystem.find_user(pattern)
             for k,user in enumerate(users_found):
                 watchers.append(user['id'])
         return watchers
             
     @classmethod
-    def create_issue(cls,subject,description, emails=[]):
-
+    def create_issue(cls,subject,description, watchers=[]):
         try:
-            watchers = TicketSystem.watchers_ids_by(emails)            
-
             params = { 'project_id': settings.REDMINE_PROJECT,
                        'tracker_id': settings.REDMINE_TRACKER_ID,
                        'status_id': settings.REDMINE_STATUS_ID,
