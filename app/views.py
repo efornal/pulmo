@@ -27,18 +27,19 @@ from django.template import Context
 from django.shortcuts import render
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-
+from decorators import redirect_without_post, redirect_if_has_registered
+from decorators import redirect_without_production_post,redirect_if_has_production_registered
 
 def log_session(request_session):
     # FIXME LOG
     for s in request_session.session.items():
         logging.warning(s)
-        
-def redirect_without_post(request):
-    if request.method != 'POST':
-        return redirect('index')
 
-    
+
+def defined_as_registered(request):
+    request.session['has_registered'] = True
+    request.session.modified = True
+
 def index(request):
     return redirect('new_step1')
 
@@ -50,6 +51,27 @@ def define_production_sessions( request ):
     request.session['production_software'] = {}
     request.session['production_variables']= {}
     request.session['production_milestones']= {}
+    request.session.modified = True
+
+def unset_production_sessions( request ):
+    del request.session['production_proyect']
+    del request.session['production']
+    del request.session['production_sources_computer']
+    del request.session['production_targets_computer']
+    del request.session['production_software']
+    del request.session['production_variables']
+    del request.session['production_milestones']
+    request.session.modified = True
+
+def unset_application_sessions( request ):
+    del request.session['proyect']
+    del request.session['application']
+    del request.session['sources_computer']
+    del request.session['targets_computer']
+    del request.session['software']
+    del request.session['scv_permissions']
+    del request.session['referrers']
+    request.session.modified = True
     
 def define_application_sessions( request ):
     request.session['has_registered'] = False
@@ -60,13 +82,16 @@ def define_application_sessions( request ):
     request.session['software'] = {}
     request.session['scv_permissions'] = {}
     request.session['referrers'] = {}
+    request.session.modified = True
 
 def new_step1(request):
+    log_session(request)
     define_application_sessions(request)
     return render(request, 'new_step1.html')
-    
+
+@redirect_without_post
 def new_step2(request):
-    redirect_without_post(request)
+    log_session(request)
     
     proyect_form = ProyectForm()
     application_form = ApplicationFormForm()
@@ -99,9 +124,9 @@ def new_step2(request):
     context.update({'proyect_form': proyect_form, 'application_form': application_form})
     return render(request, 'new_step1.html', context)
 
-
+@redirect_without_post
 def new_step3(request):
-    redirect_without_post(request)
+    log_session(request)
 
     software = []
     software_validated = True
@@ -134,8 +159,10 @@ def new_step3(request):
         context.update({'form': invalid_form, 'software_list': software})
         return render(request, 'new_step2.html', context)
 
+
+@redirect_without_post
 def new_step4(request):
-    redirect_without_post(request)
+    log_session(request)
 
     permissions_options = SCVPermission.permissions()    
     sources_computer = []
@@ -193,9 +220,9 @@ def new_step4(request):
                         'sources_computer': sources_computer, 'targets_computer': targets_computer})
         return render(request, 'new_step3.html', context)
 
-    
+@redirect_without_post    
 def new_step5(request):
-    redirect_without_post(request)
+    log_session(request)
 
     permissions_options = SCVPermission.permissions()    
     permissions = []
@@ -232,8 +259,10 @@ def new_step5(request):
 
 
 @transaction.atomic
+@redirect_without_post
+@redirect_if_has_registered
 def save(request):
-    redirect_without_post(request)
+    log_session(request)
     referrers = []
     ref_validated = True
     invalid_ref_form = None
@@ -353,8 +382,11 @@ def save(request):
             transaction.savepoint_commit( sid )
             msg = _('completed_application')
             context.update({'application_form_id': application.pk, 'msg': msg,
-                            'link_to_application': reverse('print_application_form', args=[application.pk]),
+                            'link_to_application': reverse('print_application_form',
+                                                           args=[application.pk]),
                             'link_to_new_application': reverse('index')})
+            unset_application_sessions( request )
+            defined_as_registered(request)
             return render(request, 'outcome_success.html', context)
         else:
             transaction.savepoint_rollback( sid )
@@ -811,22 +843,16 @@ def print_production_form (request, proyect_id):
     doc.build(content, onFirstPage=firstPage, onLaterPages=laterPages, canvasmaker=NumberedCanvas)
     return response
 
-
-def redirect_without_production_post(request):
-    if request.method != 'POST':
-        return redirect('production_step1')
-
 def production_step(request):
-    define_production_sessions()
+    log_session(request)
+    define_production_sessions(request)
     proyects = Proyect.production_pass_enabled()
     context = {'proyects': proyects}
-    log_session(request)
     return render(request, 'production_step.html', context)
     
-
+@redirect_without_production_post
 def production_step1(request):
-    redirect_without_production_post(request)
-    
+    log_session(request)
     proyect_id = None
     if 'id' in request.POST:
         proyect_id = request.POST['id'] or None
@@ -840,12 +866,12 @@ def production_step1(request):
     request.session['production_has_registered'] = False
     request.session['production_proyect'] = proyect_id
     request.session.modified = True
-    log_session(request)
     context = {'proyect_form': proyect_form }
     return render(request, 'production_step1.html', context)
 
+@redirect_without_production_post
 def production_step2(request):
-    redirect_without_production_post(request)
+    log_session(request)
     proyect = Proyect.objects.get(pk=request.session['production_proyect'])
     software_in_test = ApplicationSoftwareRequirement.by_proyect(proyect.pk)
     proyect_form = ProyectForm(instance=proyect)
@@ -874,7 +900,6 @@ def production_step2(request):
             request.session['production']['minimum_disk_space'] = request.POST['minimum_disk_space']
             request.session['production']['minimum_processor'] = request.POST['minimum_processor']
             request.session.modified = True
-            log_session(request)
             return render(request, 'production_step2.html', context)
         else:
             logging.warning("Invalid production form: %s" % production_form)
@@ -885,10 +910,9 @@ def production_step2(request):
     context.update({'form': production_form,})
     return render(request, 'production_step1.html', context)
 
+@redirect_without_production_post
 def production_step3(request):
-    redirect_without_production_post(request)
     log_session(request)
-    
     proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
     proyect_form = ProyectForm(instance=proyect)
     context = {'proyect_form': proyect_form}
@@ -914,7 +938,6 @@ def production_step3(request):
 
     request.session['production_software'] = software
     request.session.modified = True
-    log_session(request)
     
     if software_validated:
         return render(request, 'production_step3.html', context)
@@ -923,10 +946,9 @@ def production_step3(request):
         return render(request, 'production_step2.html', context)
 
 
-
+@redirect_without_production_post
 def production_step4(request):
-    redirect_without_production_post(request)
-
+    log_session(request)
     proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
     proyect_form = ProyectForm(instance=proyect)
     permissions_options = SCVPermission.permissions()
@@ -977,7 +999,6 @@ def production_step4(request):
     request.session['production_sources_computer'] = sources_computer
     request.session['production_targets_computer'] = targets_computer
     request.session.modified = True
-    log_session(request)
     
     if computers_validated:
         return render(request, 'production_step4.html', context)
@@ -986,10 +1007,8 @@ def production_step4(request):
                         'sources_computer': sources_computer, 'targets_computer': targets_computer})
         return render(request, 'production_step3.html', context)
 
-
+@redirect_without_production_post
 def production_step5(request):
-    redirect_without_production_post(request)
-    
     proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
     proyect_form = ProyectForm(instance=proyect)
     context = {'proyect_form': proyect_form}
@@ -1018,7 +1037,6 @@ def production_step5(request):
 
     request.session['production_variables'] = variables
     request.session.modified = True
-    log_session(request)
     
     if variables_validated:
         return render(request, 'production_step5.html', context)
@@ -1028,9 +1046,10 @@ def production_step5(request):
 
 
 @transaction.atomic
+@redirect_without_production_post
+@redirect_if_has_production_registered
 def production_step6(request):
-    redirect_without_production_post(request)
-    
+    log_session(request)
     milestones = []
     milestone_validate = True
     invalid_milestone_form = None
@@ -1143,6 +1162,8 @@ def production_step6(request):
             context.update({'production_form_id': production.pk, 'msg': msg,
                             'link_to_application': reverse('print_production_form', args=[production.pk] ),
                             'link_to_new_application': reverse('production_step')})
+            unset_production_sessions( request )
+            defined_as_registered(request)
             return render(request, 'outcome_success.html', context)
         else:
             transaction.savepoint_rollback( sid )
