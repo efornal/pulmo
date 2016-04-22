@@ -42,8 +42,16 @@ def redirect_without_post(request):
 def index(request):
     return redirect('new_step1')
 
+def define_production_sessions( request ):
+    request.session['production_proyect'] = {}
+    request.session['production'] = {}
+    request.session['production_sources_computer'] = {}
+    request.session['production_targets_computer'] = {}
+    request.session['production_software'] = {}
+    request.session['production_variables']= {}
+    request.session['production_milestones']= {}
     
-def new_step1(request):
+def define_application_sessions( request ):
     request.session['has_registered'] = False
     request.session['proyect'] = {}
     request.session['application'] = {}
@@ -52,8 +60,10 @@ def new_step1(request):
     request.session['software'] = {}
     request.session['scv_permissions'] = {}
     request.session['referrers'] = {}
-    return render(request, 'new_step1.html')
 
+def new_step1(request):
+    define_application_sessions(request)
+    return render(request, 'new_step1.html')
     
 def new_step2(request):
     redirect_without_post(request)
@@ -440,8 +450,12 @@ def to_cv( field_name, field_value ):
     return "%s: %s" % ( to_c(field_name), to_v(field_value) )
 
 def print_application_form (request, proyect_id):
-
-    application = ApplicationForm.objects.get(proyect_id=proyect_id)
+    try:
+        application = ApplicationForm.objects.get(proyect_id=proyect_id)
+    except Exception as e:
+        logging.error("Could not find the project. \n%s" % e)
+        return redirect('new_step1')
+    
     from reportlab.platypus import Paragraph
     from reportlab.lib.pagesizes import A4
     from reportlab.lib.units import cm,inch
@@ -600,8 +614,11 @@ def print_application_form (request, proyect_id):
 
 # ========================= views for production ======= \
 def print_production_form (request, proyect_id):
-
-    production = ProductionForm.objects.get(proyect_id=proyect_id)
+    try:
+        production = ProductionForm.objects.get(proyect_id=proyect_id)
+    except Exception as e:
+        logging.error("Could not find the project. \n%s" % e)
+        return redirect('production_step')
     from reportlab.platypus import Paragraph
     from reportlab.lib.pagesizes import A4
     from reportlab.lib.units import cm,inch
@@ -800,13 +817,7 @@ def redirect_without_production_post(request):
         return redirect('production_step1')
 
 def production_step(request):
-    request.session['production_proyect'] = {}
-    request.session['production'] = {}
-    request.session['production_sources_computer'] = {}
-    request.session['production_targets_computer'] = {}
-    request.session['production_software'] = {}
-    request.session['production_variables']= {}
-    request.session['production_milestones']= {}
+    define_production_sessions()
     proyects = Proyect.production_pass_enabled()
     context = {'proyects': proyects}
     log_session(request)
