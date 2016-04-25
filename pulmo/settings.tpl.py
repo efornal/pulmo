@@ -26,8 +26,13 @@ SECRET_KEY = '@(p@8_b$kl37vsh_p8urf@^681q&qpz+b+f3-o(aj4cjnv*_81'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+TEMPLATE_DEBUG = True
+
+#ADMINS = (
+#    ('Admin User', 'admin@domain.com'),
+#)
 
 # Application definition
 
