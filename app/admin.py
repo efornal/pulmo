@@ -5,7 +5,7 @@ from app.models import ApplicationConnectionTarget, ApplicationConnectionSource
 from app.models import ProductionConnectionTarget, ProductionConnectionSource
 from app.models import ApplicationSoftwareRequirement, ProductionSoftwareRequirement
 from app.models import Milestone, SCVPermission, Referrer, MonitoredVariable
-from app.models import TestServer, ProductionServer
+from app.models import TestServer, ProductionServer, User
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
 from django.db import models
@@ -171,25 +171,26 @@ class SCVPermissionAdminForm(forms.ModelForm):
         model = SCVPermission
         fields = '__all__'
 
-        
 class SCVPermissionAdmin(admin.ModelAdmin):
     form = SCVPermissionAdminForm
 
-    
+
 class TestServerAdmin(admin.ModelAdmin):
-#    exclude = ('signature_date','applicant') #FIXME, temporal
+    #exclude = ('signature_date','applicant') #FIXME, temporal
     exclude = ('applicant',) #FIXME, temporal
     ordering = ('application_form__proyect__name',)
     list_display = ('virtual_machine_name', 'ip_address',
                     'cluster_virtual_machine','related_ticket','user')
+
+    def get_changeform_initial_data(self, request):
+        return {'user': request.user.id }
+
     def save_model(self, request, obj, form, change):
         if not obj.pk:
-            #obj.applicant = request.user.username # FIXME, temporal
-            obj.applicant = obj.user.username
+            obj.applicant = request.user.username # FIXME, temporal
+            #obj.applicant = obj.user.username
             logging.info("The application server test has been signed by the user %s" \
                          % obj.applicant)
-
-
         
         super(TestServerAdmin, self).save_model(request, obj, form, change)
 
@@ -216,15 +217,6 @@ class ProductionServerAdmin(admin.ModelAdmin):
 admin.site.register(ApplicationForm,ApplicationFormAdmin)
 admin.site.register(ProductionForm,ProductionFormAdmin)
 admin.site.register(Proyect, ProyectAdmin)
-#admin.site.register(ApplicationConnectionSource,ApplicationConnectionSourceAdmin)
-#admin.site.register(ApplicationConnectionTarget,ApplicationConnectionTargetAdmin)
-#admin.site.register(ProductionConnectionTarget)
-#admin.site.register(ProductionConnectionSource)
-#admin.site.register(ProductionSoftwareRequirement)
-#admin.site.register(ApplicationSoftwareRequirement)
 admin.site.register(Milestone)
-#admin.site.register(Referrer)
 admin.site.register(TestServer,TestServerAdmin)
 admin.site.register(ProductionServer,ProductionServerAdmin)
-#admin.site.register(MonitoredVariable)
-#admin.site.register(SCVPermission,SCVPermissionAdmin)
