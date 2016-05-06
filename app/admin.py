@@ -202,6 +202,9 @@ class ProductionServerAdmin(admin.ModelAdmin):
     list_display = ('virtual_machine_name', 'ip_address',
                     'cluster_virtual_machine','related_ticket',
                     'user','added_backup','added_monitoring')
+
+    def get_changeform_initial_data(self, request):
+        return {'user': request.user.id }
     
     def save_model(self, request, obj, form, change):
         if not obj.pk:

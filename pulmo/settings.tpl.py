@@ -219,3 +219,10 @@ AUTHENTICATION_BACKENDS = (
 # logger = logging.getLogger('django_auth_ldap')
 # logger.addHandler(logging.StreamHandler())
 # logger.setLevel(logging.DEBUG)
+
+
+
+import warnings
+warnings.filterwarnings(
+        'error', r"DateTimeField .* received a naive datetime",
+        RuntimeWarning, r'django\.db\.models\.fields')
