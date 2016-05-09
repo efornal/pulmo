@@ -80,8 +80,7 @@ class ProductionSoftwareRequirementForm(forms.ModelForm):
 class ApplicationConnectionSourceForm(forms.ModelForm):
     name = forms.CharField(max_length=200,required=True)
     ip = forms.CharField(max_length=200,required=False)
-    observations = forms.CharField(required=False, \
-                                   widget=forms.Textarea(attrs={'rows':'5', 'cols': '5'}), \
+    observations = forms.CharField(required=False, widget=forms.Textarea,
                                    label=_('observations'))
 
     def __init__(self,*args,**kwargs):
@@ -95,15 +94,11 @@ class ApplicationConnectionSourceForm(forms.ModelForm):
     class Meta:
         model = ApplicationConnectionSource
         fields = '__all__'
-        widgets = {
-            'observations': Textarea( attrs={'rows': 5,'cols': 5}),
-        }
 
 class ProductionConnectionSourceForm(forms.ModelForm):
     name = forms.CharField(max_length=200,required=True)
     ip = forms.CharField(max_length=200,required=False)
-    observations = forms.CharField(required=False, \
-                                   widget=forms.Textarea(attrs={'rows':'5', 'cols': '5'}), \
+    observations = forms.CharField(required=False, widget=forms.Textarea, 
                                    label=_('observations'))
 
     def __init__(self,*args,**kwargs):
@@ -117,15 +112,13 @@ class ProductionConnectionSourceForm(forms.ModelForm):
     class Meta:
         model = ProductionConnectionSource
         fields = '__all__'
-        widgets = {
-            'observations': Textarea( attrs={'rows': 5,'cols': 5}),
-        }
         
 
 class ApplicationConnectionTargetForm(forms.ModelForm):
     name = forms.CharField(max_length=200,required=True)
     ip = forms.CharField(max_length=200,required=False)
-    observations = forms.CharField(required=False, label=_('observations'))
+    observations = forms.CharField( required=False, widget=forms.Textarea,
+                                    label=_('observations'))
 
     def __init__(self,*args,**kwargs):
         field_to_exclude = ''
@@ -138,7 +131,6 @@ class ApplicationConnectionTargetForm(forms.ModelForm):
     class Meta:
         model = ApplicationConnectionTarget
         fields = '__all__'
-
 
 class ProductionConnectionTargetForm(forms.ModelForm):
     name = forms.CharField(max_length=200,required=True)

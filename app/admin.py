@@ -57,7 +57,11 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         ReferrerInline,
     ]
     ordering = ('proyect__name',)
-    
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(
+            attrs={'rows': 3,})},
+    }
+
     def save_model(self, request, obj, form, change):
         try:
             if obj.pk:
@@ -114,6 +118,10 @@ class ProductionFormAdmin(admin.ModelAdmin):
         MilestoneInline,
     ]
     ordering = ('proyect__name',)
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(
+            attrs={'rows': 3,})},
+    }
     
     def save_model(self, request, obj, form, change):
         try:
@@ -146,9 +154,6 @@ class ApplicationConnectionSourceAdminForm(forms.ModelForm):
     class Meta:
         model = ApplicationConnectionSource
         fields = '__all__'
-        widgets = {
-            'observations': Textarea( attrs={'rows': 1,'cols': 20}),
-        }
 
 class ApplicationConnectionSourceAdmin(admin.ModelAdmin):
     form = ApplicationConnectionSourceAdminForm
@@ -162,6 +167,10 @@ class ApplicationConnectionTargetAdminForm(forms.ModelForm):
 
 class ApplicationConnectionTargetAdmin(admin.ModelAdmin):
     form = ApplicationConnectionTargetAdminForm
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(
+            attrs={'rows': 2,})},
+    }
 
     
 class SCVPermissionAdminForm(forms.ModelForm):
@@ -181,6 +190,10 @@ class TestServerAdmin(admin.ModelAdmin):
     ordering = ('application_form__proyect__name',)
     list_display = ('virtual_machine_name', 'ip_address',
                     'cluster_virtual_machine','related_ticket','user')
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(
+            attrs={'rows': 3,})},
+    }
 
     def get_changeform_initial_data(self, request):
         return {'user': request.user.id }
@@ -202,6 +215,10 @@ class ProductionServerAdmin(admin.ModelAdmin):
     list_display = ('virtual_machine_name', 'ip_address',
                     'cluster_virtual_machine','related_ticket',
                     'user','added_backup','added_monitoring')
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(
+            attrs={'rows': 3,})},
+    }
 
     def get_changeform_initial_data(self, request):
         return {'user': request.user.id }
@@ -223,3 +240,4 @@ admin.site.register(Proyect, ProyectAdmin)
 admin.site.register(Milestone)
 admin.site.register(TestServer,TestServerAdmin)
 admin.site.register(ProductionServer,ProductionServerAdmin)
+
