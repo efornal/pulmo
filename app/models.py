@@ -10,7 +10,9 @@ from django.conf import settings
 from helpers import to_v, to_absolute_url
 import logging
 from django.core.urlresolvers import reverse
-from django.utils.timezone import now
+import django.utils.timezone 
+
+
 
 class TicketSystem(models.Model):
 
@@ -654,8 +656,8 @@ class TestServer(models.Model):
                                  verbose_name=_('applicant'))
     user = models.ForeignKey(User, null=True, blank=True,
                              verbose_name=_('user'))
-#    signature_date = models.DateTimeField(auto_now=True, null=True,
-#                                          verbose_name=_('signature_date'))
+    signature_date = models.DateTimeField(default=django.utils.timezone.now, null=False,
+                                          verbose_name=_('signature_date'))
     related_ticket = models.CharField(max_length=200,null=True,blank=True,
                                       verbose_name=_('related_ticket'))
     url = models.CharField(max_length=200,null=True,blank=True,verbose_name=_('url'))
@@ -704,8 +706,8 @@ class ProductionServer(models.Model):
                                  verbose_name=_('applicant'))
     user = models.ForeignKey(User, null=True, blank=True,
                              verbose_name=_('user'))
-#    signature_date = models.DateTimeField(auto_now=True, null=True,
-#                                          verbose_name=_('signature_date'))
+    signature_date = models.DateTimeField(default=django.utils.timezone.now, null=False,
+                                          verbose_name=_('signature_date'))
     related_ticket = models.CharField(max_length=200,null=True,blank=True,
                                       verbose_name=_('related_ticket'))
     url = models.CharField(max_length=200,null=True,blank=True,
