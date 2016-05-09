@@ -387,11 +387,11 @@ class TestServer(models.Model):
                                    verbose_name=_('disk_space'))
     processors = models.CharField(max_length=200,null=True,
                                   verbose_name=_('processors'))
-    database_permissions = models.CharField(max_length=200,null=True,blank=True,
+    database_permissions = models.TextField(null=True,blank=True,
                                             verbose_name=_('database_permissions'))
     database_server = models.CharField(max_length=200,null=True,
                                        verbose_name=_('database_server'))
-    location_logs = models.CharField(max_length=200,null=True,blank=True,
+    location_logs = models.TextField(null=True,blank=True,
                                      verbose_name=_('location_logs'))
     cluster_virtual_machine = models.CharField(max_length=200,null=True,
                                                verbose_name=_('cluster_virtual_machine'))
@@ -435,11 +435,11 @@ class ProductionServer(models.Model):
                                    verbose_name=_('disk_space'))
     processors = models.CharField(max_length=200,null=True,
                                   verbose_name=_('processors'))
-    database_permissions = models.CharField(max_length=200,null=True,blank=True,
+    database_permissions = models.TextField(null=True,blank=True,
                                             verbose_name=_('database_permissions'))
     database_server = models.CharField(max_length=200,null=True,
                                        verbose_name=_('database_server'))
-    location_logs = models.CharField(max_length=200,null=True,blank=True,
+    location_logs = models.TextField(null=True,blank=True,
                                      verbose_name=_('location_logs'))
     cluster_virtual_machine = models.CharField(max_length=200,null=True,
                                                verbose_name=_('cluster_virtual_machine'))
