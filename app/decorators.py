@@ -18,7 +18,7 @@ def redirect_without_production_post(view):
 
 def redirect_if_has_registered(view):
     def wrap(request, *args, **kwargs):
-        if request.session['has_registered']:
+        if 'has_registered' in request.session and request.session['has_registered']:
             request.session['has_registered'] = False
             return redirect('index')
         else:
@@ -27,7 +27,7 @@ def redirect_if_has_registered(view):
 
 def redirect_if_has_production_registered(view):
     def wrap(request, *args, **kwargs):
-        if request.session['has_registered']:
+        if 'has_registered' in request.session and request.session['has_registered']:
             request.session['has_registered'] = False
             return redirect('production_step')
         else:
