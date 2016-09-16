@@ -28,8 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-TEMPLATE_DEBUG = True
-
 #ADMINS = (
 #    ('Admin User', 'admin@domain.com'),
 #)
@@ -70,7 +68,6 @@ SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
-    '/static/',
 )
 
 TEMPLATES = [
@@ -79,6 +76,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(SETTINGS_PATH, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
+            'debug': True,
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -138,11 +136,6 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 LOCALE_PATHS = (
      BASE_DIR + '/locale', )
 
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
-
-TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-    'django.core.context_processors.request',
-)
 
 # =================================\
 # redmine configuration
