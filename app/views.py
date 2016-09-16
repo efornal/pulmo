@@ -31,9 +31,9 @@ from decorators import redirect_without_post, redirect_if_has_registered
 from decorators import redirect_without_production_post,redirect_if_has_production_registered
 
 def log_session(request_session):
-    # FIXME LOG
+    # FIXME , eliminar
     for s in request_session.session.items():
-        logging.warning(s)
+        logging.info(s)
 
 
 def defined_as_registered(request):
@@ -85,13 +85,11 @@ def define_application_sessions( request ):
     request.session.modified = True
 
 def new_step1(request):
-    log_session(request)
     define_application_sessions(request)
     return render(request, 'new_step1.html')
 
 @redirect_without_post
 def new_step2(request):
-    log_session(request)
     
     proyect_form = ProyectForm()
     application_form = ApplicationFormForm()
@@ -120,13 +118,11 @@ def new_step2(request):
     except Exception as e:
         logging.error('%s' % e)
 
-    log_session(request)
     context.update({'proyect_form': proyect_form, 'application_form': application_form})
     return render(request, 'new_step1.html', context)
 
 @redirect_without_post
 def new_step3(request):
-    log_session(request)
 
     software = []
     software_validated = True
@@ -151,7 +147,6 @@ def new_step3(request):
 
     request.session['software'] = software
     request.session.modified = True
-    log_session(request)
     
     if software_validated:
         return render(request, 'new_step3.html', context)
@@ -162,7 +157,6 @@ def new_step3(request):
 
 @redirect_without_post
 def new_step4(request):
-    log_session(request)
 
     permissions_options = SCVPermission.permissions()    
     sources_computer = []
@@ -211,7 +205,6 @@ def new_step4(request):
     request.session['sources_computer'] = sources_computer
     request.session['targets_computer'] = targets_computer
     request.session.modified = True
-    log_session(request)
     
     if computers_validated:
         return render(request, 'new_step4.html', context)
@@ -222,7 +215,6 @@ def new_step4(request):
 
 @redirect_without_post    
 def new_step5(request):
-    log_session(request)
 
     permissions_options = SCVPermission.permissions()    
     permissions = []
@@ -249,7 +241,6 @@ def new_step5(request):
 
     request.session['scv_permissions'] = permissions
     request.session.modified = True
-    log_session(request)
 
     if permissions_validated:
         return render(request, 'new_step5.html', context)
@@ -262,7 +253,6 @@ def new_step5(request):
 @redirect_without_post
 @redirect_if_has_registered
 def save(request):
-    log_session(request)
     referrers = []
     ref_validated = True
     invalid_ref_form = None
@@ -294,9 +284,7 @@ def save(request):
     request.session['referrers'] = referrers
     request.session.modified = True
                 
-    if ref_validated:
-        log_session(request) # and continue...
-    else:
+    if not ref_validated:
         context.update({'form': invalid_ref_form, 'referrers_list': referrers})
         return render(request, 'new_step5.html', context)
 
@@ -844,7 +832,6 @@ def print_production_form (request, proyect_id):
     return response
 
 def production_step(request):
-    log_session(request)
     define_production_sessions(request)
     proyects = Proyect.production_pass_enabled()
     context = {'proyects': proyects}
@@ -852,7 +839,6 @@ def production_step(request):
     
 @redirect_without_production_post
 def production_step1(request):
-    log_session(request)
     proyect_id = None
     if 'id' in request.POST:
         proyect_id = request.POST['id'] or None
@@ -871,7 +857,6 @@ def production_step1(request):
 
 @redirect_without_production_post
 def production_step2(request):
-    log_session(request)
     proyect = Proyect.objects.get(pk=request.session['production_proyect'])
     software_in_test = ApplicationSoftwareRequirement.by_proyect(proyect.pk)
     proyect_form = ProyectForm(instance=proyect)
@@ -912,7 +897,6 @@ def production_step2(request):
 
 @redirect_without_production_post
 def production_step3(request):
-    log_session(request)
     proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
     proyect_form = ProyectForm(instance=proyect)
     context = {'proyect_form': proyect_form}
@@ -948,7 +932,6 @@ def production_step3(request):
 
 @redirect_without_production_post
 def production_step4(request):
-    log_session(request)
     proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
     proyect_form = ProyectForm(instance=proyect)
     permissions_options = SCVPermission.permissions()
@@ -1049,7 +1032,6 @@ def production_step5(request):
 @redirect_without_production_post
 @redirect_if_has_production_registered
 def production_step6(request):
-    log_session(request)
     milestones = []
     milestone_validate = True
     invalid_milestone_form = None
@@ -1078,9 +1060,7 @@ def production_step6(request):
     request.session['milestones'] = milestones
     request.session.modified = True
                 
-    if milestone_validate:
-        log_session(request) # and continue...
-    else:
+    if not milestone_validate:
         context.update({'form': invalid_milestone_form, 'milestones_list': milestones})
         return render(request, 'production_step5.html', context)
 
