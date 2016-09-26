@@ -1,7 +1,5 @@
 # pulmo
-
-Projects aplication administration
-
+Application to manage applications enablement projects. It allows application enablement (to test), and pass to production of each project.
 
 ### Package Installation
 ```bash
@@ -15,11 +13,23 @@ apt-get install python-yaml=3.11-2
 apt-get install python-dev
 apt-get install python-ldap
 apt-get install gettext=0.19.3-2
-sudo pip install Django==1.8.5
-sudo pip install django-extensions -v 1.5.7
-sudo pip install django-bootstrap-themes -v 3.1.2
-sudo pip install python-redmine
+
+pip install -r app/requirements.txt
 ```
+
+### Application configuration
+```bash
+cp pulmo/settings.tpl.py pulmo/settings.py
+```
+
+### Util commands
+```bash
+python manage.py migrate
+
+pip freeze > requirements.txt
+pip install -r requirements.txt
+```
+
 ### Postgres configuration
 ```bash
 createdb pulmo_db;
@@ -29,11 +39,6 @@ createuser pulmo_owner -P;
 hostssl  pulmo_db     pulmo_owner        ::1/128                 password
 /etc/init.d/postgresql restart
 psql -h localhost -U pulmo_owner -p 5432 -d pulmo_db
-```
-### App configuration
-```bash
-python manage.py syncdb
-python manage.py migrate
 ```
 
 ### Showing models
