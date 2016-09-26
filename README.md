@@ -26,8 +26,8 @@ cp pulmo/settings.tpl.py pulmo/settings.py
 ```bash
 python manage.py migrate
 
-pip freeze > requirements.txt
-pip install -r requirements.txt
+pip freeze > app/requirements.txt
+pip install -r app/requirements.txt
 ```
 
 ### Postgres configuration
