@@ -29,7 +29,8 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from decorators import redirect_without_post, redirect_if_has_registered
 from decorators import redirect_without_production_post,redirect_if_has_production_registered
-
+from zabbix.api import ZabbixAPI
+    
 def log_session(request_session):
     # FIXME , eliminar
     for s in request_session.session.items():
@@ -84,6 +85,7 @@ def define_application_sessions( request ):
     request.session['referrers'] = {}
     request.session.modified = True
 
+    
 def new_step1(request):
     define_application_sessions(request)
     return render(request, 'new_step1.html')

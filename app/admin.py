@@ -6,6 +6,7 @@ from app.models import ProductionConnectionTarget, ProductionConnectionSource
 from app.models import ApplicationSoftwareRequirement, ProductionSoftwareRequirement
 from app.models import Milestone, SCVPermission, Referrer, MonitoredVariable
 from app.models import TestServer, ProductionServer, User
+from app.models import Zbbx
 from django.forms import ModelForm
 from django.forms.widgets import Textarea
 from django.db import models
@@ -209,17 +210,39 @@ class TestServerAdmin(admin.ModelAdmin):
 
 
 class ProductionServerAdmin(admin.ModelAdmin):
-#    exclude = ('signature_date','applicant') #FIXME, temporal
-    exclude = ('applicant',) #FIXME, temporal
+    exclude = ('applicant','added_monitoring','added_backup') #FIXME, backup and monitoring will be removed from db
     ordering = ('production_form__proyect__name',)
     list_display = ('virtual_machine_name', 'ip_address',
-                    'cluster_virtual_machine','related_ticket',
-                    'user','added_backup','added_monitoring')
+                    'cluster_virtual_machine','related_ticket','user')
+
+    if hasattr(settings, 'ZABBIX_API_MONITORING_TEMPLATE_ID'):
+        list_display += ('zabbix_added_monitoring',)
+    if hasattr(settings, 'ZABBIX_API_BACKUP_TEMPLATE_ID'):
+        list_display += ('zabbix_added_backup',)
+        
     formfield_overrides = {
         models.TextField: {'widget': Textarea(
             attrs={'rows': 3,})},
     }
 
+    def zabbix_added_backup(cls,obj):
+        if hasattr(settings, 'ZABBIX_API_BACKUP_TEMPLATE_ID'):
+            tpls = Zbbx.get_template_ids(obj.virtual_machine_name)
+            return ("%s" % settings.ZABBIX_API_BACKUP_TEMPLATE_ID in tpls)
+        return None
+    zabbix_added_backup.short_description = 'zabbix added backup'
+    zabbix_added_backup.boolean = True
+
+    
+    def zabbix_added_monitoring(cls,obj):
+        if hasattr(settings, 'ZABBIX_API_MONITORING_TEMPLATE_ID'):
+            tpls = Zbbx.get_template_ids(obj.virtual_machine_name)
+            return ("%s" % settings.ZABBIX_API_MONITORING_TEMPLATE_ID in tpls)
+        return None
+    zabbix_added_monitoring.short_description = 'zabbix added monitoring'
+    zabbix_added_monitoring.boolean = True
+
+    
     def get_changeform_initial_data(self, request):
         return {'user': request.user.id }
     

@@ -14,6 +14,7 @@ apt-get install python-dev
 apt-get install python-ldap
 apt-get install gettext=0.19.3-2
 
+pip install py-zabbix
 pip install -r app/requirements.txt
 ```
 

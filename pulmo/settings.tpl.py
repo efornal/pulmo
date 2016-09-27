@@ -153,6 +153,17 @@ REDMINE_ASSIGNED_TO_ID = None
 REDMINE_MAXIMUM_OBSERVER_FOUND = 5
 # =================================/
 
+
+# =================================\
+# zabbix configuration
+ZABBIX_API_URL = 'http://url_to_zabbix/'
+ZABBIX_API_USERNAME = ''
+ZABBIX_API_PASSWORD = ''
+ZABBIX_API_MONITORING_TEMPLATE_ID = None
+ZABBIX_API_BACKUP_TEMPLATE_ID = None
+# =================================/
+
+
 # =================================\
 # ldap configuration
 

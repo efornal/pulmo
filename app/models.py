@@ -11,6 +11,39 @@ from helpers import to_v, to_absolute_url
 import logging
 from django.core.urlresolvers import reverse
 import django.utils.timezone 
+from pyzabbix import ZabbixAPI
+
+
+class Zbbx():
+
+    @classmethod
+    def new(cls):
+        try:
+            zapi = ZabbixAPI( url=settings.ZABBIX_API_URL,
+                              user=settings.ZABBIX_API_USERNAME,
+                              password=settings.ZABBIX_API_PASSWORD)
+            return zapi
+        except Exception as e:
+            logging.error("Could not connect to API Zabbix: '%s'" % settings.ZABBIX_API_URL )
+            logging.error(e)
+            return None
+
+    @classmethod
+    def get_template_ids(cls, hostname):
+        tpls = []
+        cnn = cls.new()
+
+        if cnn is None:
+            return tpls
+        
+        result = cnn.host.get( selectParentTemplates=1,
+                                     filter={'host': hostname} )
+        if len(result) > 0  and 'parentTemplates' in result[0]:
+            for tpl in result[0]['parentTemplates']:
+                tpls.append(tpl['templateid'])
+
+        return tpls
+
 
     
 class Proyect(models.Model):
@@ -446,9 +479,11 @@ class ProductionServer(models.Model):
     observations = models.TextField(null=True, blank=True,
                                     verbose_name=_('observations'))
     production_form = models.ForeignKey(ProductionForm, null=False, blank=False,
-                                        verbose_name=_('production_form'))    
+                                        verbose_name=_('production_form'))
+    # FIME: will be removed
     added_monitoring = models.BooleanField(default=False,null=False,
                                            verbose_name=_('added_monitoring'))
+    # FIME: will be removed
     added_backup     = models.BooleanField(default=False,null=False,
                                            verbose_name=_('added_backup'))
 
@@ -467,6 +502,14 @@ class ProductionServer(models.Model):
         db_table = 'production_servers'
         verbose_name = _('ProductionServer')
         verbose_name_plural = _('ProductionServers')
+
+        
+    # def zabbix_added_monitoring(self):
+    #     Zbbx.is_monitored_host()
+        
+    # zabbix_added_monitoring.boolean = True
+    # zabbix_added_monitoring.short_description = _("zabbix_added_monitoring")
+        
 
     def __unicode__(self):
         return "%s" % self.virtual_machine_name
