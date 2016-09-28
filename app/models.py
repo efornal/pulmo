@@ -14,6 +14,7 @@ import django.utils.timezone
 from pyzabbix import ZabbixAPI
 
 
+
 class Zbbx():
 
     @classmethod
@@ -28,6 +29,7 @@ class Zbbx():
             logging.error(e)
             return None
 
+        
     @classmethod
     def get_template_ids(cls, hostname):
         tpls = []
@@ -502,14 +504,6 @@ class ProductionServer(models.Model):
         db_table = 'production_servers'
         verbose_name = _('ProductionServer')
         verbose_name_plural = _('ProductionServers')
-
-        
-    # def zabbix_added_monitoring(self):
-    #     Zbbx.is_monitored_host()
-        
-    # zabbix_added_monitoring.boolean = True
-    # zabbix_added_monitoring.short_description = _("zabbix_added_monitoring")
-        
 
     def __unicode__(self):
         return "%s" % self.virtual_machine_name
