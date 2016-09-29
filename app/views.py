@@ -104,6 +104,7 @@ def new_step2(request):
                                                    exclude_from_validation='proyect')
             if application_form.is_valid():
                 request.session['proyect']['name'] = request.POST['name']
+                request.session['proyect']['secretariat'] = request.POST['secretariat']
                 request.session['proyect']['description'] = request.POST['description']
                 request.session['application']['db_name'] = request.POST['db_name']
                 request.session['application']['encoding'] = request.POST['encoding']
@@ -527,6 +528,15 @@ def print_application_form (request, proyect_id):
     content.append(Paragraph( _('subscription_application_form') , styleH5))
     content.append(space)
     content.append(Paragraph(to_cv(_('proyect_name'), application.proyect.name), styleN ))
+
+    logging.error("=========%s" % application.proyect.secretariat)
+    if application.proyect.secretariat:
+        content.append(space)
+        data = [[_('secretariat')],]
+        data.append([[Paragraph(to_v(application.proyect.secretariat), styleN)]])
+        t = Table(data, colWidths='*')
+        t.setStyle(styleTableObs)
+        content.append(t)
 
     if application.proyect.description:
         content.append(space)

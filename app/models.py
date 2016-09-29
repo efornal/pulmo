@@ -54,6 +54,8 @@ class Proyect(models.Model):
                              verbose_name=_('name'))
     description = models.TextField( null=True, blank=True,
                                     verbose_name=_('description'))
+    secretariat = models.CharField( max_length=254, null=True, blank=True,
+                                    verbose_name=_('secretariat'))
     created_at = models.DateTimeField( auto_now_add=True,
                                        verbose_name=_('created_at'))
     updated_at = models.DateTimeField( auto_now=True,

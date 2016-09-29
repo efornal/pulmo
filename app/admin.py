@@ -18,8 +18,8 @@ from django.conf import settings
 
 
 class ProyectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'updated_at', 'created_at')
-    search_fields = ['name']
+    list_display = ('name', 'secretariat', 'updated_at', 'created_at')
+    search_fields = ['name','secretariat','description']
     ordering = ('name',)
 
 class ReferrerInline(admin.TabularInline):

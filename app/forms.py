@@ -15,11 +15,12 @@ from django.forms import Textarea
 
 class ProyectForm(forms.ModelForm):
     name = forms.CharField(max_length=200, required=True, label=_('name'))
+    secretariat = forms.CharField(max_length=254, required=False, label=_('secretariat'))
     description = forms.CharField(required=True, widget=forms.Textarea, label=_('description'))
 
     class Meta:
         model = Proyect
-        fields = ('name', 'description')
+        fields = ('name', 'secretariat', 'description')
 
 
 class ApplicationFormForm(forms.ModelForm):
