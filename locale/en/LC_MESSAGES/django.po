@@ -592,7 +592,7 @@ msgstr "p. %(page_number)s of %(total_pages)s"
 
 #: app/views.py:454
 msgid "header_text"
-msgstr "Dirección de Informatización <br/>Rectorado<br/>Universidad Nacional"
+msgstr "The header text"
 
 #: app/views.py:527
 msgid "subscription_application_form"
