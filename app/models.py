@@ -37,9 +37,18 @@ class Zbbx():
 
         if cnn is None:
             return tpls
-        
+
+        host_filter=[{'host': hostname}]
+        if settings.ZABBIX_API_HOST_SUFIX:
+            if settings.ZABBIX_API_HOST_SUFIX in hostname:
+                host_filter.append({'host': hostname.replace(settings.ZABBIX_API_HOST_SUFIX,'')})
+            else:
+                host_filter.append({'host': "{}{}" \
+                                    .format(hostname, settings.ZABBIX_API_HOST_SUFIX)})
+            
         result = cnn.host.get( selectParentTemplates=1,
-                                     filter={'host': hostname} )
+                                     filter=host_filter )
+        
         if len(result) > 0  and 'parentTemplates' in result[0]:
             for tpl in result[0]['parentTemplates']:
                 tpls.append(tpl['templateid'])

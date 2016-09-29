@@ -161,6 +161,10 @@ ZABBIX_API_USERNAME = ''
 ZABBIX_API_PASSWORD = ''
 ZABBIX_API_MONITORING_TEMPLATE_ID = None
 ZABBIX_API_BACKUP_TEMPLATE_ID = None
+
+# when's defined, look for the host with, and without, the suffix (ex.: .com)
+ZABBIX_API_HOST_SUFIX = '' 
+
 # =================================/
 
 
