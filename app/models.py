@@ -531,7 +531,7 @@ class TicketSystem(models.Model):
         return watchers
             
     @classmethod
-    def create_issue(cls,subject,description, watchers=[]):
+    def create_issue(cls,subject,description, watchers=[], parent=None):
         try:
             params = { 'project_id': settings.REDMINE_PROJECT,
                        'tracker_id': settings.REDMINE_TRACKER_ID,
@@ -541,6 +541,7 @@ class TicketSystem(models.Model):
                        'subject': subject,
                        'watcher_user_ids': watchers,
                        'description': description,
+                       'parent_issue_id': parent,
             }
             redmine = TicketSystem.connect()
             issue = redmine.issue.create( **params )
@@ -568,7 +569,7 @@ class TicketSystem(models.Model):
 
         
     @classmethod
-    def format_application_description_issue(cls,app):
+    def application_description_issue(cls,app):
         software = ApplicationSoftwareRequirement.objects.filter(application_form=app.pk)
         sources = ApplicationConnectionSource.objects.filter(application_form=app.pk)
         targets = ApplicationConnectionTarget.objects.filter(application_form=app.pk)
@@ -660,7 +661,7 @@ class TicketSystem(models.Model):
         return description
 
     @classmethod
-    def format_production_description_issue(cls,app):
+    def production_description_issue(cls,app):
         software = ProductionSoftwareRequirement.objects.filter(production_form=app.pk)
         sources = ProductionConnectionSource.objects.filter(production_form=app.pk)
         targets = ProductionConnectionTarget.objects.filter(production_form=app.pk)
@@ -789,3 +790,7 @@ class TicketSystem(models.Model):
 
     
         return description
+
+
+
+

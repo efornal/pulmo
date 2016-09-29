@@ -73,7 +73,7 @@ class ApplicationFormAdmin(admin.ModelAdmin):
                     emails = Referrer.to_emails_by_application_form(obj.pk)
                     watchers = TicketSystem.watchers_ids_by(emails)
                     subject = _('test_server_for') % {'name': app.proyect.name}
-                    description = TicketSystem.format_application_description_issue(obj)
+                    description = TicketSystem.application_description_issue(obj)
                     issue = TicketSystem.create_issue(subject,description,watchers)
                     messages.info(request,_('confirmed_ticket_request_created') \
                                   % {'ticket': issue.id})
@@ -134,10 +134,24 @@ class ProductionFormAdmin(admin.ModelAdmin):
                     # se debe crear ticket
                     watcher = TicketSystem.watchers_ids_by([obj.applicant])
                     subject = _('production_server_for') % {'name': app.proyect.name}
-                    description = TicketSystem.format_production_description_issue(obj)
+                    description = TicketSystem.production_description_issue(obj)
                     issue = TicketSystem.create_issue(subject,description,watcher)
                     messages.info(request, _('confirmed_ticket_request_created') \
                                   % {'ticket': issue.id})
+
+                    monitoring_subject=_('add_to_monitoring') % {'name': app.proyect.name}
+                    monitoring_description = _('add_to_monitoring_desc')
+                    monitoring_issue = TicketSystem.create_issue(monitoring_subject,
+                                                              monitoring_description,
+                                                              None,
+                                                              issue.id)
+                    backup_subject=_('add_to_backup') % {'name': app.proyect.name}
+                    backup_description = _('add_to_backup_desc')
+                    backup_issue = TicketSystem.create_issue(backup_subject,
+                                                              backup_description,
+                                                              None,
+                                                              issue.id)
+
         except Exception as e:
             logging.error(e)
 
