@@ -25,7 +25,6 @@ class Zbbx():
                               password=settings.ZABBIX_API_PASSWORD)
             return zapi
         except Exception as e:
-            logging.error("Could not connect to API Zabbix: '%s'" % settings.ZABBIX_API_URL )
             logging.error(e)
             return None
 
@@ -38,18 +37,16 @@ class Zbbx():
         if cnn is None:
             return tpls
 
-        host_filter=[{'host': hostname}]
-        if settings.ZABBIX_API_HOST_SUFIX:
+        host_filter=[hostname]
+        if hasattr(settings, 'ZABBIX_API_HOST_SUFIX'):
             if settings.ZABBIX_API_HOST_SUFIX in hostname:
-                host_filter.append({'host': hostname.replace(settings.ZABBIX_API_HOST_SUFIX,'')})
+                host_filter.append(hostname.replace(settings.ZABBIX_API_HOST_SUFIX,''))
             else:
-                host_filter.append({'host': "{}{}" \
-                                    .format(hostname, settings.ZABBIX_API_HOST_SUFIX)})
-            
-        result = cnn.host.get( selectParentTemplates=1,
-                                     filter=host_filter )
-        
-        if len(result) > 0  and 'parentTemplates' in result[0]:
+                host_filter.append("{}{}".format(hostname, settings.ZABBIX_API_HOST_SUFIX))
+
+        result = cnn.host.get( selectParentTemplates=1,filter={'host': host_filter} )
+
+        if len(result) == 1  and 'parentTemplates' in result[0]:
             for tpl in result[0]['parentTemplates']:
                 tpls.append(tpl['templateid'])
 
