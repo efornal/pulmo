@@ -13,6 +13,11 @@ apt-get install python-yaml=3.11-2
 apt-get install python-dev
 apt-get install python-ldap
 apt-get install gettext=0.19.3-2
+apt-get install iotop=0.6-1
+apt-get install libjpeg-dev=1:1.3.1-12
+apt-get install zlib1g-dev=1:1.2.8.dfsg-2+b1
+apt-get install libldap2-dev=2.4.40+dfsg-1+deb8u2
+apt-get install libsasl2-dev=2.1.26.dfsg1-13+deb8u1
 
 pip install -r app/requirements.txt
 ```

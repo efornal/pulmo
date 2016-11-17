@@ -29,8 +29,6 @@ python-debian==0.1.27
 python-debianbts==1.11
 python-ldap==2.4.25
 python-redmine==1.5.1
-reportbug==6.6.3
-reportlab==3.2.0
 requests==2.4.3
 roman==2.0.0
 six==1.10.0
