@@ -16,7 +16,7 @@ from .forms import MonitoredVariableForm, MilestoneForm
 from .forms import ProductionConnectionSourceForm, ProductionConnectionTargetForm
 from .forms import ApplicationConnectionSourceForm, ApplicationConnectionTargetForm
 from django.forms.models import inlineformset_factory
-from .models import Proyect, ApplicationForm, ProductionForm
+from .models import Proyect, ApplicationForm, ProductionForm, TicketSystem
 from .models import ApplicationSoftwareRequirement,ProductionSoftwareRequirement, Referrer
 from .models import ApplicationConnectionSource, ApplicationConnectionTarget
 from .models import ProductionConnectionSource, ProductionConnectionTarget
@@ -30,7 +30,8 @@ from django.core.urlresolvers import reverse
 from decorators import redirect_without_post, redirect_if_has_registered
 from decorators import redirect_without_production_post,redirect_if_has_production_registered
 from zabbix.api import ZabbixAPI
-    
+
+
 def log_session(request_session):
     # FIXME , eliminar
     for s in request_session.session.items():
@@ -41,8 +42,10 @@ def defined_as_registered(request):
     request.session['has_registered'] = True
     request.session.modified = True
 
+    
 def index(request):
     return redirect('new_step1')
+
 
 def define_production_sessions( request ):
     request.session['production_proyect'] = {}
@@ -54,6 +57,7 @@ def define_production_sessions( request ):
     request.session['production_milestones']= {}
     request.session.modified = True
 
+    
 def unset_production_sessions( request ):
     del request.session['production_proyect']
     del request.session['production']
@@ -64,6 +68,7 @@ def unset_production_sessions( request ):
     del request.session['production_milestones']
     request.session.modified = True
 
+    
 def unset_application_sessions( request ):
     del request.session['proyect']
     del request.session['application']
@@ -73,6 +78,7 @@ def unset_application_sessions( request ):
     del request.session['scv_permissions']
     del request.session['referrers']
     request.session.modified = True
+
     
 def define_application_sessions( request ):
     request.session['has_registered'] = False
@@ -89,6 +95,7 @@ def define_application_sessions( request ):
 def new_step1(request):
     define_application_sessions(request)
     return render(request, 'new_step1.html')
+
 
 @redirect_without_post
 def new_step2(request):
@@ -123,6 +130,7 @@ def new_step2(request):
 
     context.update({'proyect_form': proyect_form, 'application_form': application_form})
     return render(request, 'new_step1.html', context)
+
 
 @redirect_without_post
 def new_step3(request):
@@ -216,6 +224,7 @@ def new_step4(request):
                         'sources_computer': sources_computer, 'targets_computer': targets_computer})
         return render(request, 'new_step3.html', context)
 
+    
 @redirect_without_post    
 def new_step5(request):
 
@@ -371,10 +380,23 @@ def save(request):
 
         if commit_transaction:
             transaction.savepoint_commit( sid )
+
             msg = _('completed_application')
+            
+            if settings.REDMINE_ENABLE_TICKET_CREATION:
+                    # se debe crear ticket
+                    emails = Referrer.to_emails_by_application_form(application.pk)
+                    watchers = TicketSystem.watchers_ids_by(emails)
+                    subject = _('test_server_for') % {'name': application.proyect.name}
+                    description = TicketSystem.application_description_issue(application)
+                    issue = TicketSystem.create_issue(subject,description,watchers)
+                    logging.info(request,_('confirmed_ticket_request_created') \
+                                 % {'ticket': issue.id})
+
+                    msg += _('confirmed_ticket_request_created') % {'ticket': issue.id}
+
+            
             context.update({'application_form_id': application.pk, 'msg': msg,
-                            'link_to_application': reverse('print_application_form',
-                                                           args=[application.pk]),
                             'link_to_new_application': reverse('index')})
             unset_application_sessions( request )
             defined_as_registered(request)
@@ -390,465 +412,14 @@ def save(request):
     context.update({'msg': msg})
     return render(request, 'outcome_error.html.html', context)
 
-def parag_style():
-    from  reportlab.lib.styles import ParagraphStyle
-    from reportlab.lib.enums import TA_LEFT
-    style = ParagraphStyle('test')
-    style.textColor = 'black'
-    style.borderColor = 'black'
-    style.borderWidth = 0
-    style.alignment = TA_LEFT
-    style.fontSize = 8
-    return style
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import mm
-
-class NumberedCanvas(canvas.Canvas):
-    def __init__(self, *args, **kwargs):
-        canvas.Canvas.__init__(self, *args, **kwargs)
-        self._saved_page_states = []
-
-    def showPage(self):
-        self._saved_page_states.append(dict(self.__dict__))
-        self._startPage()
-
-    def save(self):
-        """add page info to each page (page x of y)"""
-        num_pages = len(self._saved_page_states)
-        for state in self._saved_page_states:
-            self.__dict__.update(state)
-            self.draw_page_number(num_pages)
-            canvas.Canvas.showPage(self)
-        canvas.Canvas.save(self)
-
-    def draw_page_number(self, page_count):
-        from reportlab.rl_config import defaultPageSize
-        from reportlab.lib.units import cm
-        PAGE_HEIGHT=defaultPageSize[1]
-        PAGE_WIDTH=defaultPageSize[0]
-
-        #page = "Pág. %s of %s" % (self._pageNumber, page_count)
-        page = _('page_x_of_y') % {'page_number': self._pageNumber,
-                                   'total_pages': page_count}
-        self.setFont('Times-Roman',8)
-        self.drawString(PAGE_WIDTH-3.9*cm, PAGE_HEIGHT-1.6*cm, page)
-
-def write_header(canvas, doc):
-    from reportlab.rl_config import defaultPageSize
-    from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.lib.units import cm,inch
-    PAGE_HEIGHT=defaultPageSize[1]
-    PAGE_WIDTH=defaultPageSize[0]
-    from django.conf import settings
-    from reportlab.platypus import Paragraph
-    from reportlab.lib.units import cm
-    from datetime import datetime
-    canvas.saveState()
-    fecha = datetime.now().strftime("%d/%m/%Y %H:%M")
-    if settings.STATIC_ROOT:
-        img_path = "%s/images/logo_header.png" % settings.STATIC_ROOT
-    else:
-        img_path = "%s%simages/logo_header.png" % (settings.BASE_DIR,settings.STATIC_URL)
-    canvas.drawImage(img_path,doc.leftMargin+0.1*cm , PAGE_HEIGHT-doc.topMargin, 1.3*cm, 1.3*cm)
-    canvas.line( doc.leftMargin+0.1*cm , PAGE_HEIGHT-1.05*doc.topMargin,
-                 PAGE_WIDTH-1.05*doc.rightMargin,PAGE_HEIGHT-1.05*doc.topMargin)
-    parag = Paragraph( _('header_text') ,parag_style())
-    parag.wrapOn(canvas,PAGE_WIDTH*0.5, PAGE_HEIGHT)
-    parag.drawOn(canvas, 1.6*doc.leftMargin , PAGE_HEIGHT-doc.topMargin)
-    canvas.setFont('Times-Roman',8)
-    canvas.drawString(PAGE_WIDTH-doc.rightMargin-0.85*inch, PAGE_HEIGHT-doc.topMargin, fecha)
-    canvas.restoreState()
-
-
-def firstPage(canvas, doc):
-    write_header(canvas,doc)
-
-def laterPages(canvas, doc):
-    write_header(canvas,doc)
-
-def to_c( field_name ):
-    return "<b>%s</b>" % field_name
-
-def to_cv( field_name, field_value ):
-    return "%s: %s" % ( to_c(field_name), to_v(field_value) )
-
-def print_application_form (request, proyect_id):
-    try:
-        application = ApplicationForm.objects.get(proyect_id=proyect_id)
-    except Exception as e:
-        logging.error("Could not find the project. \n%s" % e)
-        return redirect('new_step1')
-    
-    from reportlab.platypus import Paragraph
-    from reportlab.lib.pagesizes import A4
-    from reportlab.lib.units import cm,inch
-    from reportlab.platypus import Paragraph
-    from reportlab.lib.styles import ParagraphStyle
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle
-    from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.platypus import SimpleDocTemplate, Paragraph
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib.enums import TA_CENTER, TA_RIGHT
-    from reportlab.platypus.flowables import Spacer, Flowable
-    from io import BytesIO
-    from django.http import HttpResponse
-    from django.views.generic import ListView
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle
-    from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.lib import colors
-    from reportlab.lib.pagesizes import letter
-    from reportlab.platypus import Table, Image
-    from reportlab.pdfgen import canvas
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-    from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.lib.units import inch
-    import copy
-    styles = getSampleStyleSheet()
-    styleH5 =  copy.copy(styles['Heading5'])
-    styleN  =  copy.copy(styles['Normal'])
-    styleN.fontSize = 8
-    styleTable = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.black),
-                             ('FONTSIZE', (0, 0), (-1, -1), 8), 
-                             ('BACKGROUND', (0, 1), (-1, 1), colors.Color(0.9,0.9,0.9)),
-                             ('SPAN',(0,0),(0, 0)),])
-    styleTableObs = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),
-                                ('FONTSIZE', (0, 0), (-1, -1), 8),])
-    space = Spacer(1,0.1*inch)
-    space2 = Spacer(1,0.2*inch)
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="solicitud.pdf"'
-    doc = SimpleDocTemplate(response,
-                            rightMargin=72,
-                            leftMargin=72,
-                            topMargin=72,
-                            bottomMargin=72)
-
-
-    content = [space]
-    content.append(Paragraph( _('subscription_application_form') , styleH5))
-    content.append(space)
-    content.append(Paragraph(to_cv(_('proyect_name'), application.proyect.name), styleN ))
-
-    logging.error("=========%s" % application.proyect.secretariat)
-    if application.proyect.secretariat:
-        content.append(space)
-        data = [[_('secretariat')],]
-        data.append([[Paragraph(to_v(application.proyect.secretariat), styleN)]])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTableObs)
-        content.append(t)
-
-    if application.proyect.description:
-        content.append(space)
-        data = [[_('description')],]
-        data.append([[Paragraph(to_v(application.proyect.description), styleN)]])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTableObs)
-        content.append(t)
-
-    if application.observations:
-        content.append(space)
-        data = [[_('observations')],]
-        data.append([[Paragraph(to_v(application.observations), styleN)]])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTableObs)
-        content.append(t)
-        
-    if application.db_name or application.encoding or application.user_owner or application.user_access:
-        data = [[_('database')]]
-        content.append(space)
-        data.append([_('name'),_('encoding'),_('user_owner'),_('user_access')])
-        data.append([to_v(application.db_name),
-                     to_v(application.encoding),
-                     to_v(application.user_owner),
-                     to_v(application.user_access),])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-
-    software = ApplicationSoftwareRequirement.objects.filter(application_form=proyect_id)
-    if software:
-        data = [[_('software_requirements')],[_('name'),_('version')],]
-        content.append(space)
-        for item in software:
-            data.append( [to_v(item.name),to_v(item.version)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-    sources = ApplicationConnectionSource.objects.filter(application_form=proyect_id)
-    if sources:
-        data = [[_('connection_sources')],[_('name'),_('ip_address'),_('service'),_('observations')],]
-        content.append(space)
-        for item in sources:
-            data.append( [to_v(item.name),to_v(item.ip),to_v(item.service),to_v(item.observations)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-    targets = ApplicationConnectionTarget.objects.filter(application_form=proyect_id)
-    if targets:
-        content.append(space)
-        data = [[_('connection_targets')],[_('name'),_('ip_address'),_('service'),_('observations')],]
-        for item in targets:
-            data.append( [to_v(item.name),to_v(item.ip),to_v(item.service),to_v(item.observations)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-    csv_permission = SCVPermission.objects.filter(application_form=proyect_id)
-    if csv_permission:
-        data = [[_('vcs_repository')],[_('users'),_('permissions')],]
-        content.append(space)
-        for item in csv_permission:
-            data.append( [to_v(item.user),to_v(item.permission)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-    
-
-    referrers = Referrer.objects.filter(application_form=proyect_id)
-    if referrers:
-        data = [[_('applicants_and_referentes')],
-                [_('name_and_surname'),_('email'),_('phones'),_('is_applicant')],]
-        content.append(space)
-        for item in referrers:
-            is_applicant = ""
-            if item.is_applicant:
-                is_applicant = _('yes')
-            data.append( [Paragraph(to_v(item.name), styleN),
-                          Paragraph(to_v(item.email), styleN),
-                          Paragraph(to_v(item.phones), styleN),
-                          Paragraph(to_v(is_applicant), styleN)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-
-    styleF = copy.copy(styles['Normal'])
-    styleF.alignment = TA_RIGHT
-    styleF.fontSize = 9
-    data = [[Paragraph("<br/><br/>%s<br/><br/>%s<br/>%s" % \
-                       ("Santa fe, ..... de .......... de 20....",
-                        '..................................................',
-                        _('signature_applicant')), styleF)],]
-    t = Table(data, colWidths='*')
-    t.setStyle(TableStyle([('VALIGN',(-1,-1),(-1,-1),'BOTTOM'),
-                           ('ALIGN',(0,0),(0,0),'RIGHT'),]))
-    content.append(t)
-
-    doc.build(content, onFirstPage=firstPage, onLaterPages=laterPages,canvasmaker=NumberedCanvas )
-    return response
-
-
-
-
-# ========================= views for production ======= \
-def print_production_form (request, proyect_id):
-    try:
-        production = ProductionForm.objects.get(proyect_id=proyect_id)
-    except Exception as e:
-        logging.error("Could not find the project. \n%s" % e)
-        return redirect('production_step')
-    from reportlab.platypus import Paragraph
-    from reportlab.lib.pagesizes import A4
-    from reportlab.lib.units import cm,inch
-    from reportlab.platypus import Paragraph
-    from reportlab.lib.styles import ParagraphStyle
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle
-    from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.platypus import SimpleDocTemplate, Paragraph
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib.enums import TA_CENTER, TA_RIGHT
-    from reportlab.platypus.flowables import Spacer, Flowable
-    from io import BytesIO
-    from django.http import HttpResponse
-    from django.views.generic import ListView
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, TableStyle
-    from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.lib import colors
-    from reportlab.lib.pagesizes import letter
-    from reportlab.platypus import Table, Image
-    from reportlab.pdfgen import canvas
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-    from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.lib.units import inch
-    import copy
-    styles = getSampleStyleSheet()
-    styleH5 =  copy.copy(styles['Heading5'])
-    styleN  =  copy.copy(styles['Normal'])
-    styleN.fontSize = 8
-    styleTable = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.black),
-                             ('FONTSIZE', (0, 0), (-1, -1), 8), 
-                             ('BACKGROUND', (0, 1), (-1, 1), colors.Color(0.9,0.9,0.9)),
-                             ('SPAN',(0,0),(0, 0)),])
-    styleTableObs = TableStyle([('GRID', (0,1), (-1,-1), 1, colors.Color(0.9,0.9,0.9)),
-                                ('FONTSIZE', (0, 0), (-1, -1), 8),])
-    space = Spacer(1,0.1*inch)
-    space2 = Spacer(1,0.2*inch)
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="solicitud.pdf"'
-    doc = SimpleDocTemplate(response,
-                            rightMargin=72,
-                            leftMargin=72,
-                            topMargin=72,
-                            bottomMargin=72)
-
-
-    content = [space]
-    content.append(Paragraph( _('subscription_production_form') , styleH5))
-    content.append(space)
-    content.append(Paragraph(to_cv(_('proyect_name'), production.proyect.name), styleN))
-
-    if production.proyect.description:
-        content.append(space)
-        data = [[_('description')],]
-        data.append([[Paragraph(to_v(production.proyect.description), styleN)]])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTableObs)
-        content.append(t)
-    
-    if production.observations:
-        content.append(space)
-        data = [[_('observations')],]
-        data.append([[Paragraph(to_v(production.observations), styleN)]])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTableObs)
-        content.append(t)
-
-        
-    if production.db_name or production.encoding or production.user_owner or production.user_access:
-        data = [[_('database')]]
-        content.append(space)
-        data.append([_('name'),_('encoding'),_('user_owner'),_('user_access')])
-        data.append([to_v(production.db_name),
-                     to_v(production.encoding),
-                     to_v(production.user_owner),
-                     to_v(production.user_access),])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-
-    if production.db_space_to_start or production.db_space_at_year or production.db_space_after or \
-       production.fs_space_to_start or production.fs_space_at_year or production.fs_space_after:
-        data = [[_('estimated_volume_data')],['',_('space_to_start'),_('space_at_year'),_('space_after')],]
-        content.append(space)
-        if production.db_space_to_start or production.db_space_at_year or production.db_space_after:
-            data.append( [_('database'),
-                          to_v(production.db_space_to_start),
-                          to_v(production.db_space_at_year),
-                          to_v(production.db_space_after)])
-        if production.fs_space_to_start or production.fs_space_at_year or production.fs_space_after:
-            data.append( [_('filesystem'),
-                          to_v(production.fs_space_to_start),
-                          to_v(production.fs_space_at_year),
-                          to_v(production.fs_space_after)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-
-    if production.minimum_memory or production.suggested_memory or \
-       production.minimum_disk_space or production.suggested_disk_space or \
-       production.minimum_processor or production.suggested_processor:
-        data = [[_('hardware_requirements')],['',_('minimum'), _('recommended')],]
-        content.append(space)
-        if production.minimum_memory or production.suggested_memory:
-            data.append( [_('memory'), to_v(production.minimum_memory),to_v(production.suggested_memory)])
-        if production.minimum_disk_space or production.suggested_disk_space:
-            data.append( [_('disk'), to_v(production.minimum_disk_space),to_v(production.suggested_disk_space)])
-        if production.minimum_processor or production.suggested_processor:
-            data.append( [_('processor'), to_v(production.minimum_processor), to_v(production.suggested_processor)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-            
-    software = ProductionSoftwareRequirement.objects.filter(production_form=proyect_id)
-    if software:
-        data = [[_('software_requirements')],[_('name'), _('version')],]
-        content.append(space)
-        for item in software:
-            data.append( [to_v(item.name),to_v(item.version)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-        
-    data = [[_('connection_sources')],[_('name'),_('ip_address'),_('service'),_('observations')],]
-    sources = ProductionConnectionSource.objects.filter(production_form=proyect_id)
-    if sources:
-        content.append(space)
-        for item in sources:
-            data.append( [to_v(item.name), to_v(item.ip), to_v(item.service), to_v(item.observations)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-    data = [[_('connection_targets')],[_('name'),_('ip_address'),_('service'),_('port'),_('ip_firewall')],]
-    targets = ProductionConnectionTarget.objects.filter(production_form=proyect_id)
-    if targets:
-        content.append(space)
-        for item in targets:
-            data.append( [item.name,
-                          to_v(item.ip),
-                          to_v(item.service),
-                          to_v(item.port),
-                          to_v(item.ip_firewall)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-    
-    variables = MonitoredVariable.objects.filter(production_form=proyect_id)
-    if variables:
-        data = [[_('variables_to_be_monitored')],[_('variable'), _('periodicity'), _('preserving_history_by')],]
-        content.append(space)
-        for item in variables:
-            data.append( [Paragraph(to_v(item.name), styleN),
-                          Paragraph(to_v(item.periodicity), styleN),
-                          Paragraph(to_v(item.preserving_history_by), styleN)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-    hitos = Milestone.objects.filter(production_form=proyect_id)
-    if hitos:
-        data = [[_('milestones_during_the_year')],[_('milestone'), _('date'), _('duration_in_days')],]
-        content.append(space)
-        for item in hitos:
-            data.append( [Paragraph(to_v(item.description), styleN),
-                          Paragraph(to_v(item.duration), styleN),
-                          Paragraph(to_v(str(item.date_event.strftime("%d/%m/%Y %H:%M"))), styleN)])
-        t = Table(data, colWidths='*')
-        t.setStyle(styleTable)
-        content.append(t)
-
-
-    styleF = copy.copy(styles['Normal'])
-    styleF.alignment = TA_RIGHT
-    styleF.fontSize = 9
-    data = [[Paragraph("<br/><br/>%s, %s<br/><br/>%s<br/><br/>%s<br/>%s" % \
-                       (_('full_name_applicant'),
-                        "..................................................",
-                        "Santa fe, ..... de .......... de 20....",
-                        '..................................................',
-                        _('signature_applicant')), styleF)],]
-    t = Table(data, colWidths='*')
-    t.setStyle(TableStyle([('VALIGN',(-1,-1),(-1,-1),'BOTTOM'),
-                           ('ALIGN',(0,0),(0,0),'RIGHT'),]))
-    content.append(t)
-
-    doc.build(content, onFirstPage=firstPage, onLaterPages=laterPages, canvasmaker=NumberedCanvas)
-    return response
 
 def production_step(request):
     define_production_sessions(request)
     proyects = Proyect.production_pass_enabled()
     context = {'proyects': proyects}
     return render(request, 'production_step.html', context)
-    
+
+
 @redirect_without_production_post
 def production_step1(request):
     proyect_id = None
@@ -866,6 +437,7 @@ def production_step1(request):
     request.session.modified = True
     context = {'proyect_form': proyect_form }
     return render(request, 'production_step1.html', context)
+
 
 @redirect_without_production_post
 def production_step2(request):
@@ -906,6 +478,7 @@ def production_step2(request):
 
     context.update({'form': production_form,})
     return render(request, 'production_step1.html', context)
+
 
 @redirect_without_production_post
 def production_step3(request):
@@ -1001,6 +574,7 @@ def production_step4(request):
         context.update({'sources_form': invalid_sources_form, 'targets_form': invalid_targets_form,
                         'sources_computer': sources_computer, 'targets_computer': targets_computer})
         return render(request, 'production_step3.html', context)
+
 
 @redirect_without_production_post
 def production_step5(request):
