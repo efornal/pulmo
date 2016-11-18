@@ -44,7 +44,7 @@
                   <div class="row clearfix">
 	            <div class="col-md-12 column">
                       <div class="panel-body">
- 		        <table class="table table-bordered table-hover" id="tab_logic">
+ 		        <table class="table table-bordered table-hover" id="tab_logic" style="text-align:center">
 		          <thead>
 		            <tr >
                               <th class="text-center">Nombre</th>
@@ -64,7 +64,7 @@
 			          <input type="text" name='versions[]' value="{{soft.version}}"
                                          placeholder='' class="form-control"/>
 		                </td>
-                                <td data-name="delete" >
+                                <td data-name="delete" style="width:5%;text-align:center">
                                   <a href="#" id='delete_row' name="delete[]">
                                   <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                                 </td>
@@ -80,7 +80,7 @@
 			        <input type="text" name='versions[]'
                                        placeholder='' class="form-control"/>
 		              </td>
-                              <td data-name="delete" >
+                              <td data-name="delete" style="width:5%;text-align:center">
                                 <a href="#" id='delete_row' name="delete[]">
                                 <i class="glyphicon glyphicon-remove" style="top:10px;"></i></a>
                               </td>
@@ -89,9 +89,12 @@
 		          </tbody>
 		        </table>
                         <table class="table table-bordered table-hover">
-                          <tr><td>
-                            <a href="#" id="add_row" ><i class=" glyphicon glyphicon-plus-sign"></i></a>
-                          </td></tr>
+                          <tr>
+                            <td></td>
+                            <td style="width:5%;text-align:center">
+                              <a href="#" id="add_row" ><i class=" glyphicon glyphicon-plus-sign"></i></a>
+                            </td>
+                          </tr>
                         </table>
                       </div>
                     </div>
@@ -107,7 +110,7 @@
             
             <div class="form-group">
               <div class="col-sm-10">
-                <button type="reset" class="btn btn-default col-sm-offset-1"
+                <button type="reset" class="btn btn-default col-sm-offset-1" 
                         onClick="history.go(-1);return true;">{{_('previous')}}</button>
                 <button type="submit" class="btn btn-primary col-sm-offset-2">Siguiente</button>
               </div>

@@ -63,7 +63,7 @@
                   <div class="row clearfix">
 	            <div class="col-md-12 column">
                       <div class="panel-body">
-		        <table class="table table-bordered table-hover" id="tab_logic">
+		        <table class="table table-bordered table-hover" id="tab_logic" style="text-align:center">
 		          <thead>
 		            <tr ><th class="text-center">{{_('name')}}</th>
 		            <th class="text-center">{{_('ip_address')}}</th>
@@ -125,9 +125,12 @@
 		          </tbody>
 		        </table>
                         <table class="table table-bordered table-hover">
-                          <tr><td>
-                            <a href="#" id="add_row" ><i class=" glyphicon glyphicon-plus-sign"></i></a>
-                          </td></tr>
+                          <tr>
+                            <td></td>
+                            <td style="width:5%;text-align:center">
+                              <a href="#" id="add_row" ><i class=" glyphicon glyphicon-plus-sign"></i></a>
+                            </td>
+                          </tr>
                         </table>
                       </div>
                     </div>
@@ -140,7 +143,7 @@
                   <div class="row clearfix">
 	            <div class="col-md-12 column">
                       <div class="panel-body">
-		        <table class="table table-bordered table-hover" id="tab_logics">
+		        <table class="table table-bordered table-hover" id="tab_logics" style="text-align:center">
 		          <thead>
 		            <tr ><th class="text-center">{{_('name')}}</th>
 		            <th class="text-center">{{_('ip_address')}}</th>
@@ -211,9 +214,12 @@
 		          </tbody>
 		        </table>
                         <table class="table table-bordered table-hover">
-                          <tr><td>
+                          <tr>
+                            <td></td>
+                            <td style="width:5%;text-align:center">
                               <a href="#" id="add_row1" ><i class=" glyphicon glyphicon-plus-sign"></i></a>
-                          </td></tr>
+                            </td>
+                          </tr>
                         </table>
                       </div>
                     </div>
@@ -229,7 +235,7 @@
             
             <div class="form-group">
               <div class="col-sm-10">
-                <button type="reset" class="btn btn-default col-sm-offset-1"
+                <button type="reset" class="btn btn-default col-sm-offset-1" 
                         onClick="history.go(-1);return true;">{{_('previous')}}</button>
                 <button type="submit" class="btn btn-primary col-sm-offset-2">{{_('next')}}</button>
               </div>

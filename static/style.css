@@ -32,3 +32,17 @@
 .table-sortable tbody tr {
     cursor: move;
 }
+
+
+.btn-default {
+    margin-left: 15px;
+}
+
+
+.btn-primary {
+    margin-left: 50px;
+}
+
+.btn-info {
+    margin-left: 50px;
+}
