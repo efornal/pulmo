@@ -391,8 +391,8 @@ def save(request):
                     description = TicketSystem.application_description_issue(application)
                     issue = TicketSystem.create_issue(subject,description,watchers)
                     logging.info('Confirmed ticket request created %s' % issue.id)
-                    issueurl = "%s/issues/%s" % (settings.REDMINE_URL,issue.id)
 
+                    issueurl = "%s/issues/%s" % (settings.REDMINE_URL,issue.id)
                     msg += _('confirmed_ticket_request_created') % {'ticket': issue.id,
                                                                     'issueurl': issueurl}
                                                                  
@@ -727,9 +727,40 @@ def production_step6(request):
 
         if commit_transaction:
             transaction.savepoint_commit( sid )
+            
             msg = _('completed_application')
+            
+            if settings.REDMINE_ENABLE_TICKET_CREATION:
+                # se debe crear ticket
+                watcher = TicketSystem.watchers_ids_by([production.applicant])
+                subject = _('production_server_for') % {'name': production.proyect.name}
+                description = TicketSystem.production_description_issue(production)
+                issue = TicketSystem.create_issue(subject,description,watcher)
+                logging.info('Confirmed ticket request created %s' % issue.id)
+
+                monitoring_subject=_('add_to_monitoring') % {'name': production.proyect.name}
+                monitoring_description = _('add_to_monitoring_desc')
+                monitoring_issue = TicketSystem.create_issue(monitoring_subject,
+                                                             monitoring_description,
+                                                             None,
+                                                             issue.id)
+                backup_subject=_('add_to_backup') % {'name': production.proyect.name}
+                backup_description = _('add_to_backup_desc')
+                backup_issue = TicketSystem.create_issue(backup_subject,
+                                                         backup_description,
+                                                         None,
+                                                         issue.id)
+
+                issueurl = "%s/issues/%s" % (settings.REDMINE_URL,issue.id)
+                msg += _('confirmed_ticket_request_created') % {'ticket': issue.id,
+                                                                'issueurl': issueurl}
+                                                                 
+                production.related_ticket = "#%s" % issue.id
+                production.save(update_fields=['related_ticket'])
+
+
+
             context.update({'production_form_id': production.pk, 'msg': msg,
-                            'link_to_application': reverse('print_production_form', args=[production.pk] ),
                             'link_to_new_application': reverse('production_step')})
             unset_production_sessions( request )
             defined_as_registered(request)
