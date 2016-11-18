@@ -63,24 +63,6 @@ class ApplicationFormAdmin(admin.ModelAdmin):
             attrs={'rows': 3,})},
     }
 
-    def save_model(self, request, obj, form, change):
-        try:
-            if obj.pk:
-                app = ApplicationForm.objects.get(pk=obj.pk)
-                if settings.REDMINE_ENABLE_TICKET_CREATION and obj.received_application and \
-                   (not app.received_application) and change:
-                    # se debe crear ticket
-                    emails = Referrer.to_emails_by_application_form(obj.pk)
-                    watchers = TicketSystem.watchers_ids_by(emails)
-                    subject = _('test_server_for') % {'name': app.proyect.name}
-                    description = TicketSystem.application_description_issue(obj)
-                    issue = TicketSystem.create_issue(subject,description,watchers)
-                    messages.info(request,_('confirmed_ticket_request_created') \
-                                  % {'ticket': issue.id})
-        except Exception as e:
-            logging.error(e)
-            
-        super(ApplicationFormAdmin, self).save_model(request, obj, form, change)
 
         
 class ProductionConnectionSourceInline(admin.TabularInline):

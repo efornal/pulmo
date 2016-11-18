@@ -107,6 +107,8 @@ class ApplicationForm (models.Model):
                                           verbose_name=_('signature_date'))
     received_application = models.BooleanField(default=False,
                                                verbose_name=_('received_application'))
+    related_ticket = models.CharField(max_length=200,null=True,blank=True,
+                                      verbose_name=_('related_ticket'))
     
     class Meta:
         db_table = 'application_forms'

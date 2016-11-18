@@ -390,11 +390,14 @@ def save(request):
                     subject = _('test_server_for') % {'name': application.proyect.name}
                     description = TicketSystem.application_description_issue(application)
                     issue = TicketSystem.create_issue(subject,description,watchers)
-                    logging.info(request,_('confirmed_ticket_request_created') \
-                                 % {'ticket': issue.id})
+                    logging.info('Confirmed ticket request created %s' % issue.id)
+                    issueurl = "%s/issues/%s" % (settings.REDMINE_URL,issue.id)
 
-                    msg += _('confirmed_ticket_request_created') % {'ticket': issue.id}
-
+                    msg += _('confirmed_ticket_request_created') % {'ticket': issue.id,
+                                                                    'issueurl': issueurl}
+                                                                 
+                    application.related_ticket = "#%s" % issue.id
+                    application.save(update_fields=['related_ticket'])
             
             context.update({'application_form_id': application.pk, 'msg': msg,
                             'link_to_new_application': reverse('index')})
