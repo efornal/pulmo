@@ -227,7 +227,6 @@ class ProductionServerAdmin(admin.ModelAdmin):
 admin.site.register(ApplicationForm,ApplicationFormAdmin)
 admin.site.register(ProductionForm,ProductionFormAdmin)
 admin.site.register(Proyect, ProyectAdmin)
-admin.site.register(Milestone)
 admin.site.register(TestServer,TestServerAdmin)
 admin.site.register(ProductionServer,ProductionServerAdmin)
 
