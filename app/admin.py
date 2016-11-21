@@ -184,21 +184,33 @@ class ProductionServerAdmin(admin.ModelAdmin):
 
     if hasattr(settings, 'ZABBIX_API_MONITORING_TEMPLATE_ID'):
         list_display += ('zabbix_added_monitoring',)
-    if hasattr(settings, 'ZABBIX_API_BACKUP_TEMPLATE_ID'):
-        list_display += ('zabbix_added_backup',)
+    if hasattr(settings, 'ZABBIX_API_PGSQL_TEMPLATE_ID'):
+        list_display += ('zabbix_added_pgsql_backup',)
+    if hasattr(settings, 'ZABBIX_API_MYSQL_TEMPLATE_ID'):
+        list_display += ('zabbix_added_mysql_backup',)
         
     formfield_overrides = {
         models.TextField: {'widget': Textarea(
             attrs={'rows': 3,})},
     }
 
-    def zabbix_added_backup(cls,obj):
-        if hasattr(settings, 'ZABBIX_API_BACKUP_TEMPLATE_ID'):
+    
+    def zabbix_added_mysql_backup(cls,obj):
+        if hasattr(settings, 'ZABBIX_API_MYSQL_TEMPLATE_ID'):
             tpls = Zbbx.get_template_ids(obj.virtual_machine_name)
-            return ("%s" % settings.ZABBIX_API_BACKUP_TEMPLATE_ID in tpls)
+            return ("%s" % settings.ZABBIX_API_MYSQL_TEMPLATE_ID in tpls)
         return None
-    zabbix_added_backup.short_description = 'zabbix added backup'
-    zabbix_added_backup.boolean = True
+    zabbix_added_mysql_backup.short_description = _('added_mysql_backup')
+    zabbix_added_mysql_backup.boolean = True
+
+    
+    def zabbix_added_pgsql_backup(cls,obj):
+        if hasattr(settings, 'ZABBIX_API_PGSQL_TEMPLATE_ID'):
+            tpls = Zbbx.get_template_ids(obj.virtual_machine_name)
+            return ("%s" % settings.ZABBIX_API_PGSQL_TEMPLATE_ID in tpls)
+        return None
+    zabbix_added_pgsql_backup.short_description = _('added_pgsql_backup')
+    zabbix_added_pgsql_backup.boolean = True
 
     
     def zabbix_added_monitoring(cls,obj):
@@ -206,7 +218,7 @@ class ProductionServerAdmin(admin.ModelAdmin):
             tpls = Zbbx.get_template_ids(obj.virtual_machine_name)
             return ("%s" % settings.ZABBIX_API_MONITORING_TEMPLATE_ID in tpls)
         return None
-    zabbix_added_monitoring.short_description = 'zabbix added monitoring'
+    zabbix_added_monitoring.short_description = _('added_monitoring')
     zabbix_added_monitoring.boolean = True
 
     
