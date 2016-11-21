@@ -1,5 +1,6 @@
 Django==1.9.7
 Pillow==3.2.0
+PySocks==1.5.0
 PyYAML==3.11
 Pygments==2.0.1
 SOAPpy==0.12.22
@@ -29,6 +30,8 @@ python-debian==0.1.27
 python-debianbts==1.11
 python-ldap==2.4.25
 python-redmine==1.5.1
+reportbug==6.6.3
+reportlab==3.2.0
 requests==2.4.3
 roman==2.0.0
 six==1.10.0
