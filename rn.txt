@@ -1,0 +1,12 @@
+
+* Application request
+
+- Only if the option to create ticket is enabled, are marked:
+Related_ticket, signature_date, received_application
+
+
+
+* Project request
+
+- Only if the option to create ticket is enabled, are marked:
+Related_ticket, signature_date, received_application

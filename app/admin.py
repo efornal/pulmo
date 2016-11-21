@@ -49,7 +49,7 @@ class ApplicationSoftwareRequirementInline(admin.TabularInline):
      
 class ApplicationFormAdmin(admin.ModelAdmin):
     model = ApplicationForm
-    list_display = ('proyect', 'received_application', 'signature_date')
+    list_display = ('proyect', 'received_application', 'signature_date','related_ticket')
     inlines = [
         ApplicationSoftwareRequirementInline,
         ApplicationConnectionSourceInline,
@@ -57,6 +57,7 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         SCVPermissionInline,
         ReferrerInline,
     ]
+    search_fields = ['proyect__name']
     ordering = ('proyect__name',)
     formfield_overrides = {
         models.TextField: {'widget': Textarea(
@@ -92,7 +93,8 @@ class MilestoneInline(admin.TabularInline):
     
 class ProductionFormAdmin(admin.ModelAdmin):
     model = ProductionForm
-    list_display = ('proyect', 'received_application', 'applicant', 'signature_date')
+    list_display = ('proyect','received_application', 'applicant',
+                    'signature_date','related_ticket')
     inlines = [
         ProductionSoftwareRequirementInline,
         ProductionConnectionSourceInline,
@@ -100,44 +102,13 @@ class ProductionFormAdmin(admin.ModelAdmin):
         MonitoredVariableInline,
         MilestoneInline,
     ]
+    search_fields = ['proyect__name']
     ordering = ('proyect__name',)
     formfield_overrides = {
         models.TextField: {'widget': Textarea(
             attrs={'rows': 3,})},
     }
     
-    def save_model(self, request, obj, form, change):
-        try:
-            if obj.pk:
-                app = ProductionForm.objects.get(pk = obj.pk)
-      
-                if settings.REDMINE_ENABLE_TICKET_CREATION and obj.received_application and \
-                   (not app.received_application) and change:
-                    # se debe crear ticket
-                    watcher = TicketSystem.watchers_ids_by([obj.applicant])
-                    subject = _('production_server_for') % {'name': app.proyect.name}
-                    description = TicketSystem.production_description_issue(obj)
-                    issue = TicketSystem.create_issue(subject,description,watcher)
-                    messages.info(request, _('confirmed_ticket_request_created') \
-                                  % {'ticket': issue.id})
-
-                    monitoring_subject=_('add_to_monitoring') % {'name': app.proyect.name}
-                    monitoring_description = _('add_to_monitoring_desc')
-                    monitoring_issue = TicketSystem.create_issue(monitoring_subject,
-                                                              monitoring_description,
-                                                              None,
-                                                              issue.id)
-                    backup_subject=_('add_to_backup') % {'name': app.proyect.name}
-                    backup_description = _('add_to_backup_desc')
-                    backup_issue = TicketSystem.create_issue(backup_subject,
-                                                              backup_description,
-                                                              None,
-                                                              issue.id)
-
-        except Exception as e:
-            logging.error(e)
-
-        super(ProductionFormAdmin, self).save_model(request, obj, form, change)
     
 class ApplicationFormAdminForm(forms.ModelForm):
 

@@ -30,7 +30,7 @@ from django.core.urlresolvers import reverse
 from decorators import redirect_without_post, redirect_if_has_registered
 from decorators import redirect_without_production_post,redirect_if_has_production_registered
 from zabbix.api import ZabbixAPI
-
+from django.utils import timezone
 
 def log_session(request_session):
     # FIXME , eliminar
@@ -397,8 +397,12 @@ def save(request):
                                                                     'issueurl': issueurl}
                                                                  
                     application.related_ticket = "#%s" % issue.id
-                    application.save(update_fields=['related_ticket'])
-            
+                    application.signature_date = timezone.now()
+                    application.received_application = True
+                    application.save(update_fields=['related_ticket',
+                                                    'signature_date',
+                                                    'received_application'])
+
             context.update({'application_form_id': application.pk, 'msg': msg,
                             'link_to_new_application': reverse('index')})
             unset_application_sessions( request )
@@ -756,9 +760,11 @@ def production_step6(request):
                                                                 'issueurl': issueurl}
                                                                  
                 production.related_ticket = "#%s" % issue.id
-                production.save(update_fields=['related_ticket'])
-
-
+                production.signature_date = timezone.now()
+                production.received_application = True
+                production.save(update_fields=['related_ticket',
+                                               'signature_date',
+                                               'received_application'])
 
             context.update({'production_form_id': production.pk, 'msg': msg,
                             'link_to_new_application': reverse('production_step')})
