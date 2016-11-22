@@ -153,8 +153,7 @@ class SCVPermissionAdmin(admin.ModelAdmin):
 
 
 class TestServerAdmin(admin.ModelAdmin):
-    #exclude = ('signature_date','applicant') #FIXME, temporal
-    exclude = ('applicant',) #FIXME, temporal
+    exclude = ('applicant',)
     ordering = ('application_form__proyect__name',)
     list_display = ('virtual_machine_name', 'ip_address',
                     'cluster_virtual_machine','related_ticket','user')
@@ -163,10 +162,20 @@ class TestServerAdmin(admin.ModelAdmin):
             attrs={'rows': 3,})},
     }
 
-    def get_changeform_initial_data(self, request):
-        return {'user': request.user.id }
+    
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + ('user','signature_date')
+        return self.readonly_fields
+            
+
+    def add_view(self, *args, **kwargs):
+        self.exclude += ('user','signature_date')
+        return super(TestServerAdmin, self).add_view(*args, **kwargs)
+
 
     def save_model(self, request, obj, form, change):
+        obj.user = request.user
         if not obj.pk:
             obj.applicant = request.user.username # FIXME, temporal
             #obj.applicant = obj.user.username
@@ -193,6 +202,17 @@ class ProductionServerAdmin(admin.ModelAdmin):
         models.TextField: {'widget': Textarea(
             attrs={'rows': 3,})},
     }
+
+    
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + ('user','signature_date')
+        return self.readonly_fields
+
+    
+    def add_view(self, *args, **kwargs):
+        self.exclude += ('user','signature_date')
+        return super(ProductionServerAdmin, self).add_view(*args, **kwargs)
 
     
     def zabbix_added_mysql_backup(cls,obj):
@@ -224,8 +244,10 @@ class ProductionServerAdmin(admin.ModelAdmin):
     
     def get_changeform_initial_data(self, request):
         return {'user': request.user.id }
+
     
     def save_model(self, request, obj, form, change):
+        obj.user = request.user
         if not obj.pk:
             obj.applicant = obj.user.username # FIXME, temporal
             #obj.applicant = request.user.username # FIXME, 
