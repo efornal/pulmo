@@ -4,6 +4,7 @@ from app import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url('^save',views.save, name='save'),
+    url('^check_server',views.check_server, name='check_server'),
     url(r'^new/application', views.new_step1, name='new_step1'),
     url(r'^new/2/application', views.new_step2, name='new_step2'),
     url(r'^new/3/application', views.new_step3, name='new_step3'),

@@ -31,6 +31,9 @@ from decorators import redirect_without_post, redirect_if_has_registered
 from decorators import redirect_without_production_post,redirect_if_has_production_registered
 from zabbix.api import ZabbixAPI
 from django.utils import timezone
+import json
+import subprocess
+import re
 
 def log_session(request_session):
     # FIXME , eliminar
@@ -42,6 +45,33 @@ def defined_as_registered(request):
     request.session['has_registered'] = True
     request.session.modified = True
 
+
+def ip_from_vm_name( vm_name='' ):
+    args = ['host',"{}".format(vm_name)]
+    try:
+        p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = p.communicate()
+        ip_reg = re.search('[0-9]+.[0-9]+.[0-9]+.[0-9]+', out)
+        if ip_reg:
+            return ip_reg.group(0)
+        else:
+            return ''
+        
+    except Exception as e:
+        logging.error('ERROR Exception: %s' % e)
+        return ''
+    
+    
+def check_server(request):
+    result = {}
+    if 'vm_name' in request.POST and request.POST['vm_name']:
+        vm_name = request.POST['vm_name']
+        logging.info("searching vm name: {}".format(vm_name))
+
+        result.update({'vm_ip': ip_from_vm_name(vm_name)})
+    
+    result_list = json.dumps(result)
+    return HttpResponse(result_list)
     
 def index(request):
     return redirect('new_step1')
