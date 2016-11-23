@@ -34,6 +34,7 @@ from django.utils import timezone
 import json
 import subprocess
 import re
+import requests
 
 def log_session(request_session):
     # FIXME , eliminar
@@ -45,6 +46,22 @@ def defined_as_registered(request):
     request.session['has_registered'] = True
     request.session.modified = True
 
+def instance_info( vm_name='' ):
+    result = {}
+    try:
+        r = requests.get('https://triton:5080/2/instances/{}'.format(vm_name), verify=False)
+        rj = r.json()
+        result.update({'vm_proc':rj['beparams']['vcpus']})
+        result.update({'vm_disk':rj['disk.sizes'][0]})
+        result.update({'vm_cluster':rj['pnode']})
+        if 'snodes' in rj and rj['snodes']:
+            result.update({'vm_cluster':"{}:{}".format(rj['pnode'],rj['snodes'][0])})
+        result.update({'vm_mac':rj['nic.macs'][0]})
+        result.update({'vm_ram':rj['beparams']['memory']})
+        return result
+    except Exception as e:
+        logging.error('ERROR Exception: %s' % e)
+        return ''
 
 def ip_from_vm_name( vm_name='' ):
     args = ['host',"{}".format(vm_name)]
@@ -69,7 +86,7 @@ def check_server(request):
         logging.info("searching vm name: {}".format(vm_name))
 
         result.update({'vm_ip': ip_from_vm_name(vm_name)})
-    
+        result.update(instance_info(vm_name))
     result_list = json.dumps(result)
     return HttpResponse(result_list)
     
