@@ -1,4 +1,12 @@
 {% load suit_tags %}
+<style>
+ .tx_message{
+  color: red;
+  position: absolute;
+  margin-left: 230px;
+  margin-top: -26px;
+}
+</style>
 <fieldset class="module aligned{{ fieldset.name|yesno:' with-legend, first' }} {{ fieldset.classes }}">
     {% if fieldset.name %}
         <h2 class="legend">{{ fieldset.name }}
@@ -21,7 +29,7 @@
                 {{ field.label_tag }}
             </div>
             <div class="controls">
-            {# if multi-fields and first field #}
+              {# if multi-fields and first field #}
             {% if not singlefield %}
               <div class="multi-field-box">
             {% endif %}
@@ -45,6 +53,9 @@
         {% else %}
             {{ field.field }}
         {% endif %}
+        {% if field.field.name in 'ip_address,mac_address,ram_memory,disk_space,processors,_cluster_virtual_machine' %}
+        <p id="tx_{{field.field.name}}" class="tx_message"></p>
+        {% endif %}
 
         
         {% if field.field.name == 'virtual_machine_name' %}
@@ -58,12 +69,49 @@ $("#check_server").click(function(){
         data: {'vm_name': $('#id_virtual_machine_name').attr('value'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
         dataType: "json",
         success: function(response) {
-          if (response.vm_ip) { $("#id_ip_address").val(response.vm_ip); }
-          if (response.vm_mac) { $("#id_mac_address").val(response.vm_mac); }
-          if (response.vm_ram) { $("#id_ram_memory").val(response.vm_ram); }
-          if (response.vm_disk) { $("#id_disk_space").val(response.vm_disk); }
-          if (response.vm_proc) { $("#id_processors").val(response.vm_proc); }
-          if (response.vm_cluster) { $("#id_cluster_virtual_machine").val(response.vm_cluster); }
+
+        if (response.vm_ip) {
+          if ( ($("#id_ip_address").val()) && ( $("#id_ip_address").val() != response.vm_ip ) ){
+            $("#tx_ip_address").text(response.vm_ip);
+          }else{
+            $("#id_ip_address").val(response.vm_ip);
+          }
+        }
+        if (response.vm_mac) {
+          if ( ($("#id_mac_address").val()) && ( $("#id_mac_address").val() != response.vm_mac ) ){
+            $("#tx_mac_address").text(response.vm_mac);
+          }else{
+            $("#id_mac_address").val(response.vm_mac);
+          }
+        }
+        if (response.vm_ram) {
+          if ( ($("#id_ram_memory").val()) && ( $("#id_ram_memory").val() != response.vm_ram ) ){
+            $("#tx_ram_memory").text(response.vm_ram);
+          }else{
+            $("#id_ram_memory").val(response.vm_ram);
+          }
+        }
+        if (response.vm_disk) {
+          if ( ($("#id_disk_space").val()) && ( $("#id_disk_space").val() != response.vm_disk ) ){
+            $("#tx_disk_space").text(response.vm_disk);
+          }else{
+            $("#id_disk_space").val(response.vm_disk);
+          }
+        }
+        if (response.vm_proc) {
+          if ( ($("#id_processors").val()) && ( $("#id_processors").val() != response.vm_proc ) ){
+            $("#tx_processors").text(response.vm_proc);
+          }else{
+            $("#id_processors").val(response.vm_proc);
+          }
+        }
+        if (response.vm_cluster) {
+          if ( ($("#id_cluster_virtual_machine").val()) && ( $("#id_cluster_virtual_machine").val() != response.vm_cluster ) ){
+            $("#tx_cluster_virtual_machine").text(response.vm_cluster);
+          }else{
+            $("#id_cluster_virtual_machine").val(response.vm_cluster);
+          }
+        }
         },
         error: function(rs, e) {
             alert("No se pudo realizar el completado.");
