@@ -136,6 +136,11 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 LOCALE_PATHS = (
      BASE_DIR + '/locale', )
 
+# =================================\
+# ganeti configuration
+GANETI_INSTANCES_URL = 'https://cluster:5080/2/instances'
+# =================================/
+
 
 # =================================\
 # redmine configuration

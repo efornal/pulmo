@@ -47,9 +47,9 @@ def defined_as_registered(request):
     request.session.modified = True
 
 def instance_info( vm_name='' ):
-    result = {}
+    result = {} 
     try:
-        r = requests.get('https://triton:5080/2/instances/{}'.format(vm_name), verify=False)
+        r = requests.get('{}/{}'.format(settings.GANETI_INSTANCES_URL,vm_name), verify=False)
         rj = r.json()
         result.update({'vm_proc':rj['beparams']['vcpus']})
         result.update({'vm_disk':rj['disk.sizes'][0]})
