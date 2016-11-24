@@ -183,7 +183,6 @@ def new_step2(request):
 
 @redirect_without_post
 def new_step3(request):
-
     software = []
     software_validated = True
     invalid_form = None
@@ -512,6 +511,7 @@ def production_step2(request):
             request.session['production']['user_owner'] = request.POST['user_owner']
             request.session['production']['user_access'] = request.POST['user_access']
             request.session['production']['observations'] = request.POST['observations']
+            request.session['production']['files_backup'] = request.POST['files_backup']
             request.session['production']['db_space_to_start'] = request.POST['db_space_to_start']
             request.session['production']['db_space_at_year'] = request.POST['db_space_at_year']
             request.session['production']['db_space_after'] = request.POST['db_space_after']

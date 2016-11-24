@@ -196,8 +196,14 @@
                 </div>
               </div>
               
+              <div class="form-group">
+                <label for="files_backup" class="col-sm-2 control-label">{{ _('files_backup') }}</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" rows="3"  name="files_backup"
+                            id="files_backup">{{ form.files_backup.value|default:'' }}</textarea>
+                </div>
+              </div>
               
-	      
               <div class="form-group">
                 <label for="observations" class="col-sm-2 control-label">{{ _('observations') }}</label>
                 <div class="col-sm-10">

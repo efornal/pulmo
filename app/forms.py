@@ -235,6 +235,7 @@ class ProductionFormForm(forms.ModelForm):
     user_owner  = forms.CharField(max_length=200, required=False)
     user_access = forms.CharField(max_length=200, required=False)
     observations = forms.CharField(required=False, widget=forms.Textarea, label=_('observations'))
+    files_backup = forms.CharField(required=False, widget=forms.Textarea, label=_('files_backup'))
 
     db_space_to_start = forms.CharField(max_length=200, required=False)
     db_space_at_year  = forms.CharField(max_length=200, required=False)
@@ -251,8 +252,6 @@ class ProductionFormForm(forms.ModelForm):
     suggested_memory = forms.CharField(max_length=200, required=False)
     suggested_disk_space = forms.CharField(max_length=200, required=False)
     suggested_processor = forms.CharField(max_length=200, required=False)
-
-    files_backup = forms.CharField(required=False)
 
     class Meta:
         model = ProductionForm

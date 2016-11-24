@@ -86,7 +86,6 @@ class Proyect(models.Model):
 class ApplicationForm (models.Model):
     proyect = models.OneToOneField(Proyect, primary_key=True,
                                    verbose_name=_('proyect'))
-
     db_name = models.CharField(max_length=200, null=True, blank=True,
                                verbose_name=_('db_name'))
     encoding = models.CharField(max_length=200, null=True, blank=True,
@@ -95,10 +94,8 @@ class ApplicationForm (models.Model):
                                   verbose_name=_('user_owner'))
     user_access = models.CharField(max_length=200, null=True, blank=True,
                                    verbose_name=_('user_access'))
-
     observations = models.TextField( null=True, blank=True,
                                      verbose_name=_('observations'))
-
     created_at = models.DateTimeField(auto_now_add=True,
                                       verbose_name=_('created_at'))
     updated_at = models.DateTimeField(auto_now=True,
@@ -122,7 +119,6 @@ class ApplicationForm (models.Model):
 class ProductionForm (models.Model):
     proyect = models.OneToOneField(Proyect, primary_key=True,
                                    verbose_name=_('proyect'))
-
     db_name = models.CharField(max_length=200, null=True, blank=True,
                                verbose_name=_('db_name'))
     encoding = models.CharField(max_length=200, null=True, blank=True,
@@ -131,7 +127,6 @@ class ProductionForm (models.Model):
                                   verbose_name=_('user_owner'))
     user_access = models.CharField(max_length=200, null=True, blank=True,
                                    verbose_name=_('user_access'))
-
     db_space_to_start = models.CharField(max_length=200, null=True, blank=True,
                                          verbose_name=_('db_space_to_start'))
     db_space_at_year  = models.CharField(max_length=200, null=True, blank=True,
@@ -144,31 +139,26 @@ class ProductionForm (models.Model):
                                          verbose_name=_('fs_space_at_year'))
     fs_space_after    = models.CharField(max_length=200, null=True, blank=True,
                                          verbose_name=_('fs_space_after'))
-
     minimum_memory = models.CharField(max_length=200, null=True, blank=True,
                                          verbose_name=_('minimum_memory'))
     minimum_disk_space = models.CharField(max_length=200, null=True, blank=True,
                                          verbose_name=_('minimum_disk_space'))
     minimum_processor = models.CharField(max_length=200, null=True, blank=True,
                                          verbose_name=_('minimum_processor'))
-
     suggested_memory = models.CharField(max_length=200, null=True, blank=True,
                                          verbose_name=_('suggested_memory'))
     suggested_disk_space = models.CharField(max_length=200, null=True, blank=True,
                                          verbose_name=_('suggested_disk_space'))
     suggested_processor = models.CharField(max_length=200, null=True, blank=True,
                                          verbose_name=_('suggested_processor'))
-
     files_backup = models.TextField( null=True, blank=True,
                                          verbose_name=_('files_backup'))
     observations = models.TextField( null=True, blank=True,
                                          verbose_name=_('observations'))
-
     created_at = models.DateTimeField(auto_now_add=True,
                                          verbose_name=_('created_at'))
     updated_at = models.DateTimeField(auto_now=True,
                                          verbose_name=_('updated_at'))
-
     applicant = models.CharField(max_length=200, null=True, blank=True,
                                          verbose_name=_('applicant'))
     signature_date = models.DateTimeField(null=True, blank=True,
