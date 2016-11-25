@@ -35,6 +35,9 @@ import json
 import subprocess
 import re
 import requests
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 
 def log_session(request_session):
     # FIXME , eliminar
@@ -91,9 +94,6 @@ def check_server(request):
         result.update(instance_info(vm_name))
     result_list = json.dumps(result)
     return HttpResponse(result_list)
-    
-def index(request):
-    return redirect('new_step1')
 
 
 def define_production_sessions( request ):
@@ -140,12 +140,24 @@ def define_application_sessions( request ):
     request.session['referrers'] = {}
     request.session.modified = True
 
+
+@login_required
+def index(request):
+    if 'HTTP_REFERER' in  request.META \
+       and request.META['HTTP_REFERER'] \
+       and 'production' in request.META['HTTP_REFERER']:
+        return redirect('production_step')
+    else:
+        return redirect('new_step1')
     
+
+@login_required
 def new_step1(request):
     define_application_sessions(request)
     return render(request, 'new_step1.html')
 
 
+@login_required
 @redirect_without_post
 def new_step2(request):
     
@@ -181,6 +193,7 @@ def new_step2(request):
     return render(request, 'new_step1.html', context)
 
 
+@login_required
 @redirect_without_post
 def new_step3(request):
     software = []
@@ -213,7 +226,8 @@ def new_step3(request):
         context.update({'form': invalid_form, 'software_list': software})
         return render(request, 'new_step2.html', context)
 
-
+    
+@login_required
 @redirect_without_post
 def new_step4(request):
 
@@ -272,7 +286,8 @@ def new_step4(request):
                         'sources_computer': sources_computer, 'targets_computer': targets_computer})
         return render(request, 'new_step3.html', context)
 
-    
+
+@login_required    
 @redirect_without_post    
 def new_step5(request):
 
@@ -309,6 +324,7 @@ def new_step5(request):
         return render(request, 'new_step4.html', context)
 
 
+@login_required
 @transaction.atomic
 @redirect_without_post
 @redirect_if_has_registered
@@ -468,6 +484,7 @@ def save(request):
     return render(request, 'outcome_error.html.html', context)
 
 
+@login_required
 def production_step(request):
     define_production_sessions(request)
     proyects = Proyect.production_pass_enabled()
@@ -475,6 +492,7 @@ def production_step(request):
     return render(request, 'production_step.html', context)
 
 
+@login_required
 @redirect_without_production_post
 def production_step1(request):
     proyect_id = None
@@ -494,6 +512,7 @@ def production_step1(request):
     return render(request, 'production_step1.html', context)
 
 
+@login_required
 @redirect_without_production_post
 def production_step2(request):
     proyect = Proyect.objects.get(pk=request.session['production_proyect'])
@@ -536,6 +555,7 @@ def production_step2(request):
     return render(request, 'production_step1.html', context)
 
 
+@login_required
 @redirect_without_production_post
 def production_step3(request):
     proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
@@ -571,6 +591,7 @@ def production_step3(request):
         return render(request, 'production_step2.html', context)
 
 
+@login_required
 @redirect_without_production_post
 def production_step4(request):
     proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
@@ -632,6 +653,7 @@ def production_step4(request):
         return render(request, 'production_step3.html', context)
 
 
+@login_required
 @redirect_without_production_post
 def production_step5(request):
     proyect = Proyect.objects.get(pk=request.session['production_proyect'])    
@@ -670,6 +692,7 @@ def production_step5(request):
         return render(request, 'production_step4.html', context)
 
 
+@login_required
 @transaction.atomic
 @redirect_without_production_post
 @redirect_if_has_production_registered

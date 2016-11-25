@@ -1,7 +1,12 @@
 from django.conf.urls import url
 from app import views
+from django.contrib.auth import views as auth_views
+from django.conf import settings
 
 urlpatterns = [
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout, {'next_page': settings.LOGIN_REDIRECT_URL},
+        name='logout'),
     url(r'^$', views.index, name='index'),
     url('^save',views.save, name='save'),
     url('^check_server',views.check_server, name='check_server'),
