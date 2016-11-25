@@ -598,46 +598,46 @@ msgstr "English"
 
 #: templates/admin/change_form.html:21
 msgid "You have unsaved changes"
-msgstr ""
+msgstr "You have unsaved changes"
 
 #: templates/admin/change_form.html:50 templates/admin/change_form.html:76
 msgid "Add"
-msgstr ""
+msgstr "Add"
 
 #: templates/admin/change_form.html:61
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
 #: templates/admin/change_form.html:99
 msgid "tools"
-msgstr ""
+msgstr "Tools"
 
 #: templates/admin/change_form.html:109
 msgid "History"
-msgstr ""
+msgstr "History"
 
 #: templates/admin/change_form.html:113
 msgid "View on site"
-msgstr ""
+msgstr "View on site"
 
 #: templates/admin/change_form.html:124
 #, python-format
 msgid "Add %(name)s"
-msgstr ""
+msgstr "Add %(name)s"
 
 #: templates/admin/change_form.html:153
 msgid "Please correct the error below."
-msgid_plural " Please correct the errors below."
-msgstr[0] ""
-msgstr[1] ""
+msgid_plural "Please correct the errors below."
+msgstr[0] "Please correct the error below"
+msgstr[1] "Please correct the errors below"
 
 #: templates/base.html:42
 msgid "registered_user"
-msgstr ""
+msgstr "Registered user"
 
 #: templates/base.html:46
 msgid "close_session"
-msgstr ""
+msgstr "Close session"
 
 #: templates/new_step1.html:49 templates/new_step2.html:32
 #: templates/new_step3.html:50 templates/new_step4.html:33
