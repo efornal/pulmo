@@ -478,6 +478,8 @@ def save(request):
     except IntegrityError:
         logging.error('Integrity error for: %s' % proyect)
         transaction.savepoint_rollback( sid )
+    except Exception as e:
+        logging.error('ERROR Exception: %s' % e)
 
     msg = _('incomplete_application')
     context.update({'msg': msg})
@@ -849,7 +851,9 @@ def production_step6(request):
     except IntegrityError:
         logging.error('Integrity error for: %s' % proyect)
         transaction.savepoint_rollback( sid )
-
+    except Exception as e:
+        logging.error('ERROR Exception: %s' % e)
+        
     msg = _('incomplete_application')
     context.update({'msg': msg})
     return render(request, 'outcome_error.html.html', context)

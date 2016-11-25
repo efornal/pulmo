@@ -63,7 +63,11 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         models.TextField: {'widget': Textarea(
             attrs={'rows': 3,})},
     }
-
+    
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + ('signature_date',)
+        return self.readonly_fields
 
         
 class ProductionConnectionSourceInline(admin.TabularInline):
@@ -108,6 +112,11 @@ class ProductionFormAdmin(admin.ModelAdmin):
         models.TextField: {'widget': Textarea(
             attrs={'rows': 3,})},
     }
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + ('signature_date',)
+        return self.readonly_fields
     
     
 class ApplicationFormAdminForm(forms.ModelForm):
