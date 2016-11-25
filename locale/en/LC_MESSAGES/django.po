@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-25 08:27-0300\n"
+"POT-Creation-Date: 2016-11-25 09:28-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -464,7 +464,7 @@ msgid "remember_to_add_server"
 msgstr "Remember to add server in \"%(name)s\":%(url)s"
 
 #: app/models.py:661 app/models.py:791 pulmo/settings.py:194
-#: pulmo/settings.tpl.py:191 templates/base.html:13 templates/base.html:27
+#: pulmo/settings.tpl.py:191 templates/base.html:13 templates/base.html:28
 msgid "title"
 msgstr "Pulmo"
 
@@ -538,15 +538,15 @@ msgstr "Date"
 msgid "duration_in_days"
 msgstr "Duration in days"
 
-#: app/views.py:436 app/views.py:788
+#: app/views.py:448 app/views.py:807
 msgid "completed_application"
 msgstr "The application has been successful. "
 
-#: app/views.py:442
+#: app/views.py:454
 msgid "test_server_for"
 msgstr "Test server for '%(name)s'"
 
-#: app/views.py:448 app/views.py:812
+#: app/views.py:460 app/views.py:831
 msgid "confirmed_ticket_request_created"
 msgstr ""
 "The ticket <a href='%(issueurl)s' class='alert-link' target='_blank'>#"
@@ -558,33 +558,33 @@ msgstr ""
 "oficina, se lo agregará como seguidor del ticket para poder realizar un "
 "seguimiento del mismo."
 
-#: app/views.py:470 app/views.py:834
+#: app/views.py:482 app/views.py:853
 msgid "incomplete_application"
 msgstr ""
 "The request could not be completed. In order to make the process we ask you "
 "anywhere near our office or try to make the request again later."
 
-#: app/views.py:489
+#: app/views.py:503
 msgid "project_not_found"
 msgstr "Could not determine the project on which to make the request"
 
-#: app/views.py:793
+#: app/views.py:812
 msgid "production_server_for"
 msgstr "Production server for '%(name)s'"
 
-#: app/views.py:798
+#: app/views.py:817
 msgid "add_to_monitoring"
 msgstr "Add Monitoring for '%(name)s'"
 
-#: app/views.py:799
+#: app/views.py:818
 msgid "add_to_monitoring_desc"
 msgstr "All production server should be added to monitoring"
 
-#: app/views.py:804
+#: app/views.py:823
 msgid "add_to_backup"
 msgstr "Add Backups for '%(name)s'"
 
-#: app/views.py:805
+#: app/views.py:824
 msgid "add_to_backup_desc"
 msgstr "All production server must be added to the backup system"
 
@@ -630,6 +630,14 @@ msgid "Please correct the error below."
 msgid_plural " Please correct the errors below."
 msgstr[0] ""
 msgstr[1] ""
+
+#: templates/base.html:42
+msgid "registered_user"
+msgstr ""
+
+#: templates/base.html:46
+msgid "close_session"
+msgstr ""
 
 #: templates/new_step1.html:49 templates/new_step2.html:32
 #: templates/new_step3.html:50 templates/new_step4.html:33
