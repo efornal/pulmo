@@ -106,7 +106,9 @@ class ApplicationForm (models.Model):
                                                verbose_name=_('received_application'))
     related_ticket = models.CharField(max_length=200,null=True,blank=True,
                                       verbose_name=_('related_ticket'))
-    
+    requires_integration = models.BooleanField(default=False,
+                                               verbose_name=_('requires_integration'))
+
     class Meta:
         db_table = 'application_forms'
         verbose_name = _('ApplicationForm')
