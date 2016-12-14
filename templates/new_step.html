@@ -43,7 +43,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="well bs-component">
-        <form class="form-horizontal" action="{% url 'new_step2' %}" method="post">
+        <form class="form-horizontal" action="{% url 'new_step1' %}" method="post">
           {% csrf_token %}
           <fieldset>
             <legend>{{ _('new_proyect') }}</legend>
@@ -60,7 +60,6 @@
               <label class="col-sm-2 control-label" for="textinput">{{ _('secretariat') }}</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="secretariat"
-                       placeholder="DIPT"
                        id="secretariat" value="{{ proyect_form.secretariat.value|default:'' }}"/>
               </div>
             </div>
@@ -73,26 +72,16 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="observations" class="col-sm-2 control-label">{{ _('requires_integration') }}</label>
-              <div class="col-sm-1">
-                <input type="checkbox" name='requires_integration' class="form-control"
-                       placeholder='' 
-                       {% if application_form.requires_integration %}checked{%endif%} />
-              </div>
-            </div>
             
             <div class="form-group">
               <label class="col-sm-2 control-label" for="textinput">{{ _('db_name') }}</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="db_name"
-                       placeholder="proyecto_db"
                        id="" value="{{ application_form.db_name.value|default:'' }}" />
               </div>
               <label class="col-sm-2 control-label" for="textinput">{{ _('encoding') }}</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="encoding"
-                       placeholder="UTF8"
                        id="" value="{{ application_form.encoding.value|default:'' }}" />
               </div>
             </div>
@@ -101,59 +90,21 @@
               <label class="col-sm-2 control-label" for="textinput">{{ _('user_owner') }}</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="user_owner"
-                       placeholder="proyecto_owner"
                        id="" value="{{ application_form.user_owner.value|default:'' }}" />
               </div>
               <label class="col-sm-2 control-label" for="textinput">{{ _('user_access') }}</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="user_access"
-                       placeholder="proyecto_user"
                        id="" value="{{ application_form.user_access.value|default:'' }}" />
               </div>
             </div>
 
-
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="textinput">{{ _('extra_database_users') }}</label>
-              <div class="col-sm-4">
-                <input class="form-control" type="text" name="extra_database_users"
-                       id="extra_database_users" placeholder="usuario1, usuario2 ,..usuarioN"
-                       value="{{ application_form.extra_database_users.value|default:'' }}"/>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="textinput">{{ _('ssh_users') }}</label>
-              <div class="col-sm-4">
-                <input class="form-control" type="text" name="ssh_users"
-                       placeholder="usuario1, usuario2 ,..usuarioN"
-                       id="ssh_users" value="{{ application_form.ssh_users.value|default:'' }}"/>
-              </div>
-            </div>
-
-
-
-            <div class="form-group">
-              <label for="observations" class="col-sm-2 control-label">{{ _('logs_visualization') }}</label>
-              <div class="col-sm-4">
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="logs_visualization" id="logs_visualization1" value="1" checked="">
-                     Log-Analizer
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="logs_visualization" id="logs_visualization2" value="2">
-                        Archivo en Log-Server
-                      </label>
-                    </div>
-                  </div>
-              <label class="col-sm-2 control-label" for="textinput">{{ _('logs_users') }}</label>
-              <div class="col-sm-4">
-                <input class="form-control" type="text" name="logs_users"
-                       placeholder="usuario1, usuario2 ,..usuarioN"
-                       id="logs_users" value="{{ application_form.logs_users.value|default:'' }}"/>
+              <label for="observations" class="col-sm-2 control-label">{{ _('requires_integration') }}</label>
+              <div class="col-sm-1">
+                <input type="checkbox" name='requires_integration' class="form-control"
+                       placeholder='' 
+                       {% if application_form.requires_integration %}checked{%endif%} />
               </div>
             </div>
 	    

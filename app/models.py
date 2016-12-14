@@ -108,6 +108,14 @@ class ApplicationForm (models.Model):
                                       verbose_name=_('related_ticket'))
     requires_integration = models.BooleanField(default=False,
                                                verbose_name=_('requires_integration'))
+    ssh_users = models.CharField(max_length=200, null=True, blank=True,
+                                   verbose_name=_('ssh_users'))
+    extra_database_users = models.CharField(max_length=200, null=True, blank=True,
+                                   verbose_name=_('extra_database_users'))
+    logs_visualization = models.IntegerField(default=1,
+                                             verbose_name=_('logs_visualization'))
+    logs_users = models.CharField(max_length=200, null=True, blank=True,
+                                   verbose_name=_('logs_users'))
 
     class Meta:
         db_table = 'application_forms'

@@ -179,6 +179,15 @@ def new_step2(request):
                 request.session['application']['user_owner'] = request.POST['user_owner']
                 request.session['application']['user_access'] = request.POST['user_access']
                 request.session['application']['observations'] = request.POST['observations']
+                if 'requires_integration' in request.POST:
+                    request.session['application']['requires_integration'] = 1
+                else:
+                    request.session['application']['requires_integration'] = 0
+                request.session['application']['ssh_users'] = request.POST['ssh_users']
+                request.session['application']['extra_database_users'] = request.POST['extra_database_users']
+                request.session['application']['logs_visualization'] = request.POST['logs_visualization']
+                request.session['application']['logs_users'] = request.POST['logs_users']
+
                 request.session.modified = True
                 logging.info(" New application: %s" % application_form)
                 return render(request, 'new_step2.html', context)
@@ -196,6 +205,7 @@ def new_step2(request):
 @login_required
 @redirect_without_post
 def new_step3(request):
+
     software = []
     software_validated = True
     invalid_form = None
@@ -448,14 +458,62 @@ def save(request):
             msg = _('completed_application')
             
             if settings.REDMINE_ENABLE_TICKET_CREATION:
-                    # se debe crear ticket
+                
+                    # Main ticket
+                    logging.info("Creating main ticket..")
                     emails = Referrer.to_emails_by_application_form(application.pk)
                     watchers = TicketSystem.watchers_ids_by(emails)
                     subject = _('test_server_for') % {'name': application.proyect.name}
                     description = TicketSystem.application_description_issue(application)
                     issue = TicketSystem.create_issue(subject,description,watchers)
                     logging.info('Confirmed ticket request created %s' % issue.id)
+                    
+                    # Subtask ssh users
+                    if application.ssh_users:
+                        logging.warning("Creating ticket for SSH users ...")
+                        ssh_subject= '{} - Usuarios ssh'.format(application.proyect.name)
+                        ssh_description = 'Se debe agregar los siguientes usuarios SSH ' \
+                                          'con permisos de SUDO para correr el script de actualización: \n {}' \
+                                              .format(application.ssh_users)
+                        ssh_issue = TicketSystem.create_issue(ssh_subject,
+                                                              ssh_description,
+                                                              None, issue.id)
 
+                    # Subtask extra database users
+                    if application.extra_database_users:
+                        logging.warning("Creating ticket for extra database users ...")
+                        extradb_subject= '{} - Usuarios extras de  base de datos'.format(application.proyect.name)
+                        extradb_description = 'Se debe agregar los siguientes usuarios extras ' \
+                                              'de conexión a la base de datos: \n {}' \
+                            .format(application.extra_database_users)
+                        extradb_issue = TicketSystem.create_issue(extradb_subject,
+                                                                  extradb_description,
+                                                                  None, issue.id)
+
+                    # Subtask monitoring test
+                    logging.warning("Creating ticket for test monitoring ...")
+                    monitoring_subject= '{} - Monitoreo Test'.format(application.proyect.name)
+                    monitoring_description = 'Agregar el servidor a monitoreo-test'
+                    monitoring_issue = TicketSystem.create_issue(monitoring_subject,
+                                                                 monitoring_description,
+                                                                 None, issue.id)
+
+                    # Subtask log level configuration
+                    logging.warning("Creating ticket for log level configuration ...")
+                    log_subject= '{} - Nivel de Logs'.format(application.proyect.name)
+                    log_description = 'Configurar niveles de logs en ERROR y WARNING ' \
+                                      'y dar permisos de acceso SSH a los usuarios indicados. \n\n'
+                    if application.logs_visualization==1:
+                        log_description += 'Modo de visualización de logs: Log-Analizer \n'
+                    else:
+                        log_description += 'Modo de visualización de logs: Archivo en Log-Server \n'
+                        
+                    log_description += 'Usuarios de logs: {}'.format(application.logs_users)
+                    log_issue = TicketSystem.create_issue(log_subject,
+                                                              log_description,
+                                                              None, issue.id)
+
+                    
                     issueurl = "%s/issues/%s" % (settings.REDMINE_URL,issue.id)
                     msg += _('confirmed_ticket_request_created') % {'ticket': issue.id,
                                                                     'issueurl': issueurl}
@@ -483,7 +541,7 @@ def save(request):
 
     msg = _('incomplete_application')
     context.update({'msg': msg})
-    return render(request, 'outcome_error.html.html', context)
+    return render(request, 'outcome_error.html', context)
 
 
 @login_required
