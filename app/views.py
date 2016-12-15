@@ -471,10 +471,8 @@ def save(request):
                     # Subtask ssh users
                     if application.ssh_users:
                         logging.warning("Creating ticket for SSH users ...")
-                        ssh_subject= '{} - Usuarios ssh'.format(application.proyect.name)
-                        ssh_description = 'Se debe agregar los siguientes usuarios SSH ' \
-                                          'con permisos de SUDO para correr el script de actualización: \n {}' \
-                                              .format(application.ssh_users)
+                        ssh_subject = _('ssh_subject') % {'project_name': application.proyect.name}
+                        ssh_description = TicketSystem.ssh_description({'ssh_users':application.ssh_users})
                         ssh_issue = TicketSystem.create_issue(ssh_subject,
                                                               ssh_description,
                                                               None, issue.id)
@@ -482,36 +480,29 @@ def save(request):
                     # Subtask extra database users
                     if application.extra_database_users:
                         logging.warning("Creating ticket for extra database users ...")
-                        extradb_subject= '{} - Usuarios extras de  base de datos'.format(application.proyect.name)
-                        extradb_description = 'Se debe agregar los siguientes usuarios extras ' \
-                                              'de conexión a la base de datos: \n {}' \
-                            .format(application.extra_database_users)
+                        extradb_subject = _('extradb_subject') % {'project_name': application.proyect.name}
+                        extradb_description = TicketSystem.extradb_description({'extra_database_users':
+                                                                                application.extra_database_users})
                         extradb_issue = TicketSystem.create_issue(extradb_subject,
                                                                   extradb_description,
                                                                   None, issue.id)
 
                     # Subtask monitoring test
                     logging.warning("Creating ticket for test monitoring ...")
-                    monitoring_subject= '{} - Monitoreo Test'.format(application.proyect.name)
-                    monitoring_description = 'Agregar el servidor a monitoreo-test'
+                    monitoring_subject = _('monitoring_subject') % {'project_name': application.proyect.name}
+                    monitoring_description = TicketSystem.monitoring_description()
                     monitoring_issue = TicketSystem.create_issue(monitoring_subject,
                                                                  monitoring_description,
                                                                  None, issue.id)
 
                     # Subtask log level configuration
                     logging.warning("Creating ticket for log level configuration ...")
-                    log_subject= '{} - Nivel de Logs'.format(application.proyect.name)
-                    log_description = 'Configurar niveles de logs en ERROR y WARNING ' \
-                                      'y dar permisos de acceso SSH a los usuarios indicados. \n\n'
-                    if application.logs_visualization==1:
-                        log_description += 'Modo de visualización de logs: Log-Analizer \n'
-                    else:
-                        log_description += 'Modo de visualización de logs: Archivo en Log-Server \n'
-                        
-                    log_description += 'Usuarios de logs: {}'.format(application.logs_users)
+                    log_subject = _('log_subject') % {'project_name': application.proyect.name}
+                    log_description =  TicketSystem.log_description({'logs_visualization': application.logs_visualization,
+                                                                     'logs_users': application.logs_users})
                     log_issue = TicketSystem.create_issue(log_subject,
-                                                              log_description,
-                                                              None, issue.id)
+                                                          log_description,
+                                                          None, issue.id)
 
                     
                     issueurl = "%s/issues/%s" % (settings.REDMINE_URL,issue.id)

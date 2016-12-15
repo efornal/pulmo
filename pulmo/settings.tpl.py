@@ -136,6 +136,7 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 LOCALE_PATHS = (
      BASE_DIR + '/locale', )
 
+
 # =================================\
 # ganeti configuration
 GANETI_INSTANCES_URL = 'https://cluster:5080/2/instances'
@@ -156,6 +157,12 @@ REDMINE_ASSIGNED_TO_ID = None
 # maximum limit users found as observers of a ticket.
 # If there are more than this value, the addition of the ticket is omitted obervadores
 REDMINE_MAXIMUM_OBSERVER_FOUND = 5
+#
+#
+# Url where the procedure to resolve the ticket will be explained
+REDMINE_SSH_USERS_URL  = "https://servicios.unl.edu.ar/redmine/documents/80"
+REDMINE_MONITORING_URL = "https://servicios.unl.edu.ar/redmine/documents/81"
+REDMINE_LOG_LEVEL_URL  = "https://servicios.unl.edu.ar/redmine/documents/82"
 # =================================/
 
 

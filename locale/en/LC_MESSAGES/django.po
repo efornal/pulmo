@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-06 08:22-0300\n"
+"POT-Creation-Date: 2016-12-15 10:11-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:232
+#: app/admin.py:243
 msgid "added_mysql_backup"
 msgstr "MySQL Backup"
 
-#: app/admin.py:241
+#: app/admin.py:252
 msgid "added_pgsql_backup"
 msgstr "PgSQL backup"
 
-#: app/admin.py:250 app/models.py:499
+#: app/admin.py:261 app/models.py:499
 msgid "added_monitoring"
 msgstr "Added monitoring"
 
@@ -488,7 +488,7 @@ msgstr "Yes"
 msgid "remember_to_add_server"
 msgstr "Remember to add server in \"%(name)s\":%(url)s"
 
-#: app/models.py:671 app/models.py:801 pulmo/settings.py:194
+#: app/models.py:671 app/models.py:801 pulmo/settings.py:195
 #: pulmo/settings.tpl.py:191 templates/base.html:13 templates/base.html:28
 msgid "title"
 msgstr "Pulmo"
@@ -563,15 +563,31 @@ msgstr "Date"
 msgid "duration_in_days"
 msgstr "Duration in days"
 
-#: app/views.py:448 app/views.py:809
+#: app/views.py:458 app/views.py:866
 msgid "completed_application"
 msgstr "The application has been successful. "
 
-#: app/views.py:454
+#: app/views.py:466
 msgid "test_server_for"
 msgstr "Test server for '%(name)s'"
 
-#: app/views.py:460 app/views.py:833
+#: app/views.py:474
+msgid "ssh_subject"
+msgstr "%(project_name)s - SSH Users"
+
+#: app/views.py:483
+msgid "extradb_subject"
+msgstr "%(project_name)s - Extra database users"
+
+#: app/views.py:492
+msgid "monitoring_subject"
+msgstr "%(project_name)s - Test monitoring"
+
+#: app/views.py:500
+msgid "log_subject"
+msgstr "%(project_name)s - Log level"
+
+#: app/views.py:517 app/views.py:890
 msgid "confirmed_ticket_request_created"
 msgstr ""
 "The ticket <a href='%(issueurl)s' class='alert-link' target='_blank'>#"
@@ -583,41 +599,41 @@ msgstr ""
 "oficina, se lo agregará como seguidor del ticket para poder realizar un "
 "seguimiento del mismo."
 
-#: app/views.py:484 app/views.py:857
+#: app/views.py:541 app/views.py:914
 msgid "incomplete_application"
 msgstr ""
 "The request could not be completed. In order to make the process we ask you "
 "anywhere near our office or try to make the request again later."
 
-#: app/views.py:505
+#: app/views.py:562
 msgid "project_not_found"
 msgstr "Could not determine the project on which to make the request"
 
-#: app/views.py:814
+#: app/views.py:871
 msgid "production_server_for"
 msgstr "Production server for '%(name)s'"
 
-#: app/views.py:819
+#: app/views.py:876
 msgid "add_to_monitoring"
 msgstr "Add Monitoring for '%(name)s'"
 
-#: app/views.py:820
+#: app/views.py:877
 msgid "add_to_monitoring_desc"
 msgstr "All production server should be added to monitoring"
 
-#: app/views.py:825
+#: app/views.py:882
 msgid "add_to_backup"
 msgstr "Add Backups for '%(name)s'"
 
-#: app/views.py:826
+#: app/views.py:883
 msgid "add_to_backup_desc"
 msgstr "All production server must be added to the backup system"
 
-#: pulmo/settings.py:113 pulmo/settings.tpl.py:114
+#: pulmo/settings.py:114 pulmo/settings.tpl.py:114
 msgid "Spanish"
 msgstr "Spanish"
 
-#: pulmo/settings.py:114 pulmo/settings.tpl.py:115
+#: pulmo/settings.py:115 pulmo/settings.tpl.py:115
 msgid "English"
 msgstr "English"
 

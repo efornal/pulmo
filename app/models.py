@@ -806,3 +806,49 @@ class TicketSystem(models.Model):
 
 
 
+
+# =================================/
+
+    @classmethod
+    def ssh_description(cls,args):
+        description = 'Para correr el script de actualización, ' \
+                      'se deben agregar los siguientes usuarios SSH con permisos de SUDO: \n {}' \
+                          .format(args['ssh_users'])
+        if hasattr(settings, 'REDMINE_SSH_USERS_URL'):
+            description += '\n\nPara más información verificar/completar en {}' \
+                .format(settings.REDMINE_SSH_USERS_URL)
+        return description
+
+    
+    @classmethod
+    def extradb_description(cls,args):
+        return 'Se debe agregar los siguientes usuarios extras ' \
+            'de conexión a la base de datos: \n {}' \
+                .format(args['extra_database_users'])
+
+    
+    @classmethod
+    def monitoring_description(cls,args={}):
+        description = 'Agregar el servidor a monitoreo-test'
+        if hasattr(settings, 'REDMINE_MONITORING_URL'):
+            description += '\n\nPara más información verificar/completar en {}' \
+                           .format(settings.REDMINE_MONITORING_URL)
+        return description
+
+
+    @classmethod
+    def log_description(cls,args):
+        description = 'Configurar niveles de logs en ERROR y WARNING ' \
+                      'y dar permisos de acceso SSH a los usuarios indicados. \n\n'
+        
+        if args['logs_visualization'] == 1:
+            description += 'Modo de visualización de logs: Log-Analizer \n'
+        else:
+            description += 'Modo de visualización de logs: Archivo en Log-Server \n'
+                        
+        description += 'Usuarios de logs: {}'.format(args['logs_users'])
+
+        if hasattr(settings, 'REDMINE_LOG_LEVEL_URL'):
+            description += '\n\nPara más información verificar/completar en {}' \
+                .format(settings.REDMINE_MONITORING_URL)
+        return description
