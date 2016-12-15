@@ -21,6 +21,7 @@ class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'secretariat', 'updated_at', 'created_at')
     search_fields = ['name','secretariat','description']
     ordering = ('name',)
+    list_filter = ('secretariat',)
 
 class ReferrerInline(admin.TabularInline):
      model = Referrer
@@ -49,7 +50,8 @@ class ApplicationSoftwareRequirementInline(admin.TabularInline):
      
 class ApplicationFormAdmin(admin.ModelAdmin):
     model = ApplicationForm
-    list_display = ('proyect', 'received_application', 'signature_date','related_ticket')
+    list_display = ('proyect', 'requires_integration','received_application',
+                    'related_ticket', 'signature_date')
     inlines = [
         ApplicationSoftwareRequirementInline,
         ApplicationConnectionSourceInline,
@@ -58,6 +60,7 @@ class ApplicationFormAdmin(admin.ModelAdmin):
         ReferrerInline,
     ]
     search_fields = ['proyect__name']
+    list_filter = ('received_application','requires_integration')
     ordering = ('proyect__name',)
     formfield_overrides = {
         models.TextField: {'widget': Textarea(
@@ -98,7 +101,7 @@ class MilestoneInline(admin.TabularInline):
 class ProductionFormAdmin(admin.ModelAdmin):
     model = ProductionForm
     list_display = ('proyect','received_application', 'applicant',
-                    'signature_date','related_ticket')
+                    'related_ticket','signature_date')
     inlines = [
         ProductionSoftwareRequirementInline,
         ProductionConnectionSourceInline,
@@ -107,6 +110,7 @@ class ProductionFormAdmin(admin.ModelAdmin):
         MilestoneInline,
     ]
     search_fields = ['proyect__name']
+    list_filter = ('received_application','applicant')
     ordering = ('proyect__name',)
     formfield_overrides = {
         models.TextField: {'widget': Textarea(
@@ -156,7 +160,7 @@ class SCVPermissionAdminForm(forms.ModelForm):
     class Meta:
         model = SCVPermission
         fields = '__all__'
-
+        
 class SCVPermissionAdmin(admin.ModelAdmin):
     form = SCVPermissionAdminForm
 
@@ -166,6 +170,9 @@ class TestServerAdmin(admin.ModelAdmin):
     ordering = ('application_form__proyect__name',)
     list_display = ('virtual_machine_name', 'ip_address',
                     'cluster_virtual_machine','related_ticket','user')
+    search_fields = ['virtual_machine_name','ip_address']
+    list_filter = ('cluster_virtual_machine',)
+
     formfield_overrides = {
         models.TextField: {'widget': Textarea(
             attrs={'rows': 3,})},
@@ -195,11 +202,15 @@ class TestServerAdmin(admin.ModelAdmin):
 
 
 class ProductionServerAdmin(admin.ModelAdmin):
-    exclude = ('applicant','added_monitoring','added_backup') #FIXME, backup and monitoring will be removed from db
+    #FIXME, backup and monitoring will be removed from db
+    exclude = ('applicant','added_monitoring','added_backup')
+    
     ordering = ('production_form__proyect__name',)
     list_display = ('virtual_machine_name', 'ip_address',
                     'cluster_virtual_machine','related_ticket','user')
-
+    search_fields = ['virtual_machine_name','ip_address']
+    list_filter = ('cluster_virtual_machine',)
+    
     if hasattr(settings, 'ZABBIX_API_MONITORING_TEMPLATE_ID'):
         list_display += ('zabbix_added_monitoring',)
     if hasattr(settings, 'ZABBIX_API_PGSQL_TEMPLATE_ID'):
