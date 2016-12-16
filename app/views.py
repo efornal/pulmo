@@ -160,16 +160,16 @@ def new_step1(request):
 @login_required
 @redirect_without_post
 def new_step2(request):
-    
     proyect_form = ProyectForm()
     application_form = ApplicationFormForm()
     context = {'proyect_name': request.POST['name']}
 
     try:
         proyect_form = ProyectForm(request.POST)
+        application_form = ApplicationFormForm(request.POST,
+                                               exclude_from_validation='proyect')
+
         if proyect_form.is_valid():
-            application_form = ApplicationFormForm(request.POST,
-                                                   exclude_from_validation='proyect')
             if application_form.is_valid():
                 request.session['proyect']['name'] = request.POST['name']
                 request.session['proyect']['secretariat'] = request.POST['secretariat']

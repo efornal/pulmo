@@ -72,13 +72,14 @@
                           id="description">{{ proyect_form.description.value|default:'' }}</textarea>
               </div>
             </div>
-
             <div class="form-group">
-              <label for="observations" class="col-sm-2 control-label">{{ _('requires_integration') }}</label>
+              <label for="observations" class="col-sm-2 control-label">
+                {{ _('requires_integration') }}
+              </label>
               <div class="col-sm-1">
                 <input type="checkbox" name='requires_integration' class="form-control"
                        placeholder='' 
-                       {% if application_form.requires_integration %}checked{%endif%} />
+                       {% if application_form.requires_integration.value %}checked{%endif%} />
               </div>
             </div>
             
