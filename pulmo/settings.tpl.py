@@ -137,6 +137,11 @@ LOCALE_PATHS = (
      BASE_DIR + '/locale', )
 
 
+LOGS_VISUALIZATION_CHOICES = (
+    ('1', 'Log-Analizer'),
+    ('2', 'Archivo en Log-Server'),
+)
+
 # =================================\
 # ganeti configuration
 GANETI_INSTANCES_URL = 'https://cluster:5080/2/instances'

@@ -11,45 +11,56 @@ from django.forms import ModelForm
 from django.forms.widgets import Textarea
 from django.db import models
 import logging
+
 from django.utils.translation import ugettext as _
 from django.contrib import messages
 from django.conf import settings
 
 
+class ApplicationFormForm(forms.ModelForm):
+    logs_visualization = forms.ChoiceField(choices=settings.LOGS_VISUALIZATION_CHOICES)
 
+    
 class ProyectAdmin(admin.ModelAdmin):
     list_display = ('name', 'secretariat', 'updated_at', 'created_at')
     search_fields = ['name','secretariat','description']
     ordering = ('name',)
     list_filter = ('secretariat',)
 
+    
 class ReferrerInline(admin.TabularInline):
      model = Referrer
      fk_name = "application_form"
      extra = 0
 
+     
 class SCVPermissionInline(admin.TabularInline):
      model = SCVPermission
      fk_name = "application_form"
      extra = 0
-    
+
+     
 class ApplicationConnectionSourceInline(admin.TabularInline):
      model = ApplicationConnectionSource
      fk_name = "application_form"
      extra = 0
 
+     
 class ApplicationConnectionTargetInline(admin.TabularInline):
      model = ApplicationConnectionTarget
      fk_name = "application_form"
      extra = 0
 
+     
 class ApplicationSoftwareRequirementInline(admin.TabularInline):
      model = ApplicationSoftwareRequirement
      fk_name = "application_form"
      extra = 0
-     
+
+          
 class ApplicationFormAdmin(admin.ModelAdmin):
     model = ApplicationForm
+    form = ApplicationFormForm
     list_display = ('proyect', 'requires_integration','received_application',
                     'related_ticket', 'signature_date')
     inlines = [
@@ -78,25 +89,30 @@ class ProductionConnectionSourceInline(admin.TabularInline):
      fk_name = "production_form"
      extra = 0
 
+     
 class ProductionConnectionTargetInline(admin.TabularInline):
      model = ProductionConnectionTarget
      fk_name = "production_form"
      extra = 0
 
+     
 class ProductionSoftwareRequirementInline(admin.TabularInline):
      model = ProductionSoftwareRequirement
      fk_name = "production_form"
      extra = 0
 
+     
 class MonitoredVariableInline(admin.TabularInline):
     model = MonitoredVariable
     fk_name = "production_form"
     extra = 0
 
+    
 class MilestoneInline(admin.TabularInline):
     model = Milestone
     fk_name = "production_form"
     extra = 0
+
     
 class ProductionFormAdmin(admin.ModelAdmin):
     model = ProductionForm
