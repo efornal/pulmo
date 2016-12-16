@@ -119,7 +119,8 @@
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="extra_database_users"
                        id="extra_database_users" placeholder="usuario1, usuario2 ,..usuarioN"
-                       value="{{ application_form.extra_database_users.value|default:'' }}"/>
+                       value="{{ application_form.extra_database_users.value|default:'' }}"
+                       title="{{ _('extra_database_users_title') }}"/>
               </div>
             </div>
 
@@ -128,7 +129,8 @@
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="ssh_users"
                        placeholder="usuario1, usuario2 ,..usuarioN"
-                       id="ssh_users" value="{{ application_form.ssh_users.value|default:'' }}"/>
+                       id="ssh_users" value="{{ application_form.ssh_users.value|default:'' }}"
+                       title="{{ _('ssh_users_title') }}"/>
               </div>
             </div>
 
@@ -154,7 +156,8 @@
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="logs_users"
                        placeholder="usuario1, usuario2 ,..usuarioN"
-                       id="logs_users" value="{{ application_form.logs_users.value|default:'' }}"/>
+                       id="logs_users" value="{{ application_form.logs_users.value|default:'' }}"
+                       title="{{ _('logs_users_title') }}"/>
               </div>
             </div>
 	    

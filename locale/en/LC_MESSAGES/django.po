@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-16 11:17-0300\n"
+"POT-Creation-Date: 2016-12-16 12:32-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,7 +55,7 @@ msgstr "Description"
 #: app/forms.py:237 app/models.py:98 app/models.py:167 app/models.py:200
 #: app/models.py:222 app/models.py:245 app/models.py:448 app/models.py:494
 #: app/models.py:594 app/models.py:619 app/models.py:633 app/models.py:689
-#: app/models.py:745 templates/new_step1.html:162 templates/new_step3.html:72
+#: app/models.py:745 templates/new_step1.html:165 templates/new_step3.html:72
 #: templates/new_step3.html:152 templates/production_step1.html:208
 #: templates/production_step3.html:71
 msgid "observations"
@@ -167,7 +167,7 @@ msgstr "Related ticket"
 msgid "requires_integration"
 msgstr "Requires integration"
 
-#: app/models.py:112 templates/new_step1.html:127
+#: app/models.py:112 templates/new_step1.html:128
 msgid "ssh_users"
 msgstr "SSH Users"
 
@@ -175,11 +175,11 @@ msgstr "SSH Users"
 msgid "extra_database_users"
 msgstr "Extra database users"
 
-#: app/models.py:116 templates/new_step1.html:138
+#: app/models.py:116 templates/new_step1.html:140
 msgid "logs_visualization"
 msgstr "Logs visualization"
 
-#: app/models.py:118 templates/new_step1.html:153
+#: app/models.py:118 templates/new_step1.html:155
 msgid "logs_users"
 msgstr "Logs Users"
 
@@ -719,7 +719,21 @@ msgstr "Close session"
 msgid "new_proyect"
 msgstr "Request new project"
 
-#: templates/new_step1.html:171 templates/new_step2.html:111
+#: templates/new_step1.html:123
+msgid "extra_database_users_title"
+msgstr ""
+"Extra users who will be able to connect to the database of test and "
+"integration servers"
+
+#: templates/new_step1.html:133
+msgid "ssh_users_title"
+msgstr "LDAP users who can connect via ssh to the test and integration servers"
+
+#: templates/new_step1.html:160
+msgid "logs_users_title"
+msgstr "LDAP users who can view the logs"
+
+#: templates/new_step1.html:174 templates/new_step2.html:111
 #: templates/new_step3.html:231 templates/new_step4.html:120
 #: templates/production_step.html:80 templates/production_step1.html:219
 #: templates/production_step3.html:240 templates/production_step4.html:127
