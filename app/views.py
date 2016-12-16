@@ -499,11 +499,19 @@ def save(request):
                     logging.warning("Creating ticket for log level configuration ...")
                     log_subject = _('log_subject') % {'project_name': application.proyect.name}
                     log_description =  TicketSystem.log_description({'logs_visualization': application.logs_visualization,
-                                                                     'logs_users': application.logs_users})
+                                          'logs_users': application.logs_users})
                     log_issue = TicketSystem.create_issue(log_subject,
                                                           log_description,
                                                           None, issue.id)
 
+                    # Subtask integration machine
+                    if application.requires_integration:
+                        logging.warning("Creating ticket for Integration machine ...")
+                        integration_subject = _('integration_subject') % {'project_name': application.proyect.name}
+                        integration_description = TicketSystem.integration_description()
+                        integration_issue = TicketSystem.create_issue(integration_subject,
+                                                              integration_description,
+                                                              None, issue.id)
                     
                     issueurl = "%s/issues/%s" % (settings.REDMINE_URL,issue.id)
                     msg += _('confirmed_ticket_request_created') % {'ticket': issue.id,

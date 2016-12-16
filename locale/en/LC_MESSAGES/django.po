@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -8,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-15 10:11-0300\n"
+"POT-Creation-Date: 2016-12-16 11:17-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,21 +35,19 @@ msgstr "Added monitoring"
 #: app/models.py:310 app/models.py:375 app/models.py:406 app/models.py:599
 #: app/models.py:607 app/models.py:616 app/models.py:630 app/models.py:694
 #: app/models.py:733 app/models.py:742 app/models.py:756
-#: templates/new_step.html:52 templates/new_step1.html:52
-#: templates/new_step2.html:50 templates/new_step3.html:69
-#: templates/new_step3.html:149 templates/production_step1.html:36
-#: templates/production_step3.html:68 templates/production_step3.html:148
+#: templates/new_step1.html:52 templates/new_step2.html:50
+#: templates/new_step3.html:69 templates/new_step3.html:149
+#: templates/production_step1.html:36 templates/production_step3.html:68
+#: templates/production_step3.html:148
 msgid "name"
 msgstr "Name"
 
-#: app/forms.py:18 app/models.py:64 templates/new_step.html:60
-#: templates/new_step1.html:60
+#: app/forms.py:18 app/models.py:64 templates/new_step1.html:60
 msgid "secretariat"
 msgstr "Secretariat"
 
 #: app/forms.py:19 app/forms.py:210 app/models.py:62 app/models.py:328
-#: templates/new_step.html:68 templates/new_step1.html:69
-#: templates/production_step1.html:44
+#: templates/new_step1.html:69 templates/production_step1.html:44
 msgid "description"
 msgstr "Description"
 
@@ -56,9 +55,9 @@ msgstr "Description"
 #: app/forms.py:237 app/models.py:98 app/models.py:167 app/models.py:200
 #: app/models.py:222 app/models.py:245 app/models.py:448 app/models.py:494
 #: app/models.py:594 app/models.py:619 app/models.py:633 app/models.py:689
-#: app/models.py:745 templates/new_step.html:112 templates/new_step1.html:161
-#: templates/new_step3.html:72 templates/new_step3.html:152
-#: templates/production_step1.html:208 templates/production_step3.html:71
+#: app/models.py:745 templates/new_step1.html:162 templates/new_step3.html:72
+#: templates/new_step3.html:152 templates/production_step1.html:208
+#: templates/production_step3.html:71
 msgid "observations"
 msgstr "Observations"
 
@@ -132,26 +131,23 @@ msgstr "Proyect"
 msgid "Proyects"
 msgstr "Proyects"
 
-#: app/models.py:90 app/models.py:133 templates/new_step.html:77
-#: templates/new_step1.html:86 templates/production_step1.html:61
+#: app/models.py:90 app/models.py:133 templates/new_step1.html:87
+#: templates/production_step1.html:61
 msgid "db_name"
 msgstr "DB Name"
 
 #: app/models.py:92 app/models.py:135 app/models.py:600 app/models.py:695
-#: templates/new_step.html:82 templates/new_step1.html:92
-#: templates/production_step1.html:68
+#: templates/new_step1.html:93 templates/production_step1.html:68
 msgid "encoding"
 msgstr "Encoding"
 
 #: app/models.py:94 app/models.py:137 app/models.py:601 app/models.py:696
-#: templates/new_step.html:90 templates/new_step1.html:101
-#: templates/production_step1.html:78
+#: templates/new_step1.html:102 templates/production_step1.html:78
 msgid "user_owner"
 msgstr "User owner"
 
 #: app/models.py:96 app/models.py:139 app/models.py:602 app/models.py:697
-#: templates/new_step.html:95 templates/new_step1.html:107
-#: templates/production_step1.html:87
+#: templates/new_step1.html:108 templates/production_step1.html:87
 msgid "user_access"
 msgstr "User access"
 
@@ -167,23 +163,23 @@ msgstr "Received application"
 msgid "related_ticket"
 msgstr "Related ticket"
 
-#: app/models.py:110 templates/new_step.html:103 templates/new_step1.html:77
+#: app/models.py:110 templates/new_step1.html:77
 msgid "requires_integration"
 msgstr "Requires integration"
 
-#: app/models.py:112 templates/new_step1.html:126
+#: app/models.py:112 templates/new_step1.html:127
 msgid "ssh_users"
 msgstr "SSH Users"
 
-#: app/models.py:114 templates/new_step1.html:117
+#: app/models.py:114 templates/new_step1.html:118
 msgid "extra_database_users"
 msgstr "Extra database users"
 
-#: app/models.py:116 templates/new_step1.html:137
+#: app/models.py:116 templates/new_step1.html:138
 msgid "logs_visualization"
 msgstr "Logs visualization"
 
-#: app/models.py:118 templates/new_step1.html:152
+#: app/models.py:118 templates/new_step1.html:153
 msgid "logs_users"
 msgstr "Logs Users"
 
@@ -488,8 +484,8 @@ msgstr "Yes"
 msgid "remember_to_add_server"
 msgstr "Remember to add server in \"%(name)s\":%(url)s"
 
-#: app/models.py:671 app/models.py:801 pulmo/settings.py:195
-#: pulmo/settings.tpl.py:191 templates/base.html:13 templates/base.html:28
+#: app/models.py:671 app/models.py:801 pulmo/settings.py:203
+#: pulmo/settings.tpl.py:199 templates/base.html:13 templates/base.html:28
 msgid "title"
 msgstr "Pulmo"
 
@@ -563,6 +559,39 @@ msgstr "Date"
 msgid "duration_in_days"
 msgstr "Duration in days"
 
+#: app/models.py:814
+msgid "ssh_description"
+msgstr ""
+"To run the update script you must add the following SSH users with SUDO "
+"permissions: \n"
+"%(ssh_users)s"
+
+#: app/models.py:818 app/models.py:835 app/models.py:851 app/models.py:860
+msgid "more_information"
+msgstr "For more information check/complete in %(url)s"
+
+#: app/models.py:824
+msgid "extradb_description"
+msgstr ""
+"The following database connection extra users must be added: \n"
+"%(extra_database_users)s"
+
+#: app/models.py:831
+msgid "monitoring_description"
+msgstr "Add server to Monitoring Test"
+
+#: app/models.py:846
+msgid "log_description"
+msgstr ""
+"Configure logging levels in ERROR and WARNING and give SSH access "
+"permissions to the indicated users.\n"
+"Log display mode: %(log_visualization)s \n"
+"Log Users: %(logs_users)s"
+
+#: app/models.py:857
+msgid "integration_description"
+msgstr "The integration machine must be created"
+
 #: app/views.py:458 app/views.py:866
 msgid "completed_application"
 msgstr "The application has been successful. "
@@ -586,6 +615,10 @@ msgstr "%(project_name)s - Test monitoring"
 #: app/views.py:500
 msgid "log_subject"
 msgstr "%(project_name)s - Log level"
+
+#: app/views.py:510
+msgid "integration_subject"
+msgstr "%(project_name)s - Integration machine"
 
 #: app/views.py:517 app/views.py:890
 msgid "confirmed_ticket_request_created"
@@ -680,17 +713,16 @@ msgstr "Registered user"
 msgid "close_session"
 msgstr "Close session"
 
-#: templates/new_step.html:49 templates/new_step1.html:49
-#: templates/new_step2.html:32 templates/new_step3.html:50
-#: templates/new_step4.html:33 templates/new_step5.html:33
+#: templates/new_step1.html:49 templates/new_step2.html:32
+#: templates/new_step3.html:50 templates/new_step4.html:33
+#: templates/new_step5.html:33
 msgid "new_proyect"
 msgstr "Request new project"
 
-#: templates/new_step.html:121 templates/new_step1.html:170
-#: templates/new_step2.html:111 templates/new_step3.html:231
-#: templates/new_step4.html:120 templates/production_step.html:80
-#: templates/production_step1.html:219 templates/production_step3.html:240
-#: templates/production_step4.html:127
+#: templates/new_step1.html:171 templates/new_step2.html:111
+#: templates/new_step3.html:231 templates/new_step4.html:120
+#: templates/production_step.html:80 templates/production_step1.html:219
+#: templates/production_step3.html:240 templates/production_step4.html:127
 msgid "next"
 msgstr "Next"
 
