@@ -165,10 +165,11 @@ REDMINE_MAXIMUM_OBSERVER_FOUND = 5
 #
 #
 # Url where the procedure to resolve the ticket will be explained
-REDMINE_SSH_USERS_URL   = "https://servicios.unl.edu.ar/redmine/documents/80"
-REDMINE_MONITORING_URL  = "https://servicios.unl.edu.ar/redmine/documents/81"
-REDMINE_LOG_LEVEL_URL   = "https://servicios.unl.edu.ar/redmine/documents/82"
-REDMINE_INTEGRATION_URL = "https://servicios.unl.edu.ar/redmine/documents/83"
+#REDMINE_SSH_USERS_URL   = "https://host/doc"
+#REDMINE_MONITORING_URL  = "https://host/doc"
+#REDMINE_LOG_LEVEL_URL   = "https://host/doc"
+#REDMINE_INTEGRATION_URL = "https://host/doc"
+#
 # =================================/
 
 
