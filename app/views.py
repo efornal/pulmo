@@ -254,6 +254,7 @@ def new_step4(request):
         for i,computer in enumerate( request.POST.getlist('sources_name[]') ):
             params = { 'name': computer,
                        'ip': request.POST.getlist('sources_ip[]')[i],
+                       'username': request.POST.getlist('sources_username[]')[i],
                        'service': request.POST.getlist('sources_service[]')[i],
                        'observations': request.POST.getlist('sources_observation[]')[i] }
             if not are_all_empty_params(params):
@@ -269,6 +270,7 @@ def new_step4(request):
         for i,computer in enumerate( request.POST.getlist('targets_name[]') ):
             params = { 'name': computer,
                        'ip': request.POST.getlist('targets_ip[]')[i],
+                       'username': request.POST.getlist('targets_username[]')[i],
                        'service': request.POST.getlist('targets_service[]')[i],
                        'observations': request.POST.getlist('targets_observation[]')[i] }
 

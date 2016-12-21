@@ -620,31 +620,35 @@ class TicketSystem(models.Model):
             description += "</pre>"
 
         if sources:
-            description += "\n* %s [%s, %s, %s, %s]\n" % ( _('connection_sources'),
-                                                           _('name'),
-                                                           _('ip_address'),
-                                                           _('service'),
-                                                           _('observations'))
+            description += "\n* %s [%s, %s, %s, %s, %s]\n" % ( _('connection_sources'),
+                                                               _('name'),
+                                                               _('ip_address'),
+                                                               _('username'),
+                                                               _('service'),
+                                                               _('observations'))
             description += "<pre>"
             for item in sources:
-                description += "%s, %s, %s, %s\n" % (item.name,
-                                                     to_v(item.ip),
-                                                     to_v(item.service),
-                                                     to_v(item.observations))
+                description += "%s, %s, %s, %s, %s\n" % (item.name,
+                                                         to_v(item.ip),
+                                                         to_v(item.username),
+                                                         to_v(item.service),
+                                                         to_v(item.observations))
             description += "</pre>"
                 
         if targets:
-            description += "\n* %s [%s, %s, %s, %s]\n" % ( _('connection_targets'),
-                                                           _('name'),
-                                                           _('ip_address'),
-                                                           _('service'),
-                                                           _('observations'))
+            description += "\n* %s [%s, %s, %s, %s, %s]\n" % ( _('connection_targets'),
+                                                               _('name'),
+                                                               _('ip_address'),
+                                                               _('username'),
+                                                               _('service'),
+                                                               _('observations'))
             description += "<pre>"
             for item in targets:
-                description += "%s, %s, %s, %s\n" % (item.name,
-                                                     to_v(item.ip),
-                                                     to_v(item.service),
-                                                     to_v(item.observations))
+                description += "%s, %s, %s, %s, %s\n" % (item.name,
+                                                         to_v(item.ip),
+                                                         to_v(item.username),
+                                                         to_v(item.service),
+                                                         to_v(item.observations))
             description += "</pre>"
 
         if csv_permission:
