@@ -243,6 +243,8 @@ class ApplicationConnectionTarget(models.Model):
     ip = models.CharField(max_length=200,null=True,blank=True,
                           verbose_name=_('ip'),
                           validators=[validate_ipv46_address])
+    username = models.CharField(max_length=200,null=True,blank=True,
+                                verbose_name=_('username'))
     service = models.CharField(max_length=200,null=True,blank=True,
                                verbose_name=_('service'))
     observations = models.TextField(null=True, blank=True,
@@ -264,6 +266,8 @@ class ProductionConnectionTarget(models.Model):
                             verbose_name=_('name'))
     ip = models.CharField(max_length=200,null=True,blank=True,
                           verbose_name=_('ip'))
+    username = models.CharField(max_length=200,null=True,blank=True,
+                                verbose_name=_('username'))
     ip_firewall  = models.CharField(max_length=200,null=True,blank=True,
                                     verbose_name=_('ip_firewall'))
     service = models.CharField(max_length=200,null=True,blank=True,
@@ -746,33 +750,37 @@ class TicketSystem(models.Model):
             description += "</pre>"
 
         if sources:
-            description += "\n* %s [%s, %s, %s, %s]\n" % ( _('connection_sources'),
-                                                           _('name'),
-                                                           _('ip_address'),
-                                                           _('service'),
-                                                           _('observations'))
+            description += "\n* %s [%s, %s, %s, %s, %s]\n" % ( _('connection_sources'),
+                                                               _('name'),
+                                                               _('ip_address'),
+                                                               _('username'),
+                                                               _('service'),
+                                                               _('observations'))
             description += "<pre>"
             for item in sources:
-                description += "%s, %s, %s, %s\n" % (item.name,
-                                                     to_v(item.ip),
-                                                     to_v(item.service),
-                                                     to_v(item.observations))
+                description += "%s, %s, %s, %s, %s\n" % (item.name,
+                                                         to_v(item.ip),
+                                                         to_v(item.username),
+                                                         to_v(item.service),
+                                                         to_v(item.observations))
             description += "</pre>"
                 
         if targets:
-            description += "\n* %s [%s, %s, %s, %s, %s]\n" % ( _('connection_targets'),
-                                                           _('name'),
-                                                           _('ip_address'),
-                                                           _('service'),
-                                                           _('port'),
-                                                           _('ip_firewall'))
+            description += "\n* %s [%s, %s, %s, %s, %s, %s]\n" % ( _('connection_targets'),
+                                                                   _('name'),
+                                                                   _('ip_address'),
+                                                                   _('username'),
+                                                                   _('service'),
+                                                                   _('port'),
+                                                                   _('ip_firewall'))
             description += "<pre>"
             for item in targets:
-                description += "%s, %s, %s, %s, %s\n" % (item.name,
-                                                     to_v(item.ip),
-                                                     to_v(item.service),
-                                                     to_v(item.port),
-                                                     to_v(item.ip_firewall))
+                description += "%s, %s, %s, %s, %s, %s\n" % (item.name,
+                                                             to_v(item.ip),
+                                                             to_v(item.username),
+                                                             to_v(item.service),
+                                                             to_v(item.port),
+                                                             to_v(item.ip_firewall))
             description += "</pre>"
 
 

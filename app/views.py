@@ -668,6 +668,7 @@ def production_step4(request):
         for i,computer in enumerate( request.POST.getlist('sources_name[]') ):
             params = { 'name': computer,
                        'ip': request.POST.getlist('sources_ip[]')[i],
+                       'username': request.POST.getlist('sources_username[]')[i],
                        'service': request.POST.getlist('sources_service[]')[i],
                        'observations': request.POST.getlist('sources_observation[]')[i] }
             if not are_all_empty_params(params):
@@ -683,6 +684,7 @@ def production_step4(request):
         for i,computer in enumerate( request.POST.getlist('targets_name[]') ):
             params = { 'name': computer,
                        'ip': request.POST.getlist('targets_ip[]')[i],
+                       'username': request.POST.getlist('targets_username[]')[i],
                        'service': request.POST.getlist('targets_service[]')[i],
                        'ip_firewall': request.POST.getlist('targets_ip_firewall[]')[i],
                        'port': request.POST.getlist('targets_port[]')[i] }
@@ -913,4 +915,4 @@ def production_step6(request):
         
     msg = _('incomplete_application')
     context.update({'msg': msg})
-    return render(request, 'outcome_error.html.html', context)
+    return render(request, 'outcome_error.html', context)

@@ -81,6 +81,7 @@ class ProductionSoftwareRequirementForm(forms.ModelForm):
 class ApplicationConnectionSourceForm(forms.ModelForm):
     name = forms.CharField(max_length=200,required=True)
     ip = forms.CharField(max_length=200,required=False)
+    username = forms.CharField(max_length=200,required=False)
     observations = forms.CharField(required=False, widget=forms.Textarea,
                                    label=_('observations'))
 
@@ -99,6 +100,7 @@ class ApplicationConnectionSourceForm(forms.ModelForm):
 class ProductionConnectionSourceForm(forms.ModelForm):
     name = forms.CharField(max_length=200,required=True)
     ip = forms.CharField(max_length=200,required=False)
+    username = forms.CharField(max_length=200,required=False)
     observations = forms.CharField(required=False, widget=forms.Textarea, 
                                    label=_('observations'))
 
@@ -118,6 +120,7 @@ class ProductionConnectionSourceForm(forms.ModelForm):
 class ApplicationConnectionTargetForm(forms.ModelForm):
     name = forms.CharField(max_length=200,required=True)
     ip = forms.CharField(max_length=200,required=False)
+    username = forms.CharField(max_length=200,required=False)
     observations = forms.CharField( required=False, widget=forms.Textarea,
                                     label=_('observations'))
 
@@ -136,6 +139,7 @@ class ApplicationConnectionTargetForm(forms.ModelForm):
 class ProductionConnectionTargetForm(forms.ModelForm):
     name = forms.CharField(max_length=200,required=True)
     ip = forms.CharField(max_length=200,required=False)
+    username = forms.CharField(max_length=200,required=False)
     ip_firewall = forms.CharField(max_length=200,required=False)
     port = forms.CharField(required=False, label=_('port'))
 
