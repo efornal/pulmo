@@ -194,6 +194,8 @@ class ApplicationConnectionSource(models.Model):
     ip = models.CharField(max_length=200, null=True,blank=True,
                           verbose_name=_('ip'),
                           validators=[validate_ipv46_address])
+    username = models.CharField(max_length=200,null=True,blank=True,
+                                verbose_name=_('username'))
     service = models.CharField(max_length=200,null=True,blank=True,
                                verbose_name=_('service'))
     observations = models.TextField(null=True, blank=True,
@@ -216,6 +218,8 @@ class ProductionConnectionSource(models.Model):
                             verbose_name=_('name'))
     ip = models.CharField(max_length=200,null=True,blank=True,
                           verbose_name=_('ip'))
+    username = models.CharField(max_length=200,null=True,blank=True,
+                                verbose_name=_('username'))
     service = models.CharField(max_length=200,null=True,blank=True,
                                verbose_name=_('service'))
     observations = models.TextField(null=True, blank=True,
