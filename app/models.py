@@ -666,8 +666,12 @@ class TicketSystem(models.Model):
                                                      is_applicant)
             description += "</pre>"
 
+            extra_args = "?application_form={}".format(app.pk)
+            add_url= "{}{}".format( reverse ('admin:app_testserver_add'), extra_args )
+            add_url= to_absolute_url(add_url)
+
             description += "\n* %s" % (_('remember_to_add_server') \
-                                     % {'url': to_absolute_url(reverse ('admin:app_testserver_add')),
+                                     % {'url': add_url,
                                         'name': _('title')})
 
         return description
