@@ -812,8 +812,12 @@ class TicketSystem(models.Model):
             description += "\n* %s: <pre>%s</pre>\n" % (_('files_backup'), app.files_backup)
 
 
+        extra_args = "?production_form={}".format(app.pk)
+        add_url= "{}{}".format( reverse ('admin:app_productionserver_add'), extra_args )
+        add_url= to_absolute_url(add_url)
+            
         description += "\n* %s" % (_('remember_to_add_server') \
-                                % {'url': to_absolute_url(reverse ('admin:app_productionserver_add')),
+                                % {'url': add_url,
                                 'name': _('title')})
 
     
