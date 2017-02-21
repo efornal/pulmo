@@ -872,7 +872,7 @@ class TicketSystem(models.Model):
 
         if hasattr(settings, 'REDMINE_LOG_LEVEL_URL'):
             description += "\n\n"
-            description += _('more_information') % ({'url':settings.REDMINE_MONITORING_URL})
+            description += _('more_information') % ({'url':settings.REDMINE_LOG_LEVEL_URL})
         return description
 
 
