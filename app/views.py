@@ -888,7 +888,8 @@ def production_step6(request):
                 issue = TicketSystem.create_issue(subject,description,watcher)
                 logging.info('Confirmed ticket request created %s' % issue.id)
 
-                monitoring_subject=_('add_to_monitoring') % {'name': production.proyect.name}
+                monitoring_subject = _('monitoring_subject') % {'project_name': production.proyect.name}
+                
                 monitoring_description = TicketSystem.monitoring_description()
                 monitoring_issue = TicketSystem.create_issue(monitoring_subject,
                                                              monitoring_description,
@@ -905,7 +906,7 @@ def production_step6(request):
 
                 # Subtask backup config
                 logging.warning("Creating ticket for backup configuration ...")
-                backup_subject=_('add_to_backup') % {'project_name': production.proyect.name}
+                backup_subject=_('backup_subject') % {'project_name': production.proyect.name}
                 backup_description =  TicketSystem.backup_description()
                 backup_issue = TicketSystem.create_issue(backup_subject,
                                                          backup_description,

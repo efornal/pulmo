@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-18 12:44-0300\n"
+"POT-Creation-Date: 2017-04-18 13:24-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -624,11 +624,11 @@ msgstr "%(project_name)s - SSH Users"
 msgid "extradb_subject"
 msgstr "%(project_name)s - Extra database users"
 
-#: app/views.py:505
+#: app/views.py:505 app/views.py:891
 msgid "monitoring_subject"
-msgstr "%(project_name)s - Test monitoring"
+msgstr "%(project_name)s - Monitoring"
 
-#: app/views.py:513 app/views.py:900
+#: app/views.py:513 app/views.py:901
 msgid "log_subject"
 msgstr "%(project_name)s - Log level"
 
@@ -636,7 +636,7 @@ msgstr "%(project_name)s - Log level"
 msgid "integration_subject"
 msgstr "%(project_name)s - Integration machine"
 
-#: app/views.py:530 app/views.py:916
+#: app/views.py:530 app/views.py:917
 msgid "confirmed_ticket_request_created"
 msgstr ""
 "The ticket <a href='%(issueurl)s' class='alert-link' target='_blank'>#"
@@ -648,7 +648,7 @@ msgstr ""
 "oficina, se lo agregará como seguidor del ticket para poder realizar un "
 "seguimiento del mismo."
 
-#: app/views.py:554 app/views.py:940
+#: app/views.py:554 app/views.py:941
 msgid "incomplete_application"
 msgstr ""
 "The request could not be completed. In order to make the process we ask you "
@@ -662,13 +662,9 @@ msgstr "Could not determine the project on which to make the request"
 msgid "production_server_for"
 msgstr "Production server for '%(name)s'"
 
-#: app/views.py:891
-msgid "add_to_monitoring"
-msgstr "Add Monitoring for '%(name)s'"
-
-#: app/views.py:908
-msgid "add_to_backup"
-msgstr "Add Backups for '%(project_name)s'"
+#: app/views.py:909
+msgid "backup_subject"
+msgstr "%(project_name)s - Backups"
 
 #: pulmo/settings.py:117 pulmo/settings.tpl.py:116
 msgid "Spanish"
@@ -790,6 +786,12 @@ msgstr "Password"
 #: templates/registration/login.html:35
 msgid "log_in"
 msgstr "Login"
+
+#~ msgid "add_to_monitoring"
+#~ msgstr "Add Monitoring for '%(name)s'"
+
+#~ msgid "add_to_backup"
+#~ msgstr "Add Backups for '%(project_name)s'"
 
 #~ msgid "add_to_monitoring_desc"
 #~ msgstr "All production server should be added to monitoring"
