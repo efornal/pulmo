@@ -139,14 +139,13 @@
             <div class="form-group">
               <label for="observations" class="col-sm-2 control-label">{{ _('logs_visualization') }}</label>
               <div class="col-sm-4">
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="logs_visualization" id="logs_visualization2"
-                             value="2"  checked="">
-                        Archivo en Log-Server
-                      </label>
-                    </div>
-                  </div>
+                <select class="form-control" id="select" name="logs_visualization">
+                {% for logv in logs_visualization %}
+                <option value='{{ logv.0 }}' {% if logv.0 == application_form.logs_visualization %}selected{%endif%}>
+                                    {{ logv.1 }}{{i}}</option>
+                {% endfor %}
+                </select>
+              </div>
               <label class="col-sm-2 control-label" for="textinput">{{ _('logs_users') }}</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="logs_users"

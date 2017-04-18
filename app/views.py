@@ -154,16 +154,26 @@ def index(request):
 
 @login_required
 def new_step1(request):
+    logs_visualization = []
+    if hasattr(settings, 'LOGS_VISUALIZATION_CHOICES'):
+        logs_visualization = settings.LOGS_VISUALIZATION_CHOICES
+
+    context = {'logs_visualization':logs_visualization}
     define_application_sessions(request)
-    return render(request, 'new_step1.html')
+    return render(request, 'new_step1.html',context)
 
 
 @login_required
 @redirect_without_post
 def new_step2(request):
+    logs_visualization = []
+    if hasattr(settings, 'LOGS_VISUALIZATION_CHOICES'):
+        logs_visualization = settings.LOGS_VISUALIZATION_CHOICES
+
     proyect_form = ProyectForm()
     application_form = ApplicationFormForm()
-    context = {'proyect_name': request.POST['name']}
+    context = {'proyect_name': request.POST['name'],
+               'logs_visualization':logs_visualization}
 
     try:
         proyect_form = ProyectForm(request.POST)
