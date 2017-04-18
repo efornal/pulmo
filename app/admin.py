@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django import forms
 from django.contrib import admin
 from app.models import Proyect, ApplicationForm, ProductionForm, TicketSystem
