@@ -27,6 +27,7 @@ from django.forms.models import modelformset_factory
 from django.template import Context
 from django.shortcuts import render
 from django.contrib import messages
+from app.forms import ApplicationFormForm
 from django.core.urlresolvers import reverse
 from decorators import redirect_without_post, redirect_if_has_registered
 from decorators import redirect_without_production_post,redirect_if_has_production_registered
@@ -155,10 +156,16 @@ def index(request):
 @login_required
 def new_step1(request):
     logs_visualization = []
+
     if hasattr(settings, 'LOGS_VISUALIZATION_CHOICES'):
         logs_visualization = settings.LOGS_VISUALIZATION_CHOICES
 
-    context = {'logs_visualization':logs_visualization}
+    proyect_form = ProyectForm()
+    application_form = ApplicationFormForm({'ssh_users':request.user.username})
+
+    context = {'logs_visualization':logs_visualization,
+               'proyect_form':proyect_form,
+               'application_form':application_form}
     define_application_sessions(request)
     return render(request, 'new_step1.html',context)
 
