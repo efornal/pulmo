@@ -160,12 +160,7 @@ def new_step1(request):
     if hasattr(settings, 'LOGS_VISUALIZATION_CHOICES'):
         logs_visualization = settings.LOGS_VISUALIZATION_CHOICES
 
-    proyect_form = ProyectForm()
-    application_form = ApplicationFormForm({'ssh_users':request.user.username})
-
-    context = {'logs_visualization':logs_visualization,
-               'proyect_form':proyect_form,
-               'application_form':application_form}
+    context = {'logs_visualization':logs_visualization,}
     define_application_sessions(request)
     return render(request, 'new_step1.html',context)
 
@@ -177,8 +172,6 @@ def new_step2(request):
     if hasattr(settings, 'LOGS_VISUALIZATION_CHOICES'):
         logs_visualization = settings.LOGS_VISUALIZATION_CHOICES
 
-    proyect_form = ProyectForm()
-    application_form = ApplicationFormForm()
     context = {'proyect_name': request.POST['name'],
                'logs_visualization':logs_visualization}
 
@@ -896,13 +889,24 @@ def production_step6(request):
                 logging.info('Confirmed ticket request created %s' % issue.id)
 
                 monitoring_subject=_('add_to_monitoring') % {'name': production.proyect.name}
-                monitoring_description = _('add_to_monitoring_desc')
+                monitoring_description = TicketSystem.monitoring_description()
                 monitoring_issue = TicketSystem.create_issue(monitoring_subject,
                                                              monitoring_description,
                                                              None,
                                                              issue.id)
-                backup_subject=_('add_to_backup') % {'name': production.proyect.name}
-                backup_description = _('add_to_backup_desc')
+
+                # Subtask log level configuration
+                logging.warning("Creating ticket for log level configuration ...")
+                log_subject = _('log_subject') % {'project_name': production.proyect.name}
+                log_description =  TicketSystem.log_description()
+                log_issue = TicketSystem.create_issue(log_subject,
+                                                      log_description,
+                                                      None, issue.id)
+
+                # Subtask backup config
+                logging.warning("Creating ticket for backup configuration ...")
+                backup_subject=_('add_to_backup') % {'project_name': production.proyect.name}
+                backup_description =  TicketSystem.backup_description()
                 backup_issue = TicketSystem.create_issue(backup_subject,
                                                          backup_description,
                                                          None,

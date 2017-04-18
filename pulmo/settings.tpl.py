@@ -152,7 +152,24 @@ GANETI_INSTANCES_URL = 'https://cluster:5080/2/instances'
 
 # =================================\
 # redmine configuration
+#
+# Si REDMINE_ENABLE_TICKET_CREATION está habilitado:
+# Para formulario de aplicación
+#  - crea ticket principal con solicitud de aplicación -servidor de test-
+#  - crea subtarea con solicitud de usuarios ssh (+ssh_users)
+#  - crea subtarea con usuarios extras de base de datos (+extra_database_users)
+#  - crea subtarea para monitoreo en test
+#  - crea subtarea configuración de nivel de logs en test
+#  - crea subtarea para solicitud de máquina virtual de integración (+requires_integration)
+# Para formulario de producción
+#  - crea ticket principal con solicitud de aplicación -servidor de producción-
+#  - crea subtarea para monitoreo en producción
+#  - crea subtarea configuración de nivel de logs en producción
+#  - crea subtarea configuración de backup en producción
+#
+#    + indica se debió especificar el dato en formulario para que se realice el ticket. 
 REDMINE_ENABLE_TICKET_CREATION = False
+#
 REDMINE_URL='http://redmine_url'
 REDMINE_USERNAME="username"
 REDMINE_PASSWORD = "password"
@@ -170,6 +187,7 @@ REDMINE_MAXIMUM_OBSERVER_FOUND = 5
 #REDMINE_SSH_USERS_URL   = "https://host/doc"
 #REDMINE_MONITORING_URL  = "https://host/doc"
 #REDMINE_LOG_LEVEL_URL   = "https://host/doc"
+#REDMINE_BACKUP_URL      = "https://host/doc"
 #REDMINE_INTEGRATION_URL = "https://host/doc"
 #
 # =================================/

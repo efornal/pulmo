@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-22 07:39-0300\n"
+"POT-Creation-Date: 2017-04-18 12:44-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,23 +19,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/admin.py:259
+#: app/admin.py:261
 msgid "added_mysql_backup"
 msgstr "Resguardo MySQL"
 
-#: app/admin.py:268
+#: app/admin.py:270
 msgid "added_pgsql_backup"
 msgstr "Resguardo PgSql"
 
-#: app/admin.py:277 app/models.py:507
+#: app/admin.py:279 app/models.py:508
 msgid "added_monitoring"
 msgstr "Monitoreo añadido"
 
-#: app/forms.py:17 app/forms.py:196 app/models.py:60 app/models.py:193
-#: app/models.py:218 app/models.py:242 app/models.py:266 app/models.py:292
-#: app/models.py:318 app/models.py:383 app/models.py:414 app/models.py:607
-#: app/models.py:615 app/models.py:624 app/models.py:640 app/models.py:710
-#: app/models.py:749 app/models.py:758 app/models.py:774
+#: app/forms.py:18 app/forms.py:197 app/models.py:61 app/models.py:194
+#: app/models.py:219 app/models.py:243 app/models.py:267 app/models.py:293
+#: app/models.py:319 app/models.py:384 app/models.py:415 app/models.py:608
+#: app/models.py:616 app/models.py:625 app/models.py:641 app/models.py:711
+#: app/models.py:750 app/models.py:759 app/models.py:775
 #: templates/new_step1.html:52 templates/new_step2.html:50
 #: templates/new_step3.html:69 templates/new_step3.html:158
 #: templates/production_step1.html:36 templates/production_step3.html:68
@@ -43,593 +43,602 @@ msgstr "Monitoreo añadido"
 msgid "name"
 msgstr "Nombre"
 
-#: app/forms.py:18 app/models.py:64 templates/new_step1.html:60
+#: app/forms.py:19 app/models.py:65 templates/new_step1.html:60
 msgid "secretariat"
 msgstr "Secretaría"
 
-#: app/forms.py:19 app/forms.py:214 app/models.py:62 app/models.py:336
+#: app/forms.py:20 app/forms.py:215 app/models.py:63 app/models.py:337
 #: templates/new_step1.html:69 templates/production_step1.html:44
 msgid "description"
 msgstr "Descripción"
 
-#: app/forms.py:31 app/forms.py:86 app/forms.py:105 app/forms.py:125
-#: app/forms.py:241 app/models.py:98 app/models.py:167 app/models.py:202
-#: app/models.py:226 app/models.py:251 app/models.py:456 app/models.py:502
-#: app/models.py:602 app/models.py:628 app/models.py:644 app/models.py:705
-#: app/models.py:762 templates/new_step1.html:165 templates/new_step3.html:73
+#: app/forms.py:32 app/forms.py:87 app/forms.py:106 app/forms.py:126
+#: app/forms.py:242 app/models.py:99 app/models.py:168 app/models.py:203
+#: app/models.py:227 app/models.py:252 app/models.py:457 app/models.py:503
+#: app/models.py:603 app/models.py:629 app/models.py:645 app/models.py:706
+#: app/models.py:763 templates/new_step1.html:160 templates/new_step3.html:73
 #: templates/new_step3.html:162 templates/production_step1.html:208
 #: templates/production_step3.html:72
 msgid "observations"
 msgstr "Observaciones"
 
-#: app/forms.py:144 app/models.py:276 app/models.py:778
+#: app/forms.py:145 app/models.py:277 app/models.py:779
 #: templates/production_step3.html:161
 msgid "port"
 msgstr "Puerto"
 
-#: app/forms.py:161 app/forms.py:178 app/models.py:358 app/models.py:462
-#: app/models.py:515 templates/new_step4.html:50
+#: app/forms.py:162 app/forms.py:179 app/models.py:359 app/models.py:463
+#: app/models.py:516 templates/new_step4.html:50
 #: templates/registration/login.html:23
 msgid "user"
 msgstr "Usuario"
 
-#: app/forms.py:162 app/forms.py:179 app/models.py:360
+#: app/forms.py:163 app/forms.py:180 app/models.py:361
 #: templates/new_step4.html:51
 msgid "permission"
 msgstr "Permiso"
 
-#: app/forms.py:180 app/models.py:418 app/models.py:795
+#: app/forms.py:181 app/models.py:419 app/models.py:796
 #: templates/production_step4.html:51
 msgid "preserving_history_by"
 msgstr "Preservar historial por"
 
-#: app/forms.py:197 app/models.py:386 app/models.py:667
+#: app/forms.py:198 app/models.py:387 app/models.py:668
 #: templates/new_step5.html:49
 msgid "email"
 msgstr "Email"
 
-#: app/forms.py:198 app/models.py:388 app/models.py:668
+#: app/forms.py:199 app/models.py:389 app/models.py:669
 #: templates/new_step5.html:50
 msgid "phones"
 msgstr "Teléfonos"
 
-#: app/forms.py:199 app/models.py:390 app/models.py:669
+#: app/forms.py:200 app/models.py:391 app/models.py:670
 #: templates/new_step5.html:51
 msgid "is_applicant"
 msgstr "Es solicitante"
 
-#: app/forms.py:215 app/models.py:338
+#: app/forms.py:216 app/models.py:339
 msgid "duration"
 msgstr "Duración"
 
-#: app/forms.py:216 app/models.py:341
+#: app/forms.py:217 app/models.py:342
 msgid "date_event"
 msgstr "Fecha del evento"
 
-#: app/forms.py:235 app/models.py:88 app/models.py:131
+#: app/forms.py:236 app/models.py:89 app/models.py:132
 #: templates/production_step.html:67
 msgid "proyect"
 msgstr "Proyecto"
 
-#: app/forms.py:242 app/models.py:165 app/models.py:816
+#: app/forms.py:243 app/models.py:166 app/models.py:817
 #: templates/production_step1.html:200
 msgid "files_backup"
 msgstr "Archivos a resguardar"
 
-#: app/models.py:66 app/models.py:100 app/models.py:169 app/models.py:340
+#: app/models.py:67 app/models.py:101 app/models.py:170 app/models.py:341
 msgid "created_at"
 msgstr "Creado el"
 
-#: app/models.py:68 app/models.py:102 app/models.py:171
+#: app/models.py:69 app/models.py:103 app/models.py:172
 msgid "updated_at"
 msgstr "Modificado el"
 
-#: app/models.py:72
+#: app/models.py:73
 msgid "Proyect"
 msgstr "Proyecto"
 
-#: app/models.py:73
+#: app/models.py:74
 msgid "Proyects"
 msgstr "Proyectos"
 
-#: app/models.py:90 app/models.py:133 templates/new_step1.html:87
+#: app/models.py:91 app/models.py:134 templates/new_step1.html:87
 #: templates/production_step1.html:61
 msgid "db_name"
 msgstr "Nombre DB"
 
-#: app/models.py:92 app/models.py:135 app/models.py:608 app/models.py:711
+#: app/models.py:93 app/models.py:136 app/models.py:609 app/models.py:712
 #: templates/new_step1.html:93 templates/production_step1.html:68
 msgid "encoding"
 msgstr "Codificación"
 
-#: app/models.py:94 app/models.py:137 app/models.py:609 app/models.py:712
+#: app/models.py:95 app/models.py:138 app/models.py:610 app/models.py:713
 #: templates/new_step1.html:102 templates/production_step1.html:78
 msgid "user_owner"
 msgstr "Usuario owner"
 
-#: app/models.py:96 app/models.py:139 app/models.py:610 app/models.py:713
+#: app/models.py:97 app/models.py:140 app/models.py:611 app/models.py:714
 #: templates/new_step1.html:108 templates/production_step1.html:87
 msgid "user_access"
 msgstr "Usuario acceso"
 
-#: app/models.py:104 app/models.py:175 app/models.py:464 app/models.py:517
+#: app/models.py:105 app/models.py:176 app/models.py:465 app/models.py:518
 msgid "signature_date"
 msgstr "fecha de firma"
 
-#: app/models.py:106 app/models.py:177
+#: app/models.py:107 app/models.py:178
 msgid "received_application"
 msgstr "Solicitud recibida"
 
-#: app/models.py:108 app/models.py:179 app/models.py:466 app/models.py:519
+#: app/models.py:109 app/models.py:180 app/models.py:467 app/models.py:520
 msgid "related_ticket"
 msgstr "Ticket relacionado"
 
-#: app/models.py:110 templates/new_step1.html:77
+#: app/models.py:111 templates/new_step1.html:77
 msgid "requires_integration"
 msgstr "Requiere integración"
 
-#: app/models.py:112 templates/new_step1.html:128
+#: app/models.py:113 templates/new_step1.html:128
 msgid "ssh_users"
 msgstr "Usuarios SSH"
 
-#: app/models.py:114 templates/new_step1.html:118
+#: app/models.py:115 templates/new_step1.html:118
 msgid "extra_database_users"
 msgstr "Usuarios extras de DB"
 
-#: app/models.py:116 templates/new_step1.html:140
+#: app/models.py:117 templates/new_step1.html:141
 msgid "logs_visualization"
 msgstr "Modo de visualizar Logs"
 
-#: app/models.py:118 templates/new_step1.html:155
+#: app/models.py:119 templates/new_step1.html:150
 msgid "logs_users"
 msgstr "Usuarios Logs"
 
-#: app/models.py:122
+#: app/models.py:123
 msgid "ApplicationForm"
 msgstr "Formulario de Solicitud"
 
-#: app/models.py:123
+#: app/models.py:124
 msgid "ApplicationForms"
 msgstr "Formularios de Solicitud"
 
-#: app/models.py:141
+#: app/models.py:142
 msgid "db_space_to_start"
 msgstr "Espacio inicial en DB "
 
-#: app/models.py:143
+#: app/models.py:144
 msgid "db_space_at_year"
 msgstr "Espacio en DB por año"
 
-#: app/models.py:145
+#: app/models.py:146
 msgid "db_space_after"
 msgstr "Espacio en DB posterior"
 
-#: app/models.py:147
+#: app/models.py:148
 msgid "fs_space_to_start"
 msgstr "Espacio inicial en disco "
 
-#: app/models.py:149
+#: app/models.py:150
 msgid "fs_space_at_year"
 msgstr "Espacio en disco al año"
 
-#: app/models.py:151
+#: app/models.py:152
 msgid "fs_space_after"
 msgstr "Espacio en disco posterior"
 
-#: app/models.py:153
+#: app/models.py:154
 msgid "minimum_memory"
 msgstr "Espacio mínimo de memoria"
 
-#: app/models.py:155
+#: app/models.py:156
 msgid "minimum_disk_space"
 msgstr "Espacio mínimo en disco"
 
-#: app/models.py:157
+#: app/models.py:158
 msgid "minimum_processor"
 msgstr "Nro mínimo de procesadores"
 
-#: app/models.py:159
+#: app/models.py:160
 msgid "suggested_memory"
 msgstr "Espacio de memoria sugerido"
 
-#: app/models.py:161
+#: app/models.py:162
 msgid "suggested_disk_space"
 msgstr "Espacio en disco sugerido"
 
-#: app/models.py:163
+#: app/models.py:164
 msgid "suggested_processor"
 msgstr "Nro de procesadores sugeridos"
 
-#: app/models.py:173 app/models.py:460 app/models.py:513 app/models.py:702
+#: app/models.py:174 app/models.py:461 app/models.py:514 app/models.py:703
 msgid "applicant"
 msgstr "Solicitante"
 
-#: app/models.py:183
+#: app/models.py:184
 msgid "ProductionForm"
 msgstr "Formulario de Producción"
 
-#: app/models.py:184
+#: app/models.py:185
 msgid "ProductionForms"
 msgstr "Formularios de Producción"
 
-#: app/models.py:195 app/models.py:220 app/models.py:244 app/models.py:268
+#: app/models.py:196 app/models.py:221 app/models.py:245 app/models.py:269
 msgid "ip"
 msgstr "IP"
 
-#: app/models.py:198 app/models.py:222 app/models.py:247 app/models.py:270
-#: app/models.py:626 app/models.py:642 app/models.py:760 app/models.py:776
+#: app/models.py:199 app/models.py:223 app/models.py:248 app/models.py:271
+#: app/models.py:627 app/models.py:643 app/models.py:761 app/models.py:777
 #: templates/new_step3.html:71 templates/new_step3.html:160
 #: templates/production_step3.html:70 templates/production_step3.html:159
 msgid "username"
 msgstr "Usuario"
 
-#: app/models.py:200 app/models.py:224 app/models.py:249 app/models.py:274
-#: app/models.py:627 app/models.py:643 app/models.py:761 app/models.py:777
+#: app/models.py:201 app/models.py:225 app/models.py:250 app/models.py:275
+#: app/models.py:628 app/models.py:644 app/models.py:762 app/models.py:778
 #: templates/new_step3.html:72 templates/new_step3.html:161
 #: templates/production_step3.html:71 templates/production_step3.html:160
 msgid "service"
 msgstr "Servicio"
 
-#: app/models.py:204 app/models.py:253 app/models.py:296 app/models.py:362
-#: app/models.py:392 app/models.py:458
+#: app/models.py:205 app/models.py:254 app/models.py:297 app/models.py:363
+#: app/models.py:393 app/models.py:459
 msgid "application_form"
 msgstr "Formulario de Solicitud"
 
-#: app/models.py:208
+#: app/models.py:209
 msgid "ApplicationConnectionSource"
 msgstr "Fuente de conexión de solicitud"
 
-#: app/models.py:209
+#: app/models.py:210
 msgid "ApplicationConnectionSources"
 msgstr "Fuentes de conexión de solicitud"
 
-#: app/models.py:228 app/models.py:278 app/models.py:322 app/models.py:343
-#: app/models.py:420 app/models.py:504
+#: app/models.py:229 app/models.py:279 app/models.py:323 app/models.py:344
+#: app/models.py:421 app/models.py:505
 msgid "production_form"
 msgstr "Formulario de Producción"
 
-#: app/models.py:232
+#: app/models.py:233
 msgid "ProductionConnectionSource"
 msgstr "Fuente de conexión de producción"
 
-#: app/models.py:233
+#: app/models.py:234
 msgid "ProductionConnectionSources"
 msgstr "Fuentes de conexión de producción"
 
-#: app/models.py:257
+#: app/models.py:258
 msgid "ApplicationConnectionTarget"
 msgstr "Destino de conexión de solicitud"
 
-#: app/models.py:258
+#: app/models.py:259
 msgid "ApplicationConnectionTargets"
 msgstr "Destinos de conexión de solicitud"
 
-#: app/models.py:272 app/models.py:779 templates/production_step3.html:162
+#: app/models.py:273 app/models.py:780 templates/production_step3.html:162
 msgid "ip_firewall"
 msgstr "IP Firewall"
 
-#: app/models.py:282
+#: app/models.py:283
 msgid "ProductionConnectionTarget"
 msgstr "Destino de conexión de producción"
 
-#: app/models.py:283
+#: app/models.py:284
 msgid "ProductionConnectionTargets"
 msgstr "Destinos de conexión de producción"
 
-#: app/models.py:294 app/models.py:320 app/models.py:616 app/models.py:750
+#: app/models.py:295 app/models.py:321 app/models.py:617 app/models.py:751
 #: templates/new_step2.html:51
 msgid "version"
 msgstr "Versión"
 
-#: app/models.py:300
+#: app/models.py:301
 msgid "ApplicationSoftwareRequirement"
 msgstr "Requerimiento de software de solicitud"
 
-#: app/models.py:301
+#: app/models.py:302
 msgid "ApplicationSoftwareRequirements"
 msgstr "Requerimientos de software de solicitud"
 
-#: app/models.py:326
+#: app/models.py:327
 msgid "ProductionSoftwareRequirement"
 msgstr "Requerimiento de software de producción"
 
-#: app/models.py:327
+#: app/models.py:328
 msgid "ProductionSoftwareRequirements"
 msgstr "Requerimientos de software de producción"
 
-#: app/models.py:347 templates/production_step5.html:49
+#: app/models.py:348 templates/production_step5.html:49
 msgid "Milestone"
 msgstr "Hito"
 
-#: app/models.py:348
+#: app/models.py:349
 msgid "Milestones"
 msgstr "Hitos"
 
-#: app/models.py:366
+#: app/models.py:367
 msgid "SCVPermission"
 msgstr "Permiso SCV"
 
-#: app/models.py:367
+#: app/models.py:368
 msgid "SCVPermissions"
 msgstr "Permisos SCV"
 
-#: app/models.py:396
+#: app/models.py:397
 msgid "Referrer"
 msgstr "Referente"
 
-#: app/models.py:397 templates/new_step5.html:37
+#: app/models.py:398 templates/new_step5.html:37
 msgid "Referrers"
 msgstr "Referentes"
 
-#: app/models.py:416 app/models.py:794 templates/production_step4.html:50
+#: app/models.py:417 app/models.py:795 templates/production_step4.html:50
 msgid "periodicity"
 msgstr "Periodicidad"
 
-#: app/models.py:424
+#: app/models.py:425
 msgid "MonitoredVariable"
 msgstr "Variable monitoreada"
 
-#: app/models.py:425
+#: app/models.py:426
 msgid "MonitoredVariables"
 msgstr "Variables monitoreadas"
 
-#: app/models.py:434 app/models.py:482
+#: app/models.py:435 app/models.py:483
 msgid "virtual_machine_name"
 msgstr "Nombre de máquina virtual"
 
-#: app/models.py:436 app/models.py:484 app/models.py:625 app/models.py:641
-#: app/models.py:759 app/models.py:775 templates/new_step3.html:70
+#: app/models.py:437 app/models.py:485 app/models.py:626 app/models.py:642
+#: app/models.py:760 app/models.py:776 templates/new_step3.html:70
 #: templates/new_step3.html:159 templates/production_step3.html:69
 #: templates/production_step3.html:158
 msgid "ip_address"
 msgstr "Dirección IP"
 
-#: app/models.py:438 app/models.py:486
+#: app/models.py:439 app/models.py:487
 msgid "mac_address"
 msgstr "Dirección MAC"
 
-#: app/models.py:440 app/models.py:488
+#: app/models.py:441 app/models.py:489
 msgid "ram_memory"
 msgstr "Memoria RAM"
 
-#: app/models.py:442 app/models.py:490
+#: app/models.py:443 app/models.py:491
 msgid "disk_space"
 msgstr "Espacio en disco"
 
-#: app/models.py:444 app/models.py:492
+#: app/models.py:445 app/models.py:493
 msgid "processors"
 msgstr "Procesadores"
 
-#: app/models.py:446 app/models.py:494
+#: app/models.py:447 app/models.py:495
 msgid "database_permissions"
 msgstr "Permisos en DB"
 
-#: app/models.py:448 app/models.py:496
+#: app/models.py:449 app/models.py:497
 msgid "database_server"
 msgstr "Servidor de DB"
 
-#: app/models.py:450 app/models.py:498
+#: app/models.py:451 app/models.py:499
 msgid "location_logs"
 msgstr "Localización de Logs"
 
-#: app/models.py:452 app/models.py:500
+#: app/models.py:453 app/models.py:501
 msgid "cluster_virtual_machine"
 msgstr "Cluster de máquina virtual"
 
-#: app/models.py:454 app/models.py:655
+#: app/models.py:455 app/models.py:656
 msgid "vcs_repository"
 msgstr "Repositorio VCS"
 
-#: app/models.py:468 app/models.py:521
+#: app/models.py:469 app/models.py:522
 msgid "url"
 msgstr "URL"
 
-#: app/models.py:472
+#: app/models.py:473
 msgid "TestServer"
 msgstr "Servidor de Test"
 
-#: app/models.py:473
+#: app/models.py:474
 msgid "TestServers"
 msgstr "Servidores de Test"
 
-#: app/models.py:510
+#: app/models.py:511
 msgid "added_backup"
 msgstr "Resguardo MySQL"
 
-#: app/models.py:525
+#: app/models.py:526
 msgid "ProductionServer"
 msgstr "Servidor de Producción"
 
-#: app/models.py:526
+#: app/models.py:527
 msgid "ProductionServers"
 msgstr "Servidores de Producción"
 
-#: app/models.py:599 app/models.py:699
+#: app/models.py:600 app/models.py:700
 msgid "proyect_name"
 msgstr "Nombre de Proyecto"
 
-#: app/models.py:605 app/models.py:708 app/models.py:717
+#: app/models.py:606 app/models.py:709 app/models.py:718
 #: templates/production_step1.html:54 templates/production_step1.html:118
 msgid "database"
 msgstr "Base de datos"
 
-#: app/models.py:614 app/models.py:748 templates/new_step2.html:38
+#: app/models.py:615 app/models.py:749 templates/new_step2.html:38
 #: templates/production_step2.html:38
 msgid "software_requirements"
 msgstr "Requerimientos de software"
 
-#: app/models.py:623 app/models.py:757 templates/new_step3.html:56
+#: app/models.py:624 app/models.py:758 templates/new_step3.html:56
 #: templates/production_step3.html:55
 msgid "connection_sources"
 msgstr "Equipos desde los que se conecta"
 
-#: app/models.py:639 app/models.py:773 templates/new_step3.html:58
+#: app/models.py:640 app/models.py:774 templates/new_step3.html:58
 #: templates/production_step3.html:57
 msgid "connection_targets"
 msgstr "Equipos hacia los que se conecta"
 
-#: app/models.py:656
+#: app/models.py:657
 msgid "users"
 msgstr "Usuarios"
 
-#: app/models.py:657
+#: app/models.py:658
 msgid "permissions"
 msgstr "Permisos"
 
-#: app/models.py:665
+#: app/models.py:666
 msgid "applicants_and_referentes"
 msgstr "Solicitantes y referentes"
 
-#: app/models.py:666 templates/new_step5.html:48
+#: app/models.py:667 templates/new_step5.html:48
 msgid "name_and_surname"
 msgstr "Nombre y apellido"
 
-#: app/models.py:674
+#: app/models.py:675
 msgid "yes"
 msgstr "Sí"
 
-#: app/models.py:685 app/models.py:823
+#: app/models.py:686 app/models.py:824
 msgid "remember_to_add_server"
 msgstr "Recuerde agregar el servidor en \"%(name)s\":%(url)s"
 
-#: app/models.py:687 app/models.py:825 pulmo/settings.py:210
-#: pulmo/settings.tpl.py:205 templates/base.html:13 templates/base.html:28
+#: app/models.py:688 app/models.py:826 pulmo/settings.py:212
+#: pulmo/settings.tpl.py:225 templates/base.html:13 templates/base.html:28
 msgid "title"
 msgstr "Pulmo"
 
-#: app/models.py:717 app/models.py:724 templates/production_step1.html:104
+#: app/models.py:718 app/models.py:725 templates/production_step1.html:104
 msgid "estimated_volume_data"
 msgstr "Volumen de datos estimado"
 
-#: app/models.py:719 app/models.py:726 templates/production_step1.html:110
+#: app/models.py:720 app/models.py:727 templates/production_step1.html:110
 msgid "space_to_start"
 msgstr "Al inicio"
 
-#: app/models.py:720 app/models.py:727 templates/production_step1.html:111
+#: app/models.py:721 app/models.py:728 templates/production_step1.html:111
 msgid "space_at_year"
 msgstr "Al año"
 
-#: app/models.py:721 app/models.py:728 templates/production_step1.html:112
+#: app/models.py:722 app/models.py:729 templates/production_step1.html:112
 msgid "space_after"
 msgstr "Posterior"
 
-#: app/models.py:724 templates/production_step1.html:132
+#: app/models.py:725 templates/production_step1.html:132
 msgid "filesystem"
 msgstr "Sistema de archivos"
 
-#: app/models.py:734 templates/production_step1.html:150
+#: app/models.py:735 templates/production_step1.html:150
 msgid "hardware_requirements"
 msgstr "Requerimientos de hardware"
 
-#: app/models.py:736 templates/production_step1.html:163
+#: app/models.py:737 templates/production_step1.html:163
 msgid "memory"
 msgstr "Memoria"
 
-#: app/models.py:737 app/models.py:740 app/models.py:743
+#: app/models.py:738 app/models.py:741 app/models.py:744
 #: templates/production_step1.html:156
 msgid "minimum"
 msgstr "Mínimo"
 
-#: app/models.py:738 app/models.py:741 app/models.py:744
+#: app/models.py:739 app/models.py:742 app/models.py:745
 #: templates/production_step1.html:157
 msgid "recommended"
 msgstr "Recomendado"
 
-#: app/models.py:739 templates/production_step1.html:174
+#: app/models.py:740 templates/production_step1.html:174
 msgid "disk"
 msgstr "Disco"
 
-#: app/models.py:742 templates/production_step1.html:185
+#: app/models.py:743 templates/production_step1.html:185
 msgid "processor"
 msgstr "Procesador"
 
-#: app/models.py:792 templates/production_step4.html:37
+#: app/models.py:793 templates/production_step4.html:37
 msgid "variables_to_be_monitored"
 msgstr "Variables a monitorizar"
 
-#: app/models.py:793 templates/production_step4.html:49
+#: app/models.py:794 templates/production_step4.html:49
 msgid "variable"
 msgstr "Variable"
 
-#: app/models.py:804 templates/production_step5.html:37
+#: app/models.py:805 templates/production_step5.html:37
 msgid "milestones_during_the_year"
 msgstr "Hitos durante el año"
 
-#: app/models.py:805
+#: app/models.py:806
 msgid "milestone"
 msgstr "Hito"
 
-#: app/models.py:806 templates/production_step5.html:50
+#: app/models.py:807 templates/production_step5.html:50
 msgid "date"
 msgstr "Fecha"
 
-#: app/models.py:807 templates/production_step5.html:51
+#: app/models.py:808 templates/production_step5.html:51
 msgid "duration_in_days"
 msgstr "Duración en días"
 
-#: app/models.py:838
+#: app/models.py:829
+msgid "remember_ckeck_app"
+msgstr "Recuerde verificar lo realizado: %(url)s"
+
+#: app/models.py:843
 msgid "ssh_description"
 msgstr ""
 "Para correr el script de actualización se deben agregar los siguientes "
 "usuarios SSH con permisos de SUDO: \n"
 "%(ssh_users)s"
 
-#: app/models.py:842 app/models.py:859 app/models.py:875 app/models.py:884
+#: app/models.py:847 app/models.py:857 app/models.py:874 app/models.py:894
+#: app/models.py:903
 msgid "more_information"
 msgstr "Para más información verificar/completar en %(url)s"
 
-#: app/models.py:848
+#: app/models.py:853
+msgid "add_to_backup_desc"
+msgstr "Todo servidor en producción debe ser agregado al sistema de backup."
+
+#: app/models.py:863
 msgid "extradb_description"
 msgstr ""
 "Se debe agregar los siguientes usuarios extras de conexión a la base de "
 "datos: \n"
 "%(extra_database_users)s"
 
-#: app/models.py:855
-msgid "monitoring_description"
-msgstr "Agregar el servidor a Monitoreo Test"
-
 #: app/models.py:870
+msgid "monitoring_description"
+msgstr "Agregar el servidor a Monitoreo"
+
+#: app/models.py:889
 msgid "log_description"
 msgstr ""
 "Configurar niveles de logs en ERROR y WARNING y dar permisos de acceso SSH a "
-"los usuarios indicados.\n"
+"los usuarios si se indican.\n"
 "Modo de visualización de logs: %(log_visualization)s \n"
 "Usuarios de logs: %(logs_users)s"
 
-#: app/models.py:881
+#: app/models.py:900
 msgid "integration_description"
 msgstr "Se debe crear la máquina de integración"
 
-#: app/views.py:460 app/views.py:870
+#: app/views.py:471 app/views.py:881
 msgid "completed_application"
 msgstr "La solicitud se ha realizado con éxito. "
 
-#: app/views.py:468
+#: app/views.py:479
 msgid "test_server_for"
 msgstr "Servidor de Test para '%(name)s'"
 
-#: app/views.py:476
+#: app/views.py:487
 msgid "ssh_subject"
 msgstr "%(project_name)s - Usuarios SSH"
 
-#: app/views.py:485
+#: app/views.py:496
 msgid "extradb_subject"
 msgstr "%(project_name)s - Usuarios extras de base de datos"
 
-#: app/views.py:494
+#: app/views.py:505
 msgid "monitoring_subject"
 msgstr "%(project_name)s - Monitoreo Test"
 
-#: app/views.py:502
+#: app/views.py:513 app/views.py:900
 msgid "log_subject"
 msgstr "%(project_name)s - Nivel de Logs"
 
-#: app/views.py:512
+#: app/views.py:523
 msgid "integration_subject"
 msgstr "%(project_name)s - Máquina de integración"
 
-#: app/views.py:519 app/views.py:894
+#: app/views.py:530 app/views.py:916
 msgid "confirmed_ticket_request_created"
 msgstr ""
 "Se creó el ticket <a href='%(issueurl)s' class='alert-link' target='_blank'>#"
@@ -637,42 +646,34 @@ msgstr ""
 "referente es usuario de la oficina, se lo agregará como seguidor del ticket "
 "para poder realizar un seguimiento del mismo."
 
-#: app/views.py:543 app/views.py:918
+#: app/views.py:554 app/views.py:940
 msgid "incomplete_application"
 msgstr ""
 "La solicitud no pudo completarse. Para poder realizar el trámite te pedimos "
 "que te acerques a nuestra oficina o intentes realizar la solicitud "
 "nuevamente mas tarde."
 
-#: app/views.py:564
+#: app/views.py:575
 msgid "project_not_found"
 msgstr "No se pudo determinar el proyecto sobre el cual realizar la solicitud"
 
-#: app/views.py:875
+#: app/views.py:886
 msgid "production_server_for"
 msgstr "Servidor de Producción para '%(name)s'"
 
-#: app/views.py:880
+#: app/views.py:891
 msgid "add_to_monitoring"
 msgstr "Añadir Monitoreo para '%(name)s'"
 
-#: app/views.py:881
-msgid "add_to_monitoring_desc"
-msgstr "Todo servidor en producción debe ser agregado al monitoreo."
-
-#: app/views.py:886
+#: app/views.py:908
 msgid "add_to_backup"
-msgstr "Añadir Backups para '%(name)s'"
+msgstr "Añadir Backups para '%(project_name)s'"
 
-#: app/views.py:887
-msgid "add_to_backup_desc"
-msgstr "Todo servidor en producción debe ser agregado al sistema de backup."
-
-#: pulmo/settings.py:115 pulmo/settings.tpl.py:114
+#: pulmo/settings.py:117 pulmo/settings.tpl.py:116
 msgid "Spanish"
 msgstr "Español"
 
-#: pulmo/settings.py:116 pulmo/settings.tpl.py:115
+#: pulmo/settings.py:118 pulmo/settings.tpl.py:117
 msgid "English"
 msgstr "Inglés"
 
@@ -731,17 +732,17 @@ msgstr ""
 "Usuarios extras que podrán conectarse a la base de datos de los servidores "
 "de test e integración"
 
-#: templates/new_step1.html:133
+#: templates/new_step1.html:134
 msgid "ssh_users_title"
 msgstr ""
 "Usuarios de LDAP que podrán conectarse por ssh al/los servidores de test e "
 "integración"
 
-#: templates/new_step1.html:160
+#: templates/new_step1.html:155
 msgid "logs_users_title"
 msgstr "Usuarios de LDAP que podrán visualizar los logs"
 
-#: templates/new_step1.html:174 templates/new_step2.html:111
+#: templates/new_step1.html:169 templates/new_step2.html:111
 #: templates/new_step3.html:249 templates/new_step4.html:120
 #: templates/production_step.html:80 templates/production_step1.html:219
 #: templates/production_step3.html:258 templates/production_step4.html:127
@@ -790,3 +791,6 @@ msgstr "Contraseña"
 #: templates/registration/login.html:35
 msgid "log_in"
 msgstr "Iniciar sesión"
+
+#~ msgid "add_to_monitoring_desc"
+#~ msgstr "Todo servidor en producción debe ser agregado al monitoreo."

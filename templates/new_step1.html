@@ -129,6 +129,7 @@
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="ssh_users"
                        placeholder="usuario1, usuario2 ,..usuarioN"
+                       value="{{request.user.username }}"
                        id="ssh_users" value="{{ application_form.ssh_users.value|default:'' }}"
                        title="{{ _('ssh_users_title') }}"/>
               </div>

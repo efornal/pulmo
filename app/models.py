@@ -825,6 +825,10 @@ class TicketSystem(models.Model):
                                 % {'url': add_url,
                                 'name': _('title')})
 
+        if app.proyect.applicationform.related_ticket:
+            description += "\n* %s" % ( _('remember_ckeck_app') \
+                                % {'url': app.proyect.applicationform.related_ticket})
+
     
         return description
 
@@ -841,6 +845,16 @@ class TicketSystem(models.Model):
         if hasattr(settings, 'REDMINE_SSH_USERS_URL'):
             description += "\n\n"
             description += _('more_information') % ({'url':settings.REDMINE_SSH_USERS_URL})
+        return description
+
+    
+    @classmethod
+    def backup_description(cls,args={}):
+        description = _('add_to_backup_desc')
+
+        if hasattr(settings, 'REDMINE_BACKUP_URL'):
+            description += "\n\n"
+            description += _('more_information') % ({'url':settings.REDMINE_BACKUP_URL})
         return description
 
     
@@ -862,14 +876,18 @@ class TicketSystem(models.Model):
 
 
     @classmethod
-    def log_description(cls,args):
-        if args['logs_visualization'] == 1:
+    def log_description(cls,args={}):
+        if 'logs_visualization' in args and args['logs_visualization'] == 1:
             logs_visualization = "Log-Analizer"
         else:
             logs_visualization = "Archivo en Log-Server"
-        
+
+        logs_users = ''
+        if 'logs_users' in args and args['logs_users']:
+            logs_users = args['logs_users']
+            
         description = _('log_description') % ({'log_visualization':logs_visualization,
-                                               'logs_users':args['logs_users']})
+                                               'logs_users':logs_users})
 
         if hasattr(settings, 'REDMINE_LOG_LEVEL_URL'):
             description += "\n\n"
