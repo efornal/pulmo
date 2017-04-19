@@ -39,6 +39,7 @@ import re
 import requests
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 
 
 def log_session(request_session):
@@ -354,6 +355,7 @@ def new_step5(request):
 def save(request):
     referrers = []
     ref_validated = True
+    there_is_applicant_referent = False
     invalid_ref_form = None
     context = {'proyect_name': request.session['proyect']['name']}
     
@@ -369,14 +371,23 @@ def save(request):
                        'phones': request.POST.getlist('phones[]')[i],
                        'is_applicant': is_applicant,
             }
+
             if not are_all_empty_params(params):
                 ref_form =  ReferrerForm( params, exclude_from_validation='application_form' )
+
                 if ref_form.is_valid():
                     referrers.append(params)
+                    if is_applicant:
+                        there_is_applicant_referent = True
                 else:
                     logging.warning("Invalid referrer: %s" % ref_form )
                     ref_validated = False
                     invalid_ref_form = ref_form
+
+        if not there_is_applicant_referent:
+            ref_validated = False
+            messages.error(request, 'Al menos un referente debe ser solicitante')
+            
     except Exception as e:
         logging.error('%s' % e)
 

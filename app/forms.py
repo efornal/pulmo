@@ -12,7 +12,7 @@ from .models import SCVPermission, Referrer
 from django.utils.translation import ugettext as _
 from django.utils import translation
 from django.forms import Textarea
-
+import logging
 
 class ProyectForm(forms.ModelForm):
     name = forms.CharField(max_length=200, required=True, label=_('name'))
@@ -210,6 +210,15 @@ class ReferrerForm(forms.ModelForm):
     class Meta:
         model = Referrer
         fields = '__all__'
+
+    def clean(self):
+        # validate applicant email in redmine
+        if self.cleaned_data.get('is_applicant'):
+            logging.warning("Validating referring applicant '{}' in redmine.."
+                            .format(self.cleaned_data.get('email')))
+            users = Referrer.find_by_mail( self.cleaned_data.get('email') )
+            if len(users) != 1:
+                self.add_error('email' , _('invalid_applicant_email') )
 
         
 class MilestoneForm(forms.ModelForm):

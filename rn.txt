@@ -4,6 +4,7 @@
 - Only if the option to create ticket is enabled, are marked:
 Related_ticket, signature_date, received_application
 
+- If the referent is_applicant, the mail must be a user in redmine
 
 
 * Project request

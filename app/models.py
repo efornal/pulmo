@@ -410,6 +410,12 @@ class Referrer(models.Model):
             emails.append(item.email)
         return emails
 
+    @classmethod
+    def find_by_mail(cls,mail_to_search):
+        return TicketSystem.find_user_by_mail(mail_to_search)
+
+            
+    
 class MonitoredVariable(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name   = models.CharField(max_length=200,null=False,
@@ -583,11 +589,29 @@ class TicketSystem(models.Model):
                                         'mail':user.mail,
                                         'firstname':user.firstname,
                                         'lastname': user.lastname})
-            return users_found
         except Exception as e:
             logging.error(e)
-            return users_found
 
+        return users_found
+
+        
+    @classmethod
+    def find_user_by_mail(cls,mail_to_search):
+        users_found = []
+        try:
+            redmine = TicketSystem.connect()
+            users = redmine.user.filter(name=mail_to_search)
+            for user in users:
+                if user.mail == mail_to_search:
+                    users_found.append({'id':user.id,
+                                        'mail':user.mail,
+                                        'firstname':user.firstname,
+                                        'lastname': user.lastname})
+        except Exception as e:
+            logging.error(e)
+
+        return users_found
+        
 
         
     @classmethod
