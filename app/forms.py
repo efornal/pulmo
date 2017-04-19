@@ -195,7 +195,7 @@ class MonitoredVariableForm(forms.ModelForm):
         
 class ReferrerForm(forms.ModelForm):
     name   = forms.CharField(max_length=200, required=True, label=_('name'))
-    email  = forms.CharField(required=False, label=_('email'))
+    email  = forms.EmailField(required=False, label=_('email'))
     phones = forms.CharField(required=False, label=_('phones'))
     is_applicant = forms.BooleanField(required=False, label=_('is_applicant'))
 
@@ -211,6 +211,7 @@ class ReferrerForm(forms.ModelForm):
         model = Referrer
         fields = '__all__'
 
+        
 class MilestoneForm(forms.ModelForm):
     description = forms.CharField(max_length=200, required=True, label=_('description'))
     duration    = forms.CharField(required=False, label=_('duration'))
