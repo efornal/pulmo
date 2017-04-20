@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-20 09:13-0300\n"
+"POT-Creation-Date: 2017-04-20 09:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -496,8 +496,7 @@ msgstr "Yes"
 msgid "remember_to_add_server"
 msgstr "Remember to add server in \"%(name)s\":%(url)s"
 
-#: app/models.py:713 app/models.py:851 pulmo/settings.py:212
-#: pulmo/settings.tpl.py:225 templates/base.html:13 templates/base.html:28
+#: app/models.py:713 app/models.py:851
 msgid "title"
 msgstr "Pulmo"
 
@@ -675,11 +674,11 @@ msgstr "Production server for '%(name)s'"
 msgid "backup_subject"
 msgstr "%(project_name)s - Backups"
 
-#: pulmo/settings.py:117 pulmo/settings.tpl.py:116
+#: pulmo/settings.py:118 pulmo/settings.tpl.py:116
 msgid "Spanish"
 msgstr "Spanish"
 
-#: pulmo/settings.py:118 pulmo/settings.tpl.py:117
+#: pulmo/settings.py:119 pulmo/settings.tpl.py:117
 msgid "English"
 msgstr "English"
 
@@ -718,11 +717,11 @@ msgid_plural " Please correct the errors below."
 msgstr[0] "Please correct the error below"
 msgstr[1] "Please correct the errors below"
 
-#: templates/base.html:42
+#: templates/base.html:43
 msgid "registered_user"
 msgstr "Registered user"
 
-#: templates/base.html:46
+#: templates/base.html:47
 msgid "close_session"
 msgstr "Close session"
 
@@ -795,12 +794,3 @@ msgstr "Password"
 #: templates/registration/login.html:35
 msgid "log_in"
 msgstr "Login"
-
-#~ msgid "add_to_monitoring"
-#~ msgstr "Add Monitoring for '%(name)s'"
-
-#~ msgid "add_to_backup"
-#~ msgstr "Add Backups for '%(project_name)s'"
-
-#~ msgid "add_to_monitoring_desc"
-#~ msgstr "All production server should be added to monitoring"

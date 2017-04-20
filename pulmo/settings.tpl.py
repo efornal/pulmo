@@ -18,7 +18,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_URL = 'https://servicios.unl.edu.ar/pulmo'
-
+APPLICATION_NAME = "Pulmo"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -222,7 +222,7 @@ LDAP_PEOPLE = 'People'
 
 # django configuration
 SUIT_CONFIG = {
-    'ADMIN_NAME': _('title')
+    'ADMIN_NAME': APPLICATION_NAME
 }
 
 # =================================\
