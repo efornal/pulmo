@@ -69,7 +69,7 @@
                                        placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="applicants">
-			        <input type="checkbox" name='applicants[]'
+			        <input type="checkbox" name='applicants{{forloop.counter0}}'
                                        placeholder='' class="form-control"
                                        {% if referrer.is_applicant %}checked{%endif%}/>
 		              </td>
@@ -94,7 +94,7 @@
                                        placeholder='' class="form-control"/>
 		              </td>
 		              <td data-name="applicants">
-			        <input type="checkbox" name='applicants[]'
+			        <input type="checkbox" name='applicants0'
                                        placeholder='' class="form-control"/>
 		              </td>
                               <td data-name="delete" style="width:5%;text-align:center">

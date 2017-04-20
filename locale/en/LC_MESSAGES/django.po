@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-19 10:04-0300\n"
+"POT-Creation-Date: 2017-04-20 09:13-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,13 +46,13 @@ msgstr "Name"
 msgid "secretariat"
 msgstr "Secretariat"
 
-#: app/forms.py:20 app/forms.py:223 app/models.py:63 app/models.py:337
+#: app/forms.py:20 app/forms.py:225 app/models.py:63 app/models.py:337
 #: templates/new_step1.html:69 templates/production_step1.html:44
 msgid "description"
 msgstr "Description"
 
 #: app/forms.py:32 app/forms.py:87 app/forms.py:106 app/forms.py:126
-#: app/forms.py:250 app/models.py:99 app/models.py:168 app/models.py:203
+#: app/forms.py:252 app/models.py:99 app/models.py:168 app/models.py:203
 #: app/models.py:227 app/models.py:252 app/models.py:464 app/models.py:510
 #: app/models.py:628 app/models.py:654 app/models.py:670 app/models.py:731
 #: app/models.py:788 templates/new_step1.html:160 templates/new_step3.html:73
@@ -97,24 +97,25 @@ msgstr "Phones"
 msgid "is_applicant"
 msgstr "Is applicant"
 
-#: app/forms.py:220
+#: app/forms.py:221
 msgid "invalid_applicant_email"
-msgstr "It does not correspond to a user. The applicant must be a user in Redmine"
+msgstr ""
+"It does not correspond to a user. The applicant must be a user in Redmine"
 
-#: app/forms.py:224 app/models.py:339
+#: app/forms.py:226 app/models.py:339
 msgid "duration"
 msgstr "Duration"
 
-#: app/forms.py:225 app/models.py:342
+#: app/forms.py:227 app/models.py:342
 msgid "date_event"
 msgstr "Date event"
 
-#: app/forms.py:244 app/models.py:89 app/models.py:132
+#: app/forms.py:246 app/models.py:89 app/models.py:132
 #: templates/production_step.html:67
 msgid "proyect"
 msgstr "Proyect"
 
-#: app/forms.py:251 app/models.py:166 app/models.py:842
+#: app/forms.py:253 app/models.py:166 app/models.py:842
 #: templates/production_step1.html:200
 msgid "files_backup"
 msgstr "Files backup"
@@ -612,35 +613,39 @@ msgstr ""
 msgid "integration_description"
 msgstr "The integration machine must be created"
 
-#: app/views.py:471 app/views.py:881
+#: app/views.py:393
+msgid "referent_is_required"
+msgstr "At least one referent must be an applicant"
+
+#: app/views.py:486 app/views.py:896
 msgid "completed_application"
 msgstr "The application has been successful. "
 
-#: app/views.py:479
+#: app/views.py:494
 msgid "test_server_for"
 msgstr "Test server for '%(name)s'"
 
-#: app/views.py:487
+#: app/views.py:502
 msgid "ssh_subject"
 msgstr "%(project_name)s - SSH Users"
 
-#: app/views.py:496
+#: app/views.py:511
 msgid "extradb_subject"
 msgstr "%(project_name)s - Extra database users"
 
-#: app/views.py:505 app/views.py:891
+#: app/views.py:520 app/views.py:906
 msgid "monitoring_subject"
 msgstr "%(project_name)s - Monitoring"
 
-#: app/views.py:513 app/views.py:901
+#: app/views.py:528 app/views.py:916
 msgid "log_subject"
 msgstr "%(project_name)s - Log level"
 
-#: app/views.py:523
+#: app/views.py:538
 msgid "integration_subject"
 msgstr "%(project_name)s - Integration machine"
 
-#: app/views.py:530 app/views.py:917
+#: app/views.py:545 app/views.py:932
 msgid "confirmed_ticket_request_created"
 msgstr ""
 "The ticket <a href='%(issueurl)s' class='alert-link' target='_blank'>#"
@@ -652,21 +657,21 @@ msgstr ""
 "oficina, se lo agregará como seguidor del ticket para poder realizar un "
 "seguimiento del mismo."
 
-#: app/views.py:554 app/views.py:941
+#: app/views.py:569 app/views.py:956
 msgid "incomplete_application"
 msgstr ""
 "The request could not be completed. In order to make the process we ask you "
 "anywhere near our office or try to make the request again later."
 
-#: app/views.py:575
+#: app/views.py:590
 msgid "project_not_found"
 msgstr "Could not determine the project on which to make the request"
 
-#: app/views.py:886
+#: app/views.py:901
 msgid "production_server_for"
 msgstr "Production server for '%(name)s'"
 
-#: app/views.py:909
+#: app/views.py:924
 msgid "backup_subject"
 msgstr "%(project_name)s - Backups"
 

@@ -362,10 +362,14 @@ def save(request):
     # validate referrers
     try:
         for i,referrer in enumerate( request.POST.getlist('names[]') ):
-            is_applicant = False
-            if i < len(request.POST.getlist('applicants[]')) and request.POST.getlist('applicants[]')[i]:
-                is_applicant = True
 
+            is_applicant = False
+            try:
+                if request.POST['applicants{}'.format(i)]:
+                    is_applicant = True
+            except Exception as e:
+                pass
+                
             params = { 'name': referrer,
                        'email': request.POST.getlist('emails[]')[i],
                        'phones': request.POST.getlist('phones[]')[i],
@@ -386,7 +390,7 @@ def save(request):
 
         if not there_is_applicant_referent:
             ref_validated = False
-            messages.error(request, 'Al menos un referente debe ser solicitante')
+            messages.error(request, _('referent_is_required'))
             
     except Exception as e:
         logging.error('%s' % e)

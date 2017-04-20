@@ -40,8 +40,13 @@ $(document).ready(function() {
                 });
                 
                 var c = $(cur_td).find($(children[0]).prop('tagName')).clone().val("");
-                //c.attr("name", $(cur_td).data("name") + newid);
-                c.attr("name", $(cur_td).data("name")+ "[]");
+
+                if (c.attr('type') == 'checkbox'){
+                    c.attr("name", $(cur_td).data("name") + newid);
+                }else{
+                    c.attr("name", $(cur_td).data("name")+ "[]");
+                }
+
                 c.appendTo($(td));
                 
                 if ( $(this).data("name") == 'permissions' ) {
@@ -107,8 +112,11 @@ $(document).ready(function() {
                 });
                 
                 var c = $(cur_td).find($(children[0]).prop('tagName')).clone().val("");
-                //c.attr("name", $(cur_td).data("name") + newid);
-                c.attr("name", $(cur_td).data("name")+ "[]");
+                if (c.attr('type') == 'checkbox'){
+                    c.attr("name", $(cur_td).data("name") + newid);
+                }else{
+                    c.attr("name", $(cur_td).data("name")+ "[]");
+                }
                 c.appendTo($(td));
                 td.appendTo($(tr));
             } else {
@@ -131,5 +139,5 @@ $(document).ready(function() {
         if ( $('#tab_logics tr').length > 2 ) // header + first row
             $(this).closest("tr").remove();
     });
-
+    
 });
