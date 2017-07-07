@@ -1,54 +1,26 @@
-.toner-detail {
+body {
+    padding-top: 70px;
 }
 
-.toner-detail:hover {
-    opacity: .3;
-    filter: alpha(opacity=30);
+.navbar-brand > small {
+    font-size: 75%;
 }
 
-.toner-detail img {
-    width:  18px;
-    height: 13px;
+.navbar-brand > p {
+    padding: 0px;
+    margin: 0px;
+    margin-top: -6px;
+    color: #00728f;
 }
 
-.page-header {
-    margin: 30px 0px 20px;
-}
-
-.page-header h1 {
-    font-size: 30px;
-}
-
-.logo-header {
-    margin-left:5px;
+.logo-header{
     float: left;
-    position: relative;
-    margin-top:3px;
-    opacity: 0.7;
-    filter: alpha(opacity=70); /* For IE8 and earlier */
+    margin-right: 20px;
+}
+legend {
+    font-size: 18px;
+}
+.icon-pointer{
+    cursor: pointer;
 }
 
-
-.table-sortable tbody tr {
-    cursor: move;
-}
-
-
-.btn-default {
-    margin-left: 15px;
-}
-
-
-.btn-primary {
-    margin-left: 50px;
-}
-
-.btn-info {
-    margin-left: 50px;
-}
-
-.alert-error {
-    background-color: #f2dede;
-    border-color: #eed3d7;
-    color: #b94a48;
-}
