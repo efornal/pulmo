@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^new/4/production', views.production_step4, name='production_step4'),
     url(r'^new/5/production', views.production_step5, name='production_step5'),
     url(r'^new/6/production', views.production_step6, name='production_step6'),
+    url(r'^en/$', views.index, name='index'),
+    url(r'^lang/(?P<lang>\w+)/$', views.set_language, name='set_language'),
 ]
 
 
