@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-20 09:55-0300\n"
+"POT-Creation-Date: 2017-07-18 13:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,7 +68,7 @@ msgstr "Port"
 
 #: app/forms.py:162 app/forms.py:179 app/models.py:359 app/models.py:470
 #: app/models.py:523 templates/new_step4.html:50
-#: templates/registration/login.html:23
+#: templates/registration/login.html:35
 msgid "user"
 msgstr "User"
 
@@ -612,39 +612,39 @@ msgstr ""
 msgid "integration_description"
 msgstr "The integration machine must be created"
 
-#: app/views.py:393
+#: app/views.py:400
 msgid "referent_is_required"
 msgstr "At least one referent must be an applicant"
 
-#: app/views.py:486 app/views.py:896
+#: app/views.py:493 app/views.py:903
 msgid "completed_application"
 msgstr "The application has been successful. "
 
-#: app/views.py:494
+#: app/views.py:501
 msgid "test_server_for"
 msgstr "Test server for '%(name)s'"
 
-#: app/views.py:502
+#: app/views.py:509
 msgid "ssh_subject"
 msgstr "%(project_name)s - SSH Users"
 
-#: app/views.py:511
+#: app/views.py:518
 msgid "extradb_subject"
 msgstr "%(project_name)s - Extra database users"
 
-#: app/views.py:520 app/views.py:906
+#: app/views.py:527 app/views.py:913
 msgid "monitoring_subject"
 msgstr "%(project_name)s - Monitoring"
 
-#: app/views.py:528 app/views.py:916
+#: app/views.py:535 app/views.py:923
 msgid "log_subject"
 msgstr "%(project_name)s - Log level"
 
-#: app/views.py:538
+#: app/views.py:545
 msgid "integration_subject"
 msgstr "%(project_name)s - Integration machine"
 
-#: app/views.py:545 app/views.py:932
+#: app/views.py:552 app/views.py:939
 msgid "confirmed_ticket_request_created"
 msgstr ""
 "The ticket <a href='%(issueurl)s' class='alert-link' target='_blank'>#"
@@ -656,29 +656,31 @@ msgstr ""
 "oficina, se lo agregará como seguidor del ticket para poder realizar un "
 "seguimiento del mismo."
 
-#: app/views.py:569 app/views.py:956
+#: app/views.py:576 app/views.py:963
 msgid "incomplete_application"
 msgstr ""
 "The request could not be completed. In order to make the process we ask you "
 "anywhere near our office or try to make the request again later."
 
-#: app/views.py:590
+#: app/views.py:597
 msgid "project_not_found"
 msgstr "Could not determine the project on which to make the request"
 
-#: app/views.py:901
+#: app/views.py:908
 msgid "production_server_for"
 msgstr "Production server for '%(name)s'"
 
-#: app/views.py:924
+#: app/views.py:931
 msgid "backup_subject"
 msgstr "%(project_name)s - Backups"
 
-#: pulmo/settings.py:118 pulmo/settings.tpl.py:116
+#: pulmo/settings.py:123 pulmo/settings.tpl.py:122 templates/base.html:60
+#: templates/base.html:65
 msgid "Spanish"
 msgstr "Spanish"
 
-#: pulmo/settings.py:119 pulmo/settings.tpl.py:117
+#: pulmo/settings.py:124 pulmo/settings.tpl.py:123 templates/base.html:61
+#: templates/base.html:67
 msgid "English"
 msgstr "English"
 
@@ -690,7 +692,7 @@ msgstr "You have unsaved changes"
 msgid "Add"
 msgstr "Add"
 
-#: templates/admin/change_form.html:61
+#: templates/admin/change_form.html:61 templates/base.html:55
 msgid "Home"
 msgstr "Home"
 
@@ -717,11 +719,19 @@ msgid_plural " Please correct the errors below."
 msgstr[0] "Please correct the error below"
 msgstr[1] "Please correct the errors below"
 
-#: templates/base.html:43
+#: templates/base.html:37 templates/base.html:40 templates/base.html:55
+msgid "Go_home"
+msgstr "Go home"
+
+#: templates/base.html:58
+msgid "language"
+msgstr "language"
+
+#: templates/base.html:73
 msgid "registered_user"
 msgstr "Registered user"
 
-#: templates/base.html:47
+#: templates/base.html:77
 msgid "close_session"
 msgstr "Close session"
 
@@ -779,18 +789,17 @@ msgstr "To Finalize"
 msgid "production_proyect"
 msgstr "Production application passes"
 
-#: templates/registration/login.html:6
-msgid "invalid_username_or_password"
-msgstr "invalid username or password"
-
-#: templates/registration/login.html:18
+#: templates/registration/login.html:31
 msgid "home_login"
 msgstr "Home login"
 
-#: templates/registration/login.html:29
+#: templates/registration/login.html:40
 msgid "password"
 msgstr "Password"
 
-#: templates/registration/login.html:35
+#: templates/registration/login.html:45
 msgid "log_in"
 msgstr "Login"
+
+#~ msgid "invalid_username_or_password"
+#~ msgstr "invalid username or password"

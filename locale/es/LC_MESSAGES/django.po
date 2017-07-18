@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-20 09:55-0300\n"
+"POT-Creation-Date: 2017-07-18 13:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,7 +69,7 @@ msgstr "Puerto"
 
 #: app/forms.py:162 app/forms.py:179 app/models.py:359 app/models.py:470
 #: app/models.py:523 templates/new_step4.html:50
-#: templates/registration/login.html:23
+#: templates/registration/login.html:35
 msgid "user"
 msgstr "Usuario"
 
@@ -614,39 +614,39 @@ msgstr ""
 msgid "integration_description"
 msgstr "Se debe crear la máquina de integración"
 
-#: app/views.py:393
+#: app/views.py:400
 msgid "referent_is_required"
 msgstr "Al menos un referente debe ser solicitante"
 
-#: app/views.py:486 app/views.py:896
+#: app/views.py:493 app/views.py:903
 msgid "completed_application"
 msgstr "La solicitud se ha realizado con éxito. "
 
-#: app/views.py:494
+#: app/views.py:501
 msgid "test_server_for"
 msgstr "Servidor de Test para '%(name)s'"
 
-#: app/views.py:502
+#: app/views.py:509
 msgid "ssh_subject"
 msgstr "%(project_name)s - Usuarios SSH"
 
-#: app/views.py:511
+#: app/views.py:518
 msgid "extradb_subject"
 msgstr "%(project_name)s - Usuarios extras de base de datos"
 
-#: app/views.py:520 app/views.py:906
+#: app/views.py:527 app/views.py:913
 msgid "monitoring_subject"
 msgstr "%(project_name)s - Monitoreo"
 
-#: app/views.py:528 app/views.py:916
+#: app/views.py:535 app/views.py:923
 msgid "log_subject"
 msgstr "%(project_name)s - Configurar nivel y envío de logs"
 
-#: app/views.py:538
+#: app/views.py:545
 msgid "integration_subject"
 msgstr "%(project_name)s - Máquina de integración"
 
-#: app/views.py:545 app/views.py:932
+#: app/views.py:552 app/views.py:939
 msgid "confirmed_ticket_request_created"
 msgstr ""
 "Se creó el ticket <a href='%(issueurl)s' class='alert-link' target='_blank'>#"
@@ -654,30 +654,32 @@ msgstr ""
 "referente es usuario de la oficina, se lo agregará como seguidor del ticket "
 "para poder realizar un seguimiento del mismo."
 
-#: app/views.py:569 app/views.py:956
+#: app/views.py:576 app/views.py:963
 msgid "incomplete_application"
 msgstr ""
 "La solicitud no pudo completarse. Para poder realizar el trámite te pedimos "
 "que te acerques a nuestra oficina o intentes realizar la solicitud "
 "nuevamente mas tarde."
 
-#: app/views.py:590
+#: app/views.py:597
 msgid "project_not_found"
 msgstr "No se pudo determinar el proyecto sobre el cual realizar la solicitud"
 
-#: app/views.py:901
+#: app/views.py:908
 msgid "production_server_for"
 msgstr "Servidor de Producción para '%(name)s'"
 
-#: app/views.py:924
+#: app/views.py:931
 msgid "backup_subject"
 msgstr "%(project_name)s - Backups"
 
-#: pulmo/settings.py:118 pulmo/settings.tpl.py:116
+#: pulmo/settings.py:123 pulmo/settings.tpl.py:122 templates/base.html:60
+#: templates/base.html:65
 msgid "Spanish"
 msgstr "Español"
 
-#: pulmo/settings.py:119 pulmo/settings.tpl.py:117
+#: pulmo/settings.py:124 pulmo/settings.tpl.py:123 templates/base.html:61
+#: templates/base.html:67
 msgid "English"
 msgstr "Inglés"
 
@@ -689,7 +691,7 @@ msgstr "Tiene cambios no guardados"
 msgid "Add"
 msgstr "Agregar"
 
-#: templates/admin/change_form.html:61
+#: templates/admin/change_form.html:61 templates/base.html:55
 msgid "Home"
 msgstr "Inicio"
 
@@ -716,11 +718,19 @@ msgid_plural " Please correct the errors below."
 msgstr[0] "Por favor corrija el error indicado"
 msgstr[1] "Por favor corrija los errores indicados"
 
-#: templates/base.html:43
+#: templates/base.html:37 templates/base.html:40 templates/base.html:55
+msgid "Go_home"
+msgstr "Ir a inicio"
+
+#: templates/base.html:58
+msgid "language"
+msgstr "idioma"
+
+#: templates/base.html:73
 msgid "registered_user"
 msgstr "Usuario registrado"
 
-#: templates/base.html:47
+#: templates/base.html:77
 msgid "close_session"
 msgstr "Cerrar sesión"
 
@@ -780,18 +790,17 @@ msgstr "Finalizar"
 msgid "production_proyect"
 msgstr "Solicitud de pase a Producción"
 
-#: templates/registration/login.html:6
-msgid "invalid_username_or_password"
-msgstr "Usuario o contraseña invalido"
-
-#: templates/registration/login.html:18
+#: templates/registration/login.html:31
 msgid "home_login"
 msgstr "Inicio de sesión"
 
-#: templates/registration/login.html:29
+#: templates/registration/login.html:40
 msgid "password"
 msgstr "Contraseña"
 
-#: templates/registration/login.html:35
+#: templates/registration/login.html:45
 msgid "log_in"
 msgstr "Iniciar sesión"
+
+#~ msgid "invalid_username_or_password"
+#~ msgstr "Usuario o contraseña invalido"
