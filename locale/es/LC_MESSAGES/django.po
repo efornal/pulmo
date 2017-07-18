@@ -640,7 +640,7 @@ msgstr "%(project_name)s - Monitoreo"
 
 #: app/views.py:528 app/views.py:916
 msgid "log_subject"
-msgstr "%(project_name)s - Nivel de Logs"
+msgstr "%(project_name)s - Configurar nivel y envío de logs"
 
 #: app/views.py:538
 msgid "integration_subject"
