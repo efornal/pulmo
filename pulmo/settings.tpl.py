@@ -15,6 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import ldap
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_URL = 'https://servicios.unl.edu.ar/pulmo'
@@ -222,7 +223,7 @@ LDAP_DN = 'dc=domain,dc=edu,dc=ar'
 
 # Organizational Unit for Person
 LDAP_PEOPLE = 'People'
-
+LDAP_GROUP  = 'Group' # ou=Entry
 # =================================/
 
 # django configuration
@@ -232,17 +233,40 @@ SUIT_CONFIG = {
 
 # =================================\
 # django ldap configuration
-import ldap
-from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
-
-import logging
-logger = logging.getLogger('django_auth_ldap')
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
+#
+#
+# Ldap Group Type
+from django_auth_ldap.config import LDAPSearch, PosixGroupType
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("ou={},{}".format(LDAP_GROUP,LDAP_DN),
+                                    ldap.SCOPE_SUBTREE, "(objectClass=posixGroup)"
+)
+AUTH_LDAP_GROUP_TYPE =  PosixGroupType()
+#
+#
+# User will be updated with LDAP every time the user logs in.
+# Otherwise, the User will only be populated when it is automatically created.
+AUTH_LDAP_ALWAYS_UPDATE_USER = True
+#
+#
+# Simple group restrictions
+# AUTH_LDAP_REQUIRE_GROUP = "cn=users,ou={},{}".format(LDAP_GROUP,LDAP_DN)
+# AUTH_LDAP_DENY_GROUP = "cn=denygroup,ou={},{}".format(LDAP_GROUP,LDAP_DN)
+#
+# Defines the django admin attribute
+# according to whether the user is a member or not in the specified group
+AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+    "is_active": "cn=users,ou={},{}".format(LDAP_GROUP,LDAP_DN),
+    "is_staff": "cn=users,ou={},{}".format(LDAP_GROUP,LDAP_DN),
+    "is_superuser": "cn=admin,ou={},{}".format(LDAP_GROUP,LDAP_DN),
+}
+#
+# Ldap User Auth
+#AUTH_LDAP_BIND_DN = "cn={},{}".format(LDAP_USERNAME,LDAP_DN)
+#AUTH_LDAP_BIND_PASSWORD = LDAP_PASSWORD
 
 AUTH_LDAP_SERVER_URI = LDAP_SERVER
 
-AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=%s,%s" % (LDAP_PEOPLE,LDAP_DN),
+AUTH_LDAP_USER_SEARCH = LDAPSearch("ou={},{}".format(LDAP_PEOPLE,LDAP_DN),
                                    ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
 AUTH_LDAP_USER_ATTR_MAP = {
     "first_name": "givenName",
@@ -252,8 +276,9 @@ AUTH_LDAP_USER_ATTR_MAP = {
 
 AUTHENTICATION_BACKENDS = (
     'django_auth_ldap.backend.LDAPBackend',
-    'django.contrib.auth.backends.ModelBackend',
+#    'django.contrib.auth.backends.ModelBackend',
 )
+
 # =================================/
 
 
@@ -274,8 +299,13 @@ AUTHENTICATION_BACKENDS = (
 # logger.setLevel(logging.DEBUG)
 
 
+# import logging
+# logger = logging.getLogger('django_auth_ldap')
+# logger.addHandler(logging.StreamHandler())
+# logger.setLevel(logging.DEBUG)
 
-import warnings
-warnings.filterwarnings(
-        'error', r"DateTimeField .* received a naive datetime",
-        RuntimeWarning, r'django\.db\.models\.fields')
+
+# import warnings
+# warnings.filterwarnings(
+#         'error', r"DateTimeField .* received a naive datetime",
+#         RuntimeWarning, r'django\.db\.models\.fields')
