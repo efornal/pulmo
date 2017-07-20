@@ -18,9 +18,9 @@ import os
 import ldap
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_URL = 'https://servicios.unl.edu.ar/pulmo'
-APPLICATION_NAME = "Pulmo"
-APPLICATION_DESC = "Project requests"
+BASE_URL = "{{base_url}}"
+APPLICATION_NAME = "{{app_name|capitalize}}"
+APPLICATION_DESC = "{{app_desc|capitalize}}"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -29,17 +29,18 @@ APPLICATION_DESC = "Project requests"
 SECRET_KEY = '@(p@8_b$kl37vsh_p8urf@^681q&qpz+b+f3-o(aj4cjnv*_81'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = {{app_debug}}
 
 ALLOWED_HOSTS = ['*']
 
-# ADMINS = (
-#     ('name', 'email'),
-# )
+ADMINS = (
+    ("'{{app_admin_name}}'", "'{{app_admin_email}}'"),
+)
 
-# MANAGERS = (
-#     ('name', 'email'),
-# )
+MANAGERS = (
+    ("'{{app_manager_name}}'", "'{{app_manager_email}}'"),
+)
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -87,7 +88,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(SETTINGS_PATH, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'debug': True,
+            'debug': {{app_debug}},
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -107,12 +108,20 @@ WSGI_APPLICATION = 'pulmo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pulmo_db',
-        'USER': 'pulmo_owner',
-        'PASSWORD': 'owner',
-        'PORT': '5432',
-        'HOST': 'localhost',
-    }
+        'NAME': '{{db_name}}',
+        'USER': '{{db_user}}',
+        'PASSWORD': '{{db_pass}}',
+        'PORT': '{{db_port}}',
+        'HOST': '{{db_host}}',
+    },
+    'pulmo_owner': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '{{db_name}}',
+        'USER': '{{db_user_owner}}',
+        'PASSWORD': '{{db_pass_owner}}',
+        'PORT': '{{db_port}}',
+        'HOST': '{{db_host}}',
+    },
 }
 
 
@@ -145,7 +154,7 @@ LOGIN_REDIRECT_URL = '/'
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
 LOCALE_PATHS = (
-     BASE_DIR + '/locale', )
+     BASE_DIR + '/locale',)
 
 
 LOGS_VISUALIZATION_CHOICES = (
@@ -155,7 +164,7 @@ LOGS_VISUALIZATION_CHOICES = (
 
 # =================================\
 # ganeti configuration
-GANETI_INSTANCES_URL = 'https://cluster:5080/2/instances'
+GANETI_INSTANCES_URL = '{{ganeti_instances_url}}'
 # =================================/
 
 
@@ -176,43 +185,43 @@ GANETI_INSTANCES_URL = 'https://cluster:5080/2/instances'
 #  - crea subtarea configuración de nivel de logs en producción
 #  - crea subtarea configuración de backup en producción
 #
-#    + indica se debió especificar el dato en formulario para que se realice el ticket. 
-REDMINE_ENABLE_TICKET_CREATION = False
+#    + indica se debió especificar el dato en formulario para que se realice el ticket.
+REDMINE_ENABLE_TICKET_CREATION = {{redmine_enable_ticket_creation}}
 #
-REDMINE_URL='http://redmine_url'
-REDMINE_USERNAME="username"
-REDMINE_PASSWORD = "password"
-REDMINE_PROJECT = "proyect_name"
-REDMINE_TRACKER_ID = None
-REDMINE_STATUS_ID = None
-REDMINE_PRIORITY_ID = None
-REDMINE_ASSIGNED_TO_ID = None
+REDMINE_URL="{{redmine_url}}"
+REDMINE_USERNAME="{{redmine_username}}"
+REDMINE_PASSWORD = "{{redmine_password}}"
+REDMINE_PROJECT = "{{redmine_project}}"
+REDMINE_TRACKER_ID = "{{redmine_tracker_id}}"
+REDMINE_STATUS_ID = "{{redmine_status_id}}"
+REDMINE_PRIORITY_ID = "{{redmine_priority_id}}"
+REDMINE_ASSIGNED_TO_ID = "{{redmine_assigned_to_id}}"
 # maximum limit users found as observers of a ticket.
 # If there are more than this value, the addition of the ticket is omitted obervadores
-REDMINE_MAXIMUM_OBSERVER_FOUND = 5
+REDMINE_MAXIMUM_OBSERVER_FOUND = {{redmine_maximum_observer_found}}
 #
 #
 # Url where the procedure to resolve the ticket will be explained
-#REDMINE_SSH_USERS_URL   = "https://host/doc"
-#REDMINE_MONITORING_URL  = "https://host/doc"
-#REDMINE_LOG_LEVEL_URL   = "https://host/doc"
-#REDMINE_BACKUP_URL      = "https://host/doc"
-#REDMINE_INTEGRATION_URL = "https://host/doc"
+REDMINE_SSH_USERS_URL   = "{{redmine_ssh_users_url}}"
+REDMINE_MONITORING_URL  = "{{redmine_monitoring_url}}"
+REDMINE_LOG_LEVEL_URL   = "{{redmine_log_level_url}}"
+REDMINE_INTEGRATION_URL = "{{redmine_integration_url}}"
+REDMINE_BACKUP_URL      = "{{redmine_backup_url}}" 
 #
 # =================================/
 
 
 # =================================\
 # zabbix configuration
-ZABBIX_API_URL = 'http://url_to_zabbix/'
-ZABBIX_API_USERNAME = ''
-ZABBIX_API_PASSWORD = ''
-ZABBIX_API_MONITORING_TEMPLATE_ID = None
-ZABBIX_API_PGSQL_TEMPLATE_ID = None
-ZABBIX_API_MYSQL_TEMPLATE_ID = None
+ZABBIX_API_URL = "{{zabbix_api_url}}"
+ZABBIX_API_USERNAME = "{{zabbix_api_username}}"
+ZABBIX_API_PASSWORD = "{{zabbix_api_password}}"
+ZABBIX_API_MONITORING_TEMPLATE_ID = "{{zabbix_api_monitoring_template_id}}"
+ZABBIX_API_PGSQL_TEMPLATE_ID = "{{zabbix_api_pgsql_template_id}}"
+ZABBIX_API_MYSQL_TEMPLATE_ID = "{{zabbix_api_mysql_template_id}}"
 
 # when's defined, look for the host with, and without, the suffix (ex.: .com)
-ZABBIX_API_HOST_SUFIX = '' 
+ZABBIX_API_HOST_SUFIX = "{{zabbix_api_host_sufix}}"
 
 # =================================/
 
@@ -220,13 +229,12 @@ ZABBIX_API_HOST_SUFIX = ''
 # =================================\
 # ldap configuration
 
-LDAP_SERVER = 'ldap://host_ldap:port'
-
-LDAP_DN = 'dc=domain,dc=edu,dc=ar'
+LDAP_SERVER = "{{ldap_server}}"
+LDAP_DN = "{{ldap_dn}}"
 
 # Organizational Unit for Person
-LDAP_PEOPLE = 'People'
-LDAP_GROUP  = 'Group' # ou=Entry
+LDAP_PEOPLE = "{{ldap_people}}"
+LDAP_GROUP  = "{{ldap_group}}"
 # =================================/
 
 # django configuration
@@ -279,7 +287,7 @@ AUTH_LDAP_USER_ATTR_MAP = {
 
 AUTHENTICATION_BACKENDS = (
     'django_auth_ldap.backend.LDAPBackend',
-#    'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 # =================================/
