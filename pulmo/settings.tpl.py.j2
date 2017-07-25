@@ -148,7 +148,7 @@ USE_TZ = True
 
 STATIC_URL="{{ app_static_url }}"
 
-{% if static_root %}
+{% if app_static_root %}
 STATIC_ROOT = "{{ app_static_root }}"
 {% endif %}
 
