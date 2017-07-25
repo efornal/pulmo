@@ -34,11 +34,11 @@ DEBUG = {{app_debug}}
 ALLOWED_HOSTS = ['*']
 
 ADMINS = (
-    ("'{{app_admin_name}}'", "'{{app_admin_email}}'"),
+    ("{{app_admin_name}}", "{{app_admin_email}}"),
 )
 
 MANAGERS = (
-    ("'{{app_manager_name}}'", "'{{app_manager_email}}'"),
+    ("{{app_manager_name}}", "{{app_manager_email}}"),
 )
 
 # Application definition
@@ -135,7 +135,7 @@ LANGUAGES = (
   ('en', _('English')),
 )
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Argentina/Buenos_Aires'
 
 USE_I18N = True
 
@@ -146,10 +146,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL='/static/'
+STATIC_URL="{{static_url}}"
 
-LOGIN_URL='/login/'
-LOGIN_REDIRECT_URL = '/'
+{% if static_root %}
+STATIC_ROOT = "{{ static_root }}"
+{% endif %}
+
+LOGIN_URL="{{login_url}}"
+LOGIN_REDIRECT_URL = "{{login_url}}"
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -192,10 +196,10 @@ REDMINE_URL="{{redmine_url}}"
 REDMINE_USERNAME="{{redmine_username}}"
 REDMINE_PASSWORD = "{{redmine_password}}"
 REDMINE_PROJECT = "{{redmine_project}}"
-REDMINE_TRACKER_ID = "{{redmine_tracker_id}}"
-REDMINE_STATUS_ID = "{{redmine_status_id}}"
-REDMINE_PRIORITY_ID = "{{redmine_priority_id}}"
-REDMINE_ASSIGNED_TO_ID = "{{redmine_assigned_to_id}}"
+REDMINE_TRACKER_ID = {{redmine_tracker_id}}
+REDMINE_STATUS_ID = {{redmine_status_id}}
+REDMINE_PRIORITY_ID = {{redmine_priority_id}}
+REDMINE_ASSIGNED_TO_ID = {{redmine_assigned_to_id}}
 # maximum limit users found as observers of a ticket.
 # If there are more than this value, the addition of the ticket is omitted obervadores
 REDMINE_MAXIMUM_OBSERVER_FOUND = {{redmine_maximum_observer_found}}
@@ -216,9 +220,9 @@ REDMINE_BACKUP_URL      = "{{redmine_backup_url}}"
 ZABBIX_API_URL = "{{zabbix_api_url}}"
 ZABBIX_API_USERNAME = "{{zabbix_api_username}}"
 ZABBIX_API_PASSWORD = "{{zabbix_api_password}}"
-ZABBIX_API_MONITORING_TEMPLATE_ID = "{{zabbix_api_monitoring_template_id}}"
-ZABBIX_API_PGSQL_TEMPLATE_ID = "{{zabbix_api_pgsql_template_id}}"
-ZABBIX_API_MYSQL_TEMPLATE_ID = "{{zabbix_api_mysql_template_id}}"
+ZABBIX_API_MONITORING_TEMPLATE_ID = {{zabbix_api_monitoring_template_id}}
+ZABBIX_API_PGSQL_TEMPLATE_ID = {{zabbix_api_pgsql_template_id}}
+ZABBIX_API_MYSQL_TEMPLATE_ID = {{zabbix_api_mysql_template_id}}
 
 # when's defined, look for the host with, and without, the suffix (ex.: .com)
 ZABBIX_API_HOST_SUFIX = "{{zabbix_api_host_sufix}}"
