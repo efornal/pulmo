@@ -18,9 +18,9 @@ import os
 import ldap
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_URL = "{{base_url}}"
-APPLICATION_NAME = "{{app_name|capitalize}}"
-APPLICATION_DESC = "{{app_desc|capitalize}}"
+BASE_URL = "{{ setting_base_url }}"
+APPLICATION_NAME = "{{ setting_app_name|capitalize }}"
+APPLICATION_DESC = "{{ setting_app_desc|capitalize }}"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -29,16 +29,16 @@ APPLICATION_DESC = "{{app_desc|capitalize}}"
 SECRET_KEY = '@(p@8_b$kl37vsh_p8urf@^681q&qpz+b+f3-o(aj4cjnv*_81'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = {{app_debug}}
+DEBUG = {{ setting_app_debug }}
 
 ALLOWED_HOSTS = ['*']
 
 ADMINS = (
-    ("{{app_admin_name}}", "{{app_admin_email}}"),
+    ("{{ setting_app_admin_name }}", "{{ setting_app_admin_email }}"),
 )
 
 MANAGERS = (
-    ("{{app_manager_name}}", "{{app_manager_email}}"),
+    ("{{ setting_app_manager_name }}", "{{ setting_app_manager_email }}"),
 )
 
 # Application definition
@@ -88,7 +88,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(SETTINGS_PATH, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'debug': {{app_debug}},
+            'debug': {{ setting_app_debug }},
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -108,19 +108,19 @@ WSGI_APPLICATION = 'pulmo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '{{db_name}}',
-        'USER': '{{db_user}}',
-        'PASSWORD': '{{db_pass}}',
-        'PORT': '{{db_port}}',
-        'HOST': '{{db_host}}',
+        'NAME': '{{ db_name }}',
+        'USER': '{{ db_user }}',
+        'PASSWORD': '{{ db_pass }}',
+        'PORT': '{{ db_port }}',
+        'HOST': '{{ db_host }}',
     },
     'pulmo_owner': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '{{db_name}}',
-        'USER': '{{db_user_owner}}',
-        'PASSWORD': '{{db_pass_owner}}',
-        'PORT': '{{db_port}}',
-        'HOST': '{{db_host}}',
+        'NAME': '{{ db_name }}',
+        'USER': '{{ db_user_owner }}',
+        'PASSWORD': '{{ db_pass_owner }}',
+        'PORT': '{{ db_port }}',
+        'HOST': '{{ db_host }}',
     },
 }
 
@@ -146,14 +146,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL="{{static_url}}"
+STATIC_URL="{{ setting_static_url }}"
 
 {% if static_root %}
-STATIC_ROOT = "{{ static_root }}"
+STATIC_ROOT = "{{ setting_static_root }}"
 {% endif %}
 
-LOGIN_URL="{{login_url}}"
-LOGIN_REDIRECT_URL = "{{login_url}}"
+LOGIN_URL="{{ setting_login_url }}"
+LOGIN_REDIRECT_URL = "{{ setting_login_redirect_url }}"
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -168,7 +168,7 @@ LOGS_VISUALIZATION_CHOICES = (
 
 # =================================\
 # ganeti configuration
-GANETI_INSTANCES_URL = '{{ganeti_instances_url}}'
+GANETI_INSTANCES_URL = '{{ ganeti_instances_url }}'
 # =================================/
 
 
@@ -190,42 +190,42 @@ GANETI_INSTANCES_URL = '{{ganeti_instances_url}}'
 #  - crea subtarea configuración de backup en producción
 #
 #    + indica se debió especificar el dato en formulario para que se realice el ticket.
-REDMINE_ENABLE_TICKET_CREATION = {{redmine_enable_ticket_creation}}
+REDMINE_ENABLE_TICKET_CREATION = {{ redmine_enable_ticket_creation }}
 #
-REDMINE_URL="{{redmine_url}}"
-REDMINE_USERNAME="{{redmine_username}}"
-REDMINE_PASSWORD = "{{redmine_password}}"
-REDMINE_PROJECT = "{{redmine_project}}"
-REDMINE_TRACKER_ID = {{redmine_tracker_id}}
-REDMINE_STATUS_ID = {{redmine_status_id}}
-REDMINE_PRIORITY_ID = {{redmine_priority_id}}
-REDMINE_ASSIGNED_TO_ID = {{redmine_assigned_to_id}}
+REDMINE_URL="{{ redmine_url }}"
+REDMINE_USERNAME="{{ redmine_username }}"
+REDMINE_PASSWORD = "{{redmine_password }}"
+REDMINE_PROJECT = "{{ redmine_project }}"
+REDMINE_TRACKER_ID = {{ redmine_tracker_id }}
+REDMINE_STATUS_ID = {{ redmine_status_id }}
+REDMINE_PRIORITY_ID = {{ redmine_priority_id }}
+REDMINE_ASSIGNED_TO_ID = {{ redmine_assigned_to_id }}
 # maximum limit users found as observers of a ticket.
 # If there are more than this value, the addition of the ticket is omitted obervadores
-REDMINE_MAXIMUM_OBSERVER_FOUND = {{redmine_maximum_observer_found}}
+REDMINE_MAXIMUM_OBSERVER_FOUND = {{ redmine_maximum_observer_found }}
 #
 #
 # Url where the procedure to resolve the ticket will be explained
-REDMINE_SSH_USERS_URL   = "{{redmine_ssh_users_url}}"
-REDMINE_MONITORING_URL  = "{{redmine_monitoring_url}}"
-REDMINE_LOG_LEVEL_URL   = "{{redmine_log_level_url}}"
-REDMINE_INTEGRATION_URL = "{{redmine_integration_url}}"
-REDMINE_BACKUP_URL      = "{{redmine_backup_url}}" 
+REDMINE_SSH_USERS_URL   = "{{ redmine_ssh_users_url }}"
+REDMINE_MONITORING_URL  = "{{ redmine_monitoring_url }}"
+REDMINE_LOG_LEVEL_URL   = "{{ redmine_log_level_url }}"
+REDMINE_INTEGRATION_URL = "{{ redmine_integration_url }}"
+REDMINE_BACKUP_URL      = "{{ redmine_backup_url }}" 
 #
 # =================================/
 
 
 # =================================\
 # zabbix configuration
-ZABBIX_API_URL = "{{zabbix_api_url}}"
-ZABBIX_API_USERNAME = "{{zabbix_api_username}}"
-ZABBIX_API_PASSWORD = "{{zabbix_api_password}}"
-ZABBIX_API_MONITORING_TEMPLATE_ID = {{zabbix_api_monitoring_template_id}}
-ZABBIX_API_PGSQL_TEMPLATE_ID = {{zabbix_api_pgsql_template_id}}
-ZABBIX_API_MYSQL_TEMPLATE_ID = {{zabbix_api_mysql_template_id}}
+ZABBIX_API_URL = "{{ zabbix_api_url }}"
+ZABBIX_API_USERNAME = "{{ zabbix_api_username }}"
+ZABBIX_API_PASSWORD = "{{ zabbix_api_password }}"
+ZABBIX_API_MONITORING_TEMPLATE_ID = {{ zabbix_api_monitoring_template_id }}
+ZABBIX_API_PGSQL_TEMPLATE_ID = {{ zabbix_api_pgsql_template_id }}
+ZABBIX_API_MYSQL_TEMPLATE_ID = {{ zabbix_api_mysql_template_id }}
 
 # when's defined, look for the host with, and without, the suffix (ex.: .com)
-ZABBIX_API_HOST_SUFIX = "{{zabbix_api_host_sufix}}"
+ZABBIX_API_HOST_SUFIX = "{{ zabbix_api_host_sufix }}"
 
 # =================================/
 
@@ -233,12 +233,12 @@ ZABBIX_API_HOST_SUFIX = "{{zabbix_api_host_sufix}}"
 # =================================\
 # ldap configuration
 
-LDAP_SERVER = "{{ldap_server}}"
-LDAP_DN = "{{ldap_dn}}"
+LDAP_SERVER = "{{ ldap_server }}"
+LDAP_DN = "{{ ldap_dn }}"
 
 # Organizational Unit for Person
-LDAP_PEOPLE = "{{ldap_people}}"
-LDAP_GROUP  = "{{ldap_group}}"
+LDAP_PEOPLE = "{{ ldap_people }}"
+LDAP_GROUP  = "{{ ldap_group }}"
 # =================================/
 
 # django configuration
