@@ -18,9 +18,9 @@ import os
 import ldap
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_URL = "{{ setting_base_url }}"
-APPLICATION_NAME = "{{ setting_app_name|capitalize }}"
-APPLICATION_DESC = "{{ setting_app_desc|capitalize }}"
+BASE_URL = "{{ app_base_url }}"
+APPLICATION_NAME = "{{ app_name|capitalize }}"
+APPLICATION_DESC = "{{ app_desc|capitalize }}"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -29,16 +29,16 @@ APPLICATION_DESC = "{{ setting_app_desc|capitalize }}"
 SECRET_KEY = '@(p@8_b$kl37vsh_p8urf@^681q&qpz+b+f3-o(aj4cjnv*_81'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = {{ setting_app_debug }}
+DEBUG = {{ app_app_debug }}
 
 ALLOWED_HOSTS = ['*']
 
 ADMINS = (
-    ("{{ setting_app_admin_name }}", "{{ setting_app_admin_email }}"),
+    ("{{ app_app_admin_name }}", "{{ app_app_admin_email }}"),
 )
 
 MANAGERS = (
-    ("{{ setting_app_manager_name }}", "{{ setting_app_manager_email }}"),
+    ("{{ app_app_manager_name }}", "{{ app_app_manager_email }}"),
 )
 
 # Application definition
@@ -88,7 +88,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(SETTINGS_PATH, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'debug': {{ setting_app_debug }},
+            'debug': {{ app_app_debug }},
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -146,14 +146,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL="{{ setting_static_url }}"
+STATIC_URL="{{ app_static_url }}"
 
 {% if static_root %}
-STATIC_ROOT = "{{ setting_static_root }}"
+STATIC_ROOT = "{{ app_static_root }}"
 {% endif %}
 
-LOGIN_URL="{{ setting_login_url }}"
-LOGIN_REDIRECT_URL = "{{ setting_login_redirect_url }}"
+LOGIN_URL="{{ app_login_url }}"
+LOGIN_REDIRECT_URL = "{{ app_login_redirect_url }}"
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
