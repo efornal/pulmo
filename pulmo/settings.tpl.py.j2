@@ -29,7 +29,7 @@ APPLICATION_DESC = "{{ app_desc|capitalize }}"
 SECRET_KEY = '@(p@8_b$kl37vsh_p8urf@^681q&qpz+b+f3-o(aj4cjnv*_81'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = {{ app_app_debug }}
+DEBUG = {{ app_debug }}
 
 ALLOWED_HOSTS = ['*']
 
@@ -88,7 +88,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(SETTINGS_PATH, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'debug': {{ app_app_debug }},
+            'debug': {{ app_debug }},
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
