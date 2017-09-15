@@ -18,8 +18,8 @@ import os
 import ldap
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_URL = "{{ app_base_url }}"
-APPLICATION_NAME = "{{ app_name|capitalize }}"
+BASE_URL = "{{ app_base_url }}{{ app_url }}"
+APPLICATION_NAME = "{{ app_title|capitalize }}"
 APPLICATION_DESC = "{{ app_desc|capitalize }}"
 
 # Quick-start development settings - unsuitable for production
