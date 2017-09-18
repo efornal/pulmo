@@ -66,7 +66,7 @@ $("#check_server").click(function(){
     $.ajax({
         type: "POST",
         url: "{% url 'check_server' %}",
-        data: {'vm_name': $('#id_virtual_machine_name').attr('value'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        data: {'vm_name': $('#id_virtual_machine_name').val(), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
         dataType: "json",
         success: function(response) {
 
