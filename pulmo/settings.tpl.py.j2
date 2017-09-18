@@ -158,8 +158,9 @@ LOGIN_REDIRECT_URL = "{{ app_login_redirect_url }}"
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
 LOCALE_PATHS = (
-     BASE_DIR + '/locale',)
-
+    os.path.join('/srv/mollys/shared/app/locale'),
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 LOGS_VISUALIZATION_CHOICES = (
     ('1', 'Log-Analizer'),

@@ -15,9 +15,22 @@ from django.forms import Textarea
 import logging
 
 class ProyectForm(forms.ModelForm):
-    name = forms.CharField(max_length=200, required=True, label=_('name'))
-    secretariat = forms.CharField(max_length=254, required=False, label=_('secretariat'))
-    description = forms.CharField(required=True, widget=forms.Textarea, label=_('description'))
+    name = forms.CharField(
+        max_length=200,
+        required=True,
+        label=_('name'))
+    url = forms.URLField(
+        max_length=300,
+        required=False,
+        label=_('url'))
+    secretariat = forms.CharField(
+        max_length=254,
+        required=False,
+        label=_('secretariat'))
+    description = forms.CharField(
+        required=True,
+        widget=forms.Textarea,
+        label=_('description'))
 
     class Meta:
         model = Proyect
