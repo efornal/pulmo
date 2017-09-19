@@ -65,8 +65,7 @@ class Proyect(models.Model):
         verbose_name=_('name'))
     url = models.URLField(
         max_length=300,
-        null=True,
-        blank=True,
+        null=False,
         verbose_name=_('url'))
     description = models.TextField(
         null=True,

@@ -21,7 +21,7 @@ class ProyectForm(forms.ModelForm):
         label=_('name'))
     url = forms.URLField(
         max_length=300,
-        required=False,
+        required=True,
         label=_('url'))
     secretariat = forms.CharField(
         max_length=254,
