@@ -34,7 +34,7 @@ class ProyectForm(forms.ModelForm):
 
     class Meta:
         model = Proyect
-        fields = ('name', 'secretariat', 'description')
+        fields = ('name', 'url','secretariat', 'description')
 
 
 class ApplicationFormForm(forms.ModelForm):
@@ -233,7 +233,7 @@ class ReferrerForm(forms.ModelForm):
             if len(users) != 1:
                 self.add_error('email' , _('invalid_applicant_email') )
 
-        
+      
 class MilestoneForm(forms.ModelForm):
     description = forms.CharField(max_length=200, required=True, label=_('description'))
     duration    = forms.CharField(required=False, label=_('duration'))

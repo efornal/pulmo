@@ -191,6 +191,7 @@ def new_step2(request):
         if proyect_form.is_valid():
             if application_form.is_valid():
                 request.session['proyect']['name'] = request.POST['name']
+                request.session['proyect']['url'] = request.POST['url']
                 request.session['proyect']['secretariat'] = request.POST['secretariat']
                 request.session['proyect']['description'] = request.POST['description']
                 request.session['application']['db_name'] = request.POST['db_name']
@@ -365,7 +366,7 @@ def save(request):
     there_is_applicant_referent = False
     invalid_ref_form = None
     context = {'proyect_name': request.session['proyect']['name']}
-    
+    proyect = None
     # validate referrers
     try:
         for i,referrer in enumerate( request.POST.getlist('names[]') ):
@@ -485,7 +486,7 @@ def save(request):
                     
         else:
             commit_transaction = False
-            logging.warning("Invalid proyect: %s" % proyect)
+            logging.warning("Invalid proyect: %s" % proyect_form.errors)
 
         if commit_transaction:
             transaction.savepoint_commit( sid )
