@@ -638,7 +638,8 @@ class TicketSystem(models.Model):
         referrers = Referrer.objects.filter(application_form=app.pk)
         
         description =  "* *%s*: %s\n" % (_('proyect_name'), app.proyect.name)
-
+        description += "* %s: <pre>%s</pre>\n" % (_('url'), app.proyect.url)
+        
         if app.observations:
             description += "* %s: <pre>%s</pre>\n" % (_('observations'), app.observations)
 
