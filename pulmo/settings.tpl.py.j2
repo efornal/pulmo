@@ -207,11 +207,12 @@ REDMINE_MAXIMUM_OBSERVER_FOUND = {{ redmine_maximum_observer_found }}
 #
 #
 # Url where the procedure to resolve the ticket will be explained
-REDMINE_SSH_USERS_URL   = "{{ redmine_ssh_users_url }}"
-REDMINE_MONITORING_URL  = "{{ redmine_monitoring_url }}"
-REDMINE_LOG_LEVEL_URL   = "{{ redmine_log_level_url }}"
-REDMINE_INTEGRATION_URL = "{{ redmine_integration_url }}"
-REDMINE_BACKUP_URL      = "{{ redmine_backup_url }}" 
+# USE SINGLE QUOTES. the content has double quotation marks
+REDMINE_SSH_USERS_URL   = '{{ redmine_ssh_users_url }}'
+REDMINE_MONITORING_URL  = '{{ redmine_monitoring_url }}'
+REDMINE_LOG_LEVEL_URL   = '{{ redmine_log_level_url }}'
+REDMINE_INTEGRATION_URL = '{{ redmine_integration_url }}'
+REDMINE_BACKUP_URL      = '{{ redmine_backup_url }}' 
 #
 # =================================/
 
