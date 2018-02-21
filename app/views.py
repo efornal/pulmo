@@ -974,8 +974,26 @@ def application_index(request):
     return render(request, 'application/index.html', context)
 
 @login_required
-def application_show(request):
-    context = {}
+def application_show(request, pk):
+    application = ApplicationForm.objects.get(pk=pk)
+    software_list = ApplicationSoftwareRequirement.by_proyect(application.proyect.pk)
+    sources_computer = ApplicationConnectionSource.objects.filter(application_form=application.pk)
+    targets_computer = ApplicationConnectionTarget.objects.filter(application_form=application.pk)
+    permissions_list = SCVPermission.objects.filter(application_form=application.pk)
+    referrers_list = Referrer.objects.filter(application_form=application.pk)
+
+    logs_visualization = ''
+    for v in settings.LOGS_VISUALIZATION_CHOICES:
+        if v[0] == application.logs_visualization:
+            logs_visualization = v[1]
+            
+    context = {'obj': application,
+               'logs_visualization': logs_visualization,
+               'software_list':software_list,
+               'sources_computer': sources_computer,
+               'targets_computer': targets_computer,
+               'permissions_list': permissions_list,
+               'referrers_list': referrers_list}
     return render(request, 'application/show.html', context)
 
 
@@ -987,6 +1005,6 @@ def production_index(request):
     return render(request, 'production/index.html', context)
 
 @login_required
-def production_show(request):
+def production_show(request, pk):
     context = {}
     return render(request, 'production/show.html', context)

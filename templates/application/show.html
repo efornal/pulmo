@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+
+<div class="bs-docs-section">
+
+  <br>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="well bs-component">
+        <form class="form-horizontal">
+          <fieldset>
+            <legend>{{ _('new_proyect') }}</legend>
+            
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="textinput">{{ _('name') }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="name"
+                       id="name" value="{{ obj.proyect.name|default:'' }}"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="textinput">{{ _('secretariat') }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="secretariat"
+                       placeholder="DIPT"
+                       id="secretariat" value="{{ obj.proyect.secretariat|default:'' }}"/>
+              </div>
+
+            </div>
+            <div class="form-group" title="{{ _('project_url') }}">
+              <label class="col-sm-2 control-label" for="textinput">{{ _('url') }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="url"
+                       id="url" value="{{ obj.proyect.url|default:'' }}"/>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="description" class="col-sm-2 control-label">{{ _('description') }}</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="3"  name="description"
+                          id="description">{{ obj.proyect.description|default:'' }}</textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="observations" class="col-sm-2 control-label">
+                {{ _('requires_integration') }}
+              </label>
+              <div class="col-sm-1">
+                <input type="checkbox" name='requires_integration' class="form-control"
+                       placeholder='' 
+                       {% if obj.requires_integration %}checked{%endif%} />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="textinput">{{ _('db_name') }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="db_name"
+                       placeholder="proyecto_db"
+                       id="" value="{{ obj.db_name|default:'' }}" />
+              </div>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('encoding') }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="encoding"
+                       placeholder="UTF8"
+                       id="" value="{{ obj.encoding|default:'' }}" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="textinput">{{ _('user_owner') }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="user_owner"
+                       placeholder="proyecto_owner"
+                       id="" value="{{ obj.user_owner|default:'' }}" />
+              </div>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('user_access') }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="user_access"
+                       placeholder="proyecto_user"
+                       id="" value="{{ obj.user_access|default:'' }}" />
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="textinput">{{ _('extra_database_users') }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="extra_database_users"
+                       id="extra_database_users"
+                       value="{{ obj.extra_database_users|default:'' }}"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="textinput">{{ _('ssh_users') }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="ssh_users"
+                       value="{{request.user.username }}"
+                       id="ssh_users" value="{{ obj.ssh_users|default:'' }}"
+                       title="{{ _('ssh_users_title') }}"/>
+              </div>
+            </div>
+
+
+
+            <div class="form-group">
+              <label for="observations" class="col-sm-2 control-label">{{ _('logs_visualization') }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="ssh_users"
+                       value="{{ logs_visualization|default:'' }}"
+                       id="ssh_users" />
+              </div>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('logs_users') }}</label>
+              <div class="col-sm-4">
+
+                <input class="form-control" type="text" name="logs_users"
+                       id="logs_users" value="{{ obj.logs_users|default:'' }}"
+                       title="{{ _('logs_users_title') }}"/>
+              </div>
+            </div>
+	    
+            <div class="form-group">
+              <label for="observations" class="col-sm-2 control-label">{{ _('observations') }}</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" rows="3"  name="observations"
+                          id="observations">{{ obj.observations|default:'' }}</textarea>
+              </div>
+            </div>
+            
+            {% if software_list %}
+            {% include 'application/_software_requirements.html' %}
+            {% endif %}
+
+            {% if sources_computer or targets_computer %}
+            {% include 'application/_connection_sources.html' %}
+            {% endif %}
+            
+            {% if permissions_list %}
+            {% include 'application/_scv_permissions.html' %}
+            {% endif %}
+
+            {% if referrers_list %}
+            {% include 'application/_referrers.html' %}
+            {% endif %}
+            
+            <br>
+            <div class="form-group pull-right">
+              <div class="col-xs-12">
+                <a class="btn btn-primary"
+                   href="{% url 'application_index' %}" role="button">{{ _('Back') }}</a>
+              </div>
+            </div>
+            
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

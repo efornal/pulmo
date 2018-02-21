@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-21 08:27-0300\n"
+"POT-Creation-Date: 2018-02-21 08:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -753,21 +753,17 @@ msgstr "Ir a inicio"
 msgid "language"
 msgstr "idioma"
 
-#: templates/base.html:74
-msgid "applications"
-msgstr "Formulario de Solicitud"
-
-#: templates/base.html:76
+#: templates/base.html:74 templates/base.html:76
 msgid "Applications"
-msgstr "Formularios de Solicitud"
+msgstr "Solicitudes"
 
 #: templates/base.html:80
-msgid "test"
-msgstr "prueba"
+msgid "Test"
+msgstr "Test"
 
 #: templates/base.html:82
-msgid "production"
-msgstr "producción"
+msgid "Production"
+msgstr "Producción"
 
 #: templates/base.html:86
 msgid "registered_user"
@@ -852,6 +848,12 @@ msgstr "Contraseña"
 #: templates/registration/login.html:45
 msgid "log_in"
 msgstr "Iniciar sesión"
+
+#~ msgid "applications"
+#~ msgstr "Formulario de Solicitud"
+
+#~ msgid "test"
+#~ msgstr "prueba"
 
 #~ msgid "invalid_username_or_password"
 #~ msgstr "Usuario o contraseña invalido"
