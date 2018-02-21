@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="bs-docs-section">
+
+  <br>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="well bs-component">
+          <form class="form-horizontal">
+            <fieldset>
+              <legend>{{ _('production_proyect') }}</legend>
+              
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="textinput">{{ _('name') }}</label>
+                <div class="col-sm-4">
+                  <input class="form-control" type="text" name="name"
+                         id="name" value="{{ obj.proyect.name|default:'' }}" disabled/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="description" class="col-sm-2 control-label">{{ _('description') }}</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" rows="3"  name="description"
+                            id="description" disabled>{{ obj.proyect.description|default:'' }}</textarea>
+                </div>
+              </div>
+
+              
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="textinput">{{_('database')}}</label>
+                <div class="col-sm-10">
+ 		  <table class="table table-bordered table-hover" id="tab_logic">
+
+                    <tbody>
+		      <tr>
+                        <td class="text-center">
+                          <label class="col-sm-4 control-label" for="textinput">{{ _('db_name') }}</label>
+                          <div class="col-sm-8">
+                            <input class="form-control" type="text" name="db_name"
+                                   id="" value="{{ obj.db_name|default:'' }}" />
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <label class="col-sm-4 control-label" for="textinput">{{ _('encoding') }}</label>
+                          <div class="col-sm-8">
+                            <input class="form-control" type="text" name="encoding"
+                                   id="" value="{{ obj.encoding|default:'' }}" />
+                          </div>
+                        </td>
+		      </tr>
+		      <tr>
+                        <td class="text-center">
+                          <label class="col-sm-4 control-label" for="textinput">
+                            {{ _('user_owner') }}
+                          </label>
+                          <div class="col-sm-8">
+                            <input class="form-control" type="text" name="user_owner"
+                                   id="" value="{{ obj.user_owner|default:'' }}" />
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <label class="col-sm-4 control-label" for="textinput">
+                            {{ _('user_access') }}
+                          </label>
+                          <div class="col-sm-8">
+                            <input class="form-control" type="text" name="user_access"
+                                   id="" value="{{ obj.user_access|default:'' }}" />
+                          </div>
+                        </td>
+		      </tr>
+		      <tr>
+		      </tr>
+		    </tbody>
+		  </table>
+                </div>
+              </div>
+
+              
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="textinput">{{_('estimated_volume_data')}}</label>
+                <div class="col-sm-10">
+ 		  <table class="table table-bordered table-hover" id="tab_logic">
+		    <thead>
+		      <tr >
+                        <td class="text-center"></td>
+                        <td class="text-center">{{_('space_to_start')}}</td>
+                        <td class="text-center">{{_('space_at_year')}}</td>
+		        <td class="text-center">{{_('space_after')}}</td>
+		      </tr>
+		    </thead>
+                    <tbody>
+		      <tr>
+                        <td>
+			  <label class="col-sm-12 control-label" for="textinput">{{_('database')}}</label>
+		        </td>
+                        <td>
+			  <input type="text" name='db_space_to_start' class="form-control"
+                                 value="{{ obj.db_space_to_start|default:'' }}"/>
+		        </td>
+		        <td>
+			  <input type="text" name='db_space_at_year' placeholder='' class="form-control"
+                                 value="{{ obj.db_space_at_year|default:'' }}"/>
+		        </td>
+		        <td>
+			  <input type="text" name='db_space_after' placeholder='' class="form-control"
+                                 value="{{ obj.db_space_after|default:'' }}"/>
+		        </td>
+		      </tr>
+		      <tr>
+                        <td>
+			  <label class="col-sm-12 control-label" for="textinput">{{_('filesystem')}}</label>
+		        </td>
+                        <td >
+			  <input type="text" name='fs_space_to_start' placeholder='' class="form-control"
+                                 value="{{ obj.fs_space_after|default:'' }}"/>
+		        </td>
+		        <td>
+			  <input type="text" name='fs_space_at_year' placeholder='' class="form-control"
+                                 value="{{ obj.fs_space_after|default:'' }}"/>
+		        </td>
+		        <td>
+			  <input type="text" name='fs_space_after' placeholder='' class="form-control"
+                                 value="{{ obj.fs_space_after|default:'' }}"/>
+		        </td>
+		      </tr>
+		    </tbody>
+		  </table>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="textinput">{{_('hardware_requirements')}}</label>
+                <div class="col-sm-10">
+ 		  <table class="table table-bordered table-hover" id="tab_logic">
+		    <thead>
+		      <tr >
+                        <td class="text-center"></td>
+                        <td class="text-center">{{_('minimum')}}</td>
+		        <td class="text-center">{{_('recommended')}}</td>
+		      </tr>
+		    </thead>
+                    <tbody>
+		      <tr>
+                        <td>
+			  <label class="col-sm-12 control-label" for="textinput">{{_('memory')}}</label>
+		        </td>
+                        <td>
+			  <input type="text" name='minimum_memory' placeholder='' class="form-control"
+                                 value="{{ obj.fs_space_after|default:'' }}"/>
+		        </td>
+		        <td>
+			  <input type="text" name='suggested_memory' placeholder='' class="form-control"
+                                 value="{{ obj.fs_space_after|default:'' }}"/>
+		        </td>
+		      </tr>
+		      <tr>
+                        <td data-name="names" >
+			  <label class="col-sm-12 control-label" for="textinput">{{_('disk')}}</label>
+		        </td>
+                        <td data-name="names" >
+			  <input type="text" name='minimum_disk_space' placeholder='' class="form-control"
+                                 value="{{ obj.minimum_disk_space|default:'' }}"/>
+		        </td>
+		        <td  data-name="versions">
+			  <input type="text" name='suggested_disk_space' placeholder='' class="form-control"
+                                 value="{{ obj.suggested_disk_space|default:'' }}"/>
+		        </td>
+		      </tr>
+		      <tr>
+                        <td>
+			  <label class="col-sm-12 control-label" for="textinput">{{_('processor')}}</label>
+		        </td>
+                        <td>
+			  <input type="text" name='minimum_processor' placeholder='' class="form-control"
+                                 value="{{ obj.minimum_processor|default:'' }}"/>
+		        </td>
+		        <td>
+			  <input type="text" name='suggested_processor' placeholder='' class="form-control"
+                                 value="{{ obj.suggested_processor|default:'' }}"/>
+		        </td>
+		      </tr>
+		    </tbody>
+		  </table>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="files_backup" class="col-sm-2 control-label">{{ _('files_backup') }}</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" rows="3"  name="files_backup"
+                            id="files_backup">{{ obj.files_backup|default:'' }}</textarea>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="observations" class="col-sm-2 control-label">{{ _('observations') }}</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" rows="3"  name="observations"
+                            id="observations">{{ obj.observations|default:'' }}</textarea>
+                </div>
+              </div>
+              
+            {% if software_list %}
+            {% include 'production/_software_requirements.html' %}
+            {% endif %}
+
+            {% if sources_computer or targets_computer %}
+            {% include 'application/_connection_sources.html' %}
+            {% endif %}
+            
+            {% if permissions_list %}
+            {% include 'application/_scv_permissions.html' %}
+            {% endif %}
+
+            {% if referrers_list %}
+            {% include 'application/_referrers.html' %}
+            {% endif %}
+
+            {% if monitored_variable_list %}
+            {% include 'production/_monitored_variables.html' %}
+            {% endif %}
+
+            {% if milestones_list %}
+            {% include 'production/_milestones.html' %}
+            {% endif %}
+            
+            <br>
+            <div class="form-group pull-right">
+              <div class="col-xs-12">
+                <a class="btn btn-primary"
+                   href="{% url 'production_index' %}" role="button">{{ _('Back') }}</a>
+              </div>
+            </div>
+              
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+{% endblock %}

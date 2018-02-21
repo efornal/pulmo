@@ -1,0 +1,55 @@
+          <fieldset>
+            <legend></legend>
+            
+            <div class="bs-component">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab">{{_('variables_to_be_monitored')}}</a></li>
+              </ul>
+
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="home">
+
+                  <div class="row clearfix">
+	            <div class="col-md-12 column">
+                      <div class="panel-body">
+	                <table class="table table-bordered table-hover" id="tab_logic" style="text-align:center">
+	                  <thead>
+		            <tr >
+                              <th class="text-center">{{_('variable')}}</th>
+		              <th class="text-center">{{_('periodicity')}}</th>
+		            </tr>
+	                  </thead>
+	                  <tbody>
+                          {% if monitored_variable_list %}
+                          {% for permission in monitored_variable_list %}
+		            <tr id='addr{{forloop.counter0}}'>
+		              <td data-name="names" >
+		                <input type="text" name='names[]'
+                                       value="{{permission.name}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="periodicity" >
+		                <input type="text" name='periodicity[]'
+                                       value="{{permission.periodicity}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="preserving_history_by" >
+		                <input type="text" name='preserving_history_by[]'
+                                       value="{{permission.preserving_history_by}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		            </tr>
+                          {% endfor %}
+                          {% endif %}
+	                  </tbody>
+	                </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              
+            </div>
+            
+          </fieldset>

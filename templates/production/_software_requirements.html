@@ -1,0 +1,50 @@
+          <fieldset>
+            <legend></legend>
+
+            
+
+            <div class="bs-component">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab">{{ _('software_requirements') }}</a></li>
+              </ul>
+
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="home">
+
+                  <div class="row clearfix">
+	            <div class="col-md-12 column">
+                      <div class="panel-body">
+		        <table class="table table-bordered table-hover" id="tab_logic" style="text-align:center">
+		          <thead>
+		            <tr>
+                              <th class="text-center">{{_('name')}}</th>
+		              <th class="text-center">{{_('version')}}</th>
+		            </tr>
+		          </thead>
+		          <tbody>
+
+                            {% for soft in software_list %}
+		              <tr id='addr{{forloop.counter0}}' data-id="{{forloop.counter0}}">
+		                <td data-name="names" >
+			          <input type="text" name='names[]' value="{{soft.name}}"
+                                         placeholder='' class="form-control"/>
+		                </td>
+		                <td  data-name="versions">
+			          <input type="text" name='versions[]' value="{{soft.version}}"
+                                         placeholder='' class="form-control"/>
+		                </td>
+		              </tr>
+                            {% endfor %}
+		          </tbody>
+		        </table>
+                      </div>
+                    </div>
+	          </div>
+
+                </div>
+
+              </div>
+            </div>              
+
+            
+          </fieldset>

@@ -345,6 +345,12 @@ class ProductionSoftwareRequirement(models.Model):
     def __unicode__(self):
         return "%s" % (self.name)
 
+    @classmethod
+    def by_proyect(cls,proyect_id):
+        return ProductionSoftwareRequirement.objects \
+                                             .select_related('production_form__proyect') \
+                                             .filter(production_form__proyect=proyect_id)
+
     
 class Milestone(models.Model):
     id = models.AutoField(primary_key=True,null=False)

@@ -1,0 +1,120 @@
+          <fieldset>
+            <legend></legend>
+
+            
+            <div class="bs-component">
+              <ul class="nav nav-tabs">
+                <li class="active">
+                  <a href="#home" data-toggle="tab">{{_('connection_sources')}}</a>
+                </li>
+                <li><a href="#profile" data-toggle="tab">{{_('connection_targets')}}</a></li>
+              </ul>
+
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="home">
+
+                  <div class="row clearfix">
+	            <div class="col-md-12 column">
+                      <div class="panel-body">
+		        <table class="table table-bordered table-hover" id="tab_logic" style="text-align:center">
+		          <thead>
+		            <tr ><th class="text-center">{{_('name')}}</th>
+		            <th class="text-center">{{_('ip_address')}}</th>
+                            <th class="text-center">{{_('username')}}</th>
+                            <th class="text-center">{{_('service')}}</th>
+		            <th class="text-center">{{_('observations')}}</th>
+
+		            </tr>
+		          </thead>
+		          <tbody>
+                          {% if sources_computer %}
+                          {% for soft in sources_computer %}
+		            <tr id='addr{{forloop.counter0}}'>
+		              <td data-name="sources_name" >
+			        <input type="text" name='sources_name[]' value="{{soft.name}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_ip">
+			        <input type="text" name='sources_ip[]' value="{{soft.ip}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_username">
+			        <input type="text" name='sources_username[]' value="{{soft.username}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_service">
+			        <input type="text" name='sources_service[]' value="{{soft.service}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="sources_observation">
+			        <input type="text" name='sources_observation[]' value="{{soft.observation}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		            </tr>
+                            {% endfor %}
+                          {% endif %}
+		          </tbody>
+		        </table>
+                      </div>
+                    </div>
+	          </div>
+
+                </div>
+
+                <div class="tab-pane fade" id="profile">
+
+                  <div class="row clearfix">
+	            <div class="col-md-12 column">
+                      <div class="panel-body">
+		        <table class="table table-bordered table-hover" id="tab_logics" style="text-align:center">
+		          <thead>
+		            <tr ><th class="text-center">{{_('name')}}</th>
+		            <th class="text-center">{{_('ip_address')}}</th>
+                            <th class="text-center">{{_('username')}}</th>
+                            <th class="text-center">{{_('service')}}</th>
+		            <th class="text-center">{{_('observations')}}</th>
+		            </tr>
+		          </thead>
+		          <tbody>
+                          {% if targets_computer %}
+                          {% for soft in targets_computer %}
+		            <tr id='addr{{forloop.counter0}}'>
+		              <td data-name="targets_name" >
+			        <input type="text" name='targets_name[]' value="{{soft.name}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td  data-name="targets_ip">
+			        <input type="text" name='targets_ip[]' value="{{soft.ip}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td  data-name="targets_username">
+			        <input type="text" name='targets_username[]' value="{{soft.username}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td  data-name="targets_service">
+			        <input type="text" name='targets_service[]' value="{{soft.service}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td  data-name="targets_observation">
+			        <input type="text" name='targets_observation[]' value="{{soft.observation}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		            </tr>
+                            {% endfor %}
+                          {% endif %}
+		          </tbody>
+		        </table>
+                      </div>
+                    </div>
+	          </div>
+                  
+                </div>
+
+              </div>
+
+            </div>
+
+
+            
+            
+          </fieldset>

@@ -1006,5 +1006,18 @@ def production_index(request):
 
 @login_required
 def production_show(request, pk):
-    context = {}
+    production = ProductionForm.objects.get(pk=pk)
+    software_list = ProductionSoftwareRequirement.by_proyect(production.proyect.pk)
+    sources_computer = ProductionConnectionSource.objects.filter(production_form=production.pk)
+    targets_computer = ProductionConnectionTarget.objects.filter(production_form=production.pk)
+    monitored_variable_list = MonitoredVariable.objects.filter(production_form=production.pk)
+    milestones_list = Milestone.objects.filter(production_form=production.pk)
+
+    context = {'obj': production,
+               'software_list':software_list,
+               'sources_computer': sources_computer,
+               'targets_computer': targets_computer,
+               'monitored_variable_list': monitored_variable_list,
+               'milestones_list':milestones_list,
+    }
     return render(request, 'production/show.html', context)

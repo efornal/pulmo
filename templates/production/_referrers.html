@@ -1,0 +1,59 @@
+          <fieldset>
+            <legend></legend>
+
+            <div class="bs-component">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab">{{_('Referrers')}}</a></li>
+              </ul>
+
+              <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="home">
+
+                  <div class="row clearfix">
+	            <div class="col-md-12 column">
+                      <div class="panel-body">
+		        <table class="table table-bordered table-hover" id="tab_logic" style="text-align:center">
+		          <thead>
+		            <tr ><th class="text-center">{{_('name_and_surname')}}</th>
+		            <th class="text-center">{{_('email')}}</th>
+		            <th class="text-center">{{_('phones')}}</th>
+                            <th class="text-center">{{_('is_applicant')}}?</th>
+		            </tr>
+		          </thead>
+		          <tbody>
+                          {% if referrers_list %}
+                          {% for referrer in referrers_list %}
+		            <tr id='addr{{forloop.counter0}}'>
+		              <td data-name="names" >
+			        <input type="text" name='names[]' value="{{referrer.name}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="emails">
+			        <input type="text" name='emails[]' value="{{referrer.email}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="phones">
+			        <input type="text" name='phones[]' value="{{referrer.phones}}"
+                                       placeholder='' class="form-control"/>
+		              </td>
+		              <td data-name="applicants">
+			        <input type="checkbox" name='applicants{{forloop.counter0}}'
+                                       placeholder='' class="form-control"
+                                       {% if referrer.is_applicant %}checked{%endif%}/>
+		              </td>
+		            </tr>
+                          {% endfor %}
+                          {% endif %}
+		          </tbody>
+		        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              
+            </div>
+            
+        
+          </fieldset>
