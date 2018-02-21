@@ -977,3 +977,16 @@ def application_index(request):
 def application_show(request):
     context = {}
     return render(request, 'application/show.html', context)
+
+
+@login_required
+def production_index(request):
+    productions = ProductionForm.objects.all().order_by('-created_at')
+    context = {'productions': productions}
+        
+    return render(request, 'production/index.html', context)
+
+@login_required
+def production_show(request):
+    context = {}
+    return render(request, 'production/show.html', context)
