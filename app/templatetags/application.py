@@ -1,5 +1,6 @@
 from django import template
 from django.conf import settings
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -23,3 +24,11 @@ def application_subtitle(value):
         subtitle = settings.APPLICATION_DESC
 
     return subtitle
+
+@register.filter
+def boolean_icon(value):
+    if value:
+        return mark_safe('<i class="glyphicon glyphicon-ok"></i>')
+    else:
+        return mark_safe('<i class="glyphicon glyphicon-remove"></i>')
+        

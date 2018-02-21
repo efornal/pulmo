@@ -964,3 +964,16 @@ def production_step6(request):
     msg = _('incomplete_application')
     context.update({'msg': msg})
     return render(request, 'outcome_error.html', context)
+
+
+@login_required
+def application_index(request):
+    applications = ApplicationForm.objects.all().order_by('-created_at')
+    context = {'applications': applications}
+        
+    return render(request, 'application/index.html', context)
+
+@login_required
+def application_show(request):
+    context = {}
+    return render(request, 'application/show.html', context)
