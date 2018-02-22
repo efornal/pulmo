@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.conf import settings
 
 from django.shortcuts import redirect
 
@@ -35,4 +36,14 @@ def redirect_if_has_production_registered(view):
             return redirect('production_step')
         else:
             return view(request, *args, **kwargs)
+    return wrap
+
+
+def allow_view_users_requests(view):
+    def wrap(request, *args, **kwargs):
+        if hasattr(settings, 'ALLOW_VIEW_USERS_REQUESTS') and \
+           settings.ALLOW_VIEW_USERS_REQUESTS:
+            return view(request, *args, **kwargs)
+        else:
+            return redirect('index')
     return wrap

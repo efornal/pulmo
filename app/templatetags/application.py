@@ -5,6 +5,7 @@ from django.utils.safestring import mark_safe
 register = template.Library()
 
 import logging
+
 @register.filter
 def application_title(value):
     title = ''
@@ -31,4 +32,4 @@ def boolean_icon(value):
         return mark_safe('<i class="glyphicon glyphicon-ok"></i>')
     else:
         return mark_safe('<i class="glyphicon glyphicon-remove"></i>')
-        
+

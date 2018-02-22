@@ -94,6 +94,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'app.context_processors.allow_view_users_requests',
             ],
         },
     },
@@ -161,6 +162,9 @@ LOCALE_PATHS = (
     os.path.join('/srv/pulmo/shared/locale'),
     os.path.join(BASE_DIR, 'locale'),
 )
+
+# Allows users to view test requests as production
+ALLOW_VIEW_USERS_REQUESTS = {{ allow_view_users_requests }}
 
 LOGS_VISUALIZATION_CHOICES = (
     ('1', 'Log-Analizer'),

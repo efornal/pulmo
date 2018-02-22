@@ -30,6 +30,7 @@ from django.contrib import messages
 from app.forms import ApplicationFormForm
 from django.core.urlresolvers import reverse
 from decorators import redirect_without_post, redirect_if_has_registered
+from decorators import allow_view_users_requests
 from decorators import redirect_without_production_post,redirect_if_has_production_registered
 from zabbix.api import ZabbixAPI
 from django.utils import timezone
@@ -967,6 +968,7 @@ def production_step6(request):
 
 
 @login_required
+@allow_view_users_requests
 def application_index(request):
     applications = ApplicationForm.objects.all().order_by('-created_at')
     context = {'applications': applications}
@@ -974,6 +976,7 @@ def application_index(request):
     return render(request, 'application/index.html', context)
 
 @login_required
+@allow_view_users_requests
 def application_show(request, pk):
     application = ApplicationForm.objects.get(pk=pk)
     software_list = ApplicationSoftwareRequirement.by_proyect(application.proyect.pk)
@@ -998,14 +1001,18 @@ def application_show(request, pk):
 
 
 @login_required
+@allow_view_users_requests
 def production_index(request):
     productions = ProductionForm.objects.all().order_by('-created_at')
     context = {'productions': productions}
         
     return render(request, 'production/index.html', context)
 
+
 @login_required
+@allow_view_users_requests
 def production_show(request, pk):
+        
     production = ProductionForm.objects.get(pk=pk)
     software_list = ProductionSoftwareRequirement.by_proyect(production.proyect.pk)
     sources_computer = ProductionConnectionSource.objects.filter(production_form=production.pk)
