@@ -132,6 +132,8 @@ class ApplicationForm (models.Model):
                                              verbose_name=_('logs_visualization'))
     logs_users = models.CharField(max_length=200, null=True, blank=True,
                                    verbose_name=_('logs_users'))
+    user = models.ForeignKey(User, null=True, blank=True,
+                             verbose_name=_('user'))
 
     class Meta:
         db_table = 'application_forms'
@@ -193,7 +195,9 @@ class ProductionForm (models.Model):
                                                verbose_name=_('received_application'))
     related_ticket = models.CharField(max_length=200,null=True,blank=True,
                                       verbose_name=_('related_ticket'))
-    
+    user = models.ForeignKey(User, null=True, blank=True,
+                             verbose_name=_('user'))
+
     class Meta:
         db_table = 'production_forms'
         verbose_name = _('ProductionForm')

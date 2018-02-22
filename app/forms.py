@@ -12,6 +12,7 @@ from .models import SCVPermission, Referrer
 from django.utils.translation import ugettext as _
 from django.utils import translation
 from django.forms import Textarea
+from django.contrib.auth.models import User
 import logging
 
 class ProyectForm(forms.ModelForm):
@@ -38,11 +39,23 @@ class ProyectForm(forms.ModelForm):
 
 
 class ApplicationFormForm(forms.ModelForm):
-    db_name = forms.CharField(max_length=200, required=False)
-    encoding = forms.CharField(max_length=200, required=False)
-    user_owner  = forms.CharField(max_length=200, required=False)
-    user_access = forms.CharField(max_length=200, required=False)
-    observations = forms.CharField(required=False, widget=forms.Textarea, label=_('observations'))
+    db_name = forms.CharField(
+        max_length=200,
+        required=False)
+    encoding = forms.CharField(
+        max_length=200,
+        required=False)
+    user_owner  = forms.CharField(
+        max_length=200,
+        required=False)
+    user_access = forms.CharField(
+        max_length=200,
+        required=False)
+    observations = forms.CharField(
+        required=False,
+        widget=forms.Textarea,
+        label=_('observations'))
+
     
     def __init__(self,*args,**kwargs):
         field_to_exclude = ''

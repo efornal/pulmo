@@ -425,7 +425,9 @@ def save(request):
             app_params['proyect'] = proyect.pk
             application_form = ApplicationFormForm(app_params)
             if application_form.is_valid():
-                application = application_form.save()
+                application = application_form.save(commit=False)
+                application.user = request.user
+                application.save()
             else:
                 commit_transaction = False
                 logging.error("Invalid application: %s" % application_form)
@@ -838,7 +840,9 @@ def production_step6(request):
         production_form = ProductionFormForm(produciton_params)
 
         if production_form.is_valid():
-            production = production_form.save()
+            production = production_form.save(commit=False)
+            production.user = request.user
+            production.save()
         else:
             commit_transaction = False
             logging.error("Invalid production: %s" % production_form)
