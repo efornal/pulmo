@@ -872,31 +872,6 @@ def production_step6(request):
                 issue = TicketSystem.create_issue(subject,description,watcher)
                 logging.info('Confirmed ticket request created %s' % issue.id)
 
-                monitoring_subject = _('monitoring_subject') % {'project_name': production.proyect.name}
-                
-                monitoring_description = TicketSystem.monitoring_description()
-                monitoring_issue = TicketSystem.create_issue(monitoring_subject,
-                                                             monitoring_description,
-                                                             None,
-                                                             issue.id)
-
-                # Subtask log level configuration
-                logging.warning("Creating ticket for log level configuration ...")
-                log_subject = _('log_subject') % {'project_name': production.proyect.name}
-                log_description =  TicketSystem.log_description()
-                log_issue = TicketSystem.create_issue(log_subject,
-                                                      log_description,
-                                                      None, issue.id)
-
-                # Subtask backup config
-                logging.warning("Creating ticket for backup configuration ...")
-                backup_subject=_('backup_subject') % {'project_name': production.proyect.name}
-                backup_description =  TicketSystem.backup_description()
-                backup_issue = TicketSystem.create_issue(backup_subject,
-                                                         backup_description,
-                                                         None,
-                                                         issue.id)
-
                 issueurl = "%s/issues/%s" % (settings.REDMINE_URL,issue.id)
                 msg += _('confirmed_ticket_request_created') % {'ticket': issue.id,
                                                                 'issueurl': issueurl}

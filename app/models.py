@@ -905,7 +905,24 @@ class TicketSystem(models.Model):
         if app.files_backup:
             description += "\n* %s: <pre>%s</pre>\n" % (_('files_backup'), app.files_backup)
 
+        # monitoring
+        monitoring_subject = _('monitoring_subject') % {'project_name': app.proyect.name}
+        monitoring_description = TicketSystem.monitoring_description()
+        description += "\n* %s \n %s \n" % (monitoring_subject, monitoring_description)
 
+        # Subtask log level configuration
+        logging.warning("Adding reference for log level configuration ...")
+        log_subject = _('log_subject') % {'project_name': app.proyect.name}
+        log_description =  TicketSystem.log_description()
+        description += "\n* %s \n %s \n" % (log_subject, log_description)
+
+        # Subtask backup config
+        logging.warning("Adding reference for backup configuration ...")
+        backup_subject=_('backup_subject') % {'project_name': app.proyect.name}
+        backup_description =  TicketSystem.backup_description()
+        description += "\n* %s \n %s \n" % (backup_subject,backup_description)
+            
+        # remember add to pulmo
         extra_args = "?production_form={}".format(app.pk)
         add_url= "{}{}".format( reverse ('admin:app_productionserver_add'), extra_args )
         add_url= to_absolute_url(add_url)
