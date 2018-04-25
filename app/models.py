@@ -730,13 +730,51 @@ class TicketSystem(models.Model):
                                                      is_applicant)
             description += "</pre>"
 
-            extra_args = "?application_form={}".format(app.pk)
-            add_url= "{}{}".format( reverse ('admin:app_testserver_add'), extra_args )
-            add_url= to_absolute_url(add_url)
+        # Subtask ssh users
+        if app.ssh_users:
+            logging.warning("Adding reference for SSH users ...")
+            ssh_subject = _('ssh_subject') % {'project_name': app.proyect.name}
+            ssh_description = TicketSystem.ssh_description({'ssh_users':app.ssh_users})
+            description += "\n* %s \n %s \n" % (ssh_subject,ssh_description)
 
-            description += "\n* %s" % (_('remember_to_add_server') \
-                                     % {'url': add_url,
-                                        'name': _('title')})
+
+        # Subtask extra database users
+        if app.extra_database_users:
+            logging.warning("Adding reference for extra database users ...")
+            extradb_subject = _('extradb_subject') % {'project_name': app.proyect.name}
+            extradb_description = TicketSystem.extradb_description({'extra_database_users':
+                                                                    app.extra_database_users})
+            description += "\n* %s \n %s \n" % (extradb_subject, extradb_description)
+        
+        # Subtask monitoring test
+        logging.warning("Adding reference for test monitoring ...")
+        monitoring_subject = _('monitoring_subject') % {'project_name': app.proyect.name}
+        monitoring_description = TicketSystem.monitoring_description()
+        description += "\n* %s \n %s \n" % (monitoring_subject, monitoring_description)
+
+        # Subtask log level configuration
+        logging.warning("Adding reference for log level configuration ...")
+        log_subject = _('log_subject') % {'project_name': app.proyect.name}
+        log_description =  TicketSystem.log_description({'logs_visualization': app.logs_visualization,
+                                                         'logs_users': app.logs_users})
+        description += "\n* %s \n %s \n" % (log_subject, log_description)
+
+        # Subtask integration machine
+        if app.requires_integration:
+            logging.warning("Adding reference for Integration machine ...")
+            integration_subject = _('integration_subject') % {'project_name': app.proyect.name}
+            integration_description = TicketSystem.integration_description()
+            description += "\n* %s \n %s \n" % (integration_subject, integration_description)
+        
+        # remember add to pulmo
+        logging.warning("Adding reference for remember ad pulmo ...")
+        extra_args = "?application_form={}".format(app.pk)
+        add_url= "{}{}".format( reverse ('admin:app_testserver_add'), extra_args )
+        add_url= to_absolute_url(add_url)
+
+        description += "\n* %s" % (_('remember_to_add_server') \
+                                   % {'url': add_url,
+                                      'name': _('title')})
 
         return description
 
@@ -892,9 +930,8 @@ class TicketSystem(models.Model):
     @classmethod
     def ssh_description(cls,args):
         description = _('ssh_description') % ({'ssh_users': args['ssh_users']})
-
+        description += "\n"
         if hasattr(settings, 'REDMINE_SSH_USERS_URL'):
-            description += "\n\n"
             description += _('more_information') % ({'url':settings.REDMINE_SSH_USERS_URL})
         return description
 
@@ -902,9 +939,8 @@ class TicketSystem(models.Model):
     @classmethod
     def backup_description(cls,args={}):
         description = _('add_to_backup_desc')
-
+        description += "\n"
         if hasattr(settings, 'REDMINE_BACKUP_URL'):
-            description += "\n\n"
             description += _('more_information') % ({'url':settings.REDMINE_BACKUP_URL})
         return description
 
@@ -919,9 +955,8 @@ class TicketSystem(models.Model):
     @classmethod
     def monitoring_description(cls,args={}):
         description = _('monitoring_description')
-
         if hasattr(settings, 'REDMINE_MONITORING_URL'):
-            description += "\n\n"
+            description += "\n"
             description += _('more_information') % ({'url':settings.REDMINE_MONITORING_URL})
         return description
 
@@ -941,7 +976,7 @@ class TicketSystem(models.Model):
                                                'logs_users':logs_users})
 
         if hasattr(settings, 'REDMINE_LOG_LEVEL_URL'):
-            description += "\n\n"
+            description += "\n"
             description += _('more_information') % ({'url':settings.REDMINE_LOG_LEVEL_URL})
         return description
 
@@ -950,6 +985,6 @@ class TicketSystem(models.Model):
     def integration_description(cls,args={}):
         description = _('integration_description')
         if hasattr(settings, 'REDMINE_INTEGRATION_URL'):
-            description += "\n\n"
+            description += "\n"
             description += _('more_information') % ({'url':settings.REDMINE_INTEGRATION_URL})
         return description    

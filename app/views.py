@@ -507,51 +507,7 @@ def save(request):
                     issue = TicketSystem.create_issue(subject,description,watchers)
                     logging.info('Confirmed ticket request created %s' % issue.id)
                     
-                    # Subtask ssh users
-                    if application.ssh_users:
-                        logging.warning("Creating ticket for SSH users ...")
-                        ssh_subject = _('ssh_subject') % {'project_name': application.proyect.name}
-                        ssh_description = TicketSystem.ssh_description({'ssh_users':application.ssh_users})
-                        ssh_issue = TicketSystem.create_issue(ssh_subject,
-                                                              ssh_description,
-                                                              None, issue.id)
-
-                    # Subtask extra database users
-                    if application.extra_database_users:
-                        logging.warning("Creating ticket for extra database users ...")
-                        extradb_subject = _('extradb_subject') % {'project_name': application.proyect.name}
-                        extradb_description = TicketSystem.extradb_description({'extra_database_users':
-                                                                                application.extra_database_users})
-                        extradb_issue = TicketSystem.create_issue(extradb_subject,
-                                                                  extradb_description,
-                                                                  None, issue.id)
-
-                    # Subtask monitoring test
-                    logging.warning("Creating ticket for test monitoring ...")
-                    monitoring_subject = _('monitoring_subject') % {'project_name': application.proyect.name}
-                    monitoring_description = TicketSystem.monitoring_description()
-                    monitoring_issue = TicketSystem.create_issue(monitoring_subject,
-                                                                 monitoring_description,
-                                                                 None, issue.id)
-
-                    # Subtask log level configuration
-                    logging.warning("Creating ticket for log level configuration ...")
-                    log_subject = _('log_subject') % {'project_name': application.proyect.name}
-                    log_description =  TicketSystem.log_description({'logs_visualization': application.logs_visualization,
-                                          'logs_users': application.logs_users})
-                    log_issue = TicketSystem.create_issue(log_subject,
-                                                          log_description,
-                                                          None, issue.id)
-
-                    # Subtask integration machine
-                    if application.requires_integration:
-                        logging.warning("Creating ticket for Integration machine ...")
-                        integration_subject = _('integration_subject') % {'project_name': application.proyect.name}
-                        integration_description = TicketSystem.integration_description()
-                        integration_issue = TicketSystem.create_issue(integration_subject,
-                                                              integration_description,
-                                                              None, issue.id)
-                    
+                 
                     issueurl = "%s/issues/%s" % (settings.REDMINE_URL,issue.id)
                     msg += _('confirmed_ticket_request_created') % {'ticket': issue.id,
                                                                     'issueurl': issueurl}
