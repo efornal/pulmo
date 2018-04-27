@@ -166,10 +166,7 @@ LOCALE_PATHS = (
 # Allows users to view test requests as production
 ALLOW_VIEW_USERS_REQUESTS = {{ allow_view_users_requests }}
 
-LOGS_VISUALIZATION_CHOICES = (
-    ('1', 'Log-Analizer'),
-    ('2', 'Archivo en Log-Server'),
-)
+LOGS_VISUALIZATION_CHOICES = {{ logs_visualization_choices }}
 
 # =================================\
 # ganeti configuration
