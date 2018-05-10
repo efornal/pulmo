@@ -165,11 +165,14 @@ def index(request):
 @login_required
 def new_step1(request):
     logs_visualization = []
-
+    proyect_form = ProyectForm()
+            
     if hasattr(settings, 'LOGS_VISUALIZATION_CHOICES'):
         logs_visualization = settings.LOGS_VISUALIZATION_CHOICES
 
-    context = {'logs_visualization':logs_visualization,}
+    context = {'logs_visualization':logs_visualization,
+               'proyect_form': ProyectForm(),
+               'application_form': ApplicationFormForm() }
     define_application_sessions(request)
     return render(request, 'new_step1.html',context)
 
@@ -329,7 +332,8 @@ def new_step5(request):
     permissions_validated = True
     invalid_scv_form = None
     context = {'proyect_name': request.session['proyect']['name'],
-               'permissions_options': permissions_options }
+               'permissions_options': permissions_options,
+               'referrer_form': ReferrerForm()}
 
     try:
         for i,username in enumerate( request.POST.getlist('usernames[]') ):

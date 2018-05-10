@@ -33,3 +33,13 @@ def boolean_icon(value):
     else:
         return mark_safe('<i class="glyphicon glyphicon-remove"></i>')
 
+@register.filter
+def required( field ):
+    try:
+        if field.field.required:
+            return "*"
+    except Exception as e:
+        logging.error("Error in filter when evaluating if the attribute is required")
+        logging.error(e)
+    return ""
+

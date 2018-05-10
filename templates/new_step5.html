@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-
+{% load application %}
 {% block content %}
 
 {% if form.errors %}
@@ -45,10 +45,16 @@
                       <div class="panel-body">
 		        <table class="table table-bordered table-hover" id="tab_logic" style="text-align:center">
 		          <thead>
-		            <tr ><th class="text-center">{{_('name_and_surname')}}</th>
-		            <th class="text-center">{{_('email')}}</th>
-		            <th class="text-center">{{_('phones')}}</th>
-                            <th class="text-center">{{_('is_applicant')}}?</th>
+		            <tr >
+                              <th class="text-center">{{_('name_and_surname')}}
+                                {{ referrer_form.name|required }}</th>
+		              <th class="text-center">{{_('email')}}
+                                {{ referrer_form.email|required }}</th>
+		              <th class="text-center">{{_('phones')}}
+                              {{ referrer_form.phones|required }}</th>
+                              <th class="text-center">{{_('is_applicant')}}?
+                                {{ referrer_form.is_applicant|required }}
+                              </th>
 		            <th class="text-center"></th>
 		            </tr>
 		          </thead>

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-
+{% load application %}
 {% block content %}
 
 {% if proyect_form.errors %}
@@ -49,7 +49,9 @@
             <legend>{{ _('new_proyect') }}</legend>
             
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="textinput">{{ _('name') }}</label>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('name') }}
+               {{ proyect_form.name|required }}
+              </label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="name"
                        id="name" value="{{ proyect_form.name.value|default:'' }}"/>
@@ -57,7 +59,9 @@
             </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="textinput">{{ _('secretariat') }}</label>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('secretariat') }}
+                {{ proyect_form.secretariat|required }}
+              </label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="secretariat"
                        placeholder="DIPT"
@@ -66,7 +70,9 @@
 
             </div>
             <div class="form-group" title="{{ _('project_url') }}">
-              <label class="col-sm-2 control-label" for="textinput">{{ _('url') }}</label>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('url') }}
+                {{ proyect_form.url|required }}
+              </label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="url"
                        id="url" value="{{ proyect_form.url.value|default:'' }}"
@@ -75,7 +81,9 @@
             </div>
             
             <div class="form-group">
-              <label for="description" class="col-sm-2 control-label">{{ _('description') }}</label>
+              <label for="description" class="col-sm-2 control-label">{{ _('description') }}
+                {{ proyect_form.description|required }}
+              </label>
               <div class="col-sm-10">
                 <textarea class="form-control" rows="3"  name="description"
                           id="description">{{ proyect_form.description.value|default:'' }}</textarea>
@@ -84,6 +92,7 @@
             <div class="form-group">
               <label for="observations" class="col-sm-2 control-label">
                 {{ _('requires_integration') }}
+                {{ application_form.requires_integration|required }}
               </label>
               <div class="col-sm-1">
                 <input type="checkbox" name='requires_integration' class="form-control"
@@ -93,13 +102,17 @@
             </div>
             
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="textinput">{{ _('db_name') }}</label>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('db_name') }}
+                {{ application_form.db_name|required }}
+              </label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="db_name"
                        placeholder="proyecto_db"
                        id="" value="{{ application_form.db_name.value|default:'' }}" />
               </div>
-              <label class="col-sm-2 control-label" for="textinput">{{ _('encoding') }}</label>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('encoding') }}
+                {{ application_form.encoding|required }}
+              </label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="encoding"
                        placeholder="UTF8"
@@ -108,13 +121,17 @@
             </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="textinput">{{ _('user_owner') }}</label>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('user_owner') }}
+                {{ application_form.user_owner|required }}
+              </label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="user_owner"
                        placeholder="proyecto_owner"
                        id="" value="{{ application_form.user_owner.value|default:'' }}" />
               </div>
-              <label class="col-sm-2 control-label" for="textinput">{{ _('user_access') }}</label>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('user_access') }}
+                {{ application_form.user_access|required }}
+              </label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="user_access"
                        placeholder="proyecto_user"
@@ -124,7 +141,10 @@
 
 
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="textinput">{{ _('extra_database_users') }}</label>
+              <label class="col-sm-2 control-label" for="textinput">
+                {{ _('extra_database_users') }}
+                {{ application_form.extra_database_users|required }}
+              </label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="extra_database_users"
                        id="extra_database_users" placeholder="usuario1, usuario2 ,..usuarioN"
@@ -134,7 +154,9 @@
             </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="textinput">{{ _('ssh_users') }}</label>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('ssh_users') }}
+                {{ application_form.ssh_users|required }}
+              </label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="ssh_users"
                        placeholder="usuario1, usuario2 ,..usuarioN"
@@ -147,7 +169,9 @@
 
 
             <div class="form-group">
-              <label for="observations" class="col-sm-2 control-label">{{ _('logs_visualization') }}</label>
+              <label for="observations" class="col-sm-2 control-label">
+                {{ _('logs_visualization') }}
+              </label>
               <div class="col-sm-4">
                 <select class="form-control" id="select" name="logs_visualization">
                 {% for logv in logs_visualization %}
@@ -156,7 +180,9 @@
                 {% endfor %}
                 </select>
               </div>
-              <label class="col-sm-2 control-label" for="textinput">{{ _('logs_users') }}</label>
+              <label class="col-sm-2 control-label" for="textinput">{{ _('logs_users') }}
+                {{ application_form.logs_users|required }}
+              </label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="logs_users"
                        placeholder="usuario1, usuario2 ,..usuarioN"
@@ -166,7 +192,9 @@
             </div>
 	    
             <div class="form-group">
-              <label for="observations" class="col-sm-2 control-label">{{ _('observations') }}</label>
+              <label for="observations" class="col-sm-2 control-label">{{ _('observations') }}
+                {{ application_form.observations|required }}
+              </label>
               <div class="col-sm-10">
                 <textarea class="form-control" rows="3"  name="observations"
                           id="observations">{{ application_form.observations.value|default:'' }}</textarea>
