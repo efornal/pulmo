@@ -207,6 +207,10 @@ def new_step2(request):
                     request.session['application']['requires_integration'] = 1
                 else:
                     request.session['application']['requires_integration'] = 0
+                if 'requires_development' in request.POST:
+                    request.session['application']['requires_development'] = 1
+                else:
+                    request.session['application']['requires_development'] = 0
                 request.session['application']['ssh_users'] = request.POST['ssh_users']
                 request.session['application']['extra_database_users'] = request.POST['extra_database_users']
                 request.session['application']['logs_visualization'] = request.POST['logs_visualization']

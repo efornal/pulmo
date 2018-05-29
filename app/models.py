@@ -767,6 +767,13 @@ class TicketSystem(models.Model):
             integration_subject = _('integration_subject') % {'project_name': app.proyect.name}
             integration_description = TicketSystem.integration_description()
             description += "\n* %s \n %s \n" % (integration_subject, integration_description)
+            
+        # Subtask development machine
+        if app.requires_development:
+            logging.warning("Adding reference for develompent machine ...")
+            development_subject = _('development_subject') % {'project_name': app.proyect.name}
+            development_description = TicketSystem.development_description()
+            description += "\n* %s \n %s \n" % (development_subject, development_description)
         
         # remember add to pulmo
         logging.warning("Adding reference for remember ad pulmo ...")
@@ -1006,4 +1013,12 @@ class TicketSystem(models.Model):
         if hasattr(settings, 'REDMINE_INTEGRATION_URL'):
             description += "\n"
             description += _('more_information') % ({'url':settings.REDMINE_INTEGRATION_URL})
+        return description    
+    @classmethod
+    
+    def development_description(cls,args={}):
+        description = _('development_description')
+        if hasattr(settings, 'REDMINE_DEVELOPMENT_URL'):
+            description += "\n"
+            description += _('more_information') % ({'url':settings.REDMINE_DEVELOPMENT_URL})
         return description    
