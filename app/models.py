@@ -124,6 +124,8 @@ class ApplicationForm (models.Model):
                                       verbose_name=_('related_ticket'))
     requires_integration = models.BooleanField(default=False,
                                                verbose_name=_('requires_integration'))
+    requires_development = models.BooleanField(default=False,
+                                               verbose_name=_('requires_development'))
     ssh_users = models.CharField(max_length=200, null=True, blank=True,
                                    verbose_name=_('ssh_users'))
     extra_database_users = models.CharField(max_length=200, null=True, blank=True,
