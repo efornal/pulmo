@@ -44,7 +44,7 @@ pip install -r app/requirements.txt
 createdb pulmo_db;
 createuser pulmo_owner -P;
 
-/etc/postgresql/9.3/main/pg_hba.conf
+pg_hba.conf
 hostssl  pulmo_db     pulmo_owner        ::1/128                 password
 /etc/init.d/postgresql restart
 psql -h localhost -U pulmo_owner -p 5432 -d pulmo_db
