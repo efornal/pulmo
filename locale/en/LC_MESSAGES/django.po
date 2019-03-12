@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-29 14:55+0000\n"
+"POT-Creation-Date: 2019-03-12 15:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -562,11 +562,11 @@ msgstr "%(project_name)s - SSH Users"
 msgid "extradb_subject"
 msgstr "%(project_name)s - Extra database users"
 
-#: app/models.py:753 app/models.py:918
+#: app/models.py:753 app/models.py:919
 msgid "monitoring_subject"
 msgstr "%(project_name)s - Monitoring"
 
-#: app/models.py:759 app/models.py:924
+#: app/models.py:759 app/models.py:925
 msgid "log_subject"
 msgstr "%(project_name)s - Log level"
 
@@ -670,69 +670,67 @@ msgstr "Date"
 msgid "duration_in_days"
 msgstr "Duration in days"
 
-#: app/models.py:930
+#: app/models.py:931
 msgid "backup_subject"
-msgstr "%(project_name)s - Backups"
+msgstr "%(project_name)s - Add to backup system"
 
-#: app/models.py:944
+#: app/models.py:946
+msgid "redirection_subject"
+msgstr "%(project_name)s - Add to redirect system"
+
+#: app/models.py:952
+msgid "dump_subject"
+msgstr "%(project_name)s - Add to dumps system"
+
+#: app/models.py:959
 msgid "remember_ckeck_app"
 msgstr "Remember to check what was done in: %(url)s"
 
-#: app/models.py:958
+#: app/models.py:973
 msgid "ssh_description"
 msgstr ""
 "To run the update script you must add the following SSH users with SUDO "
 "permissions: \n"
 "%(ssh_users)s"
 
-#: app/models.py:961 app/models.py:970 app/models.py:986 app/models.py:1006
-#: app/models.py:1015 app/models.py:1023
+#: app/models.py:976 app/models.py:984 app/models.py:1000 app/models.py:1008
+#: app/models.py:1016 app/models.py:1036 app/models.py:1045 app/models.py:1053
 msgid "more_information"
 msgstr "For more information check/complete in %(url)s"
 
-#: app/models.py:967
-msgid "add_to_backup_desc"
-msgstr "All production server must be added to the backup system"
-
-#: app/models.py:976
+#: app/models.py:990
 msgid "extradb_description"
 msgstr ""
 "The following database connection extra users must be added: \n"
 "%(extra_database_users)s"
 
-#: app/models.py:983
-msgid "monitoring_description"
-msgstr "Add server to Monitoring"
-
-#: app/models.py:1001
+#: app/models.py:1031
 msgid "log_description"
 msgstr ""
-"Configure logging levels in ERROR and WARNING and give SSH access "
-"permissions to the indicated users.\n"
 "Log display mode: %(log_visualization)s \n"
 "Log Users: %(logs_users)s"
 
-#: app/models.py:1012
+#: app/models.py:1042
 msgid "integration_description"
 msgstr "The integration machine must be created"
 
-#: app/models.py:1020
+#: app/models.py:1050
 msgid "development_description"
 msgstr "The development machine must be created"
 
-#: app/views.py:406
+#: app/views.py:410
 msgid "referent_is_required"
 msgstr "At least one referent must be an applicant"
 
-#: app/views.py:501 app/views.py:869
+#: app/views.py:505 app/views.py:873
 msgid "completed_application"
 msgstr "The application has been successful. "
 
-#: app/views.py:509
+#: app/views.py:513
 msgid "test_server_for"
 msgstr "Test server for '%(name)s'"
 
-#: app/views.py:516 app/views.py:880
+#: app/views.py:520 app/views.py:884
 msgid "confirmed_ticket_request_created"
 msgstr ""
 "The ticket <a href='%(issueurl)s' class='alert-link' target='_blank'>#"
@@ -744,17 +742,17 @@ msgstr ""
 "oficina, se lo agregará como seguidor del ticket para poder realizar un "
 "seguimiento del mismo."
 
-#: app/views.py:540 app/views.py:904
+#: app/views.py:544 app/views.py:908
 msgid "incomplete_application"
 msgstr ""
 "The request could not be completed. In order to make the process we ask you "
 "anywhere near our office or try to make the request again later."
 
-#: app/views.py:561
+#: app/views.py:565
 msgid "project_not_found"
 msgstr "Could not determine the project on which to make the request"
 
-#: app/views.py:874
+#: app/views.py:878
 msgid "production_server_for"
 msgstr "Production server for '%(name)s'"
 
@@ -945,12 +943,3 @@ msgstr "Password"
 #: templates/registration/login.html:45
 msgid "log_in"
 msgstr "Login"
-
-#~ msgid "applications"
-#~ msgstr "applications"
-
-#~ msgid "test"
-#~ msgstr "test"
-
-#~ msgid "invalid_username_or_password"
-#~ msgstr "invalid username or password"

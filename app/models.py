@@ -774,6 +774,19 @@ class TicketSystem(models.Model):
             development_subject = _('development_subject') % {'project_name': app.proyect.name}
             development_description = TicketSystem.development_description()
             description += "\n* %s \n %s \n" % (development_subject, development_description)
+
+        # redirection
+        logging.warning("Adding reference for redirection ...")
+        redir_url = app.proyect.url or ''
+        redir_subject = _('redirection_subject') % {'project_name': app.proyect.name}
+        redir_description =  TicketSystem.redirection_description()
+        description += "\n* %s \n %s \n %s \n" % (redir_subject,redir_url,redir_description)
+
+        # dumpserver
+        logging.warning("Adding reference for dump ...")
+        dump_subject = _('dump_subject') % {'project_name': app.proyect.name}
+        dump_description =  TicketSystem.dump_description()
+        description += "\n* %s \n %s \n" % (dump_subject,dump_description)
         
         # remember add to pulmo
         logging.warning("Adding reference for remember ad pulmo ...")
@@ -915,6 +928,7 @@ class TicketSystem(models.Model):
             description += "\n* %s: <pre>%s</pre>\n" % (_('files_backup'), app.files_backup)
 
         # monitoring
+        logging.warning("Adding reference for monitoring configuration ...")
         monitoring_subject = _('monitoring_subject') % {'project_name': app.proyect.name}
         monitoring_description = TicketSystem.monitoring_description()
         description += "\n* %s \n %s \n" % (monitoring_subject, monitoring_description)
@@ -931,15 +945,28 @@ class TicketSystem(models.Model):
         backup_description =  TicketSystem.backup_description()
         description += "\n* %s \n %s \n" % (backup_subject,backup_description)
             
+        # redirection
+        logging.warning("Adding reference for redirection ...")
+        redir_url = app.proyect.url or ''
+        redir_subject = _('redirection_subject') % {'project_name': app.proyect.name}
+        redir_description =  TicketSystem.redirection_description()
+        description += "\n* %s \n %s \n %s \n" % (redir_subject,redir_url,redir_description)
+
+        # dumpserver
+        logging.warning("Adding reference for dump ...")
+        dump_subject = _('dump_subject') % {'project_name': app.proyect.name}
+        dump_description =  TicketSystem.dump_description()
+        description += "\n* %s \n %s \n" % (dump_subject,dump_description)
+
         # remember add to pulmo
         extra_args = "?production_form={}".format(app.pk)
         add_url= "{}{}".format( reverse ('admin:app_productionserver_add'), extra_args )
         add_url= to_absolute_url(add_url)
-            
         description += "\n* %s" % (_('remember_to_add_server') \
                                 % {'url': add_url,
                                 'name': _('title')})
 
+        # related_ticket
         if app.proyect.applicationform.related_ticket:
             description += "\n* %s" % ( _('remember_ckeck_app') \
                                 % {'url': app.proyect.applicationform.related_ticket})
@@ -964,8 +991,7 @@ class TicketSystem(models.Model):
     
     @classmethod
     def backup_description(cls,args={}):
-        description = _('add_to_backup_desc')
-        description += "\n"
+        description = ""
         if hasattr(settings, 'REDMINE_BACKUP_URL'):
             description += _('more_information') % ({'url':settings.REDMINE_BACKUP_URL})
         return description
@@ -980,10 +1006,23 @@ class TicketSystem(models.Model):
     
     @classmethod
     def monitoring_description(cls,args={}):
-        description = _('monitoring_description')
+        description = ""
         if hasattr(settings, 'REDMINE_MONITORING_URL'):
-            description += "\n"
             description += _('more_information') % ({'url':settings.REDMINE_MONITORING_URL})
+        return description
+    
+    @classmethod
+    def redirection_description(cls,args={}):
+        description = ""
+        if hasattr(settings, 'REDMINE_REDIRECTION_URL'):
+            description += _('more_information') % ({'url':settings.REDMINE_REDIRECTION_URL })
+        return description
+    
+    @classmethod
+    def dump_description(cls,args={}):
+        description = ""
+        if hasattr(settings, 'REDMINE_DUMP_URL'):
+            description += _('more_information') % ({'url':settings.REDMINE_DUMP_URL })
         return description
 
 

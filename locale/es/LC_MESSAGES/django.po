@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-29 14:55+0000\n"
+"POT-Creation-Date: 2019-03-12 15:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -563,11 +563,11 @@ msgstr "%(project_name)s - Usuarios SSH"
 msgid "extradb_subject"
 msgstr "%(project_name)s - Usuarios extras de base de datos"
 
-#: app/models.py:753 app/models.py:918
+#: app/models.py:753 app/models.py:919
 msgid "monitoring_subject"
 msgstr "%(project_name)s - Monitoreo"
 
-#: app/models.py:759 app/models.py:924
+#: app/models.py:759 app/models.py:925
 msgid "log_subject"
 msgstr "%(project_name)s - Configurar nivel y envío de logs"
 
@@ -671,70 +671,68 @@ msgstr "Fecha"
 msgid "duration_in_days"
 msgstr "Duración en días"
 
-#: app/models.py:930
+#: app/models.py:931
 msgid "backup_subject"
-msgstr "%(project_name)s - Backups"
+msgstr "%(project_name)s - Agregar al sistema de backups"
 
-#: app/models.py:944
+#: app/models.py:946
+msgid "redirection_subject"
+msgstr "%(project_name)s - Agregar al sistema de redirección"
+
+#: app/models.py:952
+msgid "dump_subject"
+msgstr "%(project_name)s - Agregar a sistema de dumps"
+
+#: app/models.py:959
 msgid "remember_ckeck_app"
 msgstr "Recuerde verificar lo realizado: %(url)s"
 
-#: app/models.py:958
+#: app/models.py:973
 msgid "ssh_description"
 msgstr ""
 "Para correr el script de actualización se deben agregar los siguientes "
 "usuarios SSH con permisos de SUDO: \n"
 "%(ssh_users)s"
 
-#: app/models.py:961 app/models.py:970 app/models.py:986 app/models.py:1006
-#: app/models.py:1015 app/models.py:1023
+#: app/models.py:976 app/models.py:984 app/models.py:1000 app/models.py:1008
+#: app/models.py:1016 app/models.py:1036 app/models.py:1045 app/models.py:1053
 msgid "more_information"
 msgstr "Para más información verificar/completar en %(url)s"
 
-#: app/models.py:967
-msgid "add_to_backup_desc"
-msgstr "Todo servidor en producción debe ser agregado al sistema de backup."
-
-#: app/models.py:976
+#: app/models.py:990
 msgid "extradb_description"
 msgstr ""
 "Se debe agregar los siguientes usuarios extras de conexión a la base de "
 "datos: \n"
 "%(extra_database_users)s"
 
-#: app/models.py:983
-msgid "monitoring_description"
-msgstr "Agregar el servidor a Monitoreo"
-
-#: app/models.py:1001
+#: app/models.py:1031
 msgid "log_description"
 msgstr ""
-"Configurar niveles de logs en ERROR y WARNING y dar permisos de acceso SSH a "
-"los usuarios si se indican.\n"
 "Modo de visualización de logs: %(log_visualization)s \n"
 "Usuarios de logs: %(logs_users)s"
 
-#: app/models.py:1012
+#: app/models.py:1042
 msgid "integration_description"
 msgstr "Se debe crear la máquina de integración"
 
-#: app/models.py:1020
+#: app/models.py:1050
 msgid "development_description"
 msgstr "Se debe crear la máquina de desarrollo"
 
-#: app/views.py:406
+#: app/views.py:410
 msgid "referent_is_required"
 msgstr "Al menos un referente debe ser solicitante"
 
-#: app/views.py:501 app/views.py:869
+#: app/views.py:505 app/views.py:873
 msgid "completed_application"
 msgstr "La solicitud se ha realizado con éxito. "
 
-#: app/views.py:509
+#: app/views.py:513
 msgid "test_server_for"
 msgstr "Servidor de Test para '%(name)s'"
 
-#: app/views.py:516 app/views.py:880
+#: app/views.py:520 app/views.py:884
 msgid "confirmed_ticket_request_created"
 msgstr ""
 "Se creó el ticket <a href='%(issueurl)s' class='alert-link' target='_blank'>#"
@@ -742,18 +740,18 @@ msgstr ""
 "referente es usuario de la oficina, se lo agregará como seguidor del ticket "
 "para poder realizar un seguimiento del mismo."
 
-#: app/views.py:540 app/views.py:904
+#: app/views.py:544 app/views.py:908
 msgid "incomplete_application"
 msgstr ""
 "La solicitud no pudo completarse. Para poder realizar el trámite te pedimos "
 "que te acerques a nuestra oficina o intentes realizar la solicitud "
 "nuevamente mas tarde."
 
-#: app/views.py:561
+#: app/views.py:565
 msgid "project_not_found"
 msgstr "No se pudo determinar el proyecto sobre el cual realizar la solicitud"
 
-#: app/views.py:874
+#: app/views.py:878
 msgid "production_server_for"
 msgstr "Servidor de Producción para '%(name)s'"
 
@@ -945,12 +943,3 @@ msgstr "Contraseña"
 #: templates/registration/login.html:45
 msgid "log_in"
 msgstr "Iniciar sesión"
-
-#~ msgid "applications"
-#~ msgstr "Formulario de Solicitud"
-
-#~ msgid "test"
-#~ msgstr "prueba"
-
-#~ msgid "invalid_username_or_password"
-#~ msgstr "Usuario o contraseña invalido"
