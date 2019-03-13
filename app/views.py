@@ -63,18 +63,18 @@ def defined_as_registered(request):
 def instance_info( vm_name='' ):
     result = {} 
     try:
-        r = requests.get('{}/{}'.format(settings.GANETI_INSTANCES_URL,vm_name), verify=False)
-        if not (r.status_code == requests.codes.ok):
-            return ''
-        rj = r.json()
-        result.update({'vm_proc':rj['beparams']['vcpus']})
-        result.update({'vm_disk':rj['disk.sizes'][0]})
-        result.update({'vm_cluster':rj['pnode']})
-        if 'snodes' in rj and rj['snodes']:
-            result.update({'vm_cluster':"{}:{}".format(rj['pnode'],rj['snodes'][0])})
-        result.update({'vm_mac':rj['nic.macs'][0]})
-        result.update({'vm_ram':rj['beparams']['memory']})
-        return result
+        for instance in settings.GANETI_INSTANCES_URL:
+            r = requests.get('{}/{}'.format(instance,vm_name), verify=False)
+            if (r.status_code == requests.codes.ok):
+                rj = r.json()
+                result.update({'vm_proc':rj['beparams']['vcpus']})
+                result.update({'vm_disk':rj['disk.sizes'][0]})
+                result.update({'vm_cluster':rj['pnode']})
+                if 'snodes' in rj and rj['snodes']:
+                    result.update({'vm_cluster':"{}:{}".format(rj['pnode'],rj['snodes'][0])})
+                result.update({'vm_mac':rj['nic.macs'][0]})
+                result.update({'vm_ram':rj['beparams']['memory']})
+                return result
     except Exception as e:
         logging.error('ERROR Exception: %s' % e)
         return ''
