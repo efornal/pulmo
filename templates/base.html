@@ -78,9 +78,11 @@
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="download">
-                  <li><a href="{% url 'application_index' %}">{{ _('Test') }}</a></li>
-                  <li class="divider"></li>
-                  <li><a href="{% url 'production_index' %}">{{ _('Production') }}</a></li>
+                  <li><a href="{% url 'new_step1' %}">{{ _('Test_new') }}</a></li>
+                  <li><a href="{% url 'production_step' %}">{{ _('Production_new') }}</a></li>
+                  <div class="divider"></div>
+                  <li><a href="{% url 'application_index' %}">{{ _('Test_list') }}</a></li>
+                  <li><a href="{% url 'production_index' %}">{{ _('Production_list') }}</a></li>
                 </ul>
               </li>
               {% endif %}
